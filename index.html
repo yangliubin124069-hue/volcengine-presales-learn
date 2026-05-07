@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#2b5cff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1d3fb8" media="(prefers-color-scheme: dark)" />
+  <meta name="description" content="火山引擎售前工程师 20 天深度学习 · 含面试培训与华为对位竞品分析 · 离线可用" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="火山售前学习" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png" />
+
+  <title>火山引擎售前工程师 · 20天深度学习平台</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">VE</span>
+      <div>
+        <h1>火山引擎售前工程师 · 20天深度版</h1>
+        <p class="subtitle">Cloud · AI · Solution · 每天 90-120 分钟，由浅入深直达合格</p>
+      </div>
+    </div>
+    <nav class="topnav">
+      <button class="nav-btn active" data-view="dashboard">学习仪表盘</button>
+      <button class="nav-btn" data-view="curriculum">课程目录</button>
+      <button class="nav-btn" data-view="interview">面试培训</button>
+      <button class="nav-btn" data-view="competition">竞品分析</button>
+      <button class="nav-btn" data-view="exam">综合考试</button>
+      <button class="nav-btn" data-view="about">学习指南</button>
+    </nav>
+  </header>
+
+  <main id="app"></main>
+
+  <footer class="footer">
+    <span>© 学习平台 · 数据保存在你本地浏览器，关闭页面不会丢失</span>
+    <button id="resetBtn" class="link-btn">重置全部进度</button>
+  </footer>
+
+  <script src="scripts/data.js"></script>
+  <script src="scripts/quiz-data.js"></script>
+  <script src="scripts/competition-data.js"></script>
+  <script src="scripts/app.js"></script>
+  <script>
+    // 注册 Service Worker（PWA 离线缓存）
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          // 检测到新版本时静默更新
+          reg.addEventListener('updatefound', () => {
+            const sw = reg.installing;
+            if (!sw) return;
+            sw.addEventListener('statechange', () => {
+              if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+                // 后台已下载新版，下次启动生效
+                console.info('[PWA] 已下载新版本，下次启动应用');
+              }
+            });
+          });
+        }).catch((err) => {
+          console.warn('[PWA] Service Worker 注册失败：', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

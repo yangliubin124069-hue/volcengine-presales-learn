@@ -1,0 +1,25 @@
+# 临时工作目录（图标模板/调试文件等）
+_work/
+
+# 系统文件
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# 编辑器/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python（如果将来加生成脚本）
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node（保留余地）
+node_modules/
+
+# Claude Code 本地配置
+.claude/
