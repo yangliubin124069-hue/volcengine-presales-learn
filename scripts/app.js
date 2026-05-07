@@ -1039,19 +1039,16 @@ function escapeHtml(s) {
   });
 
   // 关闭浮层 —— 多重机制：× 按钮 / 点背景 / ESC / Android 返回键
-  function closeHelp(e) {
-    if (e) { e.preventDefault(); e.stopPropagation(); }
-    if (help) help.hidden = true;
+  function closeHelp() {
+    if (help) {
+      help.hidden = true;
+      help.style.display = 'none';
+    }
     document.body.style.overflow = '';
   }
-  if (helpClose) {
-    helpClose.addEventListener('click', closeHelp, { capture: true });
-    helpClose.addEventListener('touchend', closeHelp, { capture: true });
-  }
-  if (helpBigClose) {
-    helpBigClose.addEventListener('click', closeHelp, { capture: true });
-    helpBigClose.addEventListener('touchend', closeHelp, { capture: true });
-  }
+  // 注意：不要用 capture+stopPropagation，否则会阻止 HTML inline onclick 执行
+  if (helpClose) helpClose.addEventListener('click', closeHelp);
+  if (helpBigClose) helpBigClose.addEventListener('click', closeHelp);
   if (help) {
     help.addEventListener('click', (e) => {
       if (e.target === help) closeHelp(e);
