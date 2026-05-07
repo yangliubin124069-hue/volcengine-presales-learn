@@ -1008,6 +1008,7 @@ function escapeHtml(s) {
   const fab = document.getElementById('installFab');
   const help = document.getElementById('installHelp');
   const helpClose = document.getElementById('installHelpClose');
+  const helpBigClose = document.getElementById('installHelpBigClose');
   if (!fab) return;
 
   // 已经以 PWA 模式运行 → 不显示按钮
@@ -1037,11 +1038,28 @@ function escapeHtml(s) {
     deferredPrompt = null;
   });
 
-  // 关闭浮层
-  function closeHelp() { if (help) help.hidden = true; }
-  if (helpClose) helpClose.addEventListener('click', closeHelp);
-  if (help) help.addEventListener('click', (e) => {
-    if (e.target === help) closeHelp();
+  // 关闭浮层 —— 多重机制：× 按钮 / 点背景 / ESC / Android 返回键
+  function closeHelp(e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    if (help) help.hidden = true;
+    document.body.style.overflow = '';
+  }
+  if (helpClose) {
+    helpClose.addEventListener('click', closeHelp, { capture: true });
+    helpClose.addEventListener('touchend', closeHelp, { capture: true });
+  }
+  if (helpBigClose) {
+    helpBigClose.addEventListener('click', closeHelp, { capture: true });
+    helpBigClose.addEventListener('touchend', closeHelp, { capture: true });
+  }
+  if (help) {
+    help.addEventListener('click', (e) => {
+      if (e.target === help) closeHelp(e);
+    });
+  }
+  // ESC 关闭
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && help && !help.hidden) closeHelp(e);
   });
 
   // 主按钮点击
