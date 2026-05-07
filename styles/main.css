@@ -355,6 +355,8 @@ main {
 }
 
 /* ============ 安装指引浮层 ============ */
+/* hidden 属性强制覆盖（修复 .install-help 的 display:flex 把 hidden 顶掉的 bug） */
+.install-help[hidden], .install-fab[hidden] { display: none !important; }
 .install-help {
   position: fixed;
   inset: 0;
