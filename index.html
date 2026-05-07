@@ -30,17 +30,61 @@
         <p class="subtitle">Cloud · AI · Solution · 每天 90-120 分钟，由浅入深直达合格</p>
       </div>
     </div>
-    <nav class="topnav">
-      <button class="nav-btn active" data-view="dashboard">学习仪表盘</button>
-      <button class="nav-btn" data-view="curriculum">课程目录</button>
-      <button class="nav-btn" data-view="interview">面试培训</button>
-      <button class="nav-btn" data-view="competition">竞品分析</button>
-      <button class="nav-btn" data-view="exam">综合考试</button>
-      <button class="nav-btn" data-view="about">学习指南</button>
+    <nav class="topnav" id="topnav">
+      <button class="nav-btn active" data-view="dashboard"><span class="nav-ic">🏠</span><span class="nav-tx">学习仪表盘</span></button>
+      <button class="nav-btn" data-view="curriculum"><span class="nav-ic">📚</span><span class="nav-tx">课程目录</span></button>
+      <button class="nav-btn" data-view="interview"><span class="nav-ic">🎯</span><span class="nav-tx">面试培训</span></button>
+      <button class="nav-btn" data-view="competition"><span class="nav-ic">⚔️</span><span class="nav-tx">竞品分析</span></button>
+      <button class="nav-btn" data-view="exam"><span class="nav-ic">📝</span><span class="nav-tx">综合考试</span></button>
+      <button class="nav-btn" data-view="about"><span class="nav-ic">💡</span><span class="nav-tx">学习指南</span></button>
     </nav>
   </header>
 
   <main id="app"></main>
+
+  <!-- 浮动安装按钮（手动触发 PWA 安装；已装则自动隐藏） -->
+  <button id="installFab" class="install-fab" hidden>
+    <span class="install-fab-icon">📲</span>
+    <span class="install-fab-text">安装到桌面</span>
+  </button>
+
+  <!-- 安装指引浮层（不支持自动安装时显示） -->
+  <div id="installHelp" class="install-help" hidden>
+    <div class="install-help-card">
+      <button class="install-help-close" id="installHelpClose">×</button>
+      <h3>📲 怎么把应用装到桌面</h3>
+      <p class="install-help-tip">不同浏览器步骤不同，照下面对应的做：</p>
+      <div class="install-help-tabs">
+        <details open><summary>🌐 Chrome / Edge</summary>
+          <ol>
+            <li>右上角 <b>⋮</b> 菜单</li>
+            <li>选 <b>"添加到主屏幕"</b> / <b>"安装应用"</b></li>
+            <li>确定 → 桌面出现 VE 图标，点开就是全屏 App</li>
+          </ol>
+        </details>
+        <details><summary>🦊 Via 浏览器</summary>
+          <ol>
+            <li>右下角 <b>三横菜单</b></li>
+            <li>选 <b>"添加到桌面"</b> → 类型选 <b>"应用"</b></li>
+            <li>授予权限提示出现时同意</li>
+          </ol>
+        </details>
+        <details><summary>🐲 华为浏览器</summary>
+          <ol>
+            <li>底部 <b>≡</b> 菜单</li>
+            <li>选 <b>"添加到桌面"</b></li>
+            <li>注：华为浏览器只能加快捷方式（带地址栏），但功能完整可用</li>
+          </ol>
+        </details>
+        <details><summary>🐧 QQ 浏览器 / 夸克</summary>
+          <ol>
+            <li>菜单 → <b>"添加到桌面"</b> 或 <b>"网页应用"</b></li>
+          </ol>
+        </details>
+      </div>
+      <p class="install-help-foot">如果某个步骤不见 → 切换到 <b>Via 浏览器</b> 或 <b>Chrome</b> 重试</p>
+    </div>
+  </div>
 
   <footer class="footer">
     <span>© 学习平台 · 数据保存在你本地浏览器，关闭页面不会丢失</span>

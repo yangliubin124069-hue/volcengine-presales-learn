@@ -36,6 +36,10 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
     state.currentInterview = null;
     state.currentCompetition = null;
     state.examState = null;
+    // 移动端：让被点击的 tab 滚到 nav 中央
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
     render();
   });
 });
@@ -997,6 +1001,67 @@ function escapeHtml(s) {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   })[c]);
 }
+
+// ============ PWA 安装按钮 ============
+(function setupInstall() {
+  let deferredPrompt = null;
+  const fab = document.getElementById('installFab');
+  const help = document.getElementById('installHelp');
+  const helpClose = document.getElementById('installHelpClose');
+  if (!fab) return;
+
+  // 已经以 PWA 模式运行 → 不显示按钮
+  const isStandalone =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.matchMedia('(display-mode: fullscreen)').matches ||
+    window.matchMedia('(display-mode: minimal-ui)').matches ||
+    window.navigator.standalone === true;
+  if (isStandalone) {
+    fab.hidden = true;
+    return;
+  }
+
+  // 默认先显示按钮（不依赖 beforeinstallprompt — 部分国产浏览器不触发）
+  fab.hidden = false;
+
+  // Chrome / Edge 等会触发这个事件，存下来用于一键安装
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    fab.hidden = false;
+  });
+
+  // 已安装事件 → 隐藏按钮
+  window.addEventListener('appinstalled', () => {
+    fab.hidden = true;
+    deferredPrompt = null;
+  });
+
+  // 关闭浮层
+  function closeHelp() { if (help) help.hidden = true; }
+  if (helpClose) helpClose.addEventListener('click', closeHelp);
+  if (help) help.addEventListener('click', (e) => {
+    if (e.target === help) closeHelp();
+  });
+
+  // 主按钮点击
+  fab.addEventListener('click', async () => {
+    // 1) 浏览器支持自动安装 → 直接调用
+    if (deferredPrompt) {
+      try {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        if (outcome === 'accepted') fab.hidden = true;
+        return;
+      } catch (err) {
+        console.warn('install prompt failed:', err);
+      }
+    }
+    // 2) 否则弹手动指引浮层
+    if (help) help.hidden = false;
+  });
+})();
 
 // ============ 启动 ============
 render();

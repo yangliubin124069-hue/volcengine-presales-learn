@@ -62,6 +62,15 @@ body {
   color: var(--muted);
   cursor: pointer;
   transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.nav-btn .nav-ic {
+  font-size: 15px;
+  line-height: 1;
+  display: inline-block;
 }
 .nav-btn:hover { background: #eef2ff; color: var(--primary); }
 .nav-btn.active { background: var(--primary); color: #fff; }
@@ -302,6 +311,145 @@ main {
   border-color: #7c3aed;
   box-shadow: 0 8px 30px rgba(124, 58, 237, 0.12);
 }
+
+/* ============ 浮动安装按钮 ============ */
+.install-fab {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  z-index: 998;
+  border: none;
+  background: linear-gradient(135deg, #2b5cff 0%, #6e3aff 60%, #ec4899 100%);
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 24px rgba(43, 92, 255, 0.4),
+              0 2px 6px rgba(43, 92, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  animation: install-pulse 2.4s ease-in-out infinite;
+}
+.install-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(43, 92, 255, 0.5),
+              0 4px 10px rgba(43, 92, 255, 0.3);
+  filter: brightness(1.05);
+}
+.install-fab:active { transform: translateY(0); animation: none; }
+.install-fab-icon { font-size: 18px; line-height: 1; }
+.install-fab-text { line-height: 1; }
+@keyframes install-pulse {
+  0%, 100% { box-shadow: 0 8px 24px rgba(43, 92, 255, 0.4), 0 2px 6px rgba(43, 92, 255, 0.25); }
+  50% { box-shadow: 0 8px 24px rgba(43, 92, 255, 0.6), 0 0 0 8px rgba(43, 92, 255, 0.10); }
+}
+
+/* iOS 安全区适配 */
+@supports (padding: max(0px)) {
+  .install-fab { bottom: max(24px, calc(env(safe-area-inset-bottom) + 18px)); }
+}
+
+/* ============ 安装指引浮层 ============ */
+.install-help {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: help-fade 0.2s ease;
+}
+@keyframes help-fade { from { opacity: 0 } to { opacity: 1 } }
+.install-help-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px 22px 18px;
+  max-width: 440px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+.install-help-close {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  background: transparent;
+  border: none;
+  font-size: 26px;
+  color: var(--muted);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  line-height: 1;
+}
+.install-help-close:hover { background: #f3f4f6; color: var(--text); }
+.install-help h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.install-help-tip {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.install-help-tabs details {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  background: #fafbfc;
+  transition: all 0.15s;
+}
+.install-help-tabs details[open] {
+  background: #f0f5ff;
+  border-color: #c7dbff;
+}
+.install-help-tabs summary {
+  cursor: pointer;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  list-style: none;
+}
+.install-help-tabs summary::-webkit-details-marker { display: none }
+.install-help-tabs summary::after {
+  content: "▼";
+  float: right;
+  font-size: 10px;
+  color: var(--muted);
+  transition: transform 0.2s;
+}
+.install-help-tabs details[open] summary::after { transform: rotate(180deg) }
+.install-help-tabs ol {
+  padding: 4px 14px 12px 32px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-2, #4E5969);
+}
+.install-help-tabs ol li { margin-bottom: 2px; }
+.install-help-tabs ol b { color: var(--primary); }
+.install-help-foot {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+}
+.install-help-foot b { color: var(--primary); }
 
 /* ============ 章节底部 · 下一章导航卡 ============ */
 .next-nav {
@@ -681,6 +829,7 @@ main {
   .logo { width: 40px; height: 40px; font-size: 15px; border-radius: 10px; }
   main { padding: 14px; }
 
+  /* nav 横向滚动 + 滚动阴影提示 + scroll snap */
   .topnav {
     width: 100%;
     overflow-x: auto;
@@ -688,9 +837,29 @@ main {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 12px;
+    /* 左右两侧的"还有内容"渐变阴影提示 */
+    mask-image: linear-gradient(to right,
+      transparent 0,
+      #000 16px,
+      #000 calc(100% - 16px),
+      transparent 100%);
+    -webkit-mask-image: linear-gradient(to right,
+      transparent 0,
+      #000 16px,
+      #000 calc(100% - 16px),
+      transparent 100%);
   }
   .topnav::-webkit-scrollbar { display: none; }
-  .nav-btn { flex-shrink: 0; padding: 8px 14px; font-size: 13px; }
+  .nav-btn {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    font-size: 13px;
+    scroll-snap-align: center;
+    gap: 5px;
+  }
+  .nav-btn .nav-ic { font-size: 16px; }
 
   .hero { padding: 20px; border-radius: 14px; }
   .hero h2 { font-size: 19px; line-height: 1.35; }
@@ -776,7 +945,11 @@ main {
   .day-card h4 { font-size: 14.5px; }
   .day-card p { font-size: 12.5px; line-height: 1.55; }
 
-  .nav-btn { padding: 7px 12px; font-size: 12.5px; }
+  /* 极窄屏（≤480）：仅显示 icon + 简短文字，避免挤 */
+  .nav-btn { padding: 7px 11px; font-size: 12px; gap: 4px; }
+  .nav-btn .nav-ic { font-size: 16px; }
+  /* 极窄屏可用 inactive 隐藏文字、只留图标，让 active 的 tab 文字突出 */
+  /* 这里保留文字但收紧字号；如果再不够窄可改成 .nav-btn:not(.active) .nav-tx{display:none} */
 
   .lesson-section h3 { font-size: 15px; }
   .keypoint { font-size: 13px; padding: 10px 12px; }
