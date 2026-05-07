@@ -1077,7 +1077,7 @@ function escapeHtml(s) {
       }
     }
     // 2) 否则弹手动指引浮层
-    if (help) help.hidden = false;
+    if (help) { help.hidden = false; help.style.display = ''; }
   });
 })();
 

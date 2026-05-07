@@ -49,9 +49,9 @@
   </button>
 
   <!-- 安装指引浮层（不支持自动安装时显示） -->
-  <div id="installHelp" class="install-help" hidden onclick="if(event.target===this){this.hidden=true;}">
+  <div id="installHelp" class="install-help" hidden onclick="if(event.target===this){this.hidden=true;this.style.display='none';}">
     <div class="install-help-card">
-      <button class="install-help-close" id="installHelpClose" type="button" onclick="document.getElementById('installHelp').hidden=true;">×</button>
+      <button class="install-help-close" id="installHelpClose" type="button" onclick="var h=document.getElementById('installHelp');h.hidden=true;h.style.display='none';">×</button>
       <h3>📲 怎么把应用装到桌面</h3>
       <p class="install-help-tip">不同浏览器步骤不同，照下面对应的做：</p>
       <div class="install-help-tabs">
@@ -83,7 +83,7 @@
         </details>
       </div>
       <p class="install-help-foot">如果某个步骤不见 → 切换到 <b>Via 浏览器</b> 或 <b>Chrome</b> 重试</p>
-      <button class="install-help-bigclose" id="installHelpBigClose" type="button" onclick="document.getElementById('installHelp').hidden=true;">关闭</button>
+      <button class="install-help-bigclose" id="installHelpBigClose" type="button" onclick="var h=document.getElementById('installHelp');h.hidden=true;h.style.display='none';">关闭</button>
     </div>
   </div>
 
