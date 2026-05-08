@@ -42,48 +42,71 @@
 
   <main id="app"></main>
 
-  <!-- 浮动安装按钮（手动触发 PWA 安装；已装则自动隐藏） -->
-  <button id="installFab" class="install-fab" hidden>
-    <span class="install-fab-icon">📲</span>
-    <span class="install-fab-text">安装到桌面</span>
+  <!-- 智能问答浮动按钮 -->
+  <button id="aiFab" class="ai-fab" type="button" aria-label="打开学习助手" title="对内容有疑问？问我">
+    <span class="ai-fab-icon">💬</span>
   </button>
 
-  <!-- 安装指引浮层（不支持自动安装时显示） -->
-  <div id="installHelp" class="install-help" hidden onclick="if(event.target===this){this.hidden=true;this.style.display='none';}">
-    <div class="install-help-card">
-      <button class="install-help-close" id="installHelpClose" type="button" onclick="var h=document.getElementById('installHelp');h.hidden=true;h.style.display='none';">×</button>
-      <h3>📲 怎么把应用装到桌面</h3>
-      <p class="install-help-tip">不同浏览器步骤不同，照下面对应的做：</p>
-      <div class="install-help-tabs">
-        <details open><summary>🌐 Chrome / Edge</summary>
-          <ol>
-            <li>右上角 <b>⋮</b> 菜单</li>
-            <li>选 <b>"添加到主屏幕"</b> / <b>"安装应用"</b></li>
-            <li>确定 → 桌面出现 VE 图标，点开就是全屏 App</li>
-          </ol>
-        </details>
-        <details><summary>🦊 Via 浏览器</summary>
-          <ol>
-            <li>右下角 <b>三横菜单</b></li>
-            <li>选 <b>"添加到桌面"</b> → 类型选 <b>"应用"</b></li>
-            <li>授予权限提示出现时同意</li>
-          </ol>
-        </details>
-        <details><summary>🐲 华为浏览器</summary>
-          <ol>
-            <li>底部 <b>≡</b> 菜单</li>
-            <li>选 <b>"添加到桌面"</b></li>
-            <li>注：华为浏览器只能加快捷方式（带地址栏），但功能完整可用</li>
-          </ol>
-        </details>
-        <details><summary>🐧 QQ 浏览器 / 夸克</summary>
-          <ol>
-            <li>菜单 → <b>"添加到桌面"</b> 或 <b>"网页应用"</b></li>
-          </ol>
-        </details>
+  <!-- 智能问答聊天面板 -->
+  <div id="aiPanel" class="ai-panel" hidden>
+    <div class="ai-panel-card">
+      <header class="ai-header">
+        <div class="ai-title-wrap">
+          <span class="ai-title">📚 学习助手</span>
+          <span class="ai-context-label" id="aiContextLabel">…</span>
+        </div>
+        <button class="ai-icon-btn" id="aiSettingsBtn" type="button" title="AI 服务设置">⚙</button>
+        <button class="ai-icon-btn" type="button" title="关闭" onclick="var p=document.getElementById('aiPanel');p.hidden=true;p.style.display='none';">×</button>
+      </header>
+      <div class="ai-messages" id="aiMessages"></div>
+      <div class="ai-input-row">
+        <button class="ai-context-btn" id="aiContextBtn" type="button" title="附加当前章节内容到提问">📎</button>
+        <textarea id="aiInput" rows="1" placeholder="问点什么？例如：豆包 Pro 和 DeepSeek 怎么对比？" autocomplete="off"></textarea>
+        <button class="ai-send-btn" id="aiSendBtn" type="button">发送</button>
       </div>
-      <p class="install-help-foot">如果某个步骤不见 → 切换到 <b>Via 浏览器</b> 或 <b>Chrome</b> 重试</p>
-      <button class="install-help-bigclose" id="installHelpBigClose" type="button" onclick="var h=document.getElementById('installHelp');h.hidden=true;h.style.display='none';">关闭</button>
+    </div>
+  </div>
+
+  <!-- AI 服务设置面板 -->
+  <div id="aiSettings" class="ai-settings" hidden>
+    <div class="ai-settings-card">
+      <header class="ai-header">
+        <span class="ai-title">⚙ AI 服务设置</span>
+        <button class="ai-icon-btn" type="button" title="关闭" onclick="var s=document.getElementById('aiSettings');s.hidden=true;s.style.display='none';">×</button>
+      </header>
+      <div class="ai-settings-body">
+        <p class="ai-help-tip">🔒 配置只保存在你本地浏览器，<b>不会上传任何服务器</b>。</p>
+
+        <label>选择服务</label>
+        <select id="aiPreset">
+          <option value="ark">火山方舟 / 豆包（国内推荐）</option>
+          <option value="deepseek">DeepSeek（性价比高）</option>
+          <option value="qwen">通义千问（阿里）</option>
+          <option value="custom">自定义（OpenAI 兼容）</option>
+        </select>
+
+        <label>API Endpoint</label>
+        <input id="aiEndpoint" type="url" placeholder="https://...">
+
+        <label>API Key (Bearer Token)</label>
+        <input id="aiKey" type="password" autocomplete="off" placeholder="sk-... / ep-... / 等">
+
+        <label>Model 或 Endpoint ID</label>
+        <input id="aiModel" type="text" placeholder="如 deepseek-chat / ep-2024xxxxx">
+
+        <p class="ai-help-links">
+          申请 API Key：<br>
+          • <a href="https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey" target="_blank" rel="noopener">火山方舟控制台</a><br>
+          • <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">DeepSeek 平台</a><br>
+          • <a href="https://bailian.console.aliyun.com/" target="_blank" rel="noopener">通义千问百炼</a>
+        </p>
+
+        <div class="ai-settings-actions">
+          <button class="ai-test-btn" id="aiTestBtn" type="button">测试连接</button>
+          <button class="ai-save-btn" id="aiSaveBtn" type="button">保存</button>
+        </div>
+        <div class="ai-test-result" id="aiTestResult"></div>
+      </div>
     </div>
   </div>
 
@@ -96,6 +119,7 @@
   <script src="scripts/quiz-data.js"></script>
   <script src="scripts/competition-data.js"></script>
   <script src="scripts/app.js"></script>
+  <script src="scripts/ai-chat.js"></script>
   <script>
     // 注册 Service Worker（PWA 离线缓存）
     if ('serviceWorker' in navigator) {
