@@ -336,7 +336,120 @@
       'CDP（营销）': { tag: '数据', def: 'Customer Data Platform，客户数据平台。统一融合多渠道用户数据（CRM/网站/APP/小程序），构建 360 度画像。注意和数据保护的 CDP 重名。' },
       'DataPhin': { tag: '竞品', def: '阿里云智能数据建设与治理平台。是 DataWorks 的升级品牌，强调"数据资产化"。' },
       'QuickBI': { tag: '竞品', def: '阿里云 BI 工具，可视化分析+报表+大屏。对位 PowerBI/Tableau。' },
-    };
+  
+    // ===== 第二批扩充（基于扫描语料发现的高频未收录词）=====
+    // 计算/存储核心
+    'AI': { en: 'Artificial Intelligence', tag: 'AI', def: '人工智能。狭义指 ML/DL/LLM 等技术；广义指让机器具备感知、推理、决策、生成能力的工程。火山引擎的 AI 产品矩阵包括豆包、火山方舟、机器学习平台、VikingDB。' },
+    'API': { en: 'Application Programming Interface', tag: '云', def: '应用程序接口，让不同系统通过预定义协议交互。RESTful API、GraphQL、gRPC 是主流形态。云上一切资源都通过 API 操作（OpenAPI、SDK 都是 API 的不同封装）。' },
+    'ECS': { en: 'Elastic Compute Service', tag: '云', def: '弹性云服务器，云上最基础的虚拟机。火山 ECS、阿里 ECS、AWS EC2 同义。提供 CPU/内存/网卡/磁盘的灵活组合，分钟级开通，按量/包月计费。' },
+    'EBS': { en: 'Elastic Block Storage', tag: '云存储', def: '弹性块存储，给 ECS 挂载的网络云盘。可热扩容、可快照、可跨可用区迁移。性能从普通云盘（几千 IOPS）到 NVMe SSD（几十万 IOPS）多档可选。' },
+    'ENI': { en: 'Elastic Network Interface', tag: '云网络', def: '弹性网卡，可以独立于 ECS 创建、绑定、解绑。一台 ECS 可绑多张 ENI 实现多 IP 多网段；故障切换时把 ENI 漂到备机，IP 不变。' },
+    'IDC': { en: 'Internet Data Center', tag: '架构', def: '互联网数据中心，传统机房。客户自己买服务器/网络/制冷设备，运维全包，CapEx 重、利用率 10-15%。上云就是把 IDC 的活外包给云厂商。' },
+    'POP': { en: 'Point of Presence', tag: '云网络', def: '接入点，CDN/网络服务在城市的边缘节点。北京 POP、上海 POP、广州 POP 都是物理机房。用户访问就近 POP，CDN 厂商在全球部署 1000+ POP。' },
+
+    // 数据库/中间件
+    'MySQL': { tag: '数据库', def: '最流行的开源关系数据库，1995 年瑞典 MySQL AB 发布，被 Oracle 收购。OLTP 主力库，单实例 1-3 万 QPS。火山 veDB、阿里 RDS、华为 GaussDB(MySQL) 都是托管 MySQL。' },
+    'PostgreSQL': { tag: '数据库', def: '功能最丰富的开源关系数据库（被誉为 "开源 Oracle"），强项是复杂查询、JSON 字段、向量、地理空间。火山、阿里、华为都提供托管 PG 服务。' },
+    'PG': { tag: '数据库', def: 'PostgreSQL 的简称。常说 "PG 系" 数据库——很多国产数据库（GaussDB、瀚高、金仓）都基于 PG。' },
+    'Oracle': { tag: '数据库', def: '美国甲骨文公司及其旗舰商业数据库。金融、电信、政府等高端 OLTP 场景统治者。"去 O" = 国产数据库替代 Oracle 是信创核心话题。' },
+    'DB': { tag: '数据库', def: 'Database 的缩写。一般指关系型/非关系型数据系统。云上 "veDB" "GaussDB" "PolarDB" 都用 DB 后缀。' },
+    'RDS': { en: 'Relational Database Service', tag: '数据库', def: '关系型数据库服务，云上托管的 MySQL/PostgreSQL/SQL Server。云厂商负责备份/高可用/补丁/监控，客户专注业务。比自建省 70% 运维。' },
+    'SQL': { en: 'Structured Query Language', tag: '数据库', def: '结构化查询语言，关系数据库标准操作语言。SELECT/INSERT/UPDATE/DELETE 是 CRUD 四件套。' },
+    'DTS': { en: 'Data Transmission Service', tag: '数据', def: '数据传输服务，把数据从一个库同步到另一个（如 MySQL 上云、跨地域同步、CDC 流到 Kafka）。阿里 DTS、华为 DRS、火山 veDB 同步是同类产品。' },
+    'IOPS': { en: 'Input/Output Operations Per Second', tag: '架构', def: '每秒读写操作数，磁盘性能核心指标。普通 SSD 几万 IOPS，NVMe SSD 几十万 IOPS。数据库密集小 IO 场景的瓶颈指标。' },
+
+    // 中间件/消息
+    'Service': { tag: '云原生', def: 'K8s 中提供稳定网络入口的资源。Pod IP 漂移，Service IP 不变。常见类型：ClusterIP（集群内）/NodePort（节点端口）/LoadBalancer（外部 LB）/Headless（无 IP）。' },
+    'Cluster': { tag: '云原生', def: '集群，多台机器协同组成的一个逻辑系统。K8s 集群、Redis 集群、Kafka 集群、ES 集群都是同义。优势：扩容横向、单点故障无感、负载均衡。' },
+    'BMQ': { tag: '火山', def: 'Byte Message Queue，火山引擎消息队列，对位阿里 RocketMQ、AWS SQS。抖音/今日头条内部主力 MQ 的对外版。' },
+    'ISV': { en: 'Independent Software Vendor', tag: '售前', def: '独立软件供应商。云生态合作伙伴的一种，把自己的软件部署到云上卖。如把 SaaS 上架到火山引擎云市场。售前要懂 ISV 渠道分成模型。' },
+
+    // AI / 机器学习
+    'ML': { en: 'Machine Learning', tag: 'AI', def: '机器学习。让计算机从数据中"学习"规律而非硬编码规则。监督学习/无监督/强化学习是三大范式。LLM 是 ML 的特殊形态（自监督 + 大规模）。' },
+    'DL': { en: 'Deep Learning', tag: 'AI', def: '深度学习，用多层神经网络做 ML。是当前 AI 主流方法。CNN（视觉）、RNN/LSTM（序列）、Transformer（语言）都是 DL 架构。' },
+    'GPU': { en: 'Graphics Processing Unit', tag: 'AI', def: '图形处理器，原本做游戏渲染，因擅长并行计算成为 AI 训练/推理算力主力。NVIDIA H100/H200/B200 是当前训练王者，单卡 ¥30万+。' },
+    'AIGC': { en: 'AI Generated Content', tag: 'AI', def: 'AI 生成内容，含文本（ChatGPT）、图像（Midjourney）、视频（Sora）、音乐（Suno）、代码（Copilot）。是 2023 起的产业大风口。' },
+    'Coze': { tag: '火山', def: '字节扣子，国内最大的 AI Agent 开发平台。可视化拖拽搭建智能体，一键发布到微信公众号/抖音/网页/飞书。零代码做 AI 应用首选。' },
+    'LSS': { tag: '火山', def: 'Live Streaming Service，火山直播服务的简称。含推流、转码、分发、低延迟拉流，<1.5s 端到端延迟。直播带货、连麦电商首选。' },
+    '大模型': { tag: 'AI', def: 'Large Model 通称，参数百亿+的神经网络。包括 LLM（语言）、多模态、Vision、Audio 等。豆包/盘古/通义/文心都是大模型。' },
+    '知识库': { tag: 'AI', def: '企业知识的结构化集合，配合 RAG 让 LLM 回答专业问题。火山方舟、Coze 都内建知识库管理。文档上传→自动切片→向量化→存 VikingDB。' },
+
+    // 网络/安全
+    'IP': { tag: '云网络', def: 'Internet Protocol 地址，网络上的唯一标识。IPv4 是 32 位（如 10.0.0.1），IPv6 是 128 位。云上分公网 IP（EIP）和私网 IP。' },
+    'DNS': { en: 'Domain Name System', tag: '云网络', def: '域名系统，把 baidu.com 解析为 IP。云上的 DNS 服务还提供智能解析（按地域分流）、健康检查、CDN 联动。' },
+    'TTL': { en: 'Time To Live', tag: '云网络', def: '生存时间。DNS 缓存 TTL 影响切换速度（小则切换快但根服务器压力大）；CDN 缓存 TTL 影响内容更新延迟。' },
+    'TLS': { en: 'Transport Layer Security', tag: '安全', def: '传输层安全，HTTPS 的底层协议。当前主流 TLS 1.3，握手快、前向安全。云上 LB/CDN 都内置 TLS 卸载，业务无需自己跑加密。' },
+    'SSH': { en: 'Secure Shell', tag: '安全', def: '安全终端登录协议。远程登录服务器、Git 推送、堡垒机、SCP 文件传输都基于 SSH。密钥对认证比密码更安全。' },
+    'HTTP': { en: 'HyperText Transfer Protocol', tag: '云网络', def: '超文本传输协议，Web 标准协议。HTTP/1.1（队头阻塞）→ HTTP/2（多路复用）→ HTTP/3（基于 QUIC，更抗丢包）。' },
+    'VPN': { en: 'Virtual Private Network', tag: '云网络', def: '虚拟专用网络，加密隧道。企业 IPSec VPN 把分支接入总部，IPSec SSL VPN 让员工远程办公。零信任/SASE 正在取代传统 VPN。' },
+    'SD-WAN': { tag: '云网络', def: 'Software-Defined WAN，软件定义广域网。多分支企业的 MPLS 替代品，用互联网+智能路由+加密构建专网，成本降 60%+。' },
+    'IAM': { en: 'Identity and Access Management', tag: '安全', def: '身份和访问管理，控制"谁能做什么"。云上 IAM 含用户、角色、策略、访问密钥。最小权限原则是安全合规底线。' },
+    'CMK': { en: 'Customer Master Key', tag: '安全', def: '客户主密钥，KMS 中由客户管理的密钥。CMK 加密数据加密密钥（DEK），DEK 加密真实数据——双层加密保证安全。' },
+    'SOC': { en: 'Security Operations Center', tag: '安全', def: '安全运营中心，企业 7x24 监控+响应安全威胁的指挥部。SIEM/SOAR 是其底层工具，云上 SOC 整合 WAF/DDoS/HSS/审计日志一站式。' },
+    'ACL': { en: 'Access Control List', tag: '云网络', def: '访问控制列表。VPC 子网级 ACL 控制入方向/出方向流量，比安全组更粗粒度但能限制整个子网。' },
+    'PL3': { tag: '云网络', def: 'Premium Line 3 / Private Line 3，私有专线/物理专线的不同等级。云专线（如阿里高速通道、火山专线）让客户 IDC 直连云上 VPC，绕开公网。' },
+
+    // 计算/性能
+    'CPU': { en: 'Central Processing Unit', tag: '架构', def: '中央处理器，通用计算。x86（Intel/AMD/海光）vs ARM（鲲鹏/飞腾/Graviton）vs RISC-V（龙芯）三大架构。' },
+    'OS': { en: 'Operating System', tag: '架构', def: '操作系统。云上常见：Linux 系（CentOS/Ubuntu/欧拉/麒麟）、Windows Server。容器化让 OS 重要性降低，但底层仍是基石。' },
+    'Linux': { tag: '架构', def: '开源 Unix-Like 操作系统，1991 Linus 创建。服务器市场占比 90%+，云原生 100%。发行版：Ubuntu、CentOS、RHEL、Debian、欧拉。' },
+    'Windows': { tag: '架构', def: 'Microsoft Windows 操作系统。服务器版（Windows Server）和桌面版。.NET、Active Directory、SQL Server 等微软栈应用必选。' },
+    'GB': { tag: '架构', def: 'Gigabyte，10 亿字节。1 GB = 1024 MB。云盘最小通常 20 GB。' },
+    'TB': { tag: '架构', def: 'Terabyte，万亿字节。1 TB = 1024 GB。企业级数据集起步单位。' },
+    'PB': { tag: '架构', def: 'Petabyte，千万亿字节。1 PB = 1024 TB。大型数据湖、互联网公司用户行为日志规模。' },
+    'SDK': { en: 'Software Development Kit', tag: '云', def: '软件开发工具包，封装 API 调用的语言级库。如 Python SDK、Java SDK、JS SDK。比直接调 REST API 简洁。' },
+    'IT': { en: 'Information Technology', tag: '行业', def: '信息技术。企业 IT 部门负责硬件/软件/网络运维。云时代 IT 部门重心从"机房运维"转向"业务赋能"。' },
+
+    // 售前/销售/商业
+    'ToB': { tag: '售前', def: 'To Business，面向企业销售。和 ToC（面向消费者）相对。ToB 决策链长（1-12 个月）、单价高（¥10万-¥千万）、需要售前 SA。' },
+    'PoC': { en: 'Proof of Concept', tag: '售前', def: '概念验证（同 POC）。售前必经环节——把方案在客户真实数据上小范围跑一遍，证明能落地。' },
+    'CapEx': { en: 'Capital Expenditure', tag: '售前', def: '资本支出，一次性大额投入买固定资产（服务器、机房、设备）。自建 IDC 是典型 CapEx。' },
+    'OpEx': { en: 'Operational Expenditure', tag: '售前', def: '运营支出，持续性按月按用量付费。云服务是典型 OpEx。CFO 喜欢 OpEx（财务灵活、税务利好）。' },
+    'JD': { en: 'Job Description', tag: '售前', def: '岗位职责。面试前必读 JD 找出 5-10 个关键词，回答时主动 hit。' },
+    'SCQA': { tag: '售前', def: 'Situation/Complication/Question/Answer，麦肯锡问题分析框架。情境→冲突→问题→答案，是写方案 PPT 开头的标准结构。' },
+    'STAR': { tag: '售前', def: 'Situation/Task/Action/Result，面试行为题黄金答案结构。讲项目案例必用：背景→任务→你的动作→量化结果。' },
+
+    // 性能/运维
+    'APM': { en: 'Application Performance Management', tag: '架构', def: '应用性能管理，监控应用调用链/慢查询/异常。代表：阿里 ARMS、华为 APM、Datadog、New Relic、SkyWalking。' },
+    'SRE': { en: 'Site Reliability Engineering', tag: '架构', def: '站点可靠性工程，Google 提出的运维理念。用编程方式做运维（IaC、自动化、可观测），把运维变工程问题。SRE = 工程师 ÷ 50%。' },
+    'Right-sizing': { tag: '云服务', def: '资源规格优化，FinOps 核心动作。把过大的 ECS 缩到合适规格（如 16 核降 8 核），可省 30-60% 成本。云厂商一般提供 RightSizing 建议工具。' },
+    'Spot': { tag: '云服务', def: '抢占式实例，云厂商把空闲资源以 50-90% 折扣卖出。可被 5 分钟通知后回收。适合大数据离线计算、AI 训练 checkpoint 任务。' },
+
+    // 中文术语
+    '数据库': { tag: '数据库', def: '存储和管理数据的系统。结构化数据用关系库（MySQL/Oracle/PG），半结构化用文档库（MongoDB），KV 用 Redis，时序用 InfluxDB，向量用 VikingDB。' },
+    '消息队列': { tag: '中间件', def: 'Message Queue，应用解耦+削峰填谷+异步处理的中间件。Kafka（大吞吐流）/RabbitMQ（业务）/Pulsar（云原生）/RocketMQ（阿里）/BMQ（火山）。' },
+    '负载均衡': { tag: '云网络', def: 'Load Balance，把流量分发到多台后端。云上托管版（火山 SLB、阿里 SLB、AWS ELB）省去自建 Nginx 的运维。' },
+    '容器服务': { tag: '云原生', def: '云上托管 K8s/Docker 的服务，统称 CaaS。火山 VKE、阿里 ACK、华为 CCE、AWS EKS 都是。客户提交镜像 + YAML，平台管节点和编排。' },
+    '微服务': { tag: '云原生', def: 'Microservices，把单体应用拆成几十/几百个独立服务，每个独立部署/独立伸缩/独立技术栈。K8s+Service Mesh+API 网关是标配。' },
+    '高并发': { tag: '架构', def: 'High Concurrency，同时处理大量请求的能力。秒杀、抢购、双 11 是高并发典型场景。靠水平扩展+缓存+异步+削峰来实现。' },
+    '可观测': { tag: '架构', def: 'Observability，能从系统外部看清内部状态。三大支柱：Logs（日志）、Metrics（指标）、Traces（链路）。云上代表：阿里云 ARMS、火山 APMPlus、Datadog、OpenTelemetry。' },
+    '客户端': { tag: '架构', def: 'Client，相对服务端的访问端。Web 浏览器、App、SDK、CLI 都是客户端。云上"X客户端"通常指安装在用户机器上的代理程序（如备份客户端、监控客户端）。' },
+    '应用层': { tag: '架构', def: 'OSI 第 7 层 / TCP/IP 第 4 层，HTTP/HTTPS/WebSocket 都在这层。ALB（七层 LB）、API 网关、CDN 都是应用层基础设施。' },
+    '架构图': { tag: '售前', def: 'Architecture Diagram，方案的可视化表达。云上常分逻辑架构图/部署架构图/数据流图三类。画图工具：draw.io、Visio、ProcessOn、火山引擎架构图工具。' },
+    '调度器': { tag: '云原生', def: 'Scheduler，决定任务/容器放在哪台机器上跑的组件。K8s 默认 kube-scheduler 按资源+亲和性调度，可自定义如 Volcano 调度器适合 AI 大规模训练。' },
+    '一站式': { tag: '售前', def: 'One-Stop，所有功能在一个平台搞定。云厂商最爱用的卖点。售前讲方案时一站式 = 客户少集成多家、少培训多团队。但也是绑定深、扩展弱的代价。' },
+    '客户经理': { tag: '售前', def: 'Account Manager（AE），管客户关系+回款的销售。售前 SA 配 AE 是 ToB 标配——AE 找客户，SA 出方案。' },
+    '一对一': { tag: '售前', def: '一对一服务，云厂商对大客户的差异化服务。包括专属客户经理、专属架构师、专属支持工程师。年消费 ¥100 万+一般享受。' },
+    '日志库': { tag: '架构', def: 'Log Store，集中化日志收集+索引+检索系统。代表：阿里 SLS、火山 TLS、ELK 栈、Datadog Logs。比 grep 服务器日志高效 100 倍。' },
+    '实时计算': { tag: '大数据', def: 'Stream Processing，毫秒到秒级处理数据流。Flink、Spark Streaming、Kafka Streams 是代表。金融实时风控、广告实时归因、IoT 实时告警标配。' },
+    '短视频': { tag: '行业', def: '15 秒-3 分钟的视频内容。抖音、TikTok、视频号、快手是平台。火山引擎是抖音技术底座的对外版，短视频场景是火山引擎的天然主场。' },
+    '视频号': { tag: '行业', def: '微信视频号，腾讯生态短视频平台。和抖音是国内短视频两大主力。' },
+    '数据安全': { tag: '安全', def: '数据全生命周期保护（采集/传输/存储/使用/销毁）。手段：加密、脱敏、权限管控、审计、DLP、防勒索、合规分类分级。是售前讲云方案必答的合规问题。' },
+
+    // 流程/方法论
+    '需求挖掘': { tag: '售前', def: '从客户表述中挖出真正需要解决的问题。SPIN 提问法、5 Why、客户旅程图都是工具。售前最关键的能力，往往决定方案成败。' },
+    '客户旅程': { tag: '售前', def: 'Customer Journey，把客户从认知→兴趣→评估→购买→使用→续费的完整路径可视化。售前+客户成功一起经营客户旅程。' },
+    '客户成功': { tag: '售前', def: 'Customer Success，从售卖一次性产品转向持续帮客户成功。SaaS 时代核心 — 客户用得好/用得多才会续费扩容。' },
+
+    // 火山引擎相关
+    '火山引擎': { tag: '火山', def: '字节跳动旗下云服务品牌，2021 年正式独立。强项：AI 大模型（豆包）、数据分析（ByteHouse/DataLeap）、音视频（RTC/Live）、增长营销。' },
+    '火山方舟': { tag: '火山', def: '火山引擎大模型 PaaS 平台，集成豆包+DeepSeek+智谱+Llama+Qwen 等多家模型 + 推理/评测/精调/Agent 链路。对位阿里百炼、华为 ModelArts。' },
+
+    // 项目阶段
+    '第一阶段': { tag: '售前', def: '项目分阶段实施的第 1 期。售前讲方案常用"先做 X 第一阶段验证→第二阶段全面推广"减少客户决策压力。' },
+    '第二阶段': { tag: '售前', def: '项目第 2 期。一般在第一阶段验证成功后扩大规模。售前要把每个阶段的 KPI、时间、投入都写清楚。' },
+    'HCSP-Presales': { tag: '认证', def: '华为 HCSP-Presales（Specialist Professional 售前认证）-Government & Public Affairs（政企方向）。简历主人考过此认证，懂华为打法，对应聘火山政企售前是核心优势。' },
+  };
 
   // ========================================================
   // 工具函数
