@@ -1,7 +1,7 @@
 // Service Worker · 火山引擎售前学习 PWA
 // 策略：静态资源 cache-first；HTML 走 network-first（保证更新可见），离线回退 cache。
 // 升级方式：改下面的 CACHE_VERSION，SW 自动清旧 cache。
-const CACHE_VERSION = 'volcengine-presales-v9';
+const CACHE_VERSION = 'volcengine-presales-v10';
 const RUNTIME_CACHE = 'volcengine-presales-runtime';
 
 // 预缓存清单：首次安装即下载，离线立刻可用
@@ -9,13 +9,13 @@ const PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './styles/main.css?v=9',
-  './scripts/data.js?v=9',
-  './scripts/quiz-data.js?v=9',
-  './scripts/competition-data.js?v=9',
-  './scripts/glossary.js?v=9',
-  './scripts/app.js?v=9',
-  './scripts/ai-chat.js?v=9',
+  './styles/main.css?v=10',
+  './scripts/data.js?v=10',
+  './scripts/quiz-data.js?v=10',
+  './scripts/competition-data.js?v=10',
+  './scripts/glossary.js?v=10',
+  './scripts/app.js?v=10',
+  './scripts/ai-chat.js?v=10',
   './icons/icon-96.png',
   './icons/icon-144.png',
   './icons/icon-180.png',
