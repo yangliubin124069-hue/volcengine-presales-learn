@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 15 · 售前角色与方法论 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=25">
+<style>
+  .spin-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 900px; max-width: 96vw; }
+  .spin-card { padding: 16px 14px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; animation: cardIn .5s both; }
+  .spin-card.s { border-color: #2b5cff; }
+  .spin-card.p { border-color: #f59e0b; animation-delay: .15s; }
+  .spin-card.i { border-color: #ec4899; animation-delay: .3s; }
+  .spin-card.n { border-color: #22c55e; animation-delay: .45s; }
+  .spin-card .lt { font-size: 28px; font-weight: 800; }
+  .spin-card.s .lt { color: #a5b4fc; }
+  .spin-card.p .lt { color: #fde68a; }
+  .spin-card.i .lt { color: #f9a8d4; }
+  .spin-card.n .lt { color: #86efac; }
+  .spin-card h5 { font-size: 14px; color: #fff; margin: 4px 0; }
+  .spin-card p { font-size: 12px; color: #cbd5e1; line-height: 1.6; }
+  .spin-card .ex { padding: 6px 8px; margin-top: 6px; background: rgba(0,0,0,.3);
+    border-radius: 4px; font-size: 11px; color: #94a3b8; font-style: italic; }
+
+  .meddic-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; width: 920px; max-width: 96vw; }
+  .meddic-card { padding: 12px 8px; border-radius: 8px; background: rgba(110,58,255,.08);
+    border: 1.5px solid #6e3aff; text-align: center; animation: cardIn .5s both; }
+  .meddic-card .lt { font-size: 22px; font-weight: 800; color: #c4b5fd; }
+  .meddic-card .nm { font-size: 11px; color: #fff; font-weight: 700; margin: 4px 0; }
+  .meddic-card .desc { font-size: 10.5px; color: #cbd5e1; line-height: 1.5; }
+  .meddic-card:nth-child(2) { animation-delay: .08s; }
+  .meddic-card:nth-child(3) { animation-delay: .16s; }
+  .meddic-card:nth-child(4) { animation-delay: .24s; }
+  .meddic-card:nth-child(5) { animation-delay: .32s; }
+  .meddic-card:nth-child(6) { animation-delay: .4s; }
+
+  .funnel { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .f-step { padding: 10px 18px; border-radius: 6px;
+    background: rgba(34,197,94,.08); border: 1.5px solid #22c55e;
+    text-align: center; animation: cardIn .5s both; }
+  .f-step.s1 { width: 600px; }
+  .f-step.s2 { width: 500px; animation-delay: .15s; }
+  .f-step.s3 { width: 400px; animation-delay: .3s; }
+  .f-step.s4 { width: 300px; animation-delay: .45s; }
+  .f-step .lbl { font-size: 14px; font-weight: 700; color: #fff; }
+  .f-step .sub { font-size: 11.5px; color: #cbd5e1; margin-top: 4px; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 15, title: 'Day 15 · 售前角色与方法论', intro: '13 分钟 · SPIN + MEDDIC + BANT + 价值主张 + 城商行 AI 信审 4 月签约案例' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 15 · 售前角色与方法论',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>SPIN 提问法 + MEDDIC 资格 + BANT 判断 + 价值主张</b><br>13 分钟 + 2 互动 + 2 客户对话 + 城商行 AI 信审 4 月签约真实案例',
+    visual: '<div class="cover-icon">🎯</div>',
+    voice: '欢迎来到 Day 15 售前角色与方法论。前面 14 节课讲技术今天讲方法论——为什么有人技术好却签不下单。今天 13 分钟讲透售前角色、SPIN 提问法、MEDDIC 资格框架、BANT 判断、价值主张，加 2 个客户对话和城商行 AI 信审 4 月签约真实案例。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 1 章 · 售前是谁', title: '销售铁三角 · 双语者',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🎯</div><h5>AE</h5><p>拿单<br>客户关系<br>商务谈判</p></div>
+      <div class="col-card"><div class="num">💼</div><h5>SA / 售前</h5><p>讲技术<br><b>业务+技术双语</b><br>方案设计</p></div>
+      <div class="col-card"><div class="num">🛠️</div><h5>Delivery</h5><p>落地实施<br>客户成功<br>持续运营</p></div>
+    </div>`,
+    voice: '销售铁三角是 AE 加 SA 售前加 Delivery。AE 拿单负责客户关系商务谈判。SA 也叫售前讲技术是"业务+技术"双语者。Delivery 落地实施客户成功。售前的位置是连接业务和技术的桥梁——用客户能听懂的话讲技术用技术给客户讲清楚生意。售前 vs 售后：售前在签单前讲故事售后在签单后做交付与客户成功优秀售前必须懂落地。',
+    fallbackDuration: 21000 },
+
+  { chapter: '第 1 章 · 售前 3 层价值', title: '翻译 + 建模 + 信任',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🌉</div><h5>翻译</h5><p>产品语言<br>↓<br>客户语言</p></div>
+      <div class="col-card"><div class="num">🏗️</div><h5>建模</h5><p>业务问题<br>↓<br>技术架构</p></div>
+      <div class="col-card"><div class="num">🤝</div><h5>信任</h5><p>专业度<br>↓<br>客户敢决策</p></div>
+    </div>`,
+    voice: '售前的 3 层价值。第一翻译产品语言到客户语言。第二建模业务问题到技术架构。第三信任专业度让客户敢决策。售前画像通常 IT 背景 5-10 年加沟通好加抗压强月均出 10-30 个客户 3-5 份方案。这是售前的"标准生产力"。',
+    fallbackDuration: 16000 },
+
+  { chapter: '第 2 章 · 客户分层', title: 'KA / SMB / 行业 / 渠道',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>类型</th><th>年合同</th><th>决策周期</th><th>售前重点</th></tr></thead>
+      <tbody>
+        <tr><td class="ve">KA 大客户</td><td>500 万+</td><td>6-18 月</td><td>深度 + 定制</td></tr>
+        <tr><td class="al">SMB 中小</td><td>5-100 万</td><td>1-2 月</td><td>产品讲透 + 案例</td></tr>
+        <tr><td class="hw">行业重点</td><td>视行业</td><td>视项目</td><td>懂行业语言 + 合规</td></tr>
+        <tr><td class="tc">渠道客户</td><td>视代理</td><td>视渠道</td><td>协助代理商</td></tr>
+      </tbody>
+    </table>`,
+    voice: '客户分层 4 类售前打法各不同。KA 大客户年合同 500 万+决策链长技术业务采购高层项目周期 6-18 个月售前重深度加定制。SMB 中小客户年合同 5-100 万决策快往往 1-2 人售前重产品讲透加案例参考。行业重点客户汽车金融政企能源等要懂行业语言合规要求通常配行业专属售前。渠道客户通过代理商或集成商触达售前协助代理商而非直接面客户杠杆大。售前面试问"怎么打 KA"必答这套分层。',
+    fallbackDuration: 25000 },
+
+  { chapter: '第 3 章 · SPIN', title: '4 步提问法 · 让客户自己说痛点',
+    visual: `<div class="spin-grid">
+      <div class="spin-card s">
+        <span class="lt">S</span>
+        <h5>Situation 状况</h5>
+        <p>了解客户现状</p>
+        <div class="ex">"贵司业务规模？团队？"</div>
+      </div>
+      <div class="spin-card p">
+        <span class="lt">P</span>
+        <h5>Problem 问题</h5>
+        <p>挖痛点</p>
+        <div class="ex">"哪里慢/贵/不安全？"</div>
+      </div>
+      <div class="spin-card i">
+        <span class="lt">I</span>
+        <h5>Implication 影响</h5>
+        <p>把痛点放大</p>
+        <div class="ex">"不解决会怎样？营收？"</div>
+      </div>
+      <div class="spin-card n">
+        <span class="lt">N</span>
+        <h5>Need-Payoff 收益</h5>
+        <p>让客户自己说收益</p>
+        <div class="ex">"如果解决了能多做啥？"</div>
+      </div>
+    </div>`,
+    voice: 'SPIN 提问法是售前最重要的工具。Situation 状况了解客户现状不要在这停留太久。Problem 问题挖痛点让客户自己说出来比你猜更有力。<b>Implication 影响</b>把痛点放大如果不解决会怎样影响营收合规人效——这是 SPIN 最关键的一步。Need-Payoff 收益让客户自己描述"如果解决了会带来什么"这是成交的临门一脚。<b>客户自己说出收益比你说强 100 倍</b>。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 3 章 · SPIN 实战', title: '客户说"ERP 慢" · 怎么 SPIN？',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们 ERP 系统太慢了。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">S</span>用多久了？团队几个 DBA？数据量？</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">P</span>具体哪些场景慢？是查询还是写入？高峰几点？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">I</span>慢对业务影响是什么？销售单提交不上去？财务对账延迟？月底高峰丢单多少？</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">N</span>如果秒级响应能多接多少订单？财务能提前几天关账？</div>
+      </div>
+    </div>`,
+    voice: '一个 SPIN 实战示例。客户说"ERP 慢"。售前先问 S 状况：用多久了团队几个 DBA 数据量。再问 P 问题：具体哪些场景慢是查询还是写入高峰几点。然后问 I 影响：慢对业务影响是什么销售单提交不上去财务对账延迟月底高峰丢单多少。最后问 N 收益：如果秒级响应能多接多少订单财务能提前几天关账。<b>4 个问题客户自己把痛点和价值都说完了</b>——这就是 SPIN 的威力。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 4 章 · MEDDIC', title: '6 字母商机资格 · 销售必背',
+    visual: `<div class="meddic-grid">
+      <div class="meddic-card">
+        <span class="lt">M</span>
+        <div class="nm">Metrics</div>
+        <div class="desc">度量指标<br>响应/成本/营收</div>
+      </div>
+      <div class="meddic-card">
+        <span class="lt">E</span>
+        <div class="nm">Economic Buyer</div>
+        <div class="desc">签字决策人<br>合适时机见</div>
+      </div>
+      <div class="meddic-card">
+        <span class="lt">D</span>
+        <div class="nm">Decision Criteria</div>
+        <div class="desc">决策标准<br>价格/功能/品牌</div>
+      </div>
+      <div class="meddic-card">
+        <span class="lt">D</span>
+        <div class="nm">Decision Process</div>
+        <div class="desc">决策流程<br>评审 / 招标</div>
+      </div>
+      <div class="meddic-card">
+        <span class="lt">I</span>
+        <div class="nm">Identify Pain</div>
+        <div class="desc">真实痛点<br>必须解决</div>
+      </div>
+      <div class="meddic-card">
+        <span class="lt">C</span>
+        <div class="nm">Champion</div>
+        <div class="desc">内部支持者<br>没他难赢</div>
+      </div>
+    </div>`,
+    voice: 'MEDDIC 是销售必背的商机资格框架。M Metrics 度量客户用什么指标判断成功响应时间成本营收指标决定方案。E Economic Buyer 签字的那个人售前要在合适时机见到。D Decision Criteria 决策标准客户怎么选厂商价格功能品牌服务。D Decision Process 决策流程哪些岗位评审是否走招标采购周期。I Identify Pain 已识别的真实痛点不是想要是必须解决。<b>C Champion 内部支持者</b>客户内部站在你这边的人没有 Champion 难赢单。MEDDIC 走完一遍商机能赢的概率自己心里就有数了。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 5 章 · BANT', title: '4 字母商机判断 · 速筛',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">💰</div><h5>Budget 预算</h5><p>是否有预算？<br>没预算多是"了解"</p></div>
+      <div class="col-card"><div class="num">👑</div><h5>Authority 决策权</h5><p>对接人能决策吗<br>只对接 1/3 才推动</p></div>
+      <div class="col-card"><div class="num">🎯</div><h5>Need 需求</h5><p>真实+紧迫？<br>想了解≠想买</p></div>
+      <div class="col-card"><div class="num">⏰</div><h5>Timing 时间窗</h5><p>何时上线/付款<br>没时间表 6 月不动</p></div>
+    </div>`,
+    voice: 'BANT 是速筛商机的 4 字母。Budget 预算是否有预算预算量级没预算的需求多是"了解"不要投入过多。Authority 决策权对接人是否能决策只有决策人 1/3 的客户才推动得了。Need 需求需求是否真实+紧迫"想了解"不等于"想买"。Timing 时间窗何时上线付款没有时间表的项目通常 6 个月还没动。MEDDIC 是深度评估 BANT 是快速筛选——两者结合是售前商机管理的标配。',
+    fallbackDuration: 23000 },
+
+  { chapter: '🎯 互动测验 #1', title: 'BANT 速筛 · 该投多少时间？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户说"我们想了解一下你们的产品"，预算未定，对接的是技术经理。怎么投入？</div>
+      <div class="quiz-opt wrong" data-k="A">立刻派 3 人团队做 60 页方案</div>
+      <div class="quiz-opt correct" data-k="B">1 次 90 分钟介绍 + SPIN 探需求 + BANT 评估 → 再决定投入</div>
+      <div class="quiz-opt wrong" data-k="C">直接报价然后等</div>
+      <div class="quiz-opt wrong" data-k="D">不接（没预算）</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：BANT 4 维全是不明朗——预算无 / 权限技术经理可能不是决策人 / 需求"想了解" / 时间窗未知。<b>正确动作</b>：① 投入 1 次 90 分钟会议<b>不超 8 人时</b>；② 用 SPIN 4 步挖出真痛点；③ 顺便摸清 BANT 4 维；④ <b>评估后再决定下一步资源投入</b>。<b>"想了解"的客户至少 50% 是"调研性需求"</b>——直接派大部队做方案 60% 概率烂尾。售前最大的浪费就是把 KA 级资源砸到 SMB 客户上。</div>
+    </div>`,
+    voice: '思考一下。客户"想了解一下"预算未定该投多少时间？给你 5 秒......正确答案 B 1 次 90 分钟会议加 SPIN 探需求加 BANT 评估再决定投入。BANT 4 维全是不明朗——预算无、权限技术经理不一定决策人、需求"想了解"、时间窗未知。正确动作 90 分钟会议不超 8 人时用 SPIN 挖痛点顺便摸清 BANT 4 维评估后再决定下一步资源投入。<b>想了解的客户至少 50% 是调研性需求</b>直接派大部队做方案 60% 烂尾。售前最大浪费是把 KA 资源砸到 SMB 客户上。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 6 章 · 价值主张画布', title: '客户侧 3 + 产品侧 3 · 一一映射',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>👥 客户侧</h4>
+        <p><span class="tag">工作</span>要完成什么</p>
+        <p><span class="tag">痛苦</span>怕的事</p>
+        <p><span class="tag">收益</span>想得到的</p>
+      </div>
+      <div class="acl-box">
+        <h4>📦 产品侧</h4>
+        <p><span class="tag">产品</span>我们提供</p>
+        <p><span class="tag">缓解</span>痛苦缓解</p>
+        <p><span class="tag">创造</span>收益创造</p>
+      </div>
+    </div>`,
+    voice: '价值主张画布 9 宫格客户侧三要素加产品侧三要素一一映射。客户侧：工作要完成什么、痛苦怕的事、收益想得到的。产品侧：产品我们提供、缓解客户痛苦、创造客户收益。<b>常见误区只列产品功能不映射客户痛点客户听不见</b>。售前面试客户问"这个产品对我有什么价值"必须用价值主张画布回答不要罗列功能。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 7 章 · 售前流程', title: '4 阶段标准流程 · 售前肌肉记忆',
+    visual: `<div class="funnel">
+      <div class="f-step s1">
+        <div class="lbl">① 初次接触 → 需求调研（1-2 次会议）</div>
+        <div class="sub">产出：客户画像表 + 痛点清单</div>
+      </div>
+      <div class="f-step s2">
+        <div class="lbl">② 方案设计 → 方案讲解（2-4 周）</div>
+        <div class="sub">产出：架构图 + 报价 + ROI 测算 + 案例</div>
+      </div>
+      <div class="f-step s3">
+        <div class="lbl">③ PoC / 试用 → 商务谈判（1-3 月）</div>
+        <div class="sub">产出：PoC 报告 + 终稿合同</div>
+      </div>
+      <div class="f-step s4">
+        <div class="lbl">④ 签约 → 移交交付</div>
+        <div class="sub">KO 会议 / 陪跑模式</div>
+      </div>
+    </div>`,
+    voice: '4 阶段标准售前流程。初次接触到需求调研 1-2 次会议产出客户画像表加痛点清单。方案设计到方案讲解 2-4 周产出架构图加报价加 ROI 测算加案例。PoC 或试用到商务谈判 1-3 个月产出 PoC 报告加终稿合同。签约到移交交付签约后 1 周内召开 KO 会议正式移交给交付团队售前进入"陪跑"模式。这套流程是售前的肌肉记忆背下来跟客户对话节奏自然就对。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 8 章 · 5 软技能', title: '区别 80% 同行的关键',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">👂</div><h5>① 听比说重要</h5><p>70% 听 / 30% 说<br>过早展示产品是新手大错</p></div>
+      <div class="col-card"><div class="num">❓</div><h5>② 敢提问</h5><p>一个好问题胜过十页 PPT<br>敢问"为什么这样想"</p></div>
+      <div class="col-card"><div class="num">📊</div><h5>③ 可视化</h5><p>一图&gt;十段话<br>架构/流程/对比 3 件武器</p></div>
+      <div class="col-card"><div class="num">📚</div><h5>④ 案例化</h5><p>同行业同体量同问题<br>每月积累 3-5 个</p></div>
+      <div class="col-card"><div class="num">🤝</div><h5>⑤ 诚实</h5><p>不能做就说不能做<br>永远丢一个客户</p></div>
+      <div class="col-card"><div class="num">💎</div><h5>记忆口诀</h5><p><b>听问图案诚</b><br>5 字背下来</p></div>
+    </div>`,
+    voice: '5 个软技能区别 80% 同行。一听比说重要 70% 时间听客户 30% 时间表达过早展示产品是新手最大的错。二敢提问一个好问题胜过十页 PPT 敢问客户"为什么这样想"。三可视化一张图胜过十段话架构图流程图数据对比图是售前三件武器。四案例化同行业同体量同问题的成功案例最有说服力建议每月积累 3-5 个。五诚实不能做就说不能做你说"能做"但交付做不到永远丢一个客户。记忆口诀听问图案诚 5 字背下来。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验 #2', title: '客户拒了 · 售前小李怎么翻盘？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">售前小李第一次见城商行 IT 主管讲 60 页方舟+Coze+veMLP PPT，客户说"再考虑下"。怎么翻盘？</div>
+      <div class="quiz-opt wrong" data-k="A">下次讲 120 页更详细</div>
+      <div class="quiz-opt correct" data-k="B">第二次先 SPIN 挖痛点，第三次只讲 1 个场景方案 + 同业案例</div>
+      <div class="quiz-opt wrong" data-k="C">降价 30% 求成交</div>
+      <div class="quiz-opt wrong" data-k="D">放弃换下一个客户</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：典型"一上来讲产品矩阵"翻车案例。<b>修复 3 步</b>：① 第二次会议先用 SPIN 挖出银行真实痛点（信审材料初审人力 30 人/天）；② 第三次只讲<b>一个场景方案</b>（AI 信审助手）+ 同业 2 家案例；③ <b>PoC 30 天验证人力降 60%</b>；④ KO 签约。<b>4 个月从被拒到签约 1500 万</b>。客户评价：他听得懂我们的业务。<b>"先讲场景再讲产品"</b>是售前关键心法。</div>
+    </div>`,
+    voice: '思考一下。售前小李被城商行拒了怎么翻盘？给你 5 秒......正确答案 B 第二次先 SPIN 挖痛点第三次只讲 1 个场景方案加同业案例。典型"一上来讲产品矩阵"翻车。修复 3 步：第二次先 SPIN 挖出银行真实痛点 30 人天初审；第三次只讲一个场景 AI 信审助手加同业 2 家案例；PoC 30 天验证人力降 60%；KO 签约。4 月从被拒到签约 1500 万客户评价"他听得懂我们的业务"。先讲场景再讲产品是售前关键心法。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🌟 客户对话 #1', title: '"我们怎么开始 AI？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>领导要做 AI 转型，但我也不知道从哪下手，预算 100 万先试试。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前 (SPIN)</span><b>S</b>：贵司现在最影响业务的人力支出在哪？<b>P</b>：每天什么任务最重复最耗人？<b>I</b>：如果这部分人力释放出来能做什么？<b>N</b>：如果 AI 把它降 60% ROI 多少？</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>客服 80 人接电话 80% 是重复问题。要是能降一半人力可省 800 万/年。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>那就先做<b>智能客服 PoC</b>。预算 30 万，6 周验证 RAG + 豆包，目标 50% 通话量降低人工。<b>如果 PoC 成功 800 万年收益 / 100 万投入 ROI 8 倍 1.5 月回本</b>。这是您的<b>第一个 AI 应用</b>。</div>
+      </div>
+    </div>`,
+    voice: '一段经典 SPIN 应用对话。客户要做 AI 不知从哪开始。售前用 SPIN 4 步引导：S 现在最影响业务的人力支出在哪？P 每天什么任务最重复？I 释放出来能做什么？N AI 降 60% ROI 多少？客户自己说出 80 人客服 800 万人力。售前立刻推智能客服 PoC：30 万预算 6 周验证 RAG 加豆包目标 50% 通话量降低。<b>800 万年收益除以 100 万投入 ROI 8 倍 1.5 月回本</b>。<b>"用客户自己的数字算 ROI"</b>这是 SPIN 加 ROI 的杀手锏组合。',
+    fallbackDuration: 33000 },
+
+  { chapter: '🌟 客户对话 #2', title: '"决策人见不到怎么办？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">同事</span>客户那边只对接技术经理见不到 CIO 和 CFO，方案做了 3 轮还没决策。咋办？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型"<b>缺少 Champion 和 Economic Buyer</b>"。3 招破局：<b>① 把技术经理变 Champion</b>给他职业利益（"用这套架构帮你升 CIO"）；<b>② 申请高层会议</b>"我们 CEO 想拜访您 CIO 谈战略合作"；<b>③ 临门一脚送 1 张 ROI 表</b>含财务模型让他带给 CFO。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">同事</span>如果他还是不带方案给上面呢？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>那要承认 MEDDIC 失败重做评估：<b>① 是否真的有 Pain</b>（也许"想了解"）；<b>② 是否真的有 Budget</b>（也许 KPI 没列）；<b>③ 是否走错了门</b>（也许该从业务部门切入）。<b>3 轮没进展果断撤资源做 BANT 复盘</b>，把人力投到高赢率商机。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话同事问决策人见不到。售前给 3 招破局：把技术经理变 Champion 给他职业利益；申请高层会议"CEO 拜访 CIO 谈战略"；临门一脚送 ROI 表含财务模型让他带给 CFO。同事追问还是不带，售前甩 MEDDIC 失败评估：是否真有 Pain、是否真有 Budget、是否走错了门也许该从业务部门切入。3 轮没进展果断撤资源做 BANT 复盘人力投到高赢率商机。<b>承认失败比硬撑重要</b>这是高级售前的肌肉记忆。',
+    fallbackDuration: 33000 },
+
+  { chapter: '案例', title: '🌟 城商行 · 4 月签约 1500 万',
+    body: '<b>痛点</b>：信审材料初审人力 30 人/天 / 售前小李首次讲 60 页 PPT 被拒<br><b>复盘改打法</b>：第二次 SPIN 挖痛点 → 第三次只讲 1 个场景 → PoC 30 天<br><br>📅 <b>4 个月签约 1500 万</b><br>👥 PoC 人力降 <b>60%</b><br>🎯 后续追加 <b>800 万</b><br>💬 客户："他听得懂我们的业务"',
+    visual: '<div style="font-size:64px;">🏦</div>',
+    voice: '一个真实案例。某城商行 IT 主管想上 AI 中台预算 1500 万售前小李第一次见面就讲 60 页方舟 Coze veMLP PPT 客户说"再考虑下"。复盘后小李改打法：第二次会议先用 SPIN 挖出银行真实痛点信审材料初审人力 30 人天；第三次只讲一个场景方案 AI 信审助手加同业案例；PoC 30 天验证人力降 60%；KO 签约。从被拒到签约 4 个月客户对小李评价"他听得懂我们的业务"后续追加合同 800 万。',
+    fallbackDuration: 30000 },
+
+  { chapter: '⚠️ 售前坑', title: '售前方法论 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 售前最常犯的 3 个错</h4>
+      <div class="x-row"><b>一上来就讲产品矩阵</b>：60 页 PPT → 客户"很厉害但跟我们什么关系"</div>
+      <div class="x-row"><b>只见对接人不见决策人</b>：方案做 3 轮在最后一关被毙 → 浪费 3 月</div>
+      <div class="x-row"><b>不挖 SPIN 的 I（影响）</b>：客户觉得不解决也行没紧迫感 → 项目永远延后</div>
+      <div class="ok-row">售前正确做法：<b>① 先 SPIN 后产品</b>第一次见客户只问 5 个问题；<b>② MEDDIC 必填 Champion + EB</b>缺一个就申请见高层；<b>③ I 必做</b>把痛点量化成具体数字让客户自己说损失。</div>
+    </div>`,
+    voice: '售前 3 大坑。一上来就讲产品矩阵 60 页 PPT 客户听完说"很厉害但不知道跟我们什么关系"。二只见对接人不见决策人方案做了几轮在最后一关被毙浪费 3 月。三不挖 SPIN 的 I 影响客户觉得不解决也行没紧迫感项目永远延后。正确做法：先 SPIN 后产品第一次见客户只问 5 个问题；MEDDIC 必填 Champion 加 EB 缺一个就申请见高层；I 必做把痛点量化成具体数字让客户自己说损失。',
+    fallbackDuration: 28000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 售前 3 层价值？<span style="color:#a5b4fc"> → 翻译 / 建模 / 信任</span><br>
+      <b>Q2</b> 客户 4 类分层？<span style="color:#a5b4fc"> → KA / SMB / 行业 / 渠道</span><br>
+      <b>Q3</b> SPIN 4 步？<span style="color:#a5b4fc"> → Situation/Problem/Implication/Need-Payoff</span><br>
+      <b>Q4</b> MEDDIC 6 字母？<span style="color:#a5b4fc"> → Metrics/EB/DC/DP/Pain/Champion</span><br>
+      <b>Q5</b> BANT 4 维？<span style="color:#a5b4fc"> → Budget/Authority/Need/Timing</span><br>
+      <b>Q6</b> 售前流程 4 阶段？<span style="color:#a5b4fc"> → 接触/方案/PoC/签约</span><br>
+      <b>Q7</b> 5 软技能？<span style="color:#a5b4fc"> → 听/问/图/案/诚</span><br>
+      <b>Q8</b> 客户拒了怎么救？<span style="color:#a5b4fc"> → SPIN 重挖 + 1 个场景 + 同业案例</span>
+    </div>`,
+    voice: '8 题速查。一售前 3 层价值翻译建模信任。二客户 4 类 KA SMB 行业渠道。三 SPIN 4 步 Situation Problem Implication Need-Payoff。四 MEDDIC 6 字母 Metrics EB DC DP Pain Champion。五 BANT 4 维 Budget Authority Need Timing。六售前流程 4 阶段接触方案 PoC 签约。七 5 软技能听问图案诚。八客户拒了 SPIN 重挖加 1 个场景加同业案例。这 8 道刷熟售前方法论面试稳过。',
+    fallbackDuration: 28000 },
+
+  { chapter: '完成', title: '🎉 Day 15 学完！',
+    eyebrow: '关键心法',
+    body: '<b>"用客户能听懂的话讲技术，用技术给客户讲清楚生意"</b><br>第一次见客户先问 5 个 SPIN 问题再讲产品。<br>每次提案附 3 年 ROI 表 + 同行案例。<br><span class="hl">技术好说、案例难找——平时积累比什么都重要</span>',
+    visual: '<div style="font-size:80px;">🎯</div>',
+    voice: '恭喜 Day 15 学完。售前是用客户能听懂的话讲技术用技术给客户讲清楚生意。第一次见客户先问 5 个 SPIN 问题再讲产品每次提案附 3 年 ROI 表加同行案例。技术好说案例难找平时积累比什么都重要。下一站 Day 16 解决方案设计与 TCO/ROI。',
+    fallbackDuration: 21000 },
+];
+</script>
+<script src="_player.js?v=25"></script>
+</body>
+</html>

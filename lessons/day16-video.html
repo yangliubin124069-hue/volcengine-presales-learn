@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 16 · 解决方案设计与 TCO/ROI · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=25">
+<style>
+  .arch-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 900px; max-width: 96vw; }
+  .ar-card { padding: 16px 14px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; animation: cardIn .5s both; }
+  .ar-card.biz { border-color: #2b5cff; }
+  .ar-card.tech { border-color: #6e3aff; animation-delay: .15s; }
+  .ar-card.dep { border-color: #ec4899; animation-delay: .3s; }
+  .ar-card h5 { font-size: 14px; color: #fff; margin-bottom: 6px; }
+  .ar-card p { font-size: 12px; color: #cbd5e1; line-height: 1.6; }
+
+  .sla-table { width: 760px; max-width: 94vw; border-collapse: collapse;
+    background: rgba(255,255,255,.03); border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.1); }
+  .sla-table th, .sla-table td { padding: 10px 14px; font-size: 13px; text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,.08); }
+  .sla-table th { background: rgba(43,92,255,.18); color: #a5b4fc; font-size: 12px; }
+  .sla-table .sla { color: #fde68a; font-weight: 700; font-family: monospace; }
+  .sla-table .arch { color: #86efac; }
+
+  .dr-tower { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .dr-step { padding: 10px 18px; border-radius: 8px;
+    text-align: center; border: 1.5px solid; animation: cardIn .5s both; }
+  .dr-step.cold { width: 360px; border-color: #ef4444; background: rgba(239,68,68,.06); }
+  .dr-step.warm { width: 420px; border-color: #f59e0b; background: rgba(245,158,11,.08); animation-delay: .1s; }
+  .dr-step.hot { width: 480px; border-color: #6e3aff; background: rgba(110,58,255,.08); animation-delay: .2s; }
+  .dr-step.cross { width: 540px; border-color: #2b5cff; background: rgba(43,92,255,.08); animation-delay: .3s; }
+  .dr-step.multi { width: 600px; border-color: #22c55e; background: rgba(34,197,94,.08); animation-delay: .4s; }
+  .dr-step .lbl { font-size: 13px; font-weight: 700; color: #fff; }
+  .dr-step .rpo { font-size: 11.5px; color: #cbd5e1; margin-top: 3px; font-family: monospace; }
+
+  .tco-table { width: 800px; max-width: 96vw; border-collapse: collapse;
+    background: rgba(255,255,255,.03); border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.1); }
+  .tco-table th, .tco-table td { padding: 9px 12px; font-size: 12.5px; text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,.08); }
+  .tco-table th { background: rgba(110,58,255,.18); color: #c4b5fd; font-size: 11px; }
+  .tco-table .total { background: rgba(34,197,94,.1); color: #86efac; font-weight: 700; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 16, title: 'Day 16 · 解决方案设计与 TCO/ROI', intro: '14 分钟 · 架构图三层 + 4+1 视图 + SLA/RPO/RTO + TCO 实操 + 价值架构图心法' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 16 · 解决方案设计与 TCO/ROI',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>架构图三层 + 4+1 视图 + SLA/RPO/RTO + 灾备 + TCO/ROI</b><br>14 分钟 + 2 互动 + 2 客户对话 + "价值架构图"心法',
+    visual: '<div class="cover-icon">📐</div>',
+    voice: '欢迎来到 Day 16 解决方案设计与 TCO/ROI。Day 15 讲了如何挖客户痛点今天讲怎么把痛点变成方案。14 分钟讲透架构图三层、4+1 视图、SLA/RPO/RTO、灾备等级、TCO 实操、ROI 计算，加 2 个客户对话和"价值架构图"杀招。',
+    fallbackDuration: 23000 },
+
+  { chapter: '第 1 章 · 架构图', title: '一图三层 · 业务 / 技术 / 部署',
+    visual: `<div class="arch-3">
+      <div class="ar-card biz">
+        <h5>📋 业务架构</h5>
+        <p>用户/订单/营销/风控<br><b>面向业务方</b><br>"系统能做什么"</p>
+      </div>
+      <div class="ar-card tech">
+        <h5>⚙️ 技术架构</h5>
+        <p>CDN → ALB → ECS → DB<br><b>面向技术方</b><br>"怎么实现"</p>
+      </div>
+      <div class="ar-card dep">
+        <h5>🌐 部署架构</h5>
+        <p>VPC / AZ / Region<br><b>面向运维</b><br>"在哪里跑"</p>
+      </div>
+    </div>`,
+    voice: '架构图三层是售前的"标配"。业务架构画客户业务模块用户订单营销风控面向业务方讲"系统能做什么"。技术架构画云产品加组件 CDN ALB ECS DB 面向技术方讲"怎么实现"。部署架构画资源拓扑 VPC AZ Region 分布面向运维讲"在哪里跑"。<b>同一份方案 3 张图分别讲</b>避免对每个人都讲一种这是售前段位的体现。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 2 章 · 4+1 视图', title: '架构师必背 · 5 个视图',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(5,1fr);font-size:10.5px;">
+      <div class="col-card"><div class="num">🧩</div><h5>逻辑</h5><p>最终用户<br>UML 类图/组件</p></div>
+      <div class="col-card"><div class="num">💻</div><h5>开发</h5><p>开发人员<br>代码/构建/依赖</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>进程</h5><p>系统集成人员<br>运行时进程/并发</p></div>
+      <div class="col-card"><div class="num">🖥️</div><h5>物理</h5><p>系统工程师<br>硬件部署/网络</p></div>
+      <div class="col-card"><div class="num">🎬</div><h5>场景 +1 ★</h5><p>所有人<br>关键用例串起 4 个</p></div>
+    </div>`,
+    voice: '4+1 视图是架构师必背的 Kruchten 经典模型。逻辑视图面向最终用户描述系统功能模块及其关系 UML 类图组件图。开发视图面向开发人员描述代码组织构建第三方依赖。进程视图面向系统集成人员描述运行时进程并发通信。物理视图面向系统工程师描述硬件部署网络拓扑。<b>场景视图是"+1"</b>面向所有人用关键用例串起其他四个视图是架构合理性的"试金石"。售前面试问"4+1 视图"必答这 5 个。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 3 章 · SLA / RPO / RTO', title: '三大可用性指标',
+    visual: `<table class="sla-table">
+      <thead><tr><th>SLA</th><th>年不可用</th><th>对应架构</th><th>典型客户</th></tr></thead>
+      <tbody>
+        <tr><td class="sla">99.9%</td><td>8.7 小时</td><td class="arch">单 AZ</td><td>小型业务</td></tr>
+        <tr><td class="sla">99.95%</td><td>4.4 小时</td><td class="arch">跨 AZ</td><td>互联网业务 ★</td></tr>
+        <tr><td class="sla">99.99%</td><td>52 分钟</td><td class="arch">多 region 异地</td><td>金融核心</td></tr>
+        <tr><td class="sla">99.999%</td><td>5 分钟</td><td class="arch">多活</td><td>支付/通信 顶级</td></tr>
+      </tbody>
+    </table>`,
+    voice: 'SLA 服务等级协议常见 4 档。99.9% 年 8.7 小时不可用对应单 AZ 架构适合小型业务。99.95% 年 4.4 小时跨 AZ 是互联网业务的"性价比甜点"。99.99% 年 52 分钟多 region 异地金融核心系统。99.999% 年 5 分钟多活支付通信顶级要求。<b>SLA 越高成本指数级提升每多一个 9 大约成本翻 10 倍</b>。售前不要给客户报 99.999%——99.95% 跨 2 AZ 是大多数业务的最佳点。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 3 章 · RPO / RTO', title: '能丢多少 + 多久恢复',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>📉 RPO Recovery Point</h4>
+        <p><span class="tag">秒级</span>同步复制</p>
+        <p><span class="tag">分钟</span>异步复制</p>
+        <p><span class="tag">小时</span>每日备份</p>
+        <p><span class="tag">含义</span>能容忍丢多少数据</p>
+      </div>
+      <div class="acl-box">
+        <h4>⏱️ RTO Recovery Time</h4>
+        <p><span class="tag">分钟</span>自动切换</p>
+        <p><span class="tag">小时</span>人工切换</p>
+        <p><span class="tag">天</span>重建</p>
+        <p><span class="tag">含义</span>故障到恢复多久</p>
+      </div>
+    </div>`,
+    voice: 'RPO 恢复点目标和 RTO 恢复时间目标必须分清。RPO 能容忍丢多少数据——秒级同步复制、分钟级异步、小时级每日备份。RTO 故障到恢复需要多久——分钟级自动切换、小时级人工切换、天级重建。售前给客户做方案要主动问"您能接受丢多少数据多久恢复"——这两个数字决定灾备等级。',
+    fallbackDuration: 23000 },
+
+  { chapter: '第 4 章 · 灾备', title: '5 级灾备 · 从冷备到异地多活',
+    visual: `<div class="dr-tower">
+      <div class="dr-step cold">
+        <div class="lbl">冷备</div>
+        <div class="rpo">RPO 小时-天 · RTO 数小时 · 最便宜</div>
+      </div>
+      <div class="dr-step warm">
+        <div class="lbl">温备</div>
+        <div class="rpo">RPO 分钟 · RTO 半小时-小时</div>
+      </div>
+      <div class="dr-step hot">
+        <div class="lbl">热备 / 同城双活</div>
+        <div class="rpo">RPO=0 · RTO 分钟级 · 金融常用</div>
+      </div>
+      <div class="dr-step cross">
+        <div class="lbl">两地三中心</div>
+        <div class="rpo">同城两个 + 异地一个 · 银行监管直接要求</div>
+      </div>
+      <div class="dr-step multi">
+        <div class="lbl">异地多活 ★</div>
+        <div class="rpo">多 region 同时承载流量 · 阿里字节亿级才有</div>
+      </div>
+    </div>`,
+    voice: '灾备 5 级从低到高。冷备备份数据存异地故障时手工恢复 RPO 小时到天 RTO 数小时最便宜。温备异地有低规格资源待启动 RPO 分钟 RTO 半小时到小时。热备或同城双活同城两机房双活流量自动切换 RPO=0 RTO 分钟级金融常用。两地三中心同城两个加异地一个 2010 后银行业标配监管直接要求。<b>异地多活</b>多 region 同时承载流量最高级阿里字节这类亿级互联网才有。售前给金融客户必带"两地三中心"——这是监管硬性要求绕不开。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 5 章 · 高可用 4 原则', title: '消除单点 + 熔断 + 限流 + 混沌',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🔁</div><h5>消除单点</h5><p>关键组件 N+1<br>LB/DB/缓存/MQ 多副本</p></div>
+      <div class="col-card"><div class="num">🚧</div><h5>熔断降级</h5><p>依赖故障自动断<br>Sentinel/Hystrix<br>避免雪崩</p></div>
+      <div class="col-card"><div class="num">🚰</div><h5>限流</h5><p>保护核心服务<br>令牌桶/漏桶<br>按 QPS/并发</p></div>
+      <div class="col-card"><div class="num">🐒</div><h5>混沌工程</h5><p>主动注入故障<br>Pod kill → AZ 断电</p></div>
+    </div>`,
+    voice: '高可用 4 原则。一消除单点关键组件至少 N+1 NLB SLB 数据库主从缓存 Cluster 消息队列 3 副本。二熔断降级依赖故障时自动断开加返回兜底数据避免雪崩 Sentinel 和 Hystrix 常用。三限流保护核心服务不被打挂按 QPS 或并发数常用算法令牌桶漏桶。四混沌工程主动注入故障验证韧性从单 Pod kill 到整 AZ 断电演练。这 4 个原则是售前对客户讲高可用方案的标配——4 件套全配才叫"真高可用"。',
+    fallbackDuration: 26000 },
+
+  { chapter: '🎯 互动测验 #1', title: '金融客户 99.99% SLA · 架构怎么选？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某银行核心交易系统要求 99.99% SLA、RPO=0、RTO &lt; 5 分钟。最合适架构？</div>
+      <div class="quiz-opt wrong" data-k="A">单 AZ + 冷备（成本最低）</div>
+      <div class="quiz-opt wrong" data-k="B">跨 AZ + 异步复制（性价比）</div>
+      <div class="quiz-opt correct" data-k="C">两地三中心 + 同城双活 + 异地异步复制</div>
+      <div class="quiz-opt wrong" data-k="D">异地多活（过度设计）</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：金融核心 99.99% + RPO=0 + RTO < 5min<b>必选两地三中心</b>。架构组成：① <b>同城双活</b>两个机房同时承载流量 RPO=0 RTO 秒级；② <b>异地异步复制</b>到第三个机房做灾备 RPO 分钟级；③ <b>跨 AZ 高可用组件</b>每层都 N+1。<b>异地多活</b>(D) 是亿级互联网才需要的过度设计 + 成本翻 3 倍 + 复杂度爆炸。<b>跨 AZ + 异步</b>(B) RTO 半小时-小时不达标。<b>两地三中心是银行监管硬性要求 + SLA 99.99% 的标准答案</b>。</div>
+    </div>`,
+    voice: '思考一下。金融 99.99% SLA + RPO=0 + RTO 5 分钟怎么选？给你 5 秒......正确答案 C 两地三中心加同城双活加异地异步复制。金融核心 99.99% 加 RPO=0 必选两地三中心。架构组成：同城双活两机房同时承载流量 RPO=0 RTO 秒级；异地异步复制到第三机房 RPO 分钟级；跨 AZ 高可用组件每层 N+1。异地多活是亿级互联网才需要过度设计成本翻 3 倍。跨 AZ 加异步 RTO 不达标。两地三中心是银行监管硬性要求加 99.99% 的标准答案。',
+    fallbackDuration: 29000 },
+
+  { chapter: '第 6 章 · TCO 实战', title: 'Excel 模板 · 5 大科目 × 3 年',
+    visual: `<table class="tco-table">
+      <thead><tr><th>科目</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>3 年累计</th></tr></thead>
+      <tbody>
+        <tr><td>计算（ECS 包月 + 按量）</td><td>120 万</td><td>110 万</td><td>105 万</td><td>335 万</td></tr>
+        <tr><td>存储（TOS Standard/IA/Archive）</td><td>30 万</td><td>40 万</td><td>50 万</td><td>120 万</td></tr>
+        <tr><td>网络（带宽 + 流量）</td><td>80 万</td><td>85 万</td><td>90 万</td><td>255 万</td></tr>
+        <tr><td>DB + 备份</td><td>60 万</td><td>55 万</td><td>50 万</td><td>165 万</td></tr>
+        <tr><td>安全 + 监控</td><td>20 万</td><td>20 万</td><td>20 万</td><td>60 万</td></tr>
+        <tr class="total"><td><b>云上 3 年 TCO</b></td><td>310 万</td><td>310 万</td><td>315 万</td><td><b>935 万</b></td></tr>
+        <tr><td>对比 IDC 3 年 TCO</td><td>500 万</td><td>510 万</td><td>520 万</td><td>1530 万</td></tr>
+        <tr class="total"><td><b>净节省</b></td><td colspan="3">5 年累加 595 万</td><td><b>-39%</b></td></tr>
+      </tbody>
+    </table>`,
+    voice: '看一个典型 TCO Excel 模板。5 大科目计算存储网络数据库安全乘以 3 年矩阵。这个客户云上 3 年累计 935 万对比 IDC 3 年 1530 万净省 595 万降 39%。<b>常见错误</b>只算云端不算迁移人力、忽略培训成本、预测刊例价不打折。售前做 TCO 必须 5 年视角 Right-sizing 假设按真实利用率重新建模——IDC 通常超配 2-3 倍。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 7 章 · ROI 计算', title: '收益 3 段 · 公式 + 财务化',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">💰</div><h5>① 直接降本</h5><p>IT 支出↓<br>硬件折旧/许可/人力</p></div>
+      <div class="col-card"><div class="num">📈</div><h5>② 业务增收</h5><p>弹性带来更多营收<br>常被忽略的大头</p></div>
+      <div class="col-card"><div class="num">🛡️</div><h5>③ 风险下降</h5><p>停机损失↓<br>合规罚款↓</p></div>
+    </div>`,
+    voice: 'ROI 公式 = 收益 - 投入 / 投入 × 100%。投资回收期 = 投入 / 年净收益。<b>收益侧三段</b>。一直接降本 IT 支出降低硬件折旧加许可加人力。二业务增收弹性带来更多营收常被忽略的大头。三风险下降停机损失和合规罚款减少。<b>财务化语言</b>净现值 NPV、内部收益率 IRR 是高层喜欢看的财务模型售前最好懂一点。<b>时间维度通常给 3 年视图</b>第 1 年成本高迁移投入第 2-3 年收益体现。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 8 章 · 方案产出物', title: '售前 5 大产出 · 缺一不可',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">📊</div><h5>方案 PPT</h5><p>15-30 页<br>痛点→方案→架构→案例→ROI→实施→报价</p></div>
+      <div class="col-card"><div class="num">🏗️</div><h5>架构图</h5><p>draw.io/Visio/PPT<br>火山官方图标库</p></div>
+      <div class="col-card"><div class="num">💼</div><h5>BOQ 报价</h5><p>Bill of Quantities<br>资源清单 + 单价 + 总价</p></div>
+      <div class="col-card"><div class="num">📅</div><h5>实施计划</h5><p>里程碑 + 资源 + 风险<br>甘特图 / 交付承诺基准</p></div>
+      <div class="col-card"><div class="num">📚</div><h5>案例集</h5><p>同行业/同规模/同问题<br>最值钱的"知识库"</p></div>
+      <div class="col-card"><div class="num">💎</div><h5>记忆口诀</h5><p><b>PPT + 图 + 报价</b><br><b>+ 计划 + 案例</b></p></div>
+    </div>`,
+    voice: '售前 5 大产出物缺一不可。方案 PPT 15-30 页结构客户痛点到方案到架构图到案例到 ROI 到实施计划到商务报价。架构图 draw.io Visio PPT 标准图标库火山引擎官方有。BOQ 报价 Bill of Quantities 资源清单加单价加数量加总价通常 Excel。实施计划里程碑加资源加风险甘特图常用交给交付时是承诺基准。案例集同行业同规模同问题售前最值钱的"知识库"。记忆口诀 PPT 加图加报价加计划加案例。',
+    fallbackDuration: 28000 },
+
+  { chapter: '💎 第 9 章 · 价值架构图', title: '杀招 · 让高层 30 秒看懂',
+    visual: `<div style="display:grid;grid-template-columns:1fr auto 1fr;gap:14px;width:880px;max-width:96vw;align-items:stretch;">
+      <div style="padding:16px;border-radius:10px;background:rgba(239,68,68,.08);border:1.5px solid #ef4444;text-align:left;">
+        <h5 style="color:#fca5a5;font-size:14px;">😤 客户 3 大痛点</h5>
+        <p style="font-size:12px;color:#cbd5e1;line-height:1.7;margin-top:8px;">· 报表延迟 T+1<br>· 大促手工扩容 6 月<br>· 海外用户加载 8s</p>
+        <div style="font-size:11px;color:#fde68a;margin-top:8px;border-top:1px dashed rgba(255,255,255,.15);padding-top:8px;">每月损失 <b>~200 万</b></div>
+      </div>
+      <div style="font-size:24px;color:#a5b4fc;align-self:center;font-weight:800;">→</div>
+      <div style="padding:16px;border-radius:10px;background:rgba(34,197,94,.08);border:1.5px solid #22c55e;text-align:left;">
+        <h5 style="color:#86efac;font-size:14px;">📊 3 个量化收益</h5>
+        <p style="font-size:12px;color:#cbd5e1;line-height:1.7;margin-top:8px;">· 报表秒级 (BMQ+ByteHouse)<br>· 大促分钟扩容 (VKE)<br>· 海外 1.2s (Anycast+DCDN)</p>
+        <div style="font-size:11px;color:#fde68a;margin-top:8px;border-top:1px dashed rgba(255,255,255,.15);padding-top:8px;">年收益 <b>~2400 万</b></div>
+      </div>
+    </div>`,
+    voice: '方案设计的"杀招"是一张能让客户高层 30 秒看懂的"价值架构图"——左边写客户的 3 个核心痛点带数字；中间画云上架构不超过 10 个产品图标；右边写 3 个量化收益成本降 X% 业务提速 Y 倍合规过审。<b>这张图比 50 页方案 PPT 更能打动决策人</b>。看这个例子：左边客户 3 痛点带"每月损失 200 万"，右边 3 收益带"年收益 2400 万"。CEO 看 30 秒就能拍板。这张图是高级 SE 和初级 SE 的本质差异。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🎯 互动测验 #2', title: '客户问"3 年能省多少？" · 怎么答？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户问"上云 3 年能省多少？"。最佳回答？</div>
+      <div class="quiz-opt wrong" data-k="A">"行业平均省 30-50%"</div>
+      <div class="quiz-opt wrong" data-k="B">"我们这套方案省 47.3%"（具体到小数）</div>
+      <div class="quiz-opt correct" data-k="C">"我用您 30 天监控数据建 TCO 模型，5 天出含 3 段收益的完整 ROI 报告"</div>
+      <div class="quiz-opt wrong" data-k="D">"刊例价对比 IDC，每年省 200 万"</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：高级售前回答"省多少"的标准动作。<b>A</b> 行业平均 = 客户不信你不懂他业务；<b>B</b> 具体到小数 = 假精度让人怀疑数据来源；<b>D</b> 刊例价对比 = 没算折扣实际不准。<b>正确做法</b>：① 拿客户 30 天真实监控数据；② 5 天建 TCO 模型；③ 含<b>"直接降本+业务增收+风险下降"3 段收益</b>；④ 输出含 NPV/IRR 的财务模型。<b>"我用您数据算"</b>这 6 字让 CFO 立刻信。这是 Day 16 的关键心法。</div>
+    </div>`,
+    voice: '思考一下。客户问 3 年能省多少怎么答？给你 5 秒......正确答案 C 用客户 30 天监控数据建 TCO 模型 5 天出含 3 段收益的完整 ROI 报告。A 行业平均客户不信你不懂他业务。B 具体到小数假精度让人怀疑数据来源。D 刊例价对比没算折扣不准。正确做法：拿客户 30 天真实监控数据；5 天建 TCO 模型；含"直接降本+业务增收+风险下降"3 段收益；输出含 NPV IRR 的财务模型。"我用您数据算"这 6 字让 CFO 立刻信。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🌟 客户对话 #1', title: '"画完架构图客户没反应"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">同事</span>我画完技术架构图 30 个产品图标，客户 CIO 没反应也没问题就说"我们再研究下"。咋办？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型"<b>技术图给业务方看</b>"翻车。CIO 关心的不是 30 个图标是<b>业务价值</b>。3 步救：<b>① 重画"价值架构图"</b>左痛点中架构右收益；<b>② 数字驱动</b>每个箭头标"省 X% / 提速 Y 倍"；<b>③ 控制在 5 个产品图标内</b>多了 CIO 记不住。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">同事</span>那技术细节呢？CTO 还要看。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>分开。<b>给 CIO/CFO</b>价值架构图 1 页 + ROI 1 页。<b>给 CTO/架构师</b>技术架构图 + 4+1 视图 + 灾备方案。<b>给运维</b>部署架构图 + BOQ。<b>一图三层 / 分角色看</b>是 Day 16 的核心心法。</div>
+      </div>
+    </div>`,
+    voice: '一段经典对话。同事画完 30 图标 CIO 没反应。售前给 3 步救：重画"价值架构图"左痛点中架构右收益；数字驱动每个箭头标省 X% 提速 Y 倍；控制在 5 个产品图标内多了 CIO 记不住。同事问技术细节怎么办，售前甩"一图三层分角色看"：给 CIO/CFO 价值架构图加 ROI；给 CTO/架构师技术架构加 4+1 视图加灾备；给运维部署架构加 BOQ。<b>分角色看是 Day 16 的核心心法</b>。',
+    fallbackDuration: 33000 },
+
+  { chapter: '🌟 客户对话 #2', title: '"99.999% 我们要求绝对不能停"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们业务绝对不能停！要求 99.999% SLA！</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>理解您的诉求但需要算账。<b>99.999% 年停机 5 分钟</b>需要异地多活每多一个 9 成本翻 10 倍。<b>先反问</b>：贵司业务 1 小时停机损失多少钱？历史平均月停机几次？目标是<b>"匹配业务损失"</b>不是"最高 SLA"。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>历史平均月 1 次每次 2 小时损失 30 万。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>那目标 <b>99.95% 跨 2 AZ 年停 4.4h</b> 就够——损失 30 万/小时 × 4.4h = 13 万/年。<b>升级到 99.99% 多 region 多投入 80 万</b>多省 9 万损失<b>ROI 负数</b>。我建议 99.95% 性价比甜点。如果以后业务量增长 5 倍再升 99.99%。<b>"匹配业务损失"</b>比"听起来好"重要。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话客户要 99.999% SLA。售前不要应承先反问"业务 1 小时停机损失多少钱？历史平均月停几次？"客户说月 1 次每次 2 小时损失 30 万。售前算账：99.95% 跨 2 AZ 年停 4.4 小时损失 30 万乘 4.4 等于 13 万/年。升级 99.99% 多投入 80 万多省 9 万损失 ROI 负数。建议 99.95% 性价比甜点业务增长 5 倍再升。"匹配业务损失"比"听起来好"重要。这是 SLA 拍脑袋题的标准答法。',
+    fallbackDuration: 32000 },
+
+  { chapter: '案例', title: '🌟 价值架构图 · 让 CEO 30 秒签',
+    body: '<b>客户</b>：某零售连锁 CEO 看了 30 页 PPT 不签 → 副总要求加价值架构图<br><b>动作</b>：左 3 痛点（数据延迟/扩容慢/海外卡）+ 中 5 图标 + 右 3 收益（2400 万）<br><br>📅 CEO 30 秒看完拍板<br>💰 3 年合同 <b>1.8 亿</b><br>🎯 后续追单 <b>每年 +30%</b>',
+    visual: '<div style="font-size:64px;">💎</div>',
+    voice: '一个真实案例。某零售连锁 CEO 看 30 页技术 PPT 不签副总要求加一张价值架构图。售前重画：左边客户 3 大痛点带"每月损失 200 万"数字；中间云架构不超过 5 个产品图标；右边 3 个量化收益带"年收益 2400 万"。CEO 30 秒看完拍板 3 年合同 1.8 亿。后续追单每年加 30%。这就是价值架构图的力量。',
+    fallbackDuration: 24000 },
+
+  { chapter: '⚠️ 售前坑', title: '方案设计 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 方案设计常犯 3 个错</h4>
+      <div class="x-row"><b>架构图堆 30 个产品</b>：客户 CIO 没反应 → 你的方案 = 噪音</div>
+      <div class="x-row"><b>SLA 拍脑袋 99.999%</b>：成本翻 10 倍 ROI 负数 → 客户不签</div>
+      <div class="x-row"><b>TCO 用刊例价对比 IDC</b>：没算折扣不准 → 客户上线后被账单吓退</div>
+      <div class="ok-row">售前正确做法：<b>① 价值架构图 5 图标</b>分角色给不同图；<b>② SLA 匹配业务损失</b>不要最高；<b>③ TCO 用客户真实数据</b>5 天出含 3 段收益 ROI。</div>
+    </div>`,
+    voice: '方案设计 3 大坑。一架构图堆 30 个产品客户 CIO 没反应你的方案等于噪音。二 SLA 拍脑袋 99.999% 成本翻 10 倍 ROI 负数客户不签。三 TCO 用刊例价对比 IDC 没算折扣不准客户上线后被账单吓退。正确做法：价值架构图 5 图标分角色给不同图；SLA 匹配业务损失不要最高；TCO 用客户真实数据 5 天出含 3 段收益 ROI。',
+    fallbackDuration: 25000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 架构图三层？<span style="color:#a5b4fc"> → 业务/技术/部署 分角色看</span><br>
+      <b>Q2</b> 4+1 视图？<span style="color:#a5b4fc"> → 逻辑/开发/进程/物理 + 场景</span><br>
+      <b>Q3</b> SLA 4 档？<span style="color:#a5b4fc"> → 99.9/99.95/99.99/99.999% 单 AZ/跨 AZ/多 region/多活</span><br>
+      <b>Q4</b> RPO vs RTO？<span style="color:#a5b4fc"> → 丢多少数据 / 多久恢复</span><br>
+      <b>Q5</b> 灾备 5 级？<span style="color:#a5b4fc"> → 冷/温/热/两地三中心/异地多活</span><br>
+      <b>Q6</b> 高可用 4 原则？<span style="color:#a5b4fc"> → 消除单点/熔断/限流/混沌</span><br>
+      <b>Q7</b> ROI 3 段收益？<span style="color:#a5b4fc"> → 直接降本/业务增收/风险下降</span><br>
+      <b>Q8</b> 价值架构图心法？<span style="color:#a5b4fc"> → 左痛点中架构右收益让高层 30 秒看懂</span>
+    </div>`,
+    voice: '8 题速查。一架构图三层业务技术部署分角色看。二 4+1 视图逻辑开发进程物理加场景。三 SLA 4 档 99.9 99.95 99.99 99.999% 单 AZ 跨 AZ 多 region 多活。四 RPO 丢多少数据 RTO 多久恢复。五灾备 5 级冷温热两地三中心异地多活。六高可用 4 原则消除单点熔断限流混沌。七 ROI 3 段收益直接降本业务增收风险下降。八价值架构图心法左痛点中架构右收益让高层 30 秒看懂。',
+    fallbackDuration: 28000 },
+
+  { chapter: '完成', title: '🎉 Day 16 学完！',
+    eyebrow: '关键心法',
+    body: '<b>"一张价值架构图比 50 页 PPT 更能打动 CEO"</b><br>左边 3 痛点（带数字）<br>中间 5 图标（不超过）<br>右边 3 收益（量化）<br><span class="hl">这是高级 SE 和初级 SE 的本质差异</span>',
+    visual: '<div style="font-size:80px;">📐</div>',
+    voice: '恭喜 Day 16 学完。方案设计的杀招是价值架构图——左边 3 痛点带数字中间 5 图标不超过右边 3 收益量化。这张图比 50 页 PPT 更能打动 CEO 是高级 SE 和初级 SE 的本质差异。下一站 Day 17 演讲招投标你已经学过。',
+    fallbackDuration: 20000 },
+];
+</script>
+<script src="_player.js?v=25"></script>
+</body>
+</html>
