@@ -4,23 +4,203 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Day 2 · 云网络深度 · 互动教学视频</title>
-<link rel="stylesheet" href="_player.css?v=16">
+<link rel="stylesheet" href="_player.css?v=18">
+<style>
+  /* ===== Day 2 增强版专用样式 ===== */
+
+  /* 客户对话场景 */
+  .dlg-scene { width: 760px; max-width: 94vw; }
+  .dlg-row { display: flex; align-items: flex-start; gap: 10px; margin: 10px 0; }
+  .dlg-row.client { animation: dlgInL .55s both; }
+  .dlg-row.sales { flex-direction: row-reverse; animation: dlgInR .55s both; }
+  .dlg-row.client:nth-of-type(1) { animation-delay: .2s; }
+  .dlg-row.sales:nth-of-type(2) { animation-delay: .8s; }
+  .dlg-row.client:nth-of-type(3) { animation-delay: 1.5s; }
+  .dlg-row.sales:nth-of-type(4) { animation-delay: 2.1s; }
+  .dlg-row.client:nth-of-type(5) { animation-delay: 2.8s; }
+  .dlg-row.sales:nth-of-type(6) { animation-delay: 3.4s; }
+  .dlg-avatar { font-size: 24px; flex-shrink: 0; width: 44px; height: 44px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .dlg-row.client .dlg-avatar { background: rgba(43,92,255,.2); border: 1px solid #2b5cff; }
+  .dlg-row.sales .dlg-avatar { background: rgba(34,197,94,.2); border: 1px solid #22c55e; }
+  .dlg-bubble { padding: 10px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.65;
+    max-width: 580px; text-align: left; }
+  .dlg-row.client .dlg-bubble { background: rgba(43,92,255,.1); border: 1px solid rgba(43,92,255,.4);
+    border-top-left-radius: 4px; }
+  .dlg-row.sales .dlg-bubble { background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.4);
+    border-top-right-radius: 4px; }
+  .dlg-tag { display: inline-block; padding: 1px 7px; margin-right: 4px;
+    border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+  .dlg-row.client .dlg-tag { background: #2b5cff; color: #fff; }
+  .dlg-row.sales .dlg-tag { background: #22c55e; color: #0b1020; }
+  @keyframes dlgInL { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes dlgInR { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+
+  /* 互动测验卡 */
+  .quiz-card { width: 680px; max-width: 92vw; padding: 22px 26px;
+    background: rgba(245,158,11,.06); border: 2px solid #f59e0b;
+    border-radius: 14px; text-align: left;
+    box-shadow: 0 0 24px rgba(245,158,11,.2); }
+  .quiz-q { font-size: 17px; font-weight: 700; color: #fde68a;
+    margin-bottom: 16px; line-height: 1.55; }
+  .quiz-q::before { content: '🤔 思考一下：'; color: #f59e0b; }
+  .quiz-opt { padding: 11px 16px; margin: 8px 0;
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.15);
+    border-radius: 8px; font-size: 14.5px; color: #cbd5e1;
+    transition: all .6s; position: relative; }
+  .quiz-opt::before { content: attr(data-k) '. '; color: #7a8db5; font-weight: 700; margin-right: 4px; }
+  .quiz-opt.correct { animation: revealOk 1s ease 5s forwards; }
+  .quiz-opt.wrong { animation: revealNo 1s ease 5s forwards; }
+  @keyframes revealOk { to { background: rgba(34,197,94,.15); border-color: #22c55e; color: #86efac;
+    box-shadow: 0 0 14px rgba(34,197,94,.4); } }
+  @keyframes revealNo { to { background: rgba(239,68,68,.05); border-color: rgba(239,68,68,.3);
+    color: #6b7280; } }
+  .quiz-hint { margin-top: 14px; padding: 12px; background: rgba(34,197,94,.08);
+    border-left: 3px solid #22c55e; border-radius: 4px; font-size: 13px;
+    color: #cbd5e1; opacity: 0; animation: hintIn 1s ease 5.5s forwards; }
+  .quiz-hint b { color: #86efac; }
+  @keyframes hintIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* BGP 多线接入 */
+  .bgp-vis { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .bgp-center { padding: 14px 28px; background: linear-gradient(135deg, #2b5cff, #6e3aff);
+    border-radius: 14px; font-weight: 700; font-size: 17px;
+    box-shadow: 0 0 28px rgba(43,92,255,.6); animation: bgpCenter 3s ease-in-out infinite; }
+  @keyframes bgpCenter { 0%,100% { box-shadow: 0 0 28px rgba(43,92,255,.5); }
+    50% { box-shadow: 0 0 40px rgba(110,58,255,.85); } }
+  .bgp-spokes { width: 560px; height: 24px; position: relative; }
+  .bgp-spoke { position: absolute; top: 50%; left: 50%; width: 2px; height: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,.4), transparent);
+    transform-origin: top center; }
+  .bgp-isps { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .bgp-isp { padding: 10px 18px; border-radius: 10px; font-size: 13.5px;
+    background: rgba(255,255,255,.05); border: 1.5px solid;
+    animation: ispPulse 2.4s ease-in-out infinite; font-weight: 600; }
+  .bgp-isp.tel { border-color: #ec4899; color: #f9a8d4; }
+  .bgp-isp.cmcc { border-color: #f59e0b; color: #fde68a; animation-delay: .4s; }
+  .bgp-isp.uni { border-color: #22c55e; color: #86efac; animation-delay: .8s; }
+  .bgp-isp.edu { border-color: #6e3aff; color: #c4b5fd; animation-delay: 1.2s; }
+  .bgp-isp .small { display: block; font-size: 10.5px; opacity: .8; margin-top: 3px; font-weight: 400; }
+  @keyframes ispPulse {
+    0%,100% { box-shadow: none; transform: scale(1); }
+    50% { box-shadow: 0 0 14px currentColor; transform: scale(1.05); }
+  }
+
+  /* NAT 网关图 */
+  .nat-vis { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .nat-node { padding: 14px 18px; border-radius: 10px;
+    background: rgba(255,255,255,.04); border: 1.5px solid rgba(255,255,255,.2);
+    text-align: center; min-width: 110px; font-size: 12px; }
+  .nat-node.priv { border-color: #22c55e; background: rgba(34,197,94,.1); }
+  .nat-node.gw { border-color: #f59e0b; background: rgba(245,158,11,.12);
+    animation: natPulse 2.2s ease-in-out infinite; }
+  .nat-node.net { border-color: #ec4899; background: rgba(236,72,153,.1); }
+  @keyframes natPulse {
+    0%,100% { box-shadow: 0 0 0 rgba(245,158,11,.3); }
+    50% { box-shadow: 0 0 16px rgba(245,158,11,.7); }
+  }
+  .nat-node .ic { font-size: 26px; display: block; margin-bottom: 4px; }
+  .nat-node .ip { font-family: monospace; color: #a5b4fc; font-size: 11px; margin-top: 3px; }
+  .nat-arrow { color: #7a8db5; font-size: 22px; animation: arrowSlide 1.6s ease-in-out infinite; }
+  @keyframes arrowSlide { 0%,100% { transform: translateX(-3px); } 50% { transform: translateX(3px); } }
+
+  /* EIP 池 */
+  .eip-pool { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px;
+    width: 380px; padding: 14px; background: rgba(255,255,255,.04);
+    border-radius: 10px; border: 1px solid rgba(255,255,255,.1); }
+  .eip-cell { padding: 6px; background: rgba(245,158,11,.12); border: 1px solid #f59e0b;
+    border-radius: 5px; font-size: 9.5px; color: #fde68a; font-family: monospace;
+    text-align: center; animation: cardIn .5s both; }
+  .eip-cell.bound { background: linear-gradient(135deg, #2b5cff, #6e3aff);
+    border-color: #6e3aff; color: #fff; }
+  .eip-cell:nth-child(odd) { animation-delay: .15s; }
+  .eip-cell:nth-child(3n) { animation-delay: .3s; }
+
+  /* 厂商对比表 */
+  .cloud-table { width: 740px; max-width: 92vw; border-collapse: collapse;
+    background: rgba(255,255,255,.03); border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.1); }
+  .cloud-table th, .cloud-table td { padding: 10px 14px; font-size: 13px;
+    text-align: left; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .cloud-table th { background: rgba(43,92,255,.18); color: #a5b4fc;
+    font-weight: 700; font-size: 12px; letter-spacing: 1px; }
+  .cloud-table td:first-child { color: #cbd5e1; font-weight: 600; }
+  .cloud-table .ve { color: #fde68a; font-weight: 700; }
+  .cloud-table .hw { color: #fca5a5; }
+  .cloud-table .al { color: #a5b4fc; }
+  .cloud-table tr:hover td { background: rgba(255,255,255,.03); }
+
+  /* 故障案例 */
+  .incident-card { width: 720px; max-width: 92vw; padding: 22px 26px;
+    background: rgba(239,68,68,.06); border: 2px solid rgba(239,68,68,.5);
+    border-radius: 14px; text-align: left;
+    box-shadow: 0 0 28px rgba(239,68,68,.15); }
+  .incident-header { display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px; padding-bottom: 12px;
+    border-bottom: 1px dashed rgba(239,68,68,.4); }
+  .incident-header .badge-time { background: rgba(239,68,68,.25); color: #fca5a5;
+    padding: 4px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700;
+    letter-spacing: 1px; }
+  .incident-header h4 { font-size: 16px; color: #fca5a5; font-weight: 700; }
+  .incident-row { padding: 6px 0; font-size: 14px; color: #cbd5e1; line-height: 1.7; }
+  .incident-row b { color: #fca5a5; }
+  .incident-row.ok b { color: #86efac; }
+
+  /* 路由表 */
+  .route-table { width: 560px; max-width: 92vw; border-collapse: collapse;
+    font-family: 'Courier New', monospace; font-size: 13px;
+    background: rgba(255,255,255,.03); border-radius: 8px; overflow: hidden; }
+  .route-table th { background: rgba(110,58,255,.18); color: #c4b5fd;
+    padding: 9px 12px; text-align: left; font-size: 11px;
+    letter-spacing: 1px; font-weight: 700; }
+  .route-table td { padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,.06);
+    color: #cbd5e1; }
+  .route-table tr.h td { background: rgba(34,197,94,.08); color: #86efac; }
+  .route-table tr.dgw td { background: rgba(245,158,11,.06); color: #fde68a; }
+
+  /* 带宽计费图 */
+  .bw-vis { display: flex; gap: 14px; align-items: stretch; }
+  .bw-box { padding: 14px 18px; border-radius: 10px; border: 1.5px solid;
+    text-align: center; min-width: 160px; font-size: 13px; }
+  .bw-box.in { background: rgba(34,197,94,.08); border-color: #22c55e; color: #86efac; }
+  .bw-box.out { background: rgba(236,72,153,.1); border-color: #ec4899; color: #f9a8d4; }
+  .bw-box .lbl { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .bw-box .price { font-size: 18px; color: #fff; margin-top: 6px;
+    font-family: monospace; }
+  .bw-box small { font-size: 11px; color: #94a3b8; display: block; margin-top: 4px; }
+
+  /* 现代化无状态服务架构 */
+  .stateless-arch { display: flex; gap: 16px; align-items: center; }
+  .stateless-box { padding: 12px 18px; border-radius: 10px;
+    background: rgba(255,255,255,.05); border: 1.5px solid rgba(255,255,255,.2);
+    text-align: center; font-size: 13px; min-width: 100px; }
+  .stateless-box.lb { border-color: #6e3aff; background: rgba(110,58,255,.1); }
+  .stateless-box.svc { border-color: #2b5cff; background: rgba(43,92,255,.1);
+    animation: cardIn .5s both; }
+  .stateless-box.svc:nth-of-type(3) { animation-delay: .2s; }
+  .stateless-box.svc:nth-of-type(4) { animation-delay: .4s; }
+  .stateless-box.redis { border-color: #ef4444; background: rgba(239,68,68,.1); color: #fca5a5; }
+  .stateless-box .ic { font-size: 24px; display: block; margin-bottom: 3px; }
+</style>
 </head>
 <body>
 <script>
 window.META = {
   day: 2,
-  title: 'Day 2 · 云网络深度',
-  intro: '9 分钟讲透 VPC / CIDR / 安全组 / 负载均衡'
+  title: 'Day 2 · 云网络深度（增强版）',
+  intro: '14 分钟讲透 VPC / 子网 / NAT / EIP / 安全组 / LB / BGP / 混合云 / 真实案例'
 };
 window.SLIDES = [
-  { chapter: '开场', title: 'Day 2 · 云网络深度',
-    eyebrow: '火山引擎售前 · 互动视频课',
-    body: '<b>VPC / CIDR / 安全组 / 负载均衡</b><br>从 OSI 模型到混合云组网，一节课讲透',
-    visual: '<div class="cover-icon">🌐</div>',
-    voice: '欢迎来到 Day 2 云网络深度课。今天用 9 分钟，把 VPC、CIDR、安全组、负载均衡四大核心讲透。',
-    fallbackDuration: 8000 },
 
+  // ===== 开场 =====
+  { chapter: '开场', title: 'Day 2 · 云网络深度',
+    eyebrow: '火山引擎售前 · 互动视频课（增强版）',
+    body: '<b>VPC / 子网 / NAT / EIP / 安全组 / LB / BGP / 混合云</b><br>从协议基础到真实客户对话，14 分钟讲透云网络',
+    visual: '<div class="cover-icon">🌐</div>',
+    voice: '欢迎来到 Day 2 云网络深度课的增强版。今天用 14 分钟，从协议基础到 VPC 拓扑、安全组、负载均衡，再到 BGP 多线、混合云组网。中间会插入两道互动测验和三个真实客户对话，最后还有一个千万级故障案例。售前面试要的就是这一套。',
+    fallbackDuration: 18000 },
+
+  // ===== 第 1 章 网络协议基础 =====
   { chapter: '第 1 章 · 网络协议基础', title: '协议分层：OSI vs TCP/IP',
     body: '理论分 7 层（OSI），实际只用 4 层（TCP/IP）。<br>售前要记住 <span class="hl">L4 = TCP/UDP</span>，<span class="hl">L7 = HTTP</span>。',
     visual: `<div class="osi-table">
@@ -42,26 +222,41 @@ window.SLIDES = [
         <div class="layer">网络接口</div>
       </div>
     </div>`,
-    voice: 'OSI 把网络通信分七层，是教科书理论。实际工程只用 TCP/IP 四层。售前最常打交道的是 L4 传输层，对应 NLB 负载均衡。和 L7 应用层，对应 ALB 和 WAF。这两个数字必须记住。',
-    fallbackDuration: 14000 },
+    voice: 'OSI 把网络通信分七层，是教科书理论。实际工程只用 TCP/IP 四层。售前最常打交道的是 L4 传输层，对应 NLB 负载均衡。和 L7 应用层，对应 ALB 和 WAF。这两个数字必须记住，客户技术对话至少 30 次会用到。',
+    fallbackDuration: 15000 },
 
-  { chapter: '第 1 章 · 网络协议基础', title: 'IPv4 地址：32 位 ≈ 43 亿',
-    body: '<b>IPv4 = 32 bit</b>，理论 43 亿地址。<br>但 NAT、私网、保留段全部吃掉，<span class="hl">公网 IPv4 早已枯竭 8 年</span>。未来必须用 <b>IPv6（128 bit）</b>。',
-    visual: '<div class="ip-vis"><span class="seg">192</span>.<span class="seg">168</span>.<span class="seg">1</span>.<span class="seg">1</span></div><div style="font-size:14px;color:#7a8db5;margin-top:10px;">每段 0-255 即 8 位 → 4 段 = 32 位</div>',
-    voice: '一个 IPv4 地址是 32 位，理论上有 43 亿个。但被 NAT、私网保留段吃掉一大半，公网 IP 已经枯竭整整 8 年了。未来必须迁到 IPv6，128 位的地址几乎用不完。',
-    fallbackDuration: 11000 },
+  { chapter: '第 1 章 · 网络协议基础', title: 'IPv4 vs IPv6 · 8 年前就该迁了',
+    body: '<b>IPv4 = 32 bit ≈ 43 亿</b>，2011 年起公网 IP 已被分完<br><b>IPv6 = 128 bit ≈ 3.4×10³⁸</b>，可以给地球上每粒沙都发一个 IP<br><span class="hl">国家"IPv6 + 5G"双轮驱动，2026 年新业务必须双栈</span>',
+    visual: '<div class="ip-vis"><span class="seg">192</span>.<span class="seg">168</span>.<span class="seg">1</span>.<span class="seg">1</span></div><div style="font-size:13px;color:#7a8db5;margin-top:10px;text-align:center;">IPv4 · 4 段 × 8 位<br><br><span style="font-family:monospace;font-size:14px;color:#a5b4fc;">2001:0db8:85a3:0000:0000:8a2e:0370:7334</span><br>IPv6 · 8 段 × 16 位（地址多到用不完）</div>',
+    voice: 'IPv4 地址是 32 位，理论 43 亿个，2011 年起公网 IP 全球已经分完。NAT、私网、保留段又吃掉一半。IPv6 是 128 位，地址多到可以给地球上每一粒沙都发一个。国家"IPv6 加 5G"双轮驱动战略下，2026 年所有新业务系统必须 IPv4 IPv6 双栈。售前讲方案时记得提合规价值。',
+    fallbackDuration: 18000 },
 
   { chapter: '第 1 章 · 网络协议基础', title: 'CIDR：定义子网大小的关键',
-    body: '<b>10.0.0.0/16</b> 是什么意思？<br>前 16 位是网络号 → <span class="hl">65536 个 IP</span><br>VPC 规划必须先想好 CIDR，事后改成本极高',
+    body: '<b>10.0.0.0/16</b> 是什么意思？<br>前 16 位是网络号 → <span class="hl">65536 个 IP</span><br><b>/24 = 256 个</b>·<b>/22 = 1024 个</b>·<b>/16 = 65536 个</b>',
     visual: `<div class="cidr-split">
       <span class="chunk">10.0.0.0/16</span>
       <div class="arrow">▼ 切分</div>
-      <span class="chunk">10.0.1.0/24（业务 A）</span>
-      <span class="chunk">10.0.2.0/24（业务 B）</span>
+      <span class="chunk">10.0.1.0/24（Web 业务）</span>
+      <span class="chunk">10.0.2.0/24（App 业务）</span>
+      <span class="chunk">10.0.3.0/24（DB 业务）</span>
     </div>`,
-    voice: 'CIDR 这个东西看起来吓人，其实就一句话：斜杠后面的数字越小，IP 就越多。一个 /16 网段有 65536 个 IP，足够大公司用了。VPC 规划必须先想好 CIDR，事后改成本极高。',
-    fallbackDuration: 13000 },
+    voice: 'CIDR 这个东西看起来吓人，其实就一句话：斜杠后面的数字越小，IP 就越多。/16 有 65536 个，/22 有 1024 个，/24 有 256 个。记住这三个常用规格，配 VPC 子网时心里就有底。VPC 规划必须先想好 CIDR，事后改成本极高，因为要改 ECS 路由、改安全组、改 LB 全部重做。',
+    fallbackDuration: 16000 },
 
+  // ===== 互动测验 #1 =====
+  { chapter: '🎯 互动测验 #1', title: '客户给了你 /24 子网，能放几台 ECS？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">VPC 子网 <b>10.0.1.0/24</b> 实际可分配给 ECS 的私网 IP 数？</div>
+      <div class="quiz-opt wrong" data-k="A">256 台（看起来 8 位嘛）</div>
+      <div class="quiz-opt wrong" data-k="B">128 台</div>
+      <div class="quiz-opt correct" data-k="C">251 台（保留 5 个系统地址）</div>
+      <div class="quiz-opt wrong" data-k="D">254 台（传统机房算法）</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：/24 共 256 个，云厂商保留 5 个特殊地址（网段地址、网关、DHCP、保留、广播），所以实际可用 <b>251 台</b>。传统机房只保留 2 个所以是 254，云上要扣多 3 个。这种"差 3 个"题面试常考。</div>
+    </div>`,
+    voice: '思考一下。VPC 子网 10.0.1.0/24 实际能分配给 ECS 的 IP 是多少？给你 5 秒......正确答案是 C，251 台。/24 共 256 个 IP，云厂商比传统机房多保留 3 个系统地址，所以实际可用 251 个。如果你答了 254，那是传统机房算法。这个差 3 个的细节，面试常考。',
+    fallbackDuration: 18000 },
+
+  // ===== 第 2 章 VPC =====
   { chapter: '第 2 章 · VPC 专有网络', title: 'VPC = 你在云上的私有机房',
     body: '<b>Virtual Private Cloud</b><br>每个客户在云上有自己的逻辑隔离网络空间。<br>独立 CIDR · 独立路由 · 独立 ACL · 默认 VPC 之间不可达',
     visual: `<div class="vpc-topo">
@@ -85,16 +280,63 @@ window.SLIDES = [
           <span class="ecs"></span></div>
       </div>
     </div>`,
-    voice: 'VPC 就是你在云上的私有机房。每个 VPC 是逻辑隔离的网络空间，独立 CIDR、独立路由表、独立 ACL。看这张图：一个 VPC 里有两个可用区，A 和 B。每个可用区里有 Web、App、DB 三层子网。粉色方块就是 ECS 虚拟机，正在跑业务。生产环境必须跨可用区部署，单个机房断电也不影响业务。',
-    fallbackDuration: 17000 },
+    voice: 'VPC 就是你在云上的私有机房。每个 VPC 是逻辑隔离的网络空间，独立 CIDR、独立路由表、独立 ACL。看这张图：一个 VPC 里有两个可用区 A 和 B。每个可用区里有 Web、App、DB 三层子网。粉色方块就是 ECS 虚拟机，正在跑业务。生产环境必须跨可用区部署，单个机房断电也不影响业务。',
+    fallbackDuration: 18000 },
 
   { chapter: '第 2 章 · VPC 专有网络', title: 'CIDR 规划三原则',
     body: '<b>1. 预留 50% 给未来</b> · 现在用 1000 IP，规划 2000 IP 网段<br><b>2. 避免和 IDC 冲突</b> · 192.168.x.0/24 是家用路由器常用，禁用<br><b>3. 每个 AZ 一个独立 /22</b> · 1024 IP，未来扩容不抓瞎',
     visual: '<div style="font-family:monospace;font-size:18px;line-height:2;color:#cdd5e0;">主 VPC：<span style="color:#a5b4fc">10.0.0.0/16</span> · 65536 IP<br>分支 VPC：<span style="color:#a5b4fc">172.16.0.0/12</span><br>禁用：<span style="color:#ec4899">192.168.x.x</span> ← 家用路由器占用</div>',
     voice: 'CIDR 规划记住三个原则：第一，预留 50% 给未来扩容，现在用 1000 个 IP 就规划 2000 个。第二，绝对不要用 192.168 网段，那是家用路由器常用的，会和客户 IDC 网络冲突。第三，给每个可用区一个独立的 /22 大网段，1024 个 IP，未来扩容不抓瞎。',
-    fallbackDuration: 14000 },
+    fallbackDuration: 16000 },
 
-  { chapter: '第 3 章 · 安全组 vs ACL', title: '云上"两道防火墙"',
+  { chapter: '第 2 章 · 子网与路由', title: '公有子网 vs 私有子网 · 看路由表',
+    body: '区别<b>不在子网本身</b>，而在路由表是否有"默认路由指向网关"',
+    visual: `<table class="route-table">
+      <thead><tr><th>目的网段</th><th>下一跳</th><th>类型</th></tr></thead>
+      <tbody>
+        <tr><td>10.0.0.0/16</td><td>local（同 VPC）</td><td>系统</td></tr>
+        <tr class="h"><td>0.0.0.0/0</td><td>igw-公网网关</td><td>★ 公有子网</td></tr>
+        <tr class="dgw"><td>0.0.0.0/0</td><td>nat-NAT 网关</td><td>★ 私有子网（出网用）</td></tr>
+        <tr><td>(无 0.0.0.0/0 条目)</td><td>—</td><td>★ 严格私有子网</td></tr>
+      </tbody>
+    </table>`,
+    voice: '公有子网和私有子网本质上没有任何不同，区别只在路由表。如果路由表里有 0.0.0.0/0 指向公网网关 IGW，这个子网就是公有的，ECS 可以双向连公网。如果指向 NAT 网关，那是私有子网，ECS 能出网但收不到主动连接。如果两条都没有，那是严格私有子网，只能内网通信，DB 层必选这种。',
+    fallbackDuration: 19000 },
+
+  // ===== 第 3 章 EIP & NAT =====
+  { chapter: '第 3 章 · 公网接入', title: 'EIP · 弹性公网 IP',
+    body: '一个可以随时绑/解绑到 ECS 的公网 IP，<b>不绑也照收 ¥0.02/小时占用费</b><br><span class="hl">绑定后该 ECS 即拥有双向公网通信能力</span>',
+    visual: `<div class="eip-pool">
+      <div class="eip-cell">39.107.x.x</div>
+      <div class="eip-cell bound">绑 ecs-web1</div>
+      <div class="eip-cell bound">绑 ecs-web2</div>
+      <div class="eip-cell">39.107.x.x</div>
+      <div class="eip-cell">39.107.x.x</div>
+      <div class="eip-cell bound">绑 nat-gw</div>
+      <div class="eip-cell">39.107.x.x</div>
+      <div class="eip-cell">39.107.x.x</div>
+      <div class="eip-cell bound">绑 alb-prod</div>
+      <div class="eip-cell">39.107.x.x</div>
+      <div class="eip-cell">39.107.x.x</div>
+      <div class="eip-cell">39.107.x.x</div>
+    </div>`,
+    voice: 'EIP 弹性公网 IP 是一个可以随时绑解的公网地址。买下就归你，不绑 ECS 也照收占用费 2 分钱一小时，因为公网 IP 是稀缺资源。绑到 ECS 后该机器就拥有双向公网通信能力。客户做主备切换时，把 EIP 从主机解绑再绑到备机，秒级业务恢复，DNS 都不用改。这是云比传统机房高级的关键点。',
+    fallbackDuration: 19000 },
+
+  { chapter: '第 3 章 · 公网接入', title: 'NAT 网关 · 让私有子网"出得去"',
+    body: '<b>SNAT</b>：把私网源 IP 替换成公网 IP（出网用）<br><b>DNAT</b>：把公网端口转发到内网（端口映射）',
+    visual: `<div class="nat-vis">
+      <div class="nat-node priv"><span class="ic">🖥️</span>私有 ECS<br><span class="ip">10.0.3.5</span></div>
+      <span class="nat-arrow">→</span>
+      <div class="nat-node gw"><span class="ic">🔁</span>NAT 网关<br><span class="ip">EIP 39.107.x.x</span></div>
+      <span class="nat-arrow">→</span>
+      <div class="nat-node net"><span class="ic">🌐</span>互联网<br><span class="ip">github.com</span></div>
+    </div><div style="font-size:13px;color:#7a8db5;margin-top:14px;text-align:center;">私网 IP 出去前被替换成公网 IP · 返回时再转回来</div>`,
+    voice: 'NAT 网关是私有子网的"出网通道"。看这张图，左边私网 ECS 想下载 GitHub 代码，请求经过 NAT 网关时，源 IP 从 10.0.3.5 替换成 NAT 自己的公网 IP，这叫 SNAT。返回数据再倒回去。一个 NAT 网关一年大约 5000 元，但能让上百台 ECS 共享出网。反过来如果想从公网映射端口到内网，那叫 DNAT，比如把 80 端口映射到内网 web 服务。',
+    fallbackDuration: 21000 },
+
+  // ===== 第 4 章 安全组 vs ACL =====
+  { chapter: '第 4 章 · 安全组 vs ACL', title: '云上"两道防火墙"',
     body: '生产环境的标准做法：<br><b>ACL 做粗粒度子网隔离</b> + <b>安全组做细粒度实例放行</b><br><span class="hl">金融客户尤其依赖这个组合</span>',
     visual: `<div class="sg-acl">
       <div class="sg-box">
@@ -113,15 +355,29 @@ window.SLIDES = [
       </div>
     </div>`,
     voice: '安全组和 ACL 是云上的两道防火墙。左边绿色是安全组，工作在 ECS 实例上，是有状态的，出去的流量自动允许返回，配置简单。右边黄色是网络 ACL，工作在子网维度，无状态，进出方向都要分别配规则，更精细但容易出错。金融客户喜欢两个一起用：粗粒度 ACL 加细粒度安全组，双重防护。',
-    fallbackDuration: 18000 },
+    fallbackDuration: 19000 },
 
-  { chapter: '第 3 章 · 安全组 vs ACL', title: '⚠️ 安全雷区：永远别这么配',
+  { chapter: '第 4 章 · 安全组 vs ACL', title: '⚠️ 安全雷区：永远别这么配',
     body: '<span style="color:#ef4444;font-size:20px;font-weight:700;">❌ 禁止：0.0.0.0/0 + 22 端口</span><br><br>这等于把 SSH 端口对全世界开放。<br><span class="hl">暴力破解、勒索病毒、矿机 5 分钟内就来敲门</span>',
     visual: '<div class="danger-box">protocol: TCP<br>source: <span style="color:#ef4444;font-weight:700;">0.0.0.0/0</span><br>port: <span style="color:#ef4444;font-weight:700;">22</span><br>action: ALLOW ☠️</div>',
-    voice: '生产环境的安全组必须用白名单模式，默认全部拒绝，再按需放行。最严重的雷区是把 SSH 22 端口对 0.0.0.0/0 全互联网开放——5 分钟内就会被暴力破解、勒索病毒和矿机敲门。等保 2.0 三级也明文禁止这种配置。',
-    fallbackDuration: 14000 },
+    voice: '生产环境的安全组必须用白名单模式，默认全部拒绝，再按需放行。最严重的雷区是把 SSH 22 端口对 0.0.0.0/0 全互联网开放——5 分钟内就会被暴力破解、勒索病毒和矿机敲门。等保 2.0 三级也明文禁止这种配置。后面我们会看到一个真实因此导致千万损失的故障案例。',
+    fallbackDuration: 16000 },
 
-  { chapter: '第 4 章 · 负载均衡', title: 'NLB vs ALB · 一图看懂',
+  // ===== 互动测验 #2 =====
+  { chapter: '🎯 互动测验 #2', title: '客户运维同学要 SSH 到生产服务器，怎么放行？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户运维要 SSH 到生产 ECS，安全组怎么配最稳？</div>
+      <div class="quiz-opt wrong" data-k="A">22 端口对 0.0.0.0/0 开放（图省事）</div>
+      <div class="quiz-opt wrong" data-k="B">22 端口对运维同学的家里宽带 IP 开放</div>
+      <div class="quiz-opt correct" data-k="C">22 端口仅对堡垒机内网 IP 开放，运维登堡垒机再跳转</div>
+      <div class="quiz-opt wrong" data-k="D">改成 2222 等冷门端口，对全网开放</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：标准做法是"堡垒机 + 跳板"，22 端口只对堡垒机内网 IP（如 10.0.99.5）开放。家里 IP 会变、改端口只能拖延 30 分钟、对外开放 5 分钟就被打。等保 2.0 / ISO 27001 都强制要求堡垒机。</div>
+    </div>`,
+    voice: '第二道互动题。客户运维要 SSH 到生产 ECS，安全组怎么配最稳？给你 5 秒......正确答案是 C，堡垒机模式。22 端口只对堡垒机内网 IP 开放。A 是雷区直接死。B 看似聪明但家里 IP 是动态的会经常变。D 改非标端口只能拖延 30 分钟扫描器照样扫到。堡垒机加跳转是等保 2.0 和 ISO 27001 都强制的标配。',
+    fallbackDuration: 20000 },
+
+  // ===== 第 5 章 负载均衡 =====
+  { chapter: '第 5 章 · 负载均衡', title: 'NLB vs ALB · 一图看懂',
     body: '<b>四层 NLB</b>：极致性能（百万 PPS），TCP/UDP 包级转发<br><b>七层 ALB</b>：看得懂 HTTP，按 URL/Header 路由',
     visual: `<div class="lb-compare">
       <div class="lb-box">
@@ -143,73 +399,218 @@ window.SLIDES = [
         <div class="lb-note">按 URL/Host/Header 路由<br>SSL 卸载 · WAF 联动 · 电商/SaaS 首选</div>
       </div>
     </div>`,
-    voice: 'NLB 和 ALB 看名字晕，记规则简单：左边是 NLB，工作在第 4 层，只看 IP 和端口，性能极高，看那些流动的小球就是数据包，转发飞快，适合数据库、游戏、物联网。右边是 ALB，工作在第 7 层，能看懂 HTTP，按 URL、域名、Header 路由到不同后端，电商和 SaaS 必选。',
-    fallbackDuration: 17000 },
+    voice: 'NLB 和 ALB 看名字晕，记规则简单：左边是 NLB 四层，只看 IP 和端口，性能极高，看那些流动的小球就是数据包，转发飞快，适合数据库、游戏、物联网。右边是 ALB 七层，能看懂 HTTP，按 URL、域名、Header 路由到不同后端，电商和 SaaS 必选。',
+    fallbackDuration: 18000 },
 
-  { chapter: '第 4 章 · 负载均衡', title: 'LB 算法 · 4 种基础姿势',
+  { chapter: '第 5 章 · 负载均衡', title: '4 种算法 + 健康检查',
+    body: '<b>轮询</b> 公平 · <b>加权</b> 配大小不一节点 · <b>最小连接</b> 长连接场景 · <b>源 IP Hash</b> 会话保持',
     visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
       <div class="col-card"><div class="num">⚖️</div><h5>轮询</h5><p>公平但忽略节点性能</p></div>
-      <div class="col-card"><div class="num">⚖️+</div><h5>加权轮询</h5><p>配大小不一的节点</p></div>
+      <div class="col-card"><div class="num">⚖️+</div><h5>加权轮询</h5><p>大小不一节点配比</p></div>
       <div class="col-card"><div class="num">📊</div><h5>最小连接</h5><p>适合长连接 DB / WebSocket</p></div>
-      <div class="col-card"><div class="num">🎯</div><h5>源 IP Hash</h5><p>会话保持（不推荐）</p></div>
+      <div class="col-card"><div class="num">💓</div><h5>健康检查</h5><p>间隔 2-5s · 失败 3 次剔除<br>路径 /health 要轻量</p></div>
     </div>`,
-    voice: '负载均衡有四种基础算法。轮询最公平。加权轮询适合大小不一的节点。最小连接数适合长连接场景，比如数据库和 WebSocket。源 IP Hash 用来保持会话，但现代设计推荐无状态，把会话放 Redis，LB 才能真正水平扩展。',
-    fallbackDuration: 13000 },
+    voice: '负载均衡四种算法。轮询最公平。加权轮询适合大小不一的节点。最小连接数适合数据库和 WebSocket 这种长连接场景。源 IP Hash 用来保持会话但现代设计不推荐。最后健康检查每 2 到 5 秒探测一次后端，连续 3 次失败就剔除。/health 端点要轻量不要去查数据库，否则探测本身就成了性能负担。',
+    fallbackDuration: 19000 },
 
-  { chapter: '第 4 章 · 负载均衡', title: '健康检查 · 别配太敏感',
-    body: '每 <b>2-5 秒</b> 探测一次（HTTP/TCP/HTTPS）<br>连续 <b>3 次失败</b> 剔除节点<br><br><span class="hl">⚠️ 阈值过敏感 → 业务抖动 → 雪崩</span>',
-    visual: '<div style="font-size:14px;color:#cdd5e0;line-height:1.8;text-align:center;font-family:monospace;background:rgba(255,255,255,.04);padding:18px 24px;border-radius:10px;border:1px solid rgba(255,255,255,.1);">检测间隔 2-5s<br>不健康阈值 3<br>健康阈值 2<br>超时 5s<br>探测路径 /health</div>',
-    voice: '健康检查每 2 到 5 秒探测一次后端节点。连续 3 次失败就剔除。注意阈值不要配太敏感，否则业务一抖动就会触发节点雪崩。/health 端点要轻量，不要去查数据库，否则探测本身就成了性能负担。',
-    fallbackDuration: 13000 },
+  { chapter: '第 5 章 · 负载均衡', title: '现代做法：会话外置 + 无状态服务',
+    body: '<b>别用会话保持</b>（粘性 session）→ 单点故障 + 扩缩容不平滑<br><span class="hl">让 Session 进 Redis，LB 才能真正水平扩展</span>',
+    visual: `<div class="stateless-arch">
+      <div class="stateless-box lb"><span class="ic">⚖️</span>ALB<br>无粘性</div>
+      <span class="nat-arrow">→</span>
+      <div class="stateless-box svc"><span class="ic">📦</span>Web-1</div>
+      <div class="stateless-box svc"><span class="ic">📦</span>Web-2</div>
+      <div class="stateless-box svc"><span class="ic">📦</span>Web-N</div>
+      <span class="nat-arrow">→</span>
+      <div class="stateless-box redis"><span class="ic">💾</span>Redis<br>Session</div>
+    </div>`,
+    voice: '现代云原生应用必须做到"无状态"——把会话信息放 Redis 而不是绑在某个 ECS 上。这样 LB 不需要会话保持，请求随便分发到任何一台 Web 节点，单点故障自动剔除业务不掉，扩容秒级生效。客户问"你们 LB 支持会话保持吗"，售前应该反问"你为什么需要？我们建议把 Session 外置到 Redis 这才是云原生姿势"。这一招能让你立刻在客户面前显示专业度。',
+    fallbackDuration: 22000 },
 
-  { chapter: '第 5 章 · VPC 互联', title: 'VPC 怎么和 VPC 通话？',
+  // ===== 第 6 章 VPC 互联 =====
+  { chapter: '第 6 章 · VPC 互联', title: 'VPC 怎么和 VPC 通话？',
     visual: `<div class="three-col">
       <div class="col-card"><div class="num">1</div><h5>对等连接</h5><p>两两直连<br>CIDR 不能重叠<br>超过 3 个就乱</p></div>
       <div class="col-card"><div class="num">2</div><h5>云企业网 CEN</h5><p>中心化枢纽<br>跨 region 跨账号<br>N×N 简化为 N×1</p></div>
       <div class="col-card"><div class="num">3</div><h5>PrivateLink</h5><p>访问 SaaS<br>不暴露公网 IP<br>大幅降低攻击面</p></div>
     </div>`,
     voice: 'VPC 之间通话三种方式。一，对等连接，两两直连，简单但管理超过 3 个 VPC 就乱。二，云企业网 CEN，中心化枢纽，跨地域跨账号都支持，把 N 乘 N 简化成 N 乘 1。三，PrivateLink 私网连接，用来访问 SaaS 服务，不暴露公网 IP，安全场景必选。',
-    fallbackDuration: 15000 },
+    fallbackDuration: 17000 },
 
-  { chapter: '第 5 章 · 混合云组网', title: 'IDC 怎么连云上？',
+  // ===== 第 7 章 混合云 + BGP =====
+  { chapter: '第 7 章 · 混合云组网', title: 'IDC 怎么连云上？',
     body: '<b>1. IPsec VPN</b>：互联网走加密隧道，0 元但延迟抖动大<br><b>2. 物理专线</b>：拉光纤，¥万级/月，延迟 1-3 ms 稳定<br><b>3. SD-WAN</b>：互联网 + 智能路由 + 加密，性价比最高',
     visual: '<div class="cdn-flow" style="font-size:32px;"><span class="node">🏢</span><span class="arrow">→</span><span class="node">🔐</span><span class="arrow">→</span><span class="node">☁️</span></div><div style="font-size:13px;color:#7a8db5;margin-top:10px;text-align:center;">客户 IDC ←→ 专线 / VPN ←→ 火山 VPC</div>',
-    voice: '客户机房怎么连云上？三种方式。第一，IPsec VPN，走互联网最便宜但延迟抖动大。第二，物理专线，最稳定但每月几万块。第三，SD-WAN，用互联网加智能路由加加密，性价比最高，多分支企业的首选。',
-    fallbackDuration: 14000 },
+    voice: '客户机房怎么连云上？三种方式。第一 IPsec VPN，走互联网最便宜但延迟抖动大，0 元起步但 SLA 看运气。第二物理专线，最稳定 1 到 3 毫秒延迟，但每月几万块。第三 SD-WAN，用互联网加智能路由加加密，性价比最高，多分支企业的首选，金融客户做"两地三中心"加云上灾备常用这套。',
+    fallbackDuration: 18000 },
 
-  { chapter: '第 6 章 · CDN', title: 'CDN：把内容搬到用户家门口',
+  { chapter: '第 7 章 · BGP 多线接入', title: 'BGP · 让全国用户都"就近接入"',
+    body: '一个公网 IP，同时<b>多家运营商可达</b>，自动选最快路径<br><span class="hl">单线 IP 只走一家运营商，跨运营商访问延迟翻倍</span>',
+    visual: `<div class="bgp-vis">
+      <div class="bgp-center">🌐 火山引擎 BGP IP · 39.107.x.x</div>
+      <div class="bgp-isps">
+        <div class="bgp-isp tel">📡 电信<br><span class="small">中国南方主流</span></div>
+        <div class="bgp-isp cmcc">📡 移动<br><span class="small">华北/华东高占比</span></div>
+        <div class="bgp-isp uni">📡 联通<br><span class="small">华北/东北</span></div>
+        <div class="bgp-isp edu">📡 教育网/广电<br><span class="small">长尾</span></div>
+      </div>
+      <div style="font-size:13px;color:#7a8db5;text-align:center;max-width:560px;">同一个 IP 同时挂在多家运营商骨干网 · 用户访问时自动走最优路径</div>
+    </div>`,
+    voice: 'BGP 多线接入是公网网络的关键技术。中国有电信、移动、联通三大运营商加教育网广电的长尾，传统单线 IP 只挂在一家运营商上。客户在电信网，访问联通单线 IP 要绕一大圈，延迟从 20 毫秒涨到 80 毫秒。BGP 把同一个 IP 挂在多家运营商骨干网上，用户访问自动走最快路径。火山 CDN 节点全部 BGP，国内主流商用 IP 也基本都是 BGP。客户对话时记得提"我们 BGP 多线，全国统一 IP，跨运营商无加价"。',
+    fallbackDuration: 25000 },
+
+  { chapter: '第 7 章 · 带宽计费', title: '出网 vs 入网 · 计费有大门道',
+    body: '<b>入网（用户→你的服务器）免费</b>，全球云厂商默认<br><b>出网（你→用户）才收费</b>，¥0.5-1/GB 或带宽包月',
+    visual: `<div class="bw-vis">
+      <div class="bw-box in"><div class="lbl">⬇️ 入网</div>用户上传<br><div class="price">¥ 0</div><small>免费</small></div>
+      <div class="bw-box out"><div class="lbl">⬆️ 出网</div>下行到用户<br><div class="price">¥0.5/GB</div><small>按流量 或 95 计费</small></div>
+    </div><div style="font-size:13px;color:#7a8db5;margin-top:14px;text-align:center;">视频/CDN/直播站点出网巨大 → 必须用<b>带宽包月 + 95 计费</b>而不是流量后付费</div>`,
+    voice: '带宽计费有大门道。所有云厂商入网都免费，因为吸引客户用云。但出网才是收钱的关键。后付费按流量大约 5 毛到 1 块一 GB，看着便宜但视频网站一天出几十 TB 月账单立刻吓人。所以重出网业务都用"带宽包月加 95 计费"，承诺一个带宽峰值，每 5 分钟采样一次取第 95 百分位，单价降到流量计费的 1/3。售前讲方案要主动算 TCO 算到这一层，客户立刻信任你的专业度。',
+    fallbackDuration: 26000 },
+
+  // ===== 第 8 章 CDN =====
+  { chapter: '第 8 章 · CDN', title: 'CDN：把内容搬到用户家门口',
     body: '把静态资源（图/视频/JS/CSS）缓存到 <b>边缘节点</b>。<br>用户访问就近 POP（北京用户去北京 POP）。<br><span class="hl">视频、电商、新闻类业务标配</span>',
     visual: `<div class="cdn-flow">
       <span class="node">🌐</span><span class="arrow">→</span>
       <span class="node">📍</span><span class="arrow">→</span>
       <span class="node">📱</span>
     </div><div style="font-size:13px;color:#7a8db5;margin-top:14px;text-align:center;">源站 → 边缘 POP（缓存） → 用户</div>`,
-    voice: 'CDN 干的事很简单：把静态资源缓存到离用户最近的边缘节点。北京用户访问北京节点，广州用户访问广州节点，延迟从几十毫秒降到个位数毫秒。视频、电商、新闻类业务都是 CDN 的重度用户。',
-    fallbackDuration: 14000 },
+    voice: 'CDN 干的事很简单：把静态资源缓存到离用户最近的边缘节点。北京用户访问北京节点，广州用户访问广州节点，延迟从几十毫秒降到个位数毫秒。火山引擎 CDN 全球 2800 多个节点，复用抖音多年的边缘网络积累，国内带宽储备超 200 Tbps。视频、电商、新闻类业务都是 CDN 的重度用户。',
+    fallbackDuration: 18000 },
 
-  { chapter: '第 6 章 · CDN', title: 'CDN vs DCDN vs 智能 DNS',
-    body: '<b>CDN</b>：静态资源加速（图片/视频）<br><b>DCDN</b>：动态请求加速（API/Web）<br><b>智能 DNS</b>：根据用户位置返回最优 IP',
-    voice: 'CDN、DCDN、智能 DNS 三个分清楚。CDN 处理静态资源加速。DCDN 处理动态请求加速，比如 API 和动态网页。智能 DNS 根据用户地理位置返回最优 IP，是 CDN 的底层基础。售前面试时如果客户问到，要能秒回区别。',
-    fallbackDuration: 13000 },
+  { chapter: '第 8 章 · CDN', title: 'CDN vs DCDN vs 智能 DNS',
+    body: '<b>CDN</b>：静态资源加速（图/视频）· 90% 缓存命中<br><b>DCDN</b>：动态请求加速（API/Web）· 走最优回源路径<br><b>智能 DNS</b>：按用户位置返回最优 IP · 是 CDN/DCDN 的底层',
+    visual: '<div style="display:flex;gap:20px;font-size:14px;color:#cdd5e0;text-align:left;background:rgba(255,255,255,.04);padding:18px 22px;border-radius:10px;border:1px solid rgba(255,255,255,.1);"><div><b style="color:#a5b4fc;">CDN</b><br>图/视频/JS/CSS<br>缓存命中 → ~5ms</div><div><b style="color:#f59e0b;">DCDN</b><br>API/动态网页<br>智能选路 → ~30ms</div><div><b style="color:#22c55e;">智能 DNS</b><br>把域名解析到最优 IP<br>底层基础</div></div>',
+    voice: 'CDN、DCDN、智能 DNS 三个分清楚。CDN 处理静态资源加速，缓存命中率通常 80% 到 95%。DCDN 处理动态请求加速，比如 API 和动态网页，无法缓存但走最优回源路径。智能 DNS 根据用户地理位置返回最优 IP，是 CDN 和 DCDN 的底层基础。售前面试如果客户问到，要能秒回区别。',
+    fallbackDuration: 17000 },
 
-  { chapter: '速查表', title: '面试要点 · 4 个高频问题',
-    body: `<div style="font-size:14.5px;line-height:2;text-align:left;max-width:780px;">
-      <b>Q1</b>：VPC 跨 AZ 部署有什么好处？<br><span style="color:#a5b4fc">→ 单机房故障不影响业务，是高可用标配</span><br>
-      <b>Q2</b>：安全组和 ACL 区别？<br><span style="color:#a5b4fc">→ 安全组有状态在 ECS 上，ACL 无状态在子网上，组合用</span><br>
-      <b>Q3</b>：NLB 和 ALB 怎么选？<br><span style="color:#a5b4fc">→ TCP/UDP 选 NLB，HTTP 路由选 ALB</span><br>
-      <b>Q4</b>：会话保持必须吗？<br><span style="color:#a5b4fc">→ 现代设计推无状态，Session 放 Redis</span>
+  // ===== 客户对话场景 #1 =====
+  { chapter: '🌟 客户对话 #1', title: '电商客户大促弹性扩容',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们 618 大促 0 点开始，预计流量 50 倍涨幅。你们网络扛得住吗？带宽够吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>三层组合方案：<b>① CDN</b> 抗住静态资源 80% 流量；<b>② ALB</b> 后端 Auto Scaling 弹性组从 100 台到 5000 台，3 分钟扩满；<b>③ 出网带宽</b> 用"按使用流量"模式，0 点前自动切，按需付费。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>那万一某个 AZ 挂了呢？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>每个业务层 <b>跨 3 个可用区</b> 部署，ALB 自动剔除故障节点，DB 主从切换 30 秒内。我们抖音抗过春晚 3 倍洪峰，电商场景 vMC 协议优化包优惠 30%，PoC 我们出一份 3 天压测报告。</div>
+      </div>
     </div>`,
-    voice: '最后是 4 个面试高频题。第一，VPC 跨可用区是高可用标配，单个机房故障不影响业务。第二，安全组在 ECS 上、有状态，ACL 在子网上、无状态，组合使用最稳。第三，TCP UDP 选 NLB，HTTP 路由选 ALB。第四，现代设计推无状态，会话放 Redis，让负载均衡能真正水平扩展。',
-    fallbackDuration: 22000 },
+    voice: '看第一个真实客户对话。客户是电商，担心 618 大促网络扛不住。售前要给的是"三层组合方案"。第一层 CDN 抗住 80% 静态资源。第二层 ALB 加 Auto Scaling 弹性组，3 分钟从 100 台扩到 5000 台。第三层出网带宽切到按使用流量模式，0 点前自动切。客户追问 AZ 故障怎么办，售前接住跨三可用区部署 + 抖音春晚案例做参考。最后用 PoC 锁定客户。整个对话节奏：客户问痛点 → 售前给三层方案 → 客户追问极端 → 售前用案例 + PoC 闭环。',
+    fallbackDuration: 30000 },
 
-  { chapter: '完成', title: '🎉 Day 2 学完！',
+  // ===== 客户对话场景 #2 =====
+  { chapter: '🌟 客户对话 #2', title: '金融客户跨地域低延迟',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们核心交易系统在上海，灾备要做到北京。RPO 1 分钟、RTO 5 分钟，跨城延迟能接受吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>两条路：<b>① 火山跨域专线</b> 上海-北京物理光缆 28-32ms，比互联网 VPN 抖动小 90%；<b>② veDB Global</b> 跨地域秒级同步 RPO &lt;5s。配合 CEN 云企业网做 VPC 互通，应用层零改造。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>等保三级要求物理隔离怎么办？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>专线物理光缆 + 全程国密 SM4 加密 + 双方 NAT 边界，<b>等保三级 + 金融行业云"两地三中心"</b> 已通过测评。我能给你两份金融客户的备案号做参考。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话是金融客户做跨地域灾备。客户问 RPO 1 分钟 RTO 5 分钟能不能做。售前要给"两条腿"方案：第一物理专线，上海北京 28 到 32 毫秒，比 VPN 稳得多。第二 veDB Global 跨地域秒级同步。客户追问等保三级物理隔离怎么办，售前要用"专线物理光缆 + 国密加密 + 边界 NAT + 金融行业云已过测评"四点闭环，最后用"两份备案号"消除信任壁垒。金融客户最吃这一套有真实备案号的回答。',
+    fallbackDuration: 31000 },
+
+  // ===== 客户对话场景 #3 =====
+  { chapter: '🌟 客户对话 #3', title: '客户问"为什么你家比阿里贵 10%"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我对比了刊例价，你们公网带宽比阿里贵 8-10%，怎么解释？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>客户做对比时建议拉齐三个维度：<b>① BGP 等级</b> 我们是<b>多线 BGP+智能调度</b>非单线；<b>② SLA</b> 抖音同款承诺 99.99%；<b>③ 客户折扣</b> 公开刊例只是起点，按你们的量年度返点 15-25%。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>那我能不能要 30% 的折扣？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>我们做<b>"等量比较"PoC：</b>同样 100Mbps BGP 带宽 + 同等 SLA + 同期年付，我把你们用量做成正式 TCO 报告，刨除 CDN/出海加速等组合优惠后净价对比，让数字说话比讨折扣更可信。</div>
+      </div>
+    </div>`,
+    voice: '第三个对话是最常见的"价格比对"。客户拿出阿里刊例价对比，说你贵 10%。新人售前会直接降价，老售前会"拉齐对比维度"。第一点 BGP 等级，我们多线 BGP 加智能调度对方可能是单线。第二点 SLA 承诺。第三点公开刊例只是起点，量大有返点。客户继续要 30% 折扣，老售前不直接答应，而是甩出"等量比较 PoC"——同等带宽 SLA 年付，做正式 TCO 报告。这个套路把"讨折扣"变成"算数字"，对客户和老板都更可信，成交价反而往往更高。',
+    fallbackDuration: 32000 },
+
+  // ===== 厂商对比表 =====
+  { chapter: '🆚 三朵云对比', title: '火山 vs 阿里 vs 华为 · 网络速查',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>项目</th><th>火山引擎</th><th>阿里云</th><th>华为云</th></tr></thead>
+      <tbody>
+        <tr><td>VPC 名称</td><td class="ve">VPC</td><td class="al">VPC</td><td class="hw">VPC</td></tr>
+        <tr><td>负载均衡</td><td class="ve">CLB / ALB / NLB</td><td class="al">CLB / ALB / NLB</td><td class="hw">ELB（统一）</td></tr>
+        <tr><td>跨域专线</td><td class="ve">跨域专线 / Express Connect</td><td class="al">高速通道</td><td class="hw">云专线 DC</td></tr>
+        <tr><td>BGP 多线</td><td class="ve">默认 BGP 多线</td><td class="al">多 BGP 选购</td><td class="hw">默认 BGP</td></tr>
+        <tr><td>CDN 节点</td><td class="ve"><b>2800+ 抖音同款</b></td><td class="al">2800+</td><td class="hw">2500+</td></tr>
+        <tr><td>典型出网价</td><td class="ve">¥ 0.5/GB · 同档</td><td class="al">¥ 0.5/GB</td><td class="hw">¥ 0.5/GB</td></tr>
+        <tr><td>独家亮点</td><td class="ve">DCDN+音视频组合优惠</td><td class="al">SLB 生态最全</td><td class="hw">华为安全设备硬件协同</td></tr>
+      </tbody>
+    </table>`,
+    voice: '看这张三朵云对比速查表。VPC、LB、CDN 等核心组件大家都有，命名略有差异但功能一致。火山的独家亮点是 DCDN 加音视频组合优惠，复用了抖音和西瓜视频的全球边缘网络。阿里云胜在生态最全。华为云在政企客户和华为自家安全设备协同上有优势。售前对话时记住三个差异点：BGP 默认多线、CDN 抖音同款、音视频组合优惠。这三个能在 90% 的客户场景里立住。',
+    fallbackDuration: 24000 },
+
+  // ===== 真实故障案例 =====
+  { chapter: '⚠️ 真实故障', title: '某游戏公司因 SG 误配，1 夜损失 1500 万',
+    visual: `<div class="incident-card">
+      <div class="incident-header">
+        <span class="badge-time">2024 · 春节假期</span>
+        <h4>某头部手游公司 · 私网误开放公网</h4>
+      </div>
+      <div class="incident-row">📅 <b>事故时间</b>：除夕 22:00 至次日 09:00（11h）</div>
+      <div class="incident-row">⚠️ <b>事故原因</b>：运维同学临时调试，把数据库安全组 3306 端口对 <b>0.0.0.0/0</b> 开放，"等会再关"，结果就忘了</div>
+      <div class="incident-row">💀 <b>攻击路径</b>：暗网扫描器 8 分钟内发现 → SQL 注入 → 拖库 → 删除主表勒索</div>
+      <div class="incident-row">💸 <b>直接损失</b>：用户充值回滚 + 数据恢复 + 监管罚款 + 公关，合计 <b>1500 万</b></div>
+      <div class="incident-row ok">✅ <b>补救做法</b>：① 安全组默认全拒 + 白名单；② 上 <b>堡垒机 + 数据库审计</b>；③ 高危端口（22/3306/6379）配 <b>关键资源告警</b>，开放即报警</div>
+    </div>`,
+    voice: '最后一个真实案例。某头部手游公司，2024 年除夕夜。运维同学临时调试需要连数据库，把 MySQL 3306 端口对 0.0.0.0/0 开放，想着"等会再关"，结果整个春节假期过去都没关。暗网扫描器 8 分钟内就发现了这个开放的 MySQL 端口，SQL 注入加拖库加删除主表勒索，一夜损失 1500 万。补救做法三条：第一安全组默认全拒只白名单。第二堡垒机加数据库审计强制走跳板。第三高危端口配关键资源告警，一旦开放立刻短信报警。售前讲方案时把这个案例丢出来，金融政企客户立马跟你聊安全套餐。',
+    fallbackDuration: 30000 },
+
+  // ===== 面试速查 =====
+  { chapter: '速查表', title: '面试要点 · 8 个高频问题',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:820px;">
+      <b>Q1</b> VPC 跨 AZ 部署有什么好处？<span style="color:#a5b4fc"> → 单机房故障不影响业务，高可用标配</span><br>
+      <b>Q2</b> 安全组和 ACL 区别？<span style="color:#a5b4fc"> → 安全组有状态在 ECS 上，ACL 无状态在子网上</span><br>
+      <b>Q3</b> NLB 和 ALB 怎么选？<span style="color:#a5b4fc"> → TCP/UDP 选 NLB，HTTP 路由选 ALB</span><br>
+      <b>Q4</b> 会话保持必须吗？<span style="color:#a5b4fc"> → 现代设计推无状态，Session 放 Redis</span><br>
+      <b>Q5</b> /24 子网能放几台 ECS？<span style="color:#a5b4fc"> → 251 台（云保留 5 个）</span><br>
+      <b>Q6</b> EIP 不绑也收费？<span style="color:#a5b4fc"> → 占用费 ¥0.02/小时，因为公网 IP 稀缺</span><br>
+      <b>Q7</b> NAT 网关和 IGW 区别？<span style="color:#a5b4fc"> → NAT 让私有子网出网，IGW 让公有子网双向通</span><br>
+      <b>Q8</b> 客户嫌带宽贵怎么办？<span style="color:#a5b4fc"> → 推 95 计费 + CDN 分流，TCO 比对而不是讨价</span>
+    </div>`,
+    voice: '最后是 8 个面试高频题。一，VPC 跨可用区是高可用标配。二，安全组在 ECS 上有状态，ACL 在子网上无状态。三，TCP UDP 选 NLB，HTTP 选 ALB。四，现代设计无状态 Session 放 Redis。五，/24 实际 251 台云保留 5 个。六，EIP 不绑也收占用费因为公网 IP 稀缺。七，NAT 让私有子网出网 IGW 让公有子网双向通。八，客户嫌带宽贵推 95 计费加 CDN 分流，TCO 比对而不是简单讨价。这 8 道刷熟，云网络基础面试稳过。',
+    fallbackDuration: 28000 },
+
+  // ===== 完成 =====
+  { chapter: '完成', title: '🎉 Day 2 增强版 学完！',
     eyebrow: '下一步',
     body: '回到课程页面 → 做 8 道章节小测<br>→ 80 分通过即可解锁 Day 3<br><br><b>📺 还可以去 B 站 / YouTube 搜对应关键词补充观看</b>',
     visual: '<div style="font-size:80px;">🚀</div>',
-    voice: '恭喜，Day 2 学完了。回到课程页面做 8 道章节小测，80 分通过即可解锁 Day 3。如果某个概念还想加深，去 B 站搜对应关键词看长视频。学习愉快。',
-    fallbackDuration: 12000 },
+    voice: '恭喜，Day 2 云网络深度增强版学完。从协议基础到 VPC 拓扑、NAT EIP、安全组、负载均衡、BGP、混合云，再到 3 个客户对话和 1 个千万级故障案例。回到课程页面做 8 道章节小测，80 分通过即可解锁 Day 3 云存储。如果某个概念还想加深，去 B 站搜对应关键词看长视频。学习愉快。',
+    fallbackDuration: 22000 },
 ];
 </script>
-<script src="_player.js?v=16"></script>
+<script src="_player.js?v=18"></script>
 </body>
 </html>
