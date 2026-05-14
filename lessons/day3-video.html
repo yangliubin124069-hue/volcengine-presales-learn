@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 3 · 云存储深度 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=22">
+<style>
+  /* 存储分类卡 */
+  .storage-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    width: 900px; max-width: 96vw; }
+  .st-card { padding: 14px 12px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: center; animation: cardIn .5s both; }
+  .st-card.local { border-color: #ef4444; }
+  .st-card.block { border-color: #f59e0b; animation-delay: .1s; }
+  .st-card.file { border-color: #6e3aff; animation-delay: .2s; }
+  .st-card.obj { border-color: #2b5cff; animation-delay: .3s; }
+  .st-card.arch { border-color: #22c55e; animation-delay: .4s; }
+  .st-card.db { border-color: #ec4899; animation-delay: .5s; }
+  .st-card h5 { font-size: 13px; margin: 6px 0; color: #fff; }
+  .st-card .ic { font-size: 28px; }
+  .st-card p { font-size: 11px; color: #cbd5e1; line-height: 1.5; }
+  .st-card .perf { font-size: 10px; color: #fde68a; margin-top: 4px; font-weight: 700; }
+
+  /* 信封加密 */
+  .env-vis { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .env-box { padding: 14px 16px; border-radius: 10px; text-align: center;
+    border: 1.5px solid; font-size: 12px; animation: cardIn .5s both; }
+  .env-box.data { border-color: #22c55e; background: rgba(34,197,94,.1); }
+  .env-box.dek { border-color: #f59e0b; background: rgba(245,158,11,.12); animation-delay: .2s; }
+  .env-box.cmk { border-color: #ec4899; background: rgba(236,72,153,.12); animation-delay: .4s;
+    box-shadow: 0 0 16px rgba(236,72,153,.3); }
+  .env-box .ic { font-size: 28px; display: block; }
+  .env-box .nm { font-weight: 700; font-size: 14px; margin: 4px 0; color: #fff; }
+
+  /* 生命周期阶梯 */
+  .life-stages { display: flex; gap: 6px; align-items: stretch; width: 920px; max-width: 96vw; }
+  .ls-stage { flex: 1; padding: 14px 8px; border-radius: 8px;
+    border: 1.5px solid; text-align: center; animation: cardIn .5s both; }
+  .ls-stage.hot { border-color: #ef4444; background: rgba(239,68,68,.06); }
+  .ls-stage.warm { border-color: #f59e0b; background: rgba(245,158,11,.08); animation-delay: .15s; }
+  .ls-stage.cold { border-color: #6e3aff; background: rgba(110,58,255,.08); animation-delay: .3s; }
+  .ls-stage.archive { border-color: #2b5cff; background: rgba(43,92,255,.08); animation-delay: .45s; }
+  .ls-stage.deep { border-color: #22c55e; background: rgba(34,197,94,.08); animation-delay: .6s; }
+  .ls-stage .age { font-size: 13px; font-weight: 700; color: #fff; }
+  .ls-stage .tier { font-size: 11.5px; color: #cbd5e1; margin-top: 4px; }
+  .ls-stage .saving { font-size: 11.5px; color: #86efac; font-weight: 700; margin-top: 4px; }
+</style>
+</head>
+<body>
+<script>
+window.META = {
+  day: 3,
+  title: 'Day 3 · 云存储深度',
+  intro: '12 分钟 · 6 类存储 + 对象存储深入 + KMS + 生命周期 + 8PB → 70% 省钱案例'
+};
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 3 · 云存储深度',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>对象 / 块 / 文件 / 归档 / KMS / 生命周期 / CRR</b><br>12 分钟讲透 + 2 互动 + 视频网站 8PB 存储节省 70% 真实案例',
+    visual: '<div class="cover-icon">💾</div>',
+    voice: '欢迎来到 Day 3 云存储深度。客户问存储一定要讲分层，否则就陷入"性能 / 价格"两端拉锯。今天 12 分钟讲透 6 类存储、对象存储深入、KMS 信封加密、生命周期、跨域复制，加视频网站 8PB 存储省 70% 真实案例。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 1 章 · 分类', title: '6 类存储形态 · 一图速记',
+    visual: `<div class="storage-types">
+      <div class="st-card local">
+        <span class="ic">⚡</span>
+        <h5>本地盘</h5>
+        <p>NVMe / SSD<br>机器死数据死<br>缓存层用</p>
+        <span class="perf">μs 级延迟</span>
+      </div>
+      <div class="st-card block">
+        <span class="ic">📀</span>
+        <h5>块存储</h5>
+        <p>EBS / 云盘<br>POSIX 读写<br>VM 系统盘 / DB</p>
+        <span class="perf">亚 ms 延迟</span>
+      </div>
+      <div class="st-card file">
+        <span class="ic">📁</span>
+        <h5>文件存储</h5>
+        <p>NAS NFS/SMB<br>多机挂载共享<br>OA / ML 训练</p>
+        <span class="perf">ms 级延迟</span>
+      </div>
+      <div class="st-card obj">
+        <span class="ic">📦</span>
+        <h5>对象存储</h5>
+        <p>S3/TOS HTTP<br>扁平 K-V 数 PB<br>图片视频备份</p>
+        <span class="perf">10ms-100ms</span>
+      </div>
+      <div class="st-card arch">
+        <span class="ic">🧊</span>
+        <h5>归档存储</h5>
+        <p>对象 1/4-1/10<br>取回 1min-12h<br>7-30 年合规</p>
+        <span class="perf">超低单价</span>
+      </div>
+      <div class="st-card db">
+        <span class="ic">🗄️</span>
+        <h5>数据库</h5>
+        <p>结构化+查询引擎<br>Day 4 讲</p>
+        <span class="perf">ms 级查询</span>
+      </div>
+    </div>`,
+    voice: '6 类存储形态一图速记。本地盘 NVMe SSD 机器死数据死缓存层用。块存储 EBS 云盘支持 POSIX 读写 VM 系统盘和数据库用亚毫秒延迟。文件存储 NAS NFS SMB 多机挂载共享，OA、ML 训练数据集用。对象存储 S3 TOS HTTP RESTful 扁平 K-V 单桶数 PB 图片视频备份数据湖用。归档存储成本是对象的 1/4 到 1/10 但取回需 1 分钟到 12 小时适合 7-30 年合规留档。数据库是结构化加查询引擎 Day 4 讲。',
+    fallbackDuration: 33000 },
+
+  { chapter: '第 2 章 · 对象存储', title: 'Bucket / Object / S3 协议',
+    body: '<b>Bucket</b> 全局唯一名 · <b>Object</b> = Key+Value+Metadata · <b>单桶可存 EB 级</b><br><span class="hl">S3 是事实标准协议，火山 TOS / 阿里 OSS / 华为 OBS 全兼容</span>',
+    visual: `<div class="code-block" style="text-align:left;font-size:14px;">
+<span class="cmt"># PUT 上传 (S3 兼容)</span>
+PUT /<span class="kw">my-bucket</span>/<span class="str">photos/2026/sunset.jpg</span>
+Content-Type: image/jpeg
+x-amz-acl: private
+x-amz-server-side-encryption: AES256
+
+<span class="cmt"># 即可全球访问 https://my-bucket.tos.cn/photos/2026/sunset.jpg</span>
+</div>`,
+    voice: '对象存储概念。Bucket 桶是顶级容器全局唯一名。Object 由 Key 路径加 Value 加 Metadata 组成。火山 TOS 单桶可存 EB 级。S3 协议是事实标准 API，火山 TOS、阿里 OSS、华为 OBS 全兼容。客户已有 S3 SDK 几乎零改造迁过来。售前讲对象存储要强调"协议兼容"——客户最怕的就是"换厂商代码全改"。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 2 章 · 对象存储', title: '5 个核心特性 · 售前必谈',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(5,1fr);font-size:11px;">
+      <div class="col-card"><div class="num">📤</div><h5>分片上传</h5><p>并行+断点<br>单文件 48.8 TB</p></div>
+      <div class="col-card"><div class="num">🔐</div><h5>ACL</h5><p>桶/对象级<br>公私读写</p></div>
+      <div class="col-card"><div class="num">🔗</div><h5>签名 URL</h5><p>临时下载/上传<br>秒级到天</p></div>
+      <div class="col-card"><div class="num">📜</div><h5>版本控制</h5><p>覆盖留旧版<br>误删可恢复</p></div>
+      <div class="col-card"><div class="num">📊</div><h5>存储类别</h5><p>Standard/IA/Archive/Deep<br>自动转换</p></div>
+    </div>`,
+    voice: '对象存储 5 个核心特性。一分片上传 Multipart Upload 大文件并行加断点续传单文件最大 48.8 TB。二 ACL 桶或对象级控制公私读写。三签名 URL 给临时下载或上传链接有效期可设秒级到天，前端直传必用。四版本控制开启后每次覆盖产生新版本可恢复误删但存储成本上升需配生命周期清理旧版。五存储类别从 Standard 到 IA 到 Archive 到 Deep Archive 单价逐级降低 30-90%，按访问频率自动转换。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 3 章 · 块存储', title: 'IOPS / 吞吐 / 延迟 · 三大指标',
+    body: '<b>IOPS</b>：每秒 I/O 次数（事务型/OLTP 在意）<br><b>吞吐</b>：MB/s（分析型/视频在意）<br><b>延迟</b>：单次响应时间（金融/游戏在意）',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>云盘等级</th><th>IOPS</th><th>吞吐</th><th>延迟</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td>PL0</td><td>1 万</td><td>180 MB/s</td><td>1-3 ms</td><td>办公/测试</td></tr>
+        <tr><td>PL1</td><td>5 万</td><td>350 MB/s</td><td>0.5-2 ms</td><td>中小 OLTP</td></tr>
+        <tr><td>PL2</td><td>10 万</td><td>750 MB/s</td><td>0.3-1 ms</td><td>核心数据库</td></tr>
+        <tr><td class="ve">PL3</td><td class="ve">100 万</td><td class="ve">4 GB/s</td><td class="ve">&lt;0.5 ms</td><td>极致 OLTP / Redis</td></tr>
+      </tbody>
+    </table>`,
+    voice: '块存储三大指标。IOPS 每秒 I/O 次数事务型在意。吞吐 MB/s 分析型和视频在意。延迟单次响应时间金融游戏在意。火山云盘 PL0 到 PL3 性能逐级提升，PL3 单盘 IOPS 百万级延迟亚毫秒。售前推荐：办公测试用 PL0；中小 OLTP 用 PL1；核心数据库 PL2；极致 OLTP 或 Redis 持久化用 PL3。越高越贵按需选。',
+    fallbackDuration: 25000 },
+
+  { chapter: '第 3 章 · 块存储', title: '快照 + 加密 · 数据保护',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">📸</div><h5>快照</h5><p>增量备份<br>秒级触发<br>定时策略 + 跨域复制</p></div>
+      <div class="col-card"><div class="num">🔐</div><h5>云盘加密</h5><p>KMS 加密<br>性能损耗 &lt;3%<br>金融医疗合规必备</p></div>
+    </div>`,
+    voice: '块存储两个数据保护机制。快照是增量备份秒级触发可定时策略每天凌晨。跨区域复制实现异地容灾。云盘加密默认或按桶按盘开启 KMS 加密。现代 CPU 支持 AES-NI 指令集性能损耗小于 3% 不应该是拒绝加密的理由。金融医疗合规必备。',
+    fallbackDuration: 18000 },
+
+  { chapter: '第 4 章 · 文件存储', title: 'NAS · NFS vs SMB · vePFS',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🐧</div><h5>NFS</h5><p>Linux 主流<br>v3 / v4</p></div>
+      <div class="col-card"><div class="num">🪟</div><h5>SMB / CIFS</h5><p>Windows 主流<br>混合环境双协议</p></div>
+      <div class="col-card"><div class="num">🚀</div><h5>vePFS 并行 FS</h5><p>AI/HPC 专用<br>单 FS 100 GB/s+<br>千卡训练首选</p></div>
+    </div>`,
+    voice: '文件存储核心是协议和场景。NFS 是 Linux 主流 v3 v4 都常见。SMB 也叫 CIFS 是 Windows 主流。混合环境选支持双协议的 NAS。通用型 NAS 容量大 IOPS 中等适合 OA、企业网盘。极速型基于全闪适合 AI 训练 HPC 高吞吐场景。vePFS 是火山引擎为 AI HPC 打造的并行文件系统单 FS 支持 100 GB/s+ 吞吐千卡训练首选。',
+    fallbackDuration: 24000 },
+
+  { chapter: '🎯 互动测验 #1', title: '客户：AI 训练数据集放哪？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户做大模型训练，数据集 50TB，需要 200 张 GPU 并行读取。最合适的存储？</div>
+      <div class="quiz-opt wrong" data-k="A">每台 GPU 服务器挂本地 SSD（最快）</div>
+      <div class="quiz-opt wrong" data-k="B">普通对象存储 TOS Standard</div>
+      <div class="quiz-opt correct" data-k="C">vePFS 并行文件系统 + 对象存储归档</div>
+      <div class="quiz-opt wrong" data-k="D">每台机器一个独立 NAS</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：200 张 GPU 千卡场景<b>必须 vePFS 并行文件系统</b>——本地 SSD 数据分发噩梦；对象存储 TOS 单次读延迟 10-100ms 千卡同步时延炸；独立 NAS 数据隔离无法共享。<b>vePFS 单文件系统 100GB/s+ 吞吐</b>多 GPU 同时读取无瓶颈。冷数据归档自动转 TOS Archive 长期归档。这是 AI 训练的标准架构。</div>
+    </div>`,
+    voice: '思考一下。客户 200 张 GPU 训练数据集 50 TB 放哪？给你 5 秒......正确答案 C vePFS 加对象存储归档。本地 SSD 数据分发噩梦。普通对象存储延迟 10-100 毫秒千卡同步炸。独立 NAS 无法共享。vePFS 单文件系统 100 GB/s+ 吞吐多 GPU 同时读取无瓶颈，冷数据归档自动转 TOS Archive。这是 AI 训练的标准架构售前讲 AI 必备。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 5 章 · 归档', title: '生命周期 · 5 阶段降本',
+    visual: `<div class="life-stages">
+      <div class="ls-stage hot">
+        <div class="age">0-30 天</div>
+        <div class="tier">Standard 热</div>
+        <div class="saving">¥ 0.12/GB·月</div>
+      </div>
+      <div class="ls-stage warm">
+        <div class="age">30-90 天</div>
+        <div class="tier">IA 低频</div>
+        <div class="saving">省 30-40%</div>
+      </div>
+      <div class="ls-stage cold">
+        <div class="age">90-180 天</div>
+        <div class="tier">Archive 归档</div>
+        <div class="saving">省 70%</div>
+      </div>
+      <div class="ls-stage archive">
+        <div class="age">180天-5年</div>
+        <div class="tier">Deep Archive 冷</div>
+        <div class="saving">省 90%</div>
+      </div>
+      <div class="ls-stage deep">
+        <div class="age">5 年后</div>
+        <div class="tier">WORM 锁 或 删除</div>
+        <div class="saving">合规留</div>
+      </div>
+    </div>`,
+    voice: '生命周期 5 阶段降本是售前的"金箭"。0-30 天 Standard 热存约 1 毛 2 一 GB 月。30-90 天转 IA 低频省 30-40%。90-180 天转 Archive 归档省 70%。180 天到 5 年转 Deep Archive 冷存省 90%。5 年后按合规要求 WORM 锁定或删除。正确配置生命周期可省 50-80% 存储费。<b>WORM</b> Write Once Read Many 写入后不可删改等保金融政务部分场景强制要求。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 6 章 · KMS', title: '信封加密 · 一个 CMK 保护一切',
+    visual: `<div class="env-vis">
+      <div class="env-box data">
+        <span class="ic">📄</span>
+        <div class="nm">数据</div>
+        <div>用 DEK 加密</div>
+      </div>
+      <span style="font-size:20px;color:#7a8db5;">🔒</span>
+      <div class="env-box dek">
+        <span class="ic">🔑</span>
+        <div class="nm">DEK</div>
+        <div>用 CMK 加密</div>
+      </div>
+      <span style="font-size:20px;color:#7a8db5;">🔒</span>
+      <div class="env-box cmk">
+        <span class="ic">👑</span>
+        <div class="nm">CMK 主密钥</div>
+        <div>HSM 硬件保护<br>永不落地</div>
+      </div>
+    </div>`,
+    voice: '信封加密是 KMS 的核心机制。数据用 DEK Data Encryption Key 加密，DEK 再用 CMK Customer Master Key 加密。一次解密只暴露 DEK，CMK 永不落地。CMK 用 HSM 硬件级保护支持自动轮转和审计日志。这种"一把主钥保护千万把分钥"的设计安全且性能好。BYOK 自带密钥支持客户自有密钥导入 KMS，配合本地 HSM 联动可做"密钥不出企业"。金融政务合规客户必备。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 7 章 · 数据迁移', title: '4 种姿势 · TB 到 PB',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>方式</th><th>规模</th><th>速度</th><th>典型场景</th></tr></thead>
+      <tbody>
+        <tr><td>DTS 数据传输</td><td class="ve">GB-TB</td><td>RPO 秒级</td><td>在线 DB 迁移</td></tr>
+        <tr><td>闪电立方</td><td class="hw">PB 级</td><td>物理寄送</td><td>带宽不够时唯一选</td></tr>
+        <tr><td>rclone / s3cmd</td><td class="al">GB-TB</td><td>简单</td><td>开源跨厂商同步</td></tr>
+        <tr><td>客户端直传</td><td class="tc">任意</td><td>跳过中转</td><td>STS Token 临时授权</td></tr>
+      </tbody>
+    </table>`,
+    voice: '4 种数据迁移姿势。DTS 数据传输服务是在线数据库迁移工具支持 MySQL 到 veDB Oracle 到 veDB PG，保证 RPO 秒级，亿级数据 24 小时内迁完。闪电立方是 PB 级离线迁移物理设备寄送，当带宽不够比如 100 TB 走 1 Gbps 要 11 天才是唯一选择。rclone 和 s3cmd 开源工具适合 GB 到 TB 级别同步，生产建议结合断点续传和 MD5 校验。客户端直传通过 STS Token 让前端获取临时令牌直接上传对象存储，跳过应用层中转节省服务器带宽，电商常用。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 8 章 · 跨域 + 合规', title: 'CRR / SRR / 数据出境',
+    body: '<b>CRR</b> 跨区域复制 RPO 分钟级 · 两地三中心基础<br><b>SRR</b> 同区域复制 · 审计副本 / 治理边界<br><span class="hl">⚠️ 数据出境合规：关键数据不得出境，跨国客户必走专属 region</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🌍</div><h5>CRR 跨域</h5><p>RPO 分钟级<br>异地容灾<br>两地三中心</p></div>
+      <div class="col-card"><div class="num">🪞</div><h5>SRR 同域</h5><p>不同桶/账号<br>审计副本<br>数据治理边界</p></div>
+      <div class="col-card"><div class="num">⚖️</div><h5>合规</h5><p>数据安全法<br>个人信息保护法<br>GDPR 被遗忘权</p></div>
+    </div>`,
+    voice: '跨域复制和合规两个关键。CRR 跨区域复制对象或数据库自动复制到异地，RPO 分钟级是异地容灾基础满足两地三中心要求。SRR 同区域复制同 region 不同桶或账号复制常用于审计副本和数据治理边界。数据出境合规：数据安全法和个人信息保护法要求关键数据不得出境跨国客户必走专属 region 或行业云。GDPR 欧盟用户可要求彻底删除对象存储版本控制加 WORM 配置不当会冲突需提前设计。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验 #2', title: '客户存了 8PB 视频，账单太贵咋办？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某视频网站 8PB 都在对象 Standard，年存储费 2400 万。客户问"能不能省"？</div>
+      <div class="quiz-opt wrong" data-k="A">换便宜云厂商（违规迁移风险高）</div>
+      <div class="quiz-opt wrong" data-k="B">删一半内容（合规要求 5 年留档）</div>
+      <div class="quiz-opt correct" data-k="C">配生命周期：热 Standard / 30-180 天 IA / 180天-5年 Archive + CRR + WORM</div>
+      <div class="quiz-opt wrong" data-k="D">压缩文件后再存</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：经典的<b>存储分层降本</b>题。8PB 中 70% 半年无访问但合规要求 5 年留档。<b>分层方案</b>：① 30 天内热门留 Standard；② 30-180 天转 IA 省 30%；③ 180 天-5 年转 Archive 省 70%；④ 同时开 CRR 复制异地；⑤ 冷数据加 WORM 合规锁定。<b>年存储费降到约 720 万 = 省 70%（1680 万）</b>。这是售前推存储优化方案的标杆案例。</div>
+    </div>`,
+    voice: '思考一下。视频网站 8 PB Standard 年存储费 2400 万怎么省？给你 5 秒......正确答案 C 配生命周期分层。8 PB 中 70% 半年无访问但合规要求 5 年留档。分层方案：30 天热门留 Standard、30-180 天转 IA 省 30%、180-5 年转 Archive 省 70%、同时开 CRR 异地、冷数据加 WORM 锁定。年存储费从 2400 万降到 720 万省 70%，1680 万。这是售前推存储优化的标杆案例。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🌟 客户对话', title: '客户问"S3 兼容 = 真兼容吗？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>都说 S3 兼容，我从阿里 OSS 迁过来真的零改造吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>SDK 级 99% 兼容</b>，普通 PutObject/GetObject/分片上传零改造。但 3 个细节要注意：<b>① 高级特性</b> 如对象标签策略略有 API 差异；<b>② 域名/Endpoint</b> 配置要换；<b>③ 权限模型</b> 火山 IAM vs 阿里 RAM 概念映射。我们提供<b>迁移工具 + 1 周陪跑工程师</b>，PB 级数据 24 小时迁完。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>迁完成本能降多少？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>主要省两块：<b>① 流量出口费</b> 火山公有云内网下载 0 流量费 vs 阿里要钱；<b>② 数据分层</b> 我们帮您做生命周期评估找出冷数据。预计<b>综合存储+流量费降 30-50%</b>。先做 1 PB 试点 1 个月真实账单对比，再决定全量迁移。</div>
+      </div>
+    </div>`,
+    voice: '一段客户对话客户问 S3 兼容是否真零改造。售前要诚实："SDK 级 99% 兼容但 3 个细节"——高级特性 API 略差异、域名 Endpoint 换、权限模型 IAM vs RAM 概念映射。提供迁移工具加 1 周陪跑工程师 PB 级 24 小时迁完。客户追问省多少，售前给两块账：流量出口费火山内网下载 0 费 vs 阿里收钱，数据分层做生命周期评估找冷数据。综合降 30-50%。先做 1 PB 试点 1 月真实账单对比再决定全量。',
+    fallbackDuration: 32000 },
+
+  { chapter: '案例', title: '🌟 视频网站 8PB · 省 70%',
+    body: '<b>痛点</b>：8 PB 全 Standard，年存储费 2400 万 / 70% 内容半年无访问<br><b>方案</b>：30 天 → Standard · 30-180 天 → IA · 180天-5年 → Archive + CRR + WORM<br><br>💰 <b>年费 2400 万 → 720 万（-70%）</b><br>📅 满足 5 年合规<br>🌍 异地容灾不丢',
+    visual: '<div style="font-size:64px;">📹</div>',
+    voice: '一个真实案例。某视频网站 8 PB 存量素材全部放对象 Standard 年存储费 2400 万。70% 内容半年无访问但合规要求保留 5 年。方案：30 天热门走 Standard，30-180 天 IA，180 天到 5 年 Archive。同时开 CRR 复制到异地 region 冷数据加 WORM 合规锁定。结果年存储费降到约 720 万省 70% 同时满足 5 年合规和异地容灾。查询热门内容性能不变。',
+    fallbackDuration: 24000 },
+
+  { chapter: '⚠️ 售前坑', title: '存储常见 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 存储方案常见 3 大坑</h4>
+      <div class="x-row"><b>一桶到底</b>：所有内容堆 Standard，半年后被账单吓到</div>
+      <div class="x-row"><b>KMS 密钥误删</b>：1 个月窗口期内未恢复 → <b>数据永久不可解密</b></div>
+      <div class="x-row"><b>跨境合规漏算</b>：海外用户上传到中国 region，<b>触犯当地数据驻留法</b></div>
+      <div class="ok-row">售前正确做法：<b>① 给客户做存储分层评估</b>+ 生命周期；<b>② KMS 密钥</b>设禁删保护 + 多人审批 + 跨域备份；<b>③ 跨境业务</b>必先调研数据驻留法 + 走专属 region。</div>
+    </div>`,
+    voice: '存储方案 3 大坑。一一桶到底所有内容堆 Standard 半年后被账单吓到。二 KMS 密钥误删 1 个月窗口期内未恢复数据永久不可解密。三跨境合规漏算海外用户上传到中国 region 触犯当地数据驻留法。正确做法：给客户做存储分层评估加生命周期；KMS 密钥设禁删保护加多人审批加跨域备份；跨境业务必先调研数据驻留法加走专属 region。',
+    fallbackDuration: 25000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 6 类存储形态？<span style="color:#a5b4fc"> → 本地/块/文件/对象/归档/数据库</span><br>
+      <b>Q2</b> 块存储三大指标？<span style="color:#a5b4fc"> → IOPS/吞吐/延迟，金融选 PL3</span><br>
+      <b>Q3</b> S3 协议生态？<span style="color:#a5b4fc"> → 事实标准，TOS/OSS/OBS 全兼容，SDK 零改造</span><br>
+      <b>Q4</b> NAS 选通用还是极速？<span style="color:#a5b4fc"> → 通用适合 OA，极速 vePFS 适合 AI 千卡训练</span><br>
+      <b>Q5</b> 生命周期 5 阶段？<span style="color:#a5b4fc"> → Standard → IA → Archive → Deep → 删除，省 50-90%</span><br>
+      <b>Q6</b> 信封加密原理？<span style="color:#a5b4fc"> → DEK 加密数据，CMK 加密 DEK，CMK 永不落地</span><br>
+      <b>Q7</b> CRR vs SRR？<span style="color:#a5b4fc"> → 跨域用 CRR 容灾，同域用 SRR 审计</span><br>
+      <b>Q8</b> 客户问"能省吗"？<span style="color:#a5b4fc"> → 推存储分层 + 生命周期 + CRR，省 30-70%</span>
+    </div>`,
+    voice: '8 题速查。一 6 类存储：本地、块、文件、对象、归档、数据库。二块存储三指标 IOPS 吞吐 延迟金融 PL3。三 S3 协议是事实标准 TOS OSS OBS 兼容 SDK 零改造。四 NAS 通用适合 OA 极速 vePFS 适合 AI 千卡。五生命周期 5 阶段 Standard IA Archive Deep 删除省 50-90%。六信封加密 DEK 加密数据 CMK 加密 DEK CMK 永不落地。七 CRR 跨域容灾 SRR 同域审计。八客户问能省吗推存储分层加生命周期加 CRR 省 30-70%。',
+    fallbackDuration: 28000 },
+
+  { chapter: '完成', title: '🎉 Day 3 学完！',
+    eyebrow: '关键心法',
+    body: '存储客户对话不要陷"性能/价格"两端拉锯。<br>把客户存储画"<b>热/温/冷/冰</b>"四层 → 综合成本砍 40-60%。<br>比死磕单价有效得多。',
+    visual: '<div style="font-size:80px;">💾</div>',
+    voice: '恭喜 Day 3 学完。存储客户对话最容易陷入"性能价格"两端拉锯。把客户存储画"热温冷冰"四层综合成本砍 40-60%。比死磕单价有效得多。下一站 Day 4 云数据库。',
+    fallbackDuration: 19000 },
+];
+</script>
+<script src="_player.js?v=22"></script>
+</body>
+</html>

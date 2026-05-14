@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 4 · 云数据库与中间件 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=22">
+<style>
+  /* CAP 三角 */
+  .cap-tri { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; width: 880px; max-width: 96vw; }
+  .cap-card { padding: 18px 14px; border-radius: 12px; text-align: left;
+    background: rgba(255,255,255,.04); border: 1.5px solid;
+    animation: cardIn .5s both; }
+  .cap-card.c { border-color: #2b5cff; }
+  .cap-card.a { border-color: #f59e0b; animation-delay: .15s; }
+  .cap-card.p { border-color: #ec4899; animation-delay: .3s; }
+  .cap-card .lbl { font-size: 28px; font-weight: 800; display: block; }
+  .cap-card.c .lbl { color: #a5b4fc; }
+  .cap-card.a .lbl { color: #fde68a; }
+  .cap-card.p .lbl { color: #f9a8d4; }
+  .cap-card h5 { font-size: 14px; color: #fff; margin: 4px 0; }
+  .cap-card p { font-size: 12px; color: #cbd5e1; line-height: 1.6; }
+  .cap-card .ex { padding: 4px 8px; margin-top: 6px; background: rgba(0,0,0,.3);
+    border-radius: 4px; font-family: monospace; font-size: 11px; color: #94a3b8; }
+
+  /* Redis 3 大问题 */
+  .redis-issues { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    width: 900px; max-width: 96vw; }
+  .ri-card { padding: 16px 14px; border-radius: 10px; background: rgba(239,68,68,.06);
+    border: 1.5px solid #ef4444; text-align: left; animation: cardIn .5s both; }
+  .ri-card.warn { background: rgba(245,158,11,.06); border-color: #f59e0b; }
+  .ri-card h5 { font-size: 14px; color: #fca5a5; margin-bottom: 6px; }
+  .ri-card.warn h5 { color: #fde68a; }
+  .ri-card .desc { font-size: 12px; color: #cbd5e1; margin-bottom: 6px; line-height: 1.6; }
+  .ri-card .fix { padding: 6px 8px; background: rgba(34,197,94,.1); border-left: 3px solid #22c55e;
+    border-radius: 4px; font-size: 11.5px; color: #86efac; }
+</style>
+</head>
+<body>
+<script>
+window.META = {
+  day: 4,
+  title: 'Day 4 · 云数据库与中间件',
+  intro: '14 分钟 · CAP/BASE/ACID + NewSQL + Redis + Kafka + 湖仓一体 + Oracle 替换案例'
+};
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 4 · 云数据库与中间件',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>CAP/BASE/ACID + NewSQL + Redis 三大问题 + Kafka + 湖仓一体</b><br>14 分钟 + 2 互动 + 3 客户对话 + Oracle 替换省 65% 真实案例',
+    visual: '<div class="cover-icon">🗄️</div>',
+    voice: '欢迎来到 Day 4 云数据库与中间件。这是售前最难讲又最值钱的一节——数据库决定客户业务能不能跑得动。今天 14 分钟讲透 CAP BASE ACID 理论、NewSQL 选型、Redis 三大问题、Kafka 消息队列、湖仓一体，加 3 个客户对话和 Oracle 替换省 65% 真实案例。',
+    fallbackDuration: 23000 },
+
+  { chapter: '第 1 章 · 一致性理论', title: 'CAP 定理 · 三选二',
+    visual: `<div class="cap-tri">
+      <div class="cap-card c">
+        <span class="lbl">C</span>
+        <h5>一致性 Consistency</h5>
+        <p>所有节点同一时刻数据一致</p>
+        <div class="ex">CP: ZooKeeper / etcd</div>
+      </div>
+      <div class="cap-card a">
+        <span class="lbl">A</span>
+        <h5>可用性 Availability</h5>
+        <p>请求总能拿到响应</p>
+        <div class="ex">AP: Cassandra / Eureka</div>
+      </div>
+      <div class="cap-card p">
+        <span class="lbl">P</span>
+        <h5>分区容忍 Partition</h5>
+        <p>网络分区时仍能工作</p>
+        <div class="ex">云上分布式必选 P</div>
+      </div>
+    </div>`,
+    voice: 'CAP 定理是分布式系统的"三选二"。Consistency 一致性所有节点同一时刻数据一致。Availability 可用性请求总能拿到响应。Partition tolerance 分区容忍网络分区时仍能工作。云上分布式系统必选 P，所以核心矛盾在 CP 还是 AP。CP 代表 ZooKeeper、etcd 用于配置中心和服务注册。AP 代表 Cassandra、Eureka 用于电商社交。售前面试问"CAP 怎么选"先反问场景再答。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 1 章 · 一致性理论', title: 'BASE vs ACID · 两种世界',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>🏦 ACID（强一致）</h4>
+        <p><span class="tag">A</span>原子性 Atomicity</p>
+        <p><span class="tag">C</span>一致性 Consistency</p>
+        <p><span class="tag">I</span>隔离性 Isolation</p>
+        <p><span class="tag">D</span>持久性 Durability</p>
+        <p><span class="tag">用于</span>银行转账 / 核心交易</p>
+      </div>
+      <div class="acl-box">
+        <h4>🌐 BASE（最终一致）</h4>
+        <p><span class="tag">BA</span>Basically Available 基本可用</p>
+        <p><span class="tag">S</span>Soft state 软状态</p>
+        <p><span class="tag">E</span>Eventually consistent 最终一致</p>
+        <p><span class="tag">用于</span>电商订单 / 社交点赞</p>
+      </div>
+    </div>`,
+    voice: 'ACID 和 BASE 是两种世界。ACID 强一致原子性、一致性、隔离性、持久性，银行转账等强事务场景必须 ACID，MySQL Oracle 是代表。BASE 最终一致基本可用、软状态、最终一致，电商社交大多采用 AP+BASE。隔离级别 4 种：读未提交 / 读已提交 / 可重复读 / 串行化。MySQL 默认 RR Oracle 默认 RC，理解隔离级别才能调对锁。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 2 章 · 关系库', title: 'MySQL / PG / Oracle · 三选一',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🐬</div><h5>MySQL</h5><p>互联网最主流<br>OLTP 中小规模<br>1-2 TB / 分库分表</p></div>
+      <div class="col-card"><div class="num">🐘</div><h5>PostgreSQL</h5><p>"开源 Oracle"<br>JSON/GIS/复杂查询<br>金融政企首选</p></div>
+      <div class="col-card"><div class="num">🏦</div><h5>Oracle / SQL Server</h5><p>商业许可昂贵<br>上云常被替代<br>降 TCO 50%+</p></div>
+    </div>`,
+    voice: '关系型数据库 3 选 1。MySQL 是互联网最主流 5.7 和 8.0 是当前生产版本适合 OLTP 中小规模单实例 1-2 TB 分库分表后管理复杂。PostgreSQL 是开源 Oracle 复杂查询 JSON GIS 都强扩展性好金融、政企国产化替代首选。SQL Server 和 Oracle 是商业数据库许可昂贵上云常被 veDB MySQL/PG 替代以降低 TCO 50%+。售前讲方案要会问客户用什么 DB，决定后面整套话术方向。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 2 章 · 关系库扩展', title: '主从 + 读写分离 + 分库分表',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🔄</div><h5>主从</h5><p>一主多从<br>半同步减少延迟<br>主写从读</p></div>
+      <div class="col-card"><div class="num">📥</div><h5>读写分离</h5><p>ProxySQL/veDB Proxy<br>按 SQL 类型路由<br>电商必备</p></div>
+      <div class="col-card"><div class="num">✂️</div><h5>分库分表</h5><p>单库&gt;5TB 启用<br>用户ID 哈希<br>Sharding-JDBC</p></div>
+    </div>`,
+    voice: 'MySQL 扩展三招。一主从架构一主多从主写从读分担压力，半同步复制减少主从延迟。二读写分离通过中间件 ProxySQL 或 veDB Proxy 按 SQL 类型路由写请求到主读到从，流量大的电商必备。三分库分表当单库过 5 TB 或单表过 1 亿行时启用按用户或订单 ID 哈希分引入 Sharding-JDBC 或 MyCAT 中间件。但分库分表后跨表 JOIN 困难、运维复杂这就是 NewSQL 出现的原因。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 3 章 · NewSQL', title: 'NewSQL · SQL 加分布式',
+    body: '<b>兼具 SQL 接口 + 分布式存储计算 + ACID 事务</b><br>解决"分库分表"复杂度<br><span class="hl">代表：veDB / TiDB / PolarDB / TDSQL</span>',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>📦 Shared-Storage</h4>
+        <p><span class="tag">代表</span>PolarDB / veDB</p>
+        <p><span class="tag">原理</span>计算与存储解耦</p>
+        <p><span class="tag">优势</span>秒级扩从 / 一份数据多读副本</p>
+        <p><span class="tag">用于</span>读多写少 + 快速扩容</p>
+      </div>
+      <div class="acl-box">
+        <h4>🌐 Shared-Nothing</h4>
+        <p><span class="tag">代表</span>TiDB</p>
+        <p><span class="tag">原理</span>无共享水平扩展</p>
+        <p><span class="tag">优势</span>无限水平扩展</p>
+        <p><span class="tag">用于</span>超大规模 / 写密集</p>
+      </div>
+    </div>`,
+    voice: 'NewSQL 兼具 SQL 接口加分布式存储计算加 ACID 事务，解决分库分表复杂度。代表 veDB、TiDB、PolarDB、TDSQL。两种架构。Shared-Storage 共享存储代表 PolarDB 和 veDB 计算与存储解耦秒级扩从，适合读多写少快速扩容。Shared-Nothing 无共享代表 TiDB 无限水平扩展适合超大规模写密集。veDB MySQL 100% 兼容 MySQL 协议应用零改造迁过来，单实例可达数十 TB QPS 百万级。售前讲方案要主动给客户算"从 MySQL 到 veDB"零改造省运维这个账。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 3 章 · HTAP', title: 'HTAP · 一库跑 OLTP + OLAP',
+    body: '<b>Hybrid Transaction/Analytical Processing</b><br>既跑事务又能直接做实时分析 · <span class="hl">省去 ETL</span><br>ByteHouse、TiDB 7.0+、veDB Global 是代表',
+    visual: '<div class="cdn-flow" style="font-size:28px;"><span class="node">📝 OLTP</span><span class="arrow">+</span><span class="node">📊 OLAP</span><span class="arrow">=</span><span class="node">⚡ HTAP</span></div><div style="font-size:13px;color:#7a8db5;margin-top:14px;text-align:center;">交易 + 实时分析同一份数据 · ETL 周期 6 小时 → 0</div>',
+    voice: 'HTAP Hybrid Transaction Analytical Processing 既跑 OLTP 事务又能直接做实时分析省去 ETL。传统架构客户的 MySQL 跑事务每 6 小时 ETL 到数仓做分析，洞察延迟严重。HTAP 让一份数据同时支持事务和分析，ETL 周期 6 小时降到 0 实时分析。代表 ByteHouse、TiDB 7.0+、veDB Global。售前讲方案推 HTAP 给客户讲"实时风控、实时推荐、实时大屏"这种场景立刻打动客户。',
+    fallbackDuration: 24000 },
+
+  { chapter: '🎯 互动测验 #1', title: 'Oracle 客户怎么上云？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户 Oracle 6TB 年许可 800 万 + 写入瓶颈，最佳上云策略？</div>
+      <div class="quiz-opt wrong" data-k="A">Rehost 直接搬 ECS（继续交许可费）</div>
+      <div class="quiz-opt correct" data-k="B">Replatform 切 veDB PostgreSQL + DTS 平滑迁移</div>
+      <div class="quiz-opt wrong" data-k="C">用 MySQL 强切（存储过程兼容噩梦）</div>
+      <div class="quiz-opt wrong" data-k="D">Retain 暂留本地</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：Oracle 替换的标准打法。<b>① PG 兼容 Oracle 多数语法</b>（存储过程、Sequence、PL/SQL 可移植）；<b>② DTS 全量+增量同步</b>先做镜像，灰度切读最后切写；<b>③ 引入 ByteHouse 做实时风控分析</b>。结果：<b>许可费降 65%，写入 TPS 提 3 倍，DBA 释放 1.5 个 FTE</b>。这就是 Day 1 学过的 Replatform 在 DB 上的最佳实践。</div>
+    </div>`,
+    voice: '思考一下。Oracle 客户怎么上云？给你 5 秒......正确答案 B Replatform 切 veDB PostgreSQL 加 DTS 平滑迁移。这是 Oracle 替换的标准打法：PG 兼容 Oracle 多数语法存储过程 Sequence PL/SQL 可移植；DTS 全量加增量同步先做镜像灰度切读最后切写；引入 ByteHouse 做实时风控分析。结果许可费降 65% 写入 TPS 提 3 倍 DBA 释放 1.5 FTE。Day 1 学过的 Replatform 在 DB 上的最佳实践。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 4 章 · 索引', title: '4 种索引 · 各有所长',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🌳</div><h5>B+ 树</h5><p>关系库默认<br>范围查询友好<br>千万级 ms 内</p></div>
+      <div class="col-card"><div class="num">#️⃣</div><h5>Hash</h5><p>O(1) 等值<br>不支持范围<br>Redis 大量使用</p></div>
+      <div class="col-card"><div class="num">📚</div><h5>倒排</h5><p>"词→文档"<br>搜索引擎核心<br>Elasticsearch</p></div>
+      <div class="col-card"><div class="num">📝</div><h5>LSM Tree</h5><p>写优化结构<br>HBase/RocksDB<br>ClickHouse 用</p></div>
+    </div>`,
+    voice: '4 种索引各有所长。B+ 树是关系型数据库默认索引结构范围查询友好，千万级表查询从全表扫数秒缩短到毫秒。Hash 索引 O(1) 等值查询但不支持范围，MySQL Memory 引擎和 Redis 大量使用。倒排索引是搜索引擎核心把"文档到词"反转为"词到文档"，Elasticsearch、TiSearch 必备。LSM Tree Log-Structured Merge Tree 是写优化结构 HBase、RocksDB、ClickHouse 写性能远超 B+ 树。慢查询调优 80% 性能问题靠加索引解决——设置 slow_query_log 大于 1 秒入日志加 EXPLAIN 看执行计划。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 5 章 · Redis', title: 'Redis 持久化 + 集群',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>💾 持久化</h4>
+        <p><span class="tag">RDB</span>快照启动快 / 丢分钟级</p>
+        <p><span class="tag">AOF</span>追加日志安全 / 文件大</p>
+        <p><span class="tag">生产</span>两者结合（RDB 快加 AOF 安全）</p>
+      </div>
+      <div class="acl-box">
+        <h4>🌐 集群</h4>
+        <p><span class="tag">主从</span>单点写</p>
+        <p><span class="tag">Sentinel</span>高可用自动切换</p>
+        <p><span class="tag">Cluster</span>16384 槽水平扩展</p>
+      </div>
+    </div>`,
+    voice: 'Redis 两个核心。持久化两种：RDB 快照启动快可能丢分钟级数据。AOF 追加日志数据安全文件大。生产推荐两者结合 RDB 快加 AOF 安全。集群三种：主从单点写。Sentinel 高可用自动切换。Cluster 分槽 16384 个水平扩展。火山引擎云 Redis 三种全支持。售前讲 Redis 要主动问客户"持久化怎么配"——很多客户拿 Redis 当 DB 用没持久化重启数据全丢这是真实事故。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 5 章 · Redis 三大问题', title: '击穿 / 穿透 / 雪崩 · 必背',
+    visual: `<div class="redis-issues">
+      <div class="ri-card">
+        <h5>💥 缓存击穿</h5>
+        <div class="desc">热点 Key 失效瞬间打爆 DB</div>
+        <div class="fix">✓ 互斥锁 / 永不过期 / 提前预热</div>
+      </div>
+      <div class="ri-card warn">
+        <h5>🔍 缓存穿透</h5>
+        <div class="desc">查询不存在的 Key 持续打 DB</div>
+        <div class="fix">✓ Bloom Filter / 缓存空值</div>
+      </div>
+      <div class="ri-card">
+        <h5>❄️ 缓存雪崩</h5>
+        <div class="desc">大量 Key 同时失效 → DB 雪崩</div>
+        <div class="fix">✓ TTL 随机 / 多级缓存 / 限流降级</div>
+      </div>
+    </div>`,
+    voice: 'Redis 三大问题面试必背。缓存击穿：热点 Key 失效瞬间打爆 DB，对策互斥锁、永不过期、提前预热。缓存穿透：查询不存在的 Key 持续打 DB，对策 Bloom Filter 加缓存空值。缓存雪崩：大量 Key 同时失效，对策 TTL 加随机值、多级缓存、限流降级。售前讲方案要主动给客户上"Redis 治理 SOP"——这种"治理动作"是把售前从产品销售变成方案顾问的关键。Redis 常见用法：会话 Session、热点商品、排行榜 ZSet、消息队列 List Stream、分布式锁 SETNX。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 6 章 · NoSQL', title: 'NoSQL 五兄弟 · 按场景选',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>类型</th><th>代表</th><th>场景</th></tr></thead>
+      <tbody>
+        <tr><td>文档型</td><td class="ve">MongoDB</td><td>灵活 Schema · 内容管理 / 用户画像</td></tr>
+        <tr><td>宽列型</td><td class="hw">HBase</td><td>列族 PB 级 · 日志 / 点击流 / 推荐画像</td></tr>
+        <tr><td>列簇 / AP</td><td class="al">Cassandra</td><td>跨数据中心 · 全球化业务</td></tr>
+        <tr><td>图数据库</td><td class="tc">Neo4j / ByteGraph</td><td>多跳查询 100x · 社交 / 风控 / 知识图谱</td></tr>
+        <tr><td>时序数据库</td><td class="bd">InfluxDB / TDengine</td><td>指标 / IoT · 压缩 10x 查询 100x</td></tr>
+      </tbody>
+    </table>`,
+    voice: 'NoSQL 五兄弟按场景选。MongoDB 文档型灵活 Schema JSON 原生存储适合内容管理用户画像分片可达数十亿文档。HBase 宽列列族存储海量稀疏数据 PB 级用于日志点击流推荐画像。Cassandra AP 强一致跨数据中心写性能好外贸全球化业务常用。图数据库 Neo4j 或 ByteGraph 建模"关系"，社交风控知识图谱必备，多跳查询比关系数据库 JOIN 快 100 倍以上。时序数据库 InfluxDB 或 TDengine 专为指标和 IoT 设计，写入压缩比 10 倍查询 100 倍。售前讲 NoSQL 要会按客户场景"对号入座"。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 7 章 · 消息队列', title: 'Kafka / RocketMQ / RabbitMQ',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>选型</th><th>吞吐</th><th>强项</th><th>场景</th></tr></thead>
+      <tbody>
+        <tr><td class="ve">Kafka</td><td>百万 TPS+</td><td>日志/数据管道/流处理</td><td>互联网首选</td></tr>
+        <tr><td class="al">RocketMQ</td><td>10 万 TPS</td><td>事务消息 / 金融下单</td><td>电商支付</td></tr>
+        <tr><td class="tc">RabbitMQ</td><td>万级 TPS</td><td>AMQP 路由灵活 / 低延迟</td><td>企业 IT 流程</td></tr>
+        <tr><td class="bd">Pulsar</td><td>10 万 TPS</td><td>存算分离 / 多租户</td><td>Kafka 升级方案</td></tr>
+      </tbody>
+    </table>`,
+    voice: '消息队列 4 选 1。Kafka 高吞吐百万 TPS+ 日志、数据管道、流处理首选，不擅长复杂消息路由与事务。RocketMQ 阿里开源事务消息支持好金融下单场景适用。RabbitMQ AMQP 协议路由灵活延迟低适合企业 IT 业务流程吞吐稍弱。Pulsar 存算分离架构多租户友好少数大型公司用作 Kafka 升级方案。事务消息保证"本地事务加发消息"原子性，下单加扣库存等强一致场景必备。售前讲方案要会按客户场景推：互联网推 Kafka 金融推 RocketMQ。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 8 章 · 湖仓一体', title: '数据仓库 / 数据湖 / 湖仓一体',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🏪</div><h5>数据仓库</h5><p>结构化 + OLAP<br>ByteHouse / Snowflake<br>毫秒-秒查询<br>单价较贵</p></div>
+      <div class="col-card"><div class="num">🌊</div><h5>数据湖</h5><p>原始多源数据<br>Parquet/ORC<br>TOS+EMR+LAS<br>存便宜分析慢</p></div>
+      <div class="col-card"><div class="num">🏞️</div><h5>湖仓一体 ★</h5><p>Iceberg/Hudi/Delta<br>仓性能 + 湖灵活<br>火山 LAS 代表</p></div>
+    </div>`,
+    voice: '数据存储 3 种姿势演进。数据仓库结构化加 OLAP 查询毫秒到秒，如 ByteHouse、Snowflake、Redshift，单价较贵。数据湖存储原始多源数据 Parquet ORC 格式 TOS+EMR+LAS 是典型组合存储便宜分析慢。湖仓一体基于 Iceberg、Hudi、Delta Lake，把仓的高性能加湖的灵活性合一火山引擎 LAS 是代表。ETL 先清洗再入库适合传统数仓 ELT 先入湖再处理适合大数据时代灵活但需算力支撑。售前讲方案推湖仓一体给客户讲"省 ETL 团队成本"立刻打动 CIO。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🎯 互动测验 #2', title: 'Redis 当 DB 用 · 数据丢了咋办？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户 Redis 重启数据丢光，业务停摆 6 小时。根因可能？</div>
+      <div class="quiz-opt wrong" data-k="A">Redis 性能不够换 NoSQL</div>
+      <div class="quiz-opt correct" data-k="B">Redis 当数据库用但<b>未配持久化</b>（RDB/AOF 都没开）</div>
+      <div class="quiz-opt wrong" data-k="C">Redis 集群模式有 bug</div>
+      <div class="quiz-opt wrong" data-k="D">客户没多副本</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：<b>"Redis 当 DB 用没持久化"是售前最常见的客户事故</b>。Redis 默认内存级重启就丢。客户技术团队当缓存用顺手存了订单/用户数据没意识到。<b>修复</b>：① 立刻开 RDB 每 5 分钟快照 + AOF everysec；② 重要数据双写 MySQL；③ 定期演练 Redis 重启数据恢复流程。售前讲方案必须主动给客户讲这一条，能避免一夜白头的事故。</div>
+    </div>`,
+    voice: '思考一下。Redis 重启数据丢光业务停 6 小时根因？给你 5 秒......正确答案 B Redis 当 DB 用但未配持久化。这是售前最常见的客户事故。Redis 默认内存级重启就丢。客户技术团队当缓存用顺手存了订单用户数据没意识到。修复立刻开 RDB 每 5 分钟快照加 AOF everysec、重要数据双写 MySQL、定期演练 Redis 重启数据恢复流程。售前讲方案必须主动给客户讲这一条能避免一夜白头的事故。',
+    fallbackDuration: 27000 },
+
+  { chapter: '🌟 客户对话 #1', title: 'Oracle 客户问"换 PG 会不会出事？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们核心交易库 Oracle 跑了 10 年，存储过程几千个。换 veDB PG 心里没底。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>这个顾虑非常对。<b>5 步迁移路径</b>：<b>① 评估 1 周</b> 用工具扫存储过程兼容性，给修改清单；<b>② 改造 2-4 周</b> 不兼容部分人工修改；<b>③ DTS 全量+增量 2 周</b> 平稳同步到 PG；<b>④ 灰度 1 周</b> 先切读流量验证；<b>⑤ 切写</b> 业务零停机切换。<b>整体 8-12 周</b>。我们做过 15+ 同行案例可以给参考函。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>万一切完出事呢？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>3 层兜底：<b>① 灰度期</b> Oracle 仍在跑可秒级回切；<b>② 切换日</b> 我们派 2 名资深 DBA 现场 24h 值守；<b>③ 切完 90 天</b> Oracle 保留只读副本作为应急回滚。这种"<b>不剪断旧绳子先攀新绳子</b>"的姿态是政企/金融客户最吃的。</div>
+      </div>
+    </div>`,
+    voice: '一段客户对话。Oracle 客户怕换 PG 出事。售前给 5 步迁移路径：评估 1 周扫存储过程兼容性；改造 2-4 周不兼容部分修改；DTS 全量增量 2 周同步；灰度 1 周切读流量；切写零停机。整体 8-12 周。客户追问万一出事，售前甩 3 层兜底：灰度期 Oracle 仍在跑秒级回切、切换日 2 资深 DBA 24h 值守、切完 90 天 Oracle 保留只读副本应急回滚。<b>"不剪断旧绳子先攀新绳子"</b>是政企金融客户最吃的姿态。',
+    fallbackDuration: 33000 },
+
+  { chapter: '🌟 客户对话 #2', title: '"我们 MySQL 撑不住，但不想分库分表"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们 MySQL 单库 8TB 已经撑不住，但分库分表运维太复杂。怎么办？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型的 <b>veDB MySQL 适用场景</b>。veDB <b>100% 兼容 MySQL 协议</b>应用零改造，单实例可达<b>数十 TB QPS 百万级</b>，省去分库分表。<b>切换方式</b>：DTS 全量+增量同步，灰度切流量 1-2 周完成。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>价格呢？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>常规价是<b>原生 MySQL 的 1.5-2 倍</b>，看起来贵但<b>算总账</b>：① 省 2-3 个 DBA（年 60-90 万）；② 省运维事故时间；③ <b>读副本秒级扩</b> 高峰不抓瞎。<b>综合 TCO 1 年内回本</b>，3 年综合算下来比原生 + 分库分表便宜 30%。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话客户 MySQL 撑不住但不想分库分表。售前推 veDB MySQL：100% 兼容协议零改造，单实例数十 TB QPS 百万级省去分库分表。DTS 全量增量同步灰度切流量 1-2 周完成。客户问价格，售前要会算总账：常规价是原生 MySQL 1.5-2 倍但省 2-3 DBA 年 60-90 万、省运维事故、读副本秒级扩。综合 TCO 1 年内回本 3 年比原生加分库分表便宜 30%。<b>用"算总账"代替"比单价"</b>是 NewSQL 售前的标准动作。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🌟 客户对话 #3', title: '"我们要实时风控，但 ETL 6 小时太慢"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们做实时风控，但 MySQL ETL 到数仓要 6 小时。诈骗交易第二天才发现。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型 <b>HTAP 场景</b>。两种架构：<b>① veDB Global</b> 主库跑 OLTP 列存只读副本跑 OLAP，<b>0 ETL 秒级洞察</b>；<b>② ByteHouse + Kafka Connect</b> MySQL 变更秒级同步到 ByteHouse 列存毫秒查询。看您团队偏好。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>哪个我能更快上？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>方案 ②（ByteHouse）更快</b>，应用层不动 ByteHouse 旁挂上做风控分析 <b>2-3 周上线</b>。方案 ① 涉及核心 DB 替换需 8-12 周但长期统一架构更优。建议先 ② 解决紧迫问题，6 个月后再评估 ①。<b>"先止血再调养"</b>是优秀售前的节奏。</div>
+      </div>
+    </div>`,
+    voice: '第三个对话客户实时风控 ETL 6 小时太慢诈骗第二天才发现。售前给 2 种 HTAP 架构：veDB Global 主库 OLTP 列存只读副本 OLAP 零 ETL；ByteHouse 加 Kafka Connect MySQL 变更秒级同步。客户问哪个更快，售前推 ByteHouse 方案 2-3 周上线先止血，6 个月后再评估 veDB Global 长期统一架构。<b>"先止血再调养"</b>是优秀售前的节奏，不要一上来就推大改造。',
+    fallbackDuration: 33000 },
+
+  { chapter: '案例', title: '🌟 互联网金融 · Oracle → veDB PG',
+    body: '<b>痛点</b>：Oracle 6TB · 许可+硬件年 800 万 · 写入瓶颈 DBA 撑不住<br><b>方案</b>：veDB PG（PG 兼容 Oracle）+ DTS 平滑迁移 + ByteHouse 实时风控<br><br>💰 <b>800万 → 280万（-65%）</b><br>⚡ 写入 TPS +3 倍<br>👥 DBA 释放 1.5 FTE',
+    visual: '<div style="font-size:64px;">🏦</div>',
+    voice: '一个真实案例。某互联网金融公司核心交易库 Oracle 单实例 6 TB 许可加硬件年支出 800 万业务增长后写入瓶颈明显 3 个 DBA 撑不住。方案：veDB PG 兼容 Oracle 多数语法加 DTS 全量增量同步先做镜像灰度切读最后切写引入 ByteHouse 做实时风控分析。结果年许可加硬件费降到约 280 万省 65% 写入 TPS 提升 3 倍 DBA 释放 1.5 FTE 投入业务建模。这是 Oracle 替换 + HTAP 实时风控的标杆案例。',
+    fallbackDuration: 28000 },
+
+  { chapter: '⚠️ 售前坑', title: '数据库 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 数据库方案 3 大坑</h4>
+      <div class="x-row"><b>盲目去 Oracle</b>：用 MySQL 强切，触发存储过程兼容性深坑 → 3 个月迁不动</div>
+      <div class="x-row"><b>缓存当数据库用</b>：Redis 未持久化 → 重启数据全丢 → 业务停摆</div>
+      <div class="x-row"><b>消息队列没幂等</b>：网络重试 → 同一笔订单扣两次款 → 客户索赔</div>
+      <div class="ok-row">售前正确做法：<b>① Oracle 改 PG 不改 MySQL</b>；<b>② Redis 配 RDB+AOF</b> 重要数据双写 MySQL；<b>③ 消费者必做幂等</b> 用 Redis SETNX 或唯一约束。</div>
+    </div>`,
+    voice: '数据库方案 3 大坑。一盲目去 Oracle 用 MySQL 强切触发存储过程兼容性深坑 3 个月迁不动。二缓存当数据库用 Redis 未持久化重启数据全丢业务停摆。三消息队列没幂等网络重试同一笔订单扣两次款客户索赔。正确做法：Oracle 改 PG 不改 MySQL；Redis 配 RDB+AOF 重要数据双写 MySQL；消费者必做幂等用 Redis SETNX 或唯一约束。售前推方案要把这 3 条作为治理动作"打包卖"。',
+    fallbackDuration: 28000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> CAP 怎么选？<span style="color:#a5b4fc"> → 云上分布式必选 P，CP 配置中心 / AP 互联网</span><br>
+      <b>Q2</b> ACID 4 原则？<span style="color:#a5b4fc"> → 原子/一致/隔离/持久，金融转账必备</span><br>
+      <b>Q3</b> veDB vs TiDB？<span style="color:#a5b4fc"> → 共享存储 vs Shared-Nothing；读多写少 vs 写密集</span><br>
+      <b>Q4</b> Oracle 怎么上云？<span style="color:#a5b4fc"> → Replatform 切 veDB PG + DTS 平滑迁移</span><br>
+      <b>Q5</b> Redis 三大问题？<span style="color:#a5b4fc"> → 击穿/穿透/雪崩 → 互斥锁/Bloom/TTL 随机</span><br>
+      <b>Q6</b> Kafka vs RocketMQ？<span style="color:#a5b4fc"> → 互联网 Kafka，金融 RocketMQ 事务消息</span><br>
+      <b>Q7</b> 湖仓一体？<span style="color:#a5b4fc"> → Iceberg/Hudi/Delta，仓性能 + 湖灵活</span><br>
+      <b>Q8</b> HTAP 场景？<span style="color:#a5b4fc"> → 实时风控/推荐/大屏，零 ETL 秒级洞察</span>
+    </div>`,
+    voice: '8 题速查。一 CAP 必选 P 配置中心 CP 互联网 AP。二 ACID 4 原则原子一致隔离持久。三 veDB 共享存储 TiDB Shared-Nothing 读多写少 vs 写密集。四 Oracle 上云 Replatform 切 veDB PG 加 DTS。五 Redis 三问题击穿穿透雪崩对策互斥锁 Bloom TTL 随机。六 Kafka 互联网 RocketMQ 金融事务消息。七湖仓一体 Iceberg Hudi Delta 仓性能加湖灵活。八 HTAP 场景实时风控推荐大屏零 ETL。',
+    fallbackDuration: 30000 },
+
+  { chapter: '完成', title: '🎉 Day 4 学完！',
+    eyebrow: '关键心法',
+    body: '客户讲数据库不要技术比拼。<br>先问<b>"换的过程会不会出事"</b> · <b>"治理 SOP"</b> · <b>"算总账"</b><br>这三件套是 NewSQL 售前的肌肉记忆。',
+    visual: '<div style="font-size:80px;">🗄️</div>',
+    voice: '恭喜 Day 4 学完。客户讲数据库最关心的不是性能而是"换的过程会不会出事"。售前 3 件套：迁移路径加治理 SOP 加算总账是 NewSQL 售前的肌肉记忆。下一站 Day 5 容器云原生你已经学过增强版。',
+    fallbackDuration: 21000 },
+];
+</script>
+<script src="_player.js?v=22"></script>
+</body>
+</html>

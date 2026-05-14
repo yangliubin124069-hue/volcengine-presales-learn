@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 1 · 云计算基础 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=22">
+<style>
+  /* 服务模型金字塔 */
+  .pyramid { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .pyramid .level { padding: 10px 16px; border-radius: 8px; text-align: center;
+    border: 1.5px solid; animation: cardIn .5s both; }
+  .pyramid .level h5 { font-size: 14px; font-weight: 700; margin-bottom: 2px; color: #fff; }
+  .pyramid .level .sub { font-size: 11.5px; color: #cbd5e1; }
+  .pyramid .l1 { width: 240px; border-color: #ec4899; background: rgba(236,72,153,.1); animation-delay: .1s; }
+  .pyramid .l2 { width: 320px; border-color: #f59e0b; background: rgba(245,158,11,.1); animation-delay: .2s; }
+  .pyramid .l3 { width: 400px; border-color: #6e3aff; background: rgba(110,58,255,.1); animation-delay: .3s; }
+  .pyramid .l4 { width: 480px; border-color: #2b5cff; background: rgba(43,92,255,.1); animation-delay: .4s; }
+  .pyramid .l5 { width: 560px; border-color: #22c55e; background: rgba(34,197,94,.1); animation-delay: .5s; }
+
+  /* 历史时间线 */
+  .timeline { display: flex; gap: 4px; align-items: stretch; width: 920px; max-width: 96vw; }
+  .tl-item { flex: 1; padding: 14px 8px; background: rgba(255,255,255,.04);
+    border-radius: 8px; border: 1.5px solid #2b5cff; text-align: center;
+    animation: cardIn .5s both; }
+  .tl-item .year { font-size: 18px; font-weight: 800; color: #a5b4fc; }
+  .tl-item .ev { font-size: 11.5px; color: #cbd5e1; margin-top: 4px; line-height: 1.5; }
+  .tl-item:nth-child(2) { animation-delay: .15s; }
+  .tl-item:nth-child(3) { animation-delay: .3s; }
+  .tl-item:nth-child(4) { animation-delay: .45s; }
+  .tl-item:nth-child(5) { animation-delay: .6s; }
+
+  /* 6R 决策树 */
+  .six-r { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    width: 880px; max-width: 96vw; }
+  .r-card { padding: 14px 12px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; animation: cardIn .5s both; }
+  .r-card.host { border-color: #2b5cff; }
+  .r-card.plat { border-color: #6e3aff; animation-delay: .1s; }
+  .r-card.factor { border-color: #ec4899; animation-delay: .2s; }
+  .r-card.purchase { border-color: #f59e0b; animation-delay: .3s; }
+  .r-card.retire { border-color: #ef4444; animation-delay: .4s; }
+  .r-card.retain { border-color: #22c55e; animation-delay: .5s; }
+  .r-card h5 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .r-card .roi { padding: 2px 7px; border-radius: 4px; font-size: 10.5px;
+    font-weight: 700; display: inline-block; margin-bottom: 4px; }
+  .r-card .roi.high { background: rgba(34,197,94,.2); color: #86efac; }
+  .r-card .roi.mid { background: rgba(245,158,11,.2); color: #fde68a; }
+  .r-card .roi.low { background: rgba(239,68,68,.15); color: #fca5a5; }
+  .r-card p { font-size: 12px; color: #cbd5e1; line-height: 1.6; }
+</style>
+</head>
+<body>
+<script>
+window.META = {
+  day: 1,
+  title: 'Day 1 · 云计算基础',
+  intro: '12 分钟 · 起源 + NIST 5 特征 + 5 服务模型 + 4 部署模式 + 6R 迁移'
+};
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 1 · 云计算基础',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>起源 / NIST / IaaS-PaaS-SaaS / 公私混合 / 虚拟化容器 / 6R 迁移</b><br>12 分钟让你能跟客户从 0 聊到落地路径',
+    visual: '<div class="cover-icon">☁️</div>',
+    voice: '欢迎来到 Day 1 云计算基础。这是售前最常被问、最容易讲得"白开水"的一节。今天 12 分钟讲透云的起源、NIST 五大特征、五类服务模型、四种部署模式、虚拟化容器化、6R 迁移策略，让你能跟客户从 0 聊到落地路径。',
+    fallbackDuration: 19000 },
+
+  { chapter: '第 1 章 · 起源', title: '云计算 18 年演进史',
+    visual: `<div class="timeline">
+      <div class="tl-item"><div class="year">2006</div><div class="ev">AWS S3+EC2<br>首个商业云</div></div>
+      <div class="tl-item"><div class="year">2009</div><div class="ev">阿里云"飞天"<br>中国第一波</div></div>
+      <div class="tl-item"><div class="year">2014</div><div class="ev">腾讯/华为<br>中国第二波</div></div>
+      <div class="tl-item"><div class="year">2020</div><div class="ev">火山引擎<br>抖音技术输出</div></div>
+      <div class="tl-item"><div class="year">2024</div><div class="ev">大模型<br>AI Cloud 元年</div></div>
+    </div>`,
+    voice: '云计算 18 年演进史。2006 年 AWS 推 S3 和 EC2 第一次把按需付费的计算做成商品。2009 年阿里云"飞天"开启中国第一波。2014 年腾讯华为入场第二波打公有云。2020 年字节孵化火山引擎，第三波加入行业云和 AI Cloud。2024 年大模型爆发开启 AI Cloud 元年。云的本质是算力的"电网化"，客户买的是用电量不是发电机。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 2 章 · NIST', title: 'NIST 5 大特征 · 云的"身份证"',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(5,1fr);font-size:11px;">
+      <div class="col-card"><div class="num">🔓</div><h5>① 按需自助</h5><p>API 开通<br>分钟级到位<br>vs IDC 2-4 周</p></div>
+      <div class="col-card"><div class="num">🌐</div><h5>② 广泛访问</h5><p>互联网/专线<br>多终端<br>SLA 99.95-99.99%</p></div>
+      <div class="col-card"><div class="num">🏊</div><h5>③ 资源池化</h5><p>多租户共享<br>利用率 10% → 50%+</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>④ 快速弹性</h5><p>峰谷分钟级<br>100→5000 台</p></div>
+      <div class="col-card"><div class="num">📊</div><h5>⑤ 可计量</h5><p>秒级/GB 精算<br>CapEx → OpEx</p></div>
+    </div>`,
+    voice: 'NIST 五大基本特征是云的"身份证"。一按需自助服务客户控制台或 API 开通分钟级，对比 IDC 申请 2-4 周。二广泛网络访问支持多终端 SLA 99.95-99.99%。三资源池化多租户共享底层硬件利用率从 IDC 10-15% 拉到 50% 以上。四快速弹性峰谷分钟级业务高峰 100 台扩到 5000 台。五可计量服务秒级 GB 精算账单透明，是把 CapEx 转 OpEx 的财务前提。客户问"为什么上云"必答这 5 条。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 3 章 · 5 服务模型', title: 'IaaS / PaaS / SaaS / CaaS / FaaS · 金字塔',
+    visual: `<div class="pyramid">
+      <div class="level l1"><h5>🤖 FaaS · 函数</h5><div class="sub">事件触发+毫秒计费 · veFaaS</div></div>
+      <div class="level l2"><h5>📱 SaaS · 软件</h5><div class="sub">即开即用 · 飞书 / Coze</div></div>
+      <div class="level l3"><h5>🐳 CaaS · 容器</h5><div class="sub">K8s 托管 · VKE / veCR</div></div>
+      <div class="level l4"><h5>🗄️ PaaS · 平台</h5><div class="sub">RDS / 消息队列 / 方舟</div></div>
+      <div class="level l5"><h5>🖥️ IaaS · 基础设施</h5><div class="sub">ECS / TOS / VPC</div></div>
+    </div>`,
+    voice: '5 类服务模型从底到顶金字塔。IaaS 基础设施即服务底层资源 ECS TOS VPC，客户管 OS 及以上。PaaS 平台即服务 RDS 消息队列方舟，客户只关心应用与数据。CaaS 容器即服务 VKE veCR 介于 IaaS 和 PaaS 之间是云原生主战场。SaaS 软件即服务直接提供完整应用如飞书 Coze 3 天上线。FaaS 函数即服务事件触发毫秒计费极致弹性闲时零成本。售前问客户"想用哪一层"，能定位他的 IT 成熟度。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 4 章 · 4 部署模式', title: '公有 / 私有 / 混合 / 多云',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(2,1fr);">
+      <div class="col-card"><div class="num">🌐</div><h5>公有云</h5><p>多租户共享<br>弹性最强单价最低<br>互联网/新零售/SaaS 首选</p></div>
+      <div class="col-card"><div class="num">🏰</div><h5>私有云</h5><p>专属硬件<br>OpenStack/VMware<br>金融/政务/军工数据物理隔离</p></div>
+      <div class="col-card"><div class="num">🌉</div><h5>混合云</h5><p>IDC + 公有云 + 专线<br>两地三中心 + 公有云容灾</p></div>
+      <div class="col-card"><div class="num">🌍</div><h5>多云</h5><p>2+ 公有云规避锁定<br>CNCF 2024：76% 中大企业已采用</p></div>
+    </div>`,
+    voice: '4 种部署模式。公有云多租户共享弹性最强单价最低适合互联网新零售 SaaS。私有云专属硬件 OpenStack VMware 底座金融政务军工要求数据物理隔离 CapEx 高利用率仅 20-30%。混合云本地 IDC 加公有云通过专线打通，银行业"两地三中心+公有云容灾"是典型形态。多云 2 个以上公有云规避锁定与可用性风险 CNCF 2024 调查 76% 中大型企业已采用。售前对话要会问客户"你目前在哪个模式"。',
+    fallbackDuration: 26000 },
+
+  { chapter: '🎯 互动测验 #1', title: '客户：什么类型客户用混合云？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">下列哪类客户最适合"混合云"模式？</div>
+      <div class="quiz-opt wrong" data-k="A">互联网初创公司，节省成本</div>
+      <div class="quiz-opt correct" data-k="B">国有银行：核心系统留 IDC，营销/AI 上公有云</div>
+      <div class="quiz-opt wrong" data-k="C">3 人小创业公司</div>
+      <div class="quiz-opt wrong" data-k="D">外贸出海企业，海外业务</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：混合云是<b>"既要又要"</b>的产物——既要核心系统的合规和延迟（留 IDC），又要新业务的弹性和创新（上公有云）。<b>国有银行/大型保险/能源/政务</b> 是典型用户。A 初创公司直接全公有云。C 小公司用 SaaS。D 出海企业更适合多云（中国 + AWS 海外）。售前要会按客户类型推合适的部署模式。</div>
+    </div>`,
+    voice: '思考一下。哪类客户最适合混合云？给你 5 秒......正确答案 B 国有银行核心 IDC 加营销 AI 公有云。混合云是既要又要的产物——既要核心系统合规和延迟留 IDC，又要新业务弹性和创新上公有云。国有银行大型保险能源政务是典型用户。A 初创公司直接全公有云。C 小公司用 SaaS。D 出海企业更适合多云。售前要会按客户类型推合适的部署模式。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 5 章 · 虚拟化', title: 'KVM / Xen / Hyper-V · 虚拟化技术对比',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🐧</div><h5>KVM</h5><p>Linux 内核原生<br>开源免费<br>AWS Nitro / 火山 ECS 底座<br>性能损耗 3-5%</p></div>
+      <div class="col-card"><div class="num">🪟</div><h5>Hyper-V</h5><p>微软产品<br>Windows 栈友好</p></div>
+      <div class="col-card"><div class="num">🏢</div><h5>VMware ESXi</h5><p>商业化最成熟<br>工具链完善<br>许可费贵</p></div>
+    </div>`,
+    voice: '虚拟化技术三类。KVM Linux 内核原生开源免费 AWS Nitro 和火山 ECS 底层都基于 KVM 性能损耗 3-5%。Hyper-V 微软产品 Windows 栈友好。VMware ESXi 商业化最成熟工具链完善但许可费贵。售前面试问"火山 ECS 用什么虚拟化"答 KVM。',
+    fallbackDuration: 18000 },
+
+  { chapter: '第 5 章 · 容器化', title: '容器 = 进程级隔离 · 10x 于虚拟机',
+    body: '<b>Namespace</b>（PID/Network/Mount）+ <b>Cgroups</b>（CPU/Memory 限额）<br>秒级启动 vs 虚机分钟级 · 同机器跑 100+ vs 10<br><span class="hl">"虚拟机里跑容器"是最佳实践</span>',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>🖥️ 虚拟机</h4>
+        <p><span class="tag">隔离</span>完整 OS 内核</p>
+        <p><span class="tag">启动</span>1-3 分钟</p>
+        <p><span class="tag">密度</span>10/机器</p>
+        <p><span class="tag">用于</span>Windows + Linux 混跑</p>
+      </div>
+      <div class="acl-box">
+        <h4>📦 容器</h4>
+        <p><span class="tag">隔离</span>Namespace + Cgroups</p>
+        <p><span class="tag">启动</span>毫秒-秒级</p>
+        <p><span class="tag">密度</span>100+/机器</p>
+        <p><span class="tag">用于</span>微服务 / 快速迭代</p>
+      </div>
+    </div>`,
+    voice: '容器隔离原理：Linux Namespace（PID Network Mount）加 Cgroups（CPU Memory 限额）实现进程级隔离。秒级启动 vs 虚拟机分钟级。同一台机器跑 100+ 容器 vs 10 个虚机密度高 10 倍。OCI 是 Open Container Initiative 容器镜像与运行时规范，K8s 1.20+ 弃用 dockershim 改用 containerd 或 CRI-O。最佳实践是"虚拟机里跑容器"——既有内核级隔离又有容器密度。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 6 章 · 云原生', title: 'CNCF · 1500+ 项目地图',
+    body: '<b>12-Factor App</b>：Heroku 提出的 12 条云原生准则<br>核心：配置外部化 + 无状态 + 日志即流<br><span class="hl">"上云"是搬到 ECS，"云原生"是按 K8s+微服务+DevOps 重新设计</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🐳</div><h5>编排</h5><p>K8s / Helm</p></div>
+      <div class="col-card"><div class="num">🚦</div><h5>服务网格</h5><p>Istio / Envoy</p></div>
+      <div class="col-card"><div class="num">📊</div><h5>可观测</h5><p>Prometheus / Grafana</p></div>
+    </div>`,
+    voice: '云原生靠 CNCF 推动。CNCF 维护 1500+ 项目地图覆盖编排 K8s 服务网格 Istio 可观测 Prometheus CI CD Argo 等 30 个细分。毕业项目 30+ 是大规模生产可用的选型优先看毕业级。12-Factor 是 Heroku 提的 12 条云原生准则核心是配置外部化、无状态、日志即流。任何"上云改造"都要先做 12-Factor 体检。<b>"上云"只是搬到 ECS，"云原生"是按 K8s+微服务+DevOps+可观测重新设计应用</b>。前者节省硬件，后者改变研发效率。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 7 章 · 计费', title: '4 种计费 · FinOps 三原则',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">💸</div><h5>按量付费</h5><p>秒/小时计费<br>开发测试用<br>长期贵 30-60%</p></div>
+      <div class="col-card"><div class="num">📅</div><h5>包年包月</h5><p>预付 1 月-3 年<br>低 30-50%<br>稳定核心业务</p></div>
+      <div class="col-card"><div class="num">💎</div><h5>节省计划</h5><p>承诺用量换 30-72% 折扣<br>火山叫"资源包"</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>抢占 Spot</h5><p>空闲资源 1/10-1/2 单价<br>可被回收<br>大数据/训练用</p></div>
+    </div>`,
+    voice: '4 种计费模型。按量付费秒级计费随用随停适合开发测试单价最贵长期用比包月贵 30-60%。包年包月提前承诺 1 月到 3 年单价低 30-50% 适合稳定核心业务。节省计划承诺用量换 30-72% 折扣 AWS 叫 SP 火山叫资源包。抢占式实例使用空闲资源单价低 50-90% 可能被回收适合大数据离线计算 AI 训练 checkpoint。FinOps 三原则：Inform 账单可视 Optimize 按需选型 Operate 持续治理。好的售前要懂得算 TCO 而非只报刊例价。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 8 章 · 6R 迁移', title: '6 条上云路径 · 售前必背决策树',
+    visual: `<div class="six-r">
+      <div class="r-card host">
+        <h5>① Rehost</h5>
+        <span class="roi mid">ROI 低 · 周期 1-2 周</span>
+        <p>原样搬到 ECS<br>改造最少<br>上云时间紧</p>
+      </div>
+      <div class="r-card plat">
+        <h5>② Replatform</h5>
+        <span class="roi high">ROI 最高 ★</span>
+        <p>自建 MySQL → veDB<br>性价比最高<br>运维成本骤降</p>
+      </div>
+      <div class="r-card factor">
+        <h5>③ Refactor</h5>
+        <span class="roi mid">ROI 长期 · 周期 3-12 月</span>
+        <p>按微服务+K8s 重写<br>核心业务用</p>
+      </div>
+      <div class="r-card purchase">
+        <h5>④ Repurchase</h5>
+        <span class="roi high">ROI 高</span>
+        <p>OA/CRM → SaaS<br>飞书/Salesforce<br>省 60%+ IT 投入</p>
+      </div>
+      <div class="r-card retire">
+        <h5>⑤ Retire</h5>
+        <span class="roi high">ROI 最被低估</span>
+        <p>关停 10-20% 无人用应用<br>立即省钱</p>
+      </div>
+      <div class="r-card retain">
+        <h5>⑥ Retain</h5>
+        <span class="roi low">ROI 0 · 保留</span>
+        <p>合规/硬件依赖<br>暂留本地 + 专线</p>
+      </div>
+    </div>`,
+    voice: '6R 迁移策略售前必背。Rehost 重新托管原样搬 ECS 1-2 周完成改造最少。Replatform 小幅改造自建 MySQL 换 veDB MySQL ROI 最高运维成本骤降。Refactor 按微服务 K8s Serverless 重写 3-12 个月适合核心业务。Repurchase 替换为 SaaS OA CRM 邮箱换飞书 Salesforce 省 60%+ IT 投入。Retire 退役关停 10-20% 无人用应用 ROI 最高但最被低估。Retain 保留合规或硬件依赖暂留本地。<b>给客户做迁移规划，先 Retire 再 Replatform 再 Rehost 最后 Refactor</b>是最优 ROI 顺序。',
+    fallbackDuration: 34000 },
+
+  { chapter: '🎯 互动测验 #2', title: '客户：Oracle 数据库怎么上云？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户 Oracle 数据库年许可 800 万 + 写入瓶颈明显。最划算的上云策略？</div>
+      <div class="quiz-opt wrong" data-k="A">Rehost 直接搬到 ECS（保留 Oracle）</div>
+      <div class="quiz-opt correct" data-k="B">Replatform 切到 veDB PostgreSQL（兼容 PG）</div>
+      <div class="quiz-opt wrong" data-k="C">Refactor 用 NoSQL 重写</div>
+      <div class="quiz-opt wrong" data-k="D">Retain 暂留本地等等看</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：年许可 800 万的 Oracle 客户痛点明确——许可费太贵。Rehost 搬 ECS 还要继续交许可费。Refactor 用 NoSQL 风险太大触发存储过程兼容性深坑。Replatform 切 veDB PG（PG 兼容 Oracle 多数语法）+ DTS 平滑迁移 = <b>许可费降 65% + 性能不降 + 团队不抓狂</b>。这是售前对 Oracle 客户的标准打法。</div>
+    </div>`,
+    voice: '思考一下。Oracle 客户年许可 800 万怎么上云？给你 5 秒......正确答案 B Replatform 切 veDB PostgreSQL。Rehost 搬 ECS 还要继续交许可费。Refactor 用 NoSQL 风险太大触发存储过程兼容性深坑。Replatform 切 veDB PG 兼容 Oracle 多数语法加 DTS 平滑迁移工具——许可费降 65% 性能不降团队不抓狂。这是售前对 Oracle 客户的标准打法。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 9 章 · 厂商格局', title: '中国云 Top 5 · 2024 IDC 数据',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>厂商</th><th>客户画像</th><th>核心壁垒</th></tr></thead>
+      <tbody>
+        <tr><td>阿里云</td><td class="al">电商/SaaS/政务</td><td class="al">生态最全 + 价格灵活</td></tr>
+        <tr><td>华为云</td><td class="hw">政企/信创/海外</td><td class="hw">全栈自主 + HCS 私有云</td></tr>
+        <tr><td>腾讯云</td><td class="tc">游戏/视频/微信生态</td><td class="tc">微信入口 + 游戏</td></tr>
+        <tr><td>天翼云</td><td class="bd">央国企/政务</td><td class="bd">国资身份 + 网络资源</td></tr>
+        <tr><td>火山引擎</td><td class="ve">AI/视频/抖音生态</td><td class="ve"><b>AI 原生 + 抖音同款基础设施</b></td></tr>
+      </tbody>
+    </table>`,
+    voice: '中国云 Top 5 IDC 2024 数据。阿里云电商 SaaS 政务客户为主生态最全价格灵活。华为云政企信创海外强项全栈自主加 HCS 私有云份额第一。腾讯云游戏视频微信生态微信入口加游戏强。天翼云央国企政务国资身份加网络资源近年快速崛起。火山引擎 AI 视频抖音生态依托字节系业务快速崛起核心壁垒"AI 原生加抖音同款基础设施"——豆包大模型、推荐算法、视频云、ByteHouse 都是抖音内部生产验证后对外输出。',
+    fallbackDuration: 26000 },
+
+  { chapter: '🌟 客户对话', title: '客户问"为什么要上云？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们 IDC 跑得好好的，为什么要上云？花钱搬家。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>不是说服您搬家，是先看您痛点。<b>三问</b>：<b>① 最痛的业务问题是什么</b>（成本？弹性？合规？）；<b>② IT 预算是 CapEx 还是 OpEx 主导</b>；<b>③ 团队规模和技术储备</b>能不能撑得起云原生？</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>痛点是大促时算力不够，自建扩容来不及。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>那答案清晰了。<b>6R 分阶段路径</b>：<b>① 第 1 阶段</b> 把电商前端+营销活动 Rehost 到 ECS+CDN，3 周完成；<b>② 第 2 阶段</b> 把 MySQL 换 veDB（Replatform），节省 2 名 DBA；<b>③ 核心 ERP 暂 Retain</b> 本地+专线集成。这样您不是"全部搬家"，是"用云的弹性补 IDC 的不足"。</div>
+      </div>
+    </div>`,
+    voice: '一段经典客户对话。客户 IDC 跑得好好的为什么上云。售前不要直接说服搬家，先三问：痛点是什么、CapEx 还是 OpEx、团队技术储备。客户给出痛点是大促算力不够。售前立刻给 6R 分阶段路径：1 阶段电商前端 Rehost 到 ECS 3 周完成；2 阶段 MySQL 换 veDB 节省 2 DBA；3 阶段核心 ERP 暂 Retain。这样客户听到的是"路径"不是"卖货"，是"用云补 IDC 不足"不是"全部搬家"。',
+    fallbackDuration: 33000 },
+
+  { chapter: '案例', title: '🌟 零售客户 · 380 万 → 240 万',
+    body: '<b>痛点</b>：200+ 门店 IDC 4 机柜，年支出 380 万 · 新业务峰值 8 倍扩容来不及<br><b>方案</b>：电商 Rehost ECS+CDN（3 周）· MySQL → veDB · 核心 ERP Retain<br><br>💰 <b>380万 → 240万（-37%）</b><br>⚡ 分钟级扩 200 ECS<br>📅 上线 2 周 → 2 天',
+    visual: '<div style="font-size:64px;">🛍️</div>',
+    voice: '一个真实案例。某传统零售企业 200 多家门店自建 IDC 4 机柜年支出 380 万。新业务流量峰值是平时 8 倍自建扩容来不及。方案分阶段 6R：1 阶段电商前端营销 Rehost 到火山引擎 ECS+CDN 3 周完成；2 阶段 MySQL 换 veDB 节省 2 名 DBA；核心 ERP 暂 Retain 通过专线集成。结果年 IT 总成本从 380 万降到 240 万省 37%。营销活动可分钟级扩容到 200 台 ECS。业务团队上线周期从 2 周缩到 2 天。',
+    fallbackDuration: 26000 },
+
+  { chapter: '⚠️ 售前坑', title: '上云常见 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 售前推上云方案常见 3 大坑</h4>
+      <div class="x-row"><b>只比刊例价不算 TCO</b>：忘记算迁移人力、流量费、技术栈学习成本，<b>客户上线后账单翻倍投诉</b></div>
+      <div class="x-row"><b>一上来就 Refactor</b>：所有应用按云原生重写 → 1 年没产出业务侧造反</div>
+      <div class="x-row"><b>忽略合规</b>：金融/政务客户没看清等保和数据出境约束就推公有云方案</div>
+      <div class="ok-row">售前正确做法：<b>① 给客户做 TCO 评估</b>含人力流量学习成本；<b>② 6R 分阶段</b>先 Retire+Rehost 再 Replatform；<b>③ 合规先行</b>政务先看等保和数据驻留法。</div>
+    </div>`,
+    voice: '售前推上云方案常见 3 大坑。一只比刊例价不算 TCO 忘记算迁移人力、流量费、技术栈学习成本客户上线后账单翻倍投诉。二一上来就 Refactor 所有应用按云原生重写 1 年没产出业务侧造反。三忽略合规金融政务客户没看清等保和数据出境约束就推公有云方案。正确做法：给客户做 TCO 评估含人力流量学习成本；6R 分阶段先 Retire 加 Rehost 再 Replatform；合规先行政务先看等保和数据驻留法。',
+    fallbackDuration: 27000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> NIST 5 大特征？<span style="color:#a5b4fc"> → 按需自助/广泛访问/资源池化/快速弹性/可计量</span><br>
+      <b>Q2</b> IaaS/PaaS/SaaS 区别？<span style="color:#a5b4fc"> → 资源/平台/软件，由底到上客户管的越来越少</span><br>
+      <b>Q3</b> 公有/私有/混合/多云 怎么选？<span style="color:#a5b4fc"> → 看合规/弹性/锁定风险</span><br>
+      <b>Q4</b> 虚拟化 vs 容器？<span style="color:#a5b4fc"> → KVM 内核级 / 容器进程级，密度 10x</span><br>
+      <b>Q5</b> 6R 哪个 ROI 最高？<span style="color:#a5b4fc"> → Retire（关停无人用应用）+ Replatform（换托管 DB）</span><br>
+      <b>Q6</b> FinOps 三原则？<span style="color:#a5b4fc"> → Inform/Optimize/Operate</span><br>
+      <b>Q7</b> Spot 实例适用场景？<span style="color:#a5b4fc"> → 大数据离线/AI 训练 checkpoint，可中断</span><br>
+      <b>Q8</b> 客户问"为什么上云"？<span style="color:#a5b4fc"> → 反问 3 件事：痛点/预算结构/团队储备</span>
+    </div>`,
+    voice: '8 题速查。一 NIST 5 大特征：自助、访问、池化、弹性、计量。二 IaaS PaaS SaaS 资源平台软件由底到上客户管越来越少。三公私混合多云看合规弹性锁定风险。四 KVM 内核级容器进程级密度 10x。五 6R 中 ROI 最高 Retire 加 Replatform。六 FinOps 三原则 Inform Optimize Operate。七 Spot 实例适用大数据离线 AI 训练可中断。八客户问"为什么上云"反问 3 件事痛点预算结构团队储备。这 8 道刷熟云计算基础面试稳过。',
+    fallbackDuration: 28000 },
+
+  { chapter: '完成', title: '🎉 Day 1 学完！',
+    eyebrow: '关键心法',
+    body: '客户买的不是"云"，是"分钟级扩容 + 不用半夜运维"。<br>用 <b>6R + TCO + 合规先行</b> 三件套给客户路径，<br>而不是堆产品名词。<br><br>下一站：Day 2 云网络深度（已学过）',
+    visual: '<div style="font-size:80px;">☁️</div>',
+    voice: '恭喜 Day 1 学完。客户买的不是云是"分钟级扩容加不用半夜运维"。用 6R 加 TCO 加合规先行三件套给客户路径不是堆产品名词。下一站 Day 2 云网络深度你已经学过增强版。',
+    fallbackDuration: 19000 },
+];
+</script>
+<script src="_player.js?v=22"></script>
+</body>
+</html>
