@@ -102,12 +102,22 @@ function render() {
 
 // ============ 视频学习推荐 ============
 // 自动给学习章节加"📺 视频学习"模块，每个关键词一键搜 B站/YouTube/抖音
-function renderVideoLearning(queries, themeColor) {
+function renderVideoLearning(queries, themeColor, internalVideo) {
   if (!queries || !queries.length) return '';
   const color = themeColor || '#2b5cff';
+  const internalBlock = internalVideo ? `
+        <a href="${internalVideo}" target="_blank" rel="noopener" class="internal-video-card" style="--vt:${color};">
+          <div class="ivc-icon">🎬</div>
+          <div class="ivc-text">
+            <div class="ivc-title">Claude 精讲视频（动画 + 语音朗读）</div>
+            <div class="ivc-sub">8-10 分钟覆盖核心 · 支持暂停回放 · 离线可用</div>
+          </div>
+          <span class="ivc-play">▶ 播放</span>
+        </a>` : '';
   return `
     <div class="lesson-section video-learning" style="--vt:${color};">
       <h3>📺 视频学习 <span class="video-tip">不喜欢看文字？点关键词直接看视频</span></h3>
+      ${internalBlock}
       <div class="video-queries">
         ${queries.map(q => {
           const enc = encodeURIComponent(q);
@@ -302,7 +312,7 @@ function renderLesson(app) {
         <ul>${d.objectives.map(o => `<li>${o}</li>`).join('')}</ul>
       </div>
 
-      ${renderVideoLearning(getVideoQueries(d), stage.color)}
+      ${renderVideoLearning(getVideoQueries(d), stage.color, d.internalVideo)}
 
       ${d.sections.map(sec => `
         <div class="lesson-section">
@@ -750,7 +760,7 @@ function renderInterviewChapter(app) {
         </div>
       ` : ''}
 
-      ${renderVideoLearning(getVideoQueries(c), '#7c3aed')}
+      ${renderVideoLearning(getVideoQueries(c), '#7c3aed', c.internalVideo)}
 
       ${c.sections.map(sec => `
         <div class="lesson-section">
@@ -916,7 +926,7 @@ function renderCompetitionChapter(app) {
         </div>
       ` : ''}
 
-      ${renderVideoLearning(getVideoQueries(c), '#dc2626')}
+      ${renderVideoLearning(getVideoQueries(c), '#dc2626', c.internalVideo)}
 
       ${c.sections.map(sec => `
         <div class="lesson-section">

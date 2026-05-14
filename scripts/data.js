@@ -130,6 +130,7 @@ const COURSE = [
   {
     day: 2,
     videoQueries: ['VPC 入门 阿里云', 'VLAN 子网划分 教程', 'CIDR 子网计算'],
+    internalVideo: 'lessons/day2-video.html?v=14',
     stage: 's1',
     title: '云网络深度（VPC / 负载均衡 / 混合组网 / CDN）',
     summary: '从 OSI 模型到 VPC、SLB、专线、SD-WAN、CDN 的全栈云网络',
