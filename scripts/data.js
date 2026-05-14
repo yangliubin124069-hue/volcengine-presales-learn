@@ -2167,6 +2167,7 @@ const COURSE = [
 const INTERVIEW = [
   {
     id: 'i1',
+    videoQueries: ['售前工程师 简历 怎么写', '简历优化 售前', '技术简历 模板'],
     title: 'C01 · 面试全景与准备',
     summary: '认识售前面试的流程、考点与必备物料，建立"先准备后表达"的心态',
     duration: '约 25 分钟',
@@ -2221,6 +2222,7 @@ const INTERVIEW = [
 
   {
     id: 'i2',
+    videoQueries: ['售前面试 自我介绍 模板', 'STAR 法则 自我介绍', '30秒 自我介绍'],
     title: 'C02 · 简历优化',
     summary: '把简历改造成"30 秒能看懂、1 分钟能记住"的售前作品',
     duration: '约 20 分钟',
@@ -2275,6 +2277,7 @@ const INTERVIEW = [
 
   {
     id: 'i3',
+    videoQueries: ['售前面试 行为题', 'STAR 法则 面试', '压力面试 应对'],
     title: 'C03 · 自我介绍',
     summary: '准备 30 秒 / 1 分钟 / 3 分钟三个版本，按场景切换',
     duration: '约 20 分钟',
@@ -2329,6 +2332,7 @@ const INTERVIEW = [
 
   {
     id: 'i4',
+    videoQueries: ['大模型 面试题', '云原生 面试题', 'Kubernetes 面试题'],
     title: 'C04 · STAR 行为面试',
     summary: '掌握 STAR 模型 + 10 道高频行为题的标准答题模板',
     duration: '约 30 分钟',
@@ -2387,6 +2391,7 @@ const INTERVIEW = [
 
   {
     id: 'i5',
+    videoQueries: ['售前 Case 题', '方案设计 面试', '架构设计 面试题'],
     title: 'C05 · 技术深问应对',
     summary: '云/AI/产品高频技术题分类与"答主线 + 留细节"答题策略',
     duration: '约 30 分钟',
@@ -2450,6 +2455,7 @@ const INTERVIEW = [
 
   {
     id: 'i6',
+    videoQueries: ['客户角色扮演 面试', '售前模拟客户对话', '销售场景演练'],
     title: 'C06 · 方案设计题（Case 面）',
     summary: '15-30 分钟内完成"客户场景 → 架构设计 → 商业表达"全链路',
     duration: '约 30 分钟',
@@ -2511,6 +2517,7 @@ const INTERVIEW = [
 
   {
     id: 'i7',
+    videoQueries: ['面试反问 怎么问', '结构化面试 反问环节'],
     title: 'C07 · 角色扮演与压力面',
     summary: '现场扮演售前对真实客户场景；处理刁钻提问与突发压力',
     duration: '约 25 分钟',
@@ -2565,6 +2572,7 @@ const INTERVIEW = [
 
   {
     id: 'i8',
+    videoQueries: ['薪资谈判 技巧', 'Offer 谈判 工程师', '对标拉薪资'],
     title: 'C08 · 反问环节（你问面试官）',
     summary: '8 个高质量反问，让面试官记住你 + 主动获取关键信息',
     duration: '约 15 分钟',
@@ -2636,6 +2644,7 @@ const INTERVIEW = [
 
   {
     id: 'i9',
+    videoQueries: ['售前面试 50题', '销售面试 真题'],
     title: 'C09 · 薪资与 Offer 谈判',
     summary: '理解 P 级体系 / 谈判节奏 / 高情商话术，避免少拿 30% 薪水',
     duration: '约 25 分钟',
@@ -2699,6 +2708,7 @@ const INTERVIEW = [
 
   {
     id: 'i10',
+    videoQueries: ['售前面试 复盘', '面试反馈 怎么做'],
     title: 'C10 · 模拟面试题库（50+ 高频题）',
     summary: '5 大类共 50+ 高频题，每题给"答题要点 + 模板答案"，反复练习',
     duration: '约 40 分钟',
