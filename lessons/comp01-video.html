@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP-01 · 竞品视角四个层次 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=27">
+<style>
+  .level-tower { display: flex; flex-direction: column; gap: 8px; align-items: center; width: 720px; max-width: 92vw; }
+  .level-row { padding: 14px 22px; border-radius: 10px; border: 1.5px solid;
+    text-align: left; width: 100%; animation: cardIn .5s both; }
+  .level-row.l1 { border-color: #2b5cff; background: rgba(43,92,255,.08); }
+  .level-row.l2 { border-color: #6e3aff; background: rgba(110,58,255,.08); animation-delay: .1s; }
+  .level-row.l3 { border-color: #ec4899; background: rgba(236,72,153,.08); animation-delay: .2s; }
+  .level-row.l4 { border-color: #22c55e; background: rgba(34,197,94,.08); animation-delay: .3s; }
+  .level-row .num { display: inline-block; padding: 3px 9px; border-radius: 6px;
+    font-size: 13px; font-weight: 800; margin-right: 10px; color: #fff; }
+  .level-row.l1 .num { background: #2b5cff; }
+  .level-row.l2 .num { background: #6e3aff; }
+  .level-row.l3 .num { background: #ec4899; }
+  .level-row.l4 .num { background: #22c55e; }
+  .level-row .nm { font-size: 14px; font-weight: 700; color: #fff; }
+  .level-row .desc { font-size: 12.5px; color: #cbd5e1; margin-top: 4px; line-height: 1.65; }
+
+  .se-tiers { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; width: 900px; max-width: 96vw; }
+  .se-card { padding: 16px 14px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; animation: cardIn .5s both; }
+  .se-card.bad { border-color: #ef4444; }
+  .se-card.good { border-color: #f59e0b; animation-delay: .15s; }
+  .se-card.best { border-color: #22c55e; animation-delay: .3s; }
+  .se-card h5 { font-size: 13px; margin-bottom: 6px; font-weight: 700; }
+  .se-card.bad h5 { color: #fca5a5; }
+  .se-card.good h5 { color: #fde68a; }
+  .se-card.best h5 { color: #86efac; }
+  .se-card .quote { padding: 8px 10px; background: rgba(0,0,0,.3); border-radius: 6px;
+    font-size: 11.5px; color: #cbd5e1; line-height: 1.6; font-style: italic; margin: 6px 0; }
+  .se-card .reaction { font-size: 11.5px; color: #94a3b8; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 'COMP-01', title: 'COMP-01 · 竞品视角四个层次', intro: '12 分钟 · L1-L4 方法论 + 三档售前差异 + HCSP-Presales 稀缺价值' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'COMP-01 · 竞品视角四个层次',
+    eyebrow: '火山引擎售前 · 竞品模块第一节',
+    body: '<b>L1 客户画像 + L2 真实优劣势 + L3 对位话术 + L4 维度迁移</b><br>12 分钟 + 1 互动 + 1 客户对话 + HCSP-Presales 持证者稀缺价值',
+    visual: '<div class="cover-icon">🔍</div>',
+    voice: '欢迎来到 COMP-01 竞品视角四个层次。这是整个竞品模块的方法论基础。今天 12 分钟讲透 L1 到 L4 四个层次、三档售前的差异、HCSP-Presales 持证者的稀缺价值。学完这节你就理解了"竞品视角"不是参数对照表而是赢单的真正抓手。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 1 章 · 竞品视角', title: '不是参数对照表 · 是 4 件事合体',
+    body: '"功能 A：火山有 / 华为有"——这种表格客户自己也会列。<br><span class="hl">售前的竞品视角是去 PPT 滤镜后的真实判断，由四个层次合成</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">❌</div><h5>参数对照表</h5><p>客户自己也会列<br>没有售前价值</p></div>
+      <div class="col-card"><div class="num">✅</div><h5>4 个层次合体</h5><p>L1 客户画像<br>L2 真实优劣<br>L3 对位话术<br>L4 维度迁移</p></div>
+      <div class="col-card"><div class="num">💎</div><h5>本质</h5><p>去 PPT 滤镜<br>真实判断</p></div>
+    </div>`,
+    voice: '竞品视角的核心是去 PPT 滤镜后的真实判断不是参数对照表。"功能 A 火山有华为有"这种表格客户自己也会列没有售前价值。售前的竞品视角是 4 个层次合体——L1 客户画像、L2 真实优劣势、L3 对位话术、L4 维度迁移。这 4 层是递进的关系不是平行的。',
+    fallbackDuration: 19000 },
+
+  { chapter: '第 2 章 · L1-L4', title: '4 层递进 · 每层赢一步',
+    visual: `<div class="level-tower">
+      <div class="level-row l1">
+        <span class="num">L1</span><span class="nm">客户画像</span>
+        <div class="desc">每家厂商在什么客户群里强（不是技术哪个强）<br>例：政企找华为 / 互联网找阿里 / AI 创业找火山<br><b>决定你是不是在友商主场打仗</b></div>
+      </div>
+      <div class="level-row l2">
+        <span class="num">L2</span><span class="nm">真实优劣势</span>
+        <div class="desc">对手真正能做和做不到的事，去 PPT 滤镜<br><b>客户问"XX 也能做"时不慌、有依据</b></div>
+      </div>
+      <div class="level-row l3">
+        <span class="num">L3</span><span class="nm">对位话术</span>
+        <div class="desc">客户提到友商时怎么承接、怎么破局<br><b>不贬低对手 = 不贬低客户过往选择 = 不失信任</b></div>
+      </div>
+      <div class="level-row l4">
+        <span class="num">L4</span><span class="nm">维度迁移 ★</span>
+        <div class="desc">把比较维度从"功能点"挪到"业务价值/TCO/服务能力/长期演进"<br><b>功能层永远有人比你强，价值层只有你最懂客户</b></div>
+      </div>
+    </div>`,
+    voice: '竞品视角 4 层递进每层赢一步。L1 客户画像——知道每家厂商在什么客户群里强不是技术哪个强例如政企找华为互联网找阿里 AI 创业找火山决定你是不是在友商主场打仗。L2 真实优劣势——知道对手真正能做和做不到的事去掉宣传滤镜客户问"XX 厂商也能做"时不慌有依据。L3 对位话术——客户提到友商时怎么承接怎么破局不贬低对手等于不贬低客户的过往选择等于不失去信任。<b>L4 维度迁移最关键</b>——把客户的比较维度从"功能点"挪到"业务价值 / TCO / 服务能力 / 长期演进"。功能层永远有人比你强价值层只有你最懂客户这是赢单的真正抓手。',
+    fallbackDuration: 40000 },
+
+  { chapter: '第 3 章 · 三档售前', title: '差 / 好 / 最强 · 一图分清',
+    visual: `<div class="se-tiers">
+      <div class="se-card bad">
+        <h5>❌ 最差售前 · 贬低对手</h5>
+        <div class="quote">"华为大模型不如豆包。"</div>
+        <div class="reaction">客户立刻关上心门：你贬低对手 = 贬低我之前的选择</div>
+      </div>
+      <div class="se-card good">
+        <h5>🟡 好售前 · 承认 + 迁移</h5>
+        <div class="quote">"华为政务云在政企的渠道优势是事实。火山的差异在 AI 应用层迭代速度和字节场景的真实性。"</div>
+        <div class="reaction">客户开始听</div>
+      </div>
+      <div class="se-card best">
+        <h5>✅ 最强售前 · 给可验证 POC</h5>
+        <div class="quote">"我了解华为 ModelArts 在多版本管理上的具体限制。我们做 1 个月 POC，KPI 定 [具体指标]，让数据说话。"</div>
+        <div class="reaction">客户开始相信</div>
+      </div>
+    </div>`,
+    voice: '三档售前的差异一目了然。最差售前贬低对手："华为大模型不如豆包。"客户立刻关上心门——你贬低对手等于贬低我之前的选择。好的售前承认加迁移："华为政务云在政企的渠道优势是事实。火山的差异在 AI 应用层迭代速度和字节场景的真实性。"客户开始听。最强售前给可验证 POC："我了解华为 ModelArts 在多版本管理上的具体限制。我们做 1 个月 POC KPI 定具体指标让数据说话。"客户开始相信。<b>一句话总结</b>差的售前贬低对手、好的售前承认事实并扭转维度、最强的售前能给客户拿一个对手做不到的 POC。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🎯 互动测验', title: '客户提到华为 · 你怎么接？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户说"华为云方案已经看过了感觉不错你们火山有什么差异？"。最佳回应？</div>
+      <div class="quiz-opt wrong" data-k="A">"华为大模型迭代慢"（L0：贬低对手）</div>
+      <div class="quiz-opt wrong" data-k="B">"我们参数都比华为强"（L0：参数表）</div>
+      <div class="quiz-opt correct" data-k="C">"华为政企渠道很扎实 → 我们差异在 AI 应用层 → 30 天 POC 验证"（L2+L3+L4 全用上）</div>
+      <div class="quiz-opt wrong" data-k="D">"价格我们便宜 30%"（L0：价格战）</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：标准的 L2+L3+L4 组合拳。① <b>L2 真实优劣势</b>承认华为政企渠道扎实是事实；② <b>L3 对位话术</b>不贬低 + 承认 + 我方差异；③ <b>L4 维度迁移</b>从"产品对比"挪到"30 天 POC 业务价值验证"。<b>客户感受到的是你对市场的全局理解，不是对华为的攻击</b>。A 贬低对手客户关心门。B 参数表客户自己列得出来。D 价格战让客户当"可压价厂商"。这就是 COMP-01 的核心打法。</div>
+    </div>`,
+    voice: '思考一下。客户提到华为你怎么接？给你 5 秒......正确答案 C 华为政企渠道很扎实加我们差异在 AI 应用层加 30 天 POC 验证。标准的 L2+L3+L4 组合拳：L2 真实优劣势承认华为政企渠道扎实是事实；L3 对位话术不贬低加承认加我方差异；L4 维度迁移从"产品对比"挪到"30 天 POC 业务价值验证"。客户感受到的是你对市场的全局理解不是对华为的攻击。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 4 章 · L4 维度迁移', title: '功能层 → 价值层 · 4 种维度',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">💰</div><h5>业务价值</h5><p>不是"功能 A"<br>是"营收 +X%"</p></div>
+      <div class="col-card"><div class="num">📊</div><h5>TCO 总成本</h5><p>不是"单价"<br>是"5 年综合"</p></div>
+      <div class="col-card"><div class="num">🛠️</div><h5>服务能力</h5><p>不是"产品"<br>是"驻场+陪跑"</p></div>
+      <div class="col-card"><div class="num">📈</div><h5>长期演进</h5><p>不是"现在"<br>是"3 年技术路线"</p></div>
+    </div>`,
+    voice: 'L4 维度迁移可以迁到 4 种价值维度。业务价值——不讲"功能 A 我们有"而讲"营收提升 X%"。TCO 总成本——不讲"单价更便宜"而讲"5 年综合 TCO 省 30%"。服务能力——不讲"产品功能"而讲"驻场陪跑 30 天加 SRE 7×24"。长期演进——不讲"现在的版本"而讲"3 年技术路线和升级承诺"。这 4 种迁移方向背下来 L4 维度迁移就稳了。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 5 章 · HCSP-Presales', title: '持证者的稀缺价值',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">📜</div><h5>懂对手方法论</h5><p>华为售前体系内化训练<br>被 SA 方法论训过</p></div>
+      <div class="col-card"><div class="num">🔍</div><h5>说得出真实优劣势</h5><p>不是 PPT 滤镜<br>培训过的真实知识</p></div>
+      <div class="col-card"><div class="num">🗣️</div><h5>能用客户语言讲</h5><p>政企客户用华为话术<br>直接接住不需翻译</p></div>
+      <div class="col-card"><div class="num">💎</div><h5>面试金句</h5><p><b>"我懂华为打华为"</b><br>比 10 个参数有说服力</p></div>
+    </div>`,
+    voice: 'HCSP-Presales 持证者的稀缺价值。一懂对手的方法论 HCSP-Presales 是华为售前体系的内化训练拿过这个证等于你被华为的解决方案架构师方法论训练过。二说得出对手的真实优劣势不是 PPT 滤镜是培训过的真实知识讨论华为云时你能说出 ModelArts、HCS、FusionInsight 的具体细节客户立刻信任。三能用客户语言讲对手政企客户用华为话术你能直接接住不需要翻译这是火山引擎政企售前最稀缺的能力。<b>面试金句"我懂华为打华为"</b>——比罗列 10 个豆包参数有说服力得多。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🌟 客户对话', title: '"华为云方案咱们已经看过了"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>华为云方案我们已经看过了，技术不错。你们火山什么差异？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前 (L2)</span>华为云在政企的渠道优势是事实，HCS 私有云市占第一也是事实。我们承认这些。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>那你们怎么打？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前 (L3+L4)</span><b>不抢底座</b>从 AI 应用层切入。<b>差异在 3 点</b>：① 豆包月级迭代 vs 盘古季级；② 火山方舟一站式 vs ModelArts 偏定制；③ 抖音场景验证 vs 政务示范。建议<b>30 天 POC</b>不动您华为底座只验证 AI 层。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>这听起来不错。</div>
+      </div>
+    </div>`,
+    voice: '一段经典客户对话演示 L2+L3+L4 组合拳。客户说华为方案已看过技术不错。售前先用 L2 承认华为政企渠道优势和 HCS 市占第一是事实。客户追问怎么打，售前用 L3+L4 给出"不抢底座从 AI 应用层切入"加三点差异：豆包月级 vs 盘古季级、火山方舟一站式 vs ModelArts 偏定制、抖音场景验证 vs 政务示范。最后用 30 天 POC 不动客户华为底座只验证 AI 层。<b>客户从"看华为"开始听"看火山"</b>这就是 L2+L3+L4 的威力。',
+    fallbackDuration: 30000 },
+
+  { chapter: '⚠️ 售前坑', title: '竞品视角 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 竞品视角常犯 3 大坑</h4>
+      <div class="x-row"><b>没做 L1 就开打</b>：进华为政企腹地用 IaaS 价格打 → 死</div>
+      <div class="x-row"><b>L2 用 PPT 滤镜</b>：客户问对手具体细节答不上 → 失信</div>
+      <div class="x-row"><b>只贬低不迁移</b>：贬对手 = 贬客户过往选择 → 关心门</div>
+      <div class="ok-row">正确做法：<b>① L1 先判断主场客场</b>不在友商腹地硬刚；<b>② L2 用真实数据</b>HCSP 持证讲华为产品细节；<b>③ L4 必做维度迁移</b>把战场拉到 AI 应用 + TCO + 服务。</div>
+    </div>`,
+    voice: '竞品视角 3 大坑。一没做 L1 就开打——进华为政企腹地用 IaaS 价格打必死。二 L2 用 PPT 滤镜——客户问对手具体细节答不上立刻失信。三只贬低不迁移——贬对手等于贬客户过往选择关心门。正确做法 L1 先判断主场客场不在友商腹地硬刚；L2 用真实数据 HCSP 持证讲华为产品细节；L4 必做维度迁移把战场拉到 AI 应用加 TCO 加服务。',
+    fallbackDuration: 24000 },
+
+  { chapter: '速查表', title: '面试 · 6 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 竞品视角是什么？<span style="color:#a5b4fc"> → 不是参数表 / 是 L1-L4 四层合体</span><br>
+      <b>Q2</b> L1-L4 分别是？<span style="color:#a5b4fc"> → 客户画像 / 真实优劣 / 对位话术 / 维度迁移</span><br>
+      <b>Q3</b> 三档售前差异？<span style="color:#a5b4fc"> → 贬低 / 承认+迁移 / 给可验证 POC</span><br>
+      <b>Q4</b> L4 迁哪 4 个维度？<span style="color:#a5b4fc"> → 业务价值 / TCO / 服务能力 / 长期演进</span><br>
+      <b>Q5</b> HCSP 优势金句？<span style="color:#a5b4fc"> → "我懂华为打华为"</span><br>
+      <b>Q6</b> 客户提对手怎么接？<span style="color:#a5b4fc"> → 承认 + 维度迁移 + 30 天 POC</span>
+    </div>`,
+    voice: '6 题速查。一竞品视角不是参数表是 L1-L4 四层合体。二 L1 客户画像 L2 真实优劣 L3 对位话术 L4 维度迁移。三三档售前贬低承认加迁移给可验证 POC。四 L4 迁 4 个维度业务价值 TCO 服务能力长期演进。五 HCSP 优势金句"我懂华为打华为"。六客户提对手承认加维度迁移加 30 天 POC。这 6 道刷熟竞品视角面试稳过。',
+    fallbackDuration: 26000 },
+
+  { chapter: '完成', title: '🎉 COMP-01 学完！',
+    eyebrow: '关键心法',
+    body: '<b>L1 让你判断要不要打</b><br><b>L2 让你不被动</b><br><b>L3 让你不失分</b><br><b>L4 让你赢</b><br><span class="hl">每次客户提到友商，心里走一遍这 4 层</span>',
+    visual: '<div style="font-size:80px;">🔍</div>',
+    voice: '恭喜 COMP-01 学完。L1 让你判断要不要打 L2 让你不被动 L3 让你不失分 L4 让你赢。每次面对客户提到友商时先在心里走一遍这 4 层。下一站 COMP-02 2026 中国云市场竞争格局。',
+    fallbackDuration: 20000 },
+];
+</script>
+<script src="_player.js?v=27"></script>
+</body>
+</html>

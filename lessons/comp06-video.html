@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP-06 · 对位话术四步法 + 面试题 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=27">
+<style>
+  .four-step { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 920px; max-width: 96vw; }
+  .fs-card { padding: 16px 14px; border-radius: 12px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; animation: cardIn .5s both; }
+  .fs-card.s1 { border-color: #2b5cff; }
+  .fs-card.s2 { border-color: #6e3aff; animation-delay: .15s; }
+  .fs-card.s3 { border-color: #ec4899; animation-delay: .3s; }
+  .fs-card.s4 { border-color: #22c55e; animation-delay: .45s; }
+  .fs-card .num { font-size: 30px; font-weight: 800; display: block; margin-bottom: 6px; }
+  .fs-card.s1 .num { color: #a5b4fc; }
+  .fs-card.s2 .num { color: #c4b5fd; }
+  .fs-card.s3 .num { color: #f9a8d4; }
+  .fs-card.s4 .num { color: #86efac; }
+  .fs-card h5 { font-size: 13.5px; color: #fff; font-weight: 700; margin-bottom: 4px; }
+  .fs-card p { font-size: 12px; color: #cbd5e1; line-height: 1.55; }
+
+  .interview-card { padding: 16px 18px; border-radius: 12px;
+    background: rgba(255,255,255,.04); border: 1.5px solid #6e3aff;
+    width: 880px; max-width: 96vw; text-align: left; }
+  .interview-card .q { font-size: 14px; color: #c4b5fd; font-weight: 700; margin-bottom: 8px; }
+  .interview-card .q::before { content: 'Q: '; color: #a5b4fc; }
+  .interview-card .a { font-size: 12.5px; color: #cbd5e1; line-height: 1.7; }
+  .interview-card .a b { color: #fde68a; }
+
+  .summary-table { width: 760px; max-width: 94vw; border-collapse: collapse;
+    background: rgba(255,255,255,.03); border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.1); }
+  .summary-table th, .summary-table td { padding: 9px 12px; font-size: 13px;
+    text-align: left; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .summary-table th { background: rgba(110,58,255,.18); color: #c4b5fd; font-size: 11px; }
+  .summary-table .key { color: #fde68a; font-weight: 700; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 'COMP-06', title: 'COMP-06 · 对位话术四步法 + 面试题', intro: '15 分钟 · 4 步通用话术 + 5 道面试高频题 + 速查表 + HCSP 差异化（竞品模块收官）' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'COMP-06 · 对位话术四步法 + 面试题',
+    eyebrow: '火山引擎售前 · 竞品模块收官',
+    body: '<b>4 步通用话术 + 5 道面试题逐字答 + 调研工具 + 速查表</b><br>15 分钟 + 1 互动 + 5 题逐字示范 + HCSP-Presales 差异化收官',
+    visual: '<div class="cover-icon">🏆</div>',
+    voice: '欢迎来到 COMP-06 对位话术四步法加面试高频题。这是整个竞品模块的收官节。今天 15 分钟讲透 4 步万能话术模板、5 道面试高频题逐字答题示范、竞品调研日常工具、面试速查表、HCSP-Presales 持证者的差异化优势。学完这节面试任何售前竞品题都能从容应对。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 1 章 · 4 步法', title: '对位话术 · 通用万能模板',
+    visual: `<div class="four-step">
+      <div class="fs-card s1">
+        <span class="num">①</span>
+        <h5>承认（不贬低）</h5>
+        <p>先说对手某维度的客观优势<br><b>承认 = 尊重客户过往选择 = 建立信任</b></p>
+      </div>
+      <div class="fs-card s2">
+        <span class="num">②</span>
+        <h5>维度迁移</h5>
+        <p>把比较维度从"功能点"挪到<br>业务价值 / TCO / 服务能力 / 长期演进</p>
+      </div>
+      <div class="fs-card s3">
+        <span class="num">③</span>
+        <h5>给可验证路径</h5>
+        <p>给具体 POC 方案<br>周期 + KPI + 可量化指标</p>
+      </div>
+      <div class="fs-card s4">
+        <span class="num">④</span>
+        <h5>留退路</h5>
+        <p>"不动底座、不替换核心、可灰度试用"<br><b>给退路 = 给信任</b></p>
+      </div>
+    </div>`,
+    voice: '对位话术 4 步法通用万能模板。步骤一承认不贬低先说出对手在某个维度的客观优势承认对手等于尊重客户的过往选择等于建立信任的第一步。步骤二维度迁移把客户的比较维度从"功能点"挪到"业务价值 / TCO / 服务能力 / 长期演进"功能层永远有人比你强价值层只有你最懂客户。步骤三给可验证路径给一个具体的 POC 方案：周期、KPI、可量化指标说大话客户听过太多给可验证才是新东西。步骤四留退路不损害客户既有投资强调"不动底座、不替换核心、可灰度试用"客户最怕的是赌一把给退路就是给信任。',
+    fallbackDuration: 38000 },
+
+  { chapter: '第 1 章 · 原话模板', title: '4 步合体 · 一段话讲完',
+    visual: `<div class="scenario-card">
+      <h4>💬 原话模板（任何对手套用）</h4>
+      <div class="row" style="color:#cbd5e1;line-height:1.85;font-size:13.5px;">"<b>[友商名]</b> 在 <b>[具体场景]</b> 做得确实扎实，这是事实。<span style="color:#94a3b8;">（① 承认）</span></div>
+      <div class="row" style="color:#cbd5e1;line-height:1.85;font-size:13.5px;">火山引擎的差异不在 <b>[友商强项]</b>，而在 <b>[我方差异点]</b>。<span style="color:#94a3b8;">（② 维度迁移）</span></div>
+      <div class="row" style="color:#cbd5e1;line-height:1.85;font-size:13.5px;">建议我们按 <b>[客户业务目标]</b> 做一个 <b>[周期]</b> 的 POC，KPI 定 <b>[指标]</b>，<span style="color:#94a3b8;">（③ 可验证路径）</span></div>
+      <div class="row" style="color:#cbd5e1;line-height:1.85;font-size:13.5px;">不动您现有的 <b>[既有投资]</b>，验证完了再讨论扩展范围。"<span style="color:#94a3b8;">（④ 留退路）</span></div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);font-size:11.5px;color:#fde68a;text-align:center;">💎 这段话背下来 · 任何客户提任何友商都能套用</div>
+    </div>`,
+    voice: '4 步合体一段话讲完。原话模板："友商名在具体场景做得确实扎实这是事实。承认。火山引擎的差异不在友商强项而在我方差异点。维度迁移。建议我们按客户业务目标做一个周期的 POC KPI 定指标可验证路径。不动您现有的既有投资验证完了再讨论扩展范围。留退路。"<b>这段话背下来任何客户提任何友商都能套用</b>。这是售前的"通用万能装备"。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 2 章 · 面试题 #1', title: 'Q1：你怎么看华为云？',
+    visual: `<div class="interview-card">
+      <div class="q">你怎么看华为云？火山引擎和华为云比有什么差异？</div>
+      <div class="a">
+        "<b>华为云在政企/信创/私有云这几块的优势我们必须承认</b>，渠道下沉度和行业方案产品化都是头部。<br><br>
+        <b>火山引擎的差异点是 AI 与数据应用层</b>——豆包月级迭代、火山方舟把 RAG/Agent 做成产品、字节真实场景验证过的技术栈。<br><br>
+        所以在政企客户里，<b>我们一般不抢底座，从 AI 应用层切入</b>，用 1 个月 POC 把客户场景的指标拿出来，再讨论扩展。<br><br>
+        <b>这种打法对客户来说投资风险最小。</b>"
+      </div>
+    </div>`,
+    voice: '面试高频题第一题 Q1：你怎么看华为云火山引擎和华为云比有什么差异。逐字答题示范。"华为云在政企信创私有云这几块的优势我们必须承认渠道下沉度和行业方案产品化都是头部。火山引擎的差异点是 AI 与数据应用层——豆包月级迭代、火山方舟把 RAG Agent 做成产品、字节真实场景验证过的技术栈。所以在政企客户里我们一般不抢底座从 AI 应用层切入用 1 个月 POC 把客户场景的指标拿出来再讨论扩展。这种打法对客户来说投资风险最小。"<b>这段答案完整体现 4 步法：承认+迁移+可验证+留退路</b>。',
+    fallbackDuration: 34000 },
+
+  { chapter: '第 2 章 · 面试题 #2', title: 'Q2：你打过华为吗？',
+    visual: `<div class="interview-card">
+      <div class="q">你打过华为吗？怎么打的？</div>
+      <div class="a">
+        <b>4 步结构</b>：① 真实项目背景 → ② 客户最初默选华为原因 → ③ 你做的工作 → ④ 结果与复盘<br><br>
+        <b>示范答案</b>："在中安数联我打过几个对位华为的政企单子。比如柳州政务云灾备项目，<b>客户最初默选华为方案</b>。<br><br>
+        我做的工作是：<b>详细调研客户实际备份场景 → 发现华为方案在多租户隔离上有限制 → 用 TeraBackup 设计三大运营商统一管理方案 → 做了 1 周 POC → 给客户出了 TCO 三年对比表。</b><br><br>
+        最后<b>我们和华为并存进入项目</b>。<br><br>
+        复盘下来，关键不是技术比拼，是<b>把客户真实场景的痛点挖到比对手深一层</b>。"
+      </div>
+    </div>`,
+    voice: '面试高频题第二题 Q2：你打过华为吗怎么打的。这道是经历题答题结构是 4 步：真实项目背景加客户最初默选华为原因加你做的工作加结果与复盘。示范答案："在中安数联我打过几个对位华为的政企单子比如柳州政务云灾备项目客户最初默选华为方案。我做的工作是详细调研客户实际备份场景加发现华为方案在多租户隔离上有限制加用 TeraBackup 设计三大运营商统一管理方案加做了 1 周 POC 加给客户出了 TCO 三年对比表。最后我们和华为并存进入项目。复盘下来关键不是技术比拼是把客户真实场景的痛点挖到比对手深一层。"<b>用户简历真实项目 + 4 步结构 + 复盘心法是面试加分的标配</b>。',
+    fallbackDuration: 40000 },
+
+  { chapter: '第 2 章 · 面试题 #3', title: 'Q3：客户已买通义 · 怎么推豆包？',
+    visual: `<div class="interview-card">
+      <div class="q">客户已经买了通义千问，你怎么推豆包？</div>
+      <div class="a">
+        "<b>通义千问是好选择，咱们不替换。</b><br><br>
+        建议是<b>多模型并存策略</b>——火山方舟支持接入多家模型 API，客户按场景选择。<br><br>
+        比如：<br>
+        · <b>营销文案生成用通义</b><br>
+        · <b>客服对话用豆包</b><br>
+        · <b>代码生成用 Code 模型</b><br><br>
+        <b>火山方舟做统一调度和成本管控</b>。这样客户的选型更灵活，也<b>避免了模型供应商锁定风险</b>。"
+      </div>
+    </div>`,
+    voice: '面试高频题第三题 Q3：客户已经买了通义千问你怎么推豆包。逐字答："通义千问是好选择咱们不替换。建议是多模型并存策略——火山方舟支持接入多家模型 API 客户按场景选择。比如营销文案生成用通义、客服对话用豆包、代码生成用 Code 模型。火山方舟做统一调度和成本管控。这样客户的选型更灵活也避免了模型供应商锁定风险。"<b>"多模型并存策略"是处理"客户已用对手"题的标准答案</b>——不替换不对抗做平台和路由。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 2 章 · 面试题 #4', title: 'Q4：政企怎么和华为天翼竞争？',
+    visual: `<div class="interview-card">
+      <div class="q">为什么火山引擎能在政企里跟华为/天翼竞争？</div>
+      <div class="a">
+        "<b>我们不抢华为/天翼的底座位置，我们的破局点在 AI 应用层。</b><br><br>
+        <b>三个事实支撑</b>：<br>
+        ① <b>豆包是国内 ToB 调用量最大的模型之一</b>，政务客服、政策问答、文书写作场景成熟；<br>
+        ② <b>抖音政务号生态</b>让我们对政民对话语料有独特优势；<br>
+        ③ <b>字节自身是大型央企级别的数字化样本</b>。<br><br>
+        所以我们的打法不是替代政务云，是<b>让政务云上多一个 AI 选择</b>。<br><br>
+        <b>这个角度客户接受度高很多。</b>"
+      </div>
+    </div>`,
+    voice: '面试高频题第四题 Q4：为什么火山引擎能在政企里跟华为天翼竞争。逐字答："我们不抢华为天翼的底座位置我们的破局点在 AI 应用层。三个事实支撑：豆包是国内 ToB 调用量最大的模型之一政务客服政策问答文书写作场景成熟；抖音政务号生态让我们对政民对话语料有独特优势；字节自身是大型央企级别的数字化样本。所以我们的打法不是替代政务云是让政务云上多一个 AI 选择。这个角度客户接受度高很多。"<b>"让政务云上多一个 AI 选择"是政企对位的精髓姿态</b>。',
+    fallbackDuration: 34000 },
+
+  { chapter: '第 2 章 · 面试题 #5', title: 'Q5：AI 算力供应稳定吗？',
+    visual: `<div class="interview-card">
+      <div class="q">客户问"AI 算力供应稳定吗？华为有昇腾"，怎么答？</div>
+      <div class="a">
+        "<b>昇腾是国产 AI 算力的主流之一，华为投入多年。</b><br><br>
+        火山引擎的算力策略是<b>多元 + 弹性</b>——NVIDIA H 系列为主，部分场景接入<b>昇腾、海光、天数</b>等国产芯片，根据客户合规和成本要求灵活配置。<br><br>
+        供应稳定性上，我们<b>背靠字节自有 GPU 集群</b>，业务高峰期能调度抖音/巨量的算力，<b>是真实业务跑过的容量</b>。<br><br>
+        建议先做 <b>1 个月小批量 POC</b>，按 <b>推理时延/吞吐/成本/合规</b> 四个指标实测。"
+      </div>
+    </div>`,
+    voice: '面试高频题第五题 Q5：客户问 AI 算力供应稳定吗华为有昇腾怎么答。逐字答："昇腾是国产 AI 算力的主流之一华为投入多年。火山引擎的算力策略是多元加弹性——NVIDIA H 系列为主部分场景接入昇腾、海光、天数等国产芯片根据客户合规和成本要求灵活配置。供应稳定性上我们背靠字节自有 GPU 集群业务高峰期能调度抖音巨量的算力是真实业务跑过的容量。建议先做 1 个月小批量 POC 按推理时延、吞吐、成本、合规四个指标实测。"<b>"多元算力 + 字节自有集群 + 4 指标 POC"</b>是 AI 算力供应题的标准答。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🎯 互动测验', title: '客户场景 · 4 步法套用',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户："我们核心 DB 是 Oracle 已用 10 年。" 用 4 步法怎么答？</div>
+      <div class="quiz-opt wrong" data-k="A">"Oracle 太贵了换我们便宜"（无 4 步法）</div>
+      <div class="quiz-opt correct" data-k="B">"Oracle 稳定确实事实 + veDB PG 兼容 + 3 月迁移 PoC + 不动业务系统"</div>
+      <div class="quiz-opt wrong" data-k="C">"Oracle 你们怎么还在用？"（贬低客户选择）</div>
+      <div class="quiz-opt wrong" data-k="D">"用我们的吧便宜"（无承认无路径）</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：4 步法完整套用。① <b>承认</b>"Oracle 稳定 10 年是事实"尊重客户选择；② <b>维度迁移</b>从"Oracle 好不好"挪到"许可费 vs 国产化"；③ <b>给可验证路径</b>"veDB PG 兼容 + DTS 平滑迁移 + 3 月 PoC + TCO 表"；④ <b>留退路</b>"不动您的业务系统应用层零改动 + 灰度切流量 + 30 天回切预案"。<b>这是 Day 4 学过的 Oracle 替换案例在 4 步法下的标准答</b>。</div>
+    </div>`,
+    voice: '思考一下。客户 Oracle 10 年用 4 步法怎么答？给你 5 秒......正确答案 B 完整 4 步法套用。承认"Oracle 稳定 10 年是事实"尊重客户选择；维度迁移从"Oracle 好不好"挪到"许可费 vs 国产化"；给可验证路径"veDB PG 兼容加 DTS 平滑迁移加 3 月 PoC 加 TCO 表"；留退路"不动您的业务系统应用层零改动加灰度切流量加 30 天回切预案"。这是 Day 4 学过的 Oracle 替换案例在 4 步法下的标准答。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 3 章 · 竞调工具', title: '信息源 · 每周必看',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">📰</div><h5>官方动态</h5><p>各家云厂商公众号<br>官方博客 / 产品发布会</p></div>
+      <div class="col-card"><div class="num">💼</div><h5>新闻媒体</h5><p>InfoQ / 雷锋网<br>36氪 / 量子位 / 机器之心</p></div>
+      <div class="col-card"><div class="num">📊</div><h5>权威报告</h5><p>IDC / Gartner / Forrester<br>艾瑞咨询 / 信通院</p></div>
+      <div class="col-card"><div class="num">👥</div><h5>社区</h5><p>知乎 / CSDN<br>掘金 / V2EX</p></div>
+      <div class="col-card"><div class="num">📋</div><h5>招投标</h5><p>中国政府采购网<br>企查查 / 数据猿</p></div>
+      <div class="col-card"><div class="num">🕵️</div><h5>一手信息</h5><p>客户内部知情人<br>ex-员工 / 猎头交流</p></div>
+    </div>`,
+    voice: '竞品调研日常工具信息源。每周必看 6 类。官方动态各家云厂商公众号官方博客产品发布会。新闻媒体 InfoQ 雷锋网 36 氪量子位机器之心。权威报告 IDC Gartner Forrester 艾瑞咨询信通院。社区知乎 CSDN 掘金 V2EX。招投标中国政府采购网企查查数据猿。<b>一手信息渠道</b>招投标公告看友商中标价加方案要点、客户内部知情人了解客户决策链、ex 员工社区或猎头交流——<b>这些比公开 PPT 真实 10 倍</b>。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 3 章 · 个人竞品矩阵', title: '每打一单前列一遍',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>字段</th><th>填什么</th></tr></thead>
+      <tbody>
+        <tr><td class="ve">项目名称</td><td>具体客户单子</td></tr>
+        <tr><td class="ve">客户</td><td>客户公司 + 决策人 + 联系人</td></tr>
+        <tr><td class="ve">预算</td><td>500 万 / 1500 万 / 3000 万</td></tr>
+        <tr><td class="ve">竞品 N</td><td>每个对手单独 1 列</td></tr>
+        <tr><td class="al">— 客户内部对标人</td><td>谁推这个友商</td></tr>
+        <tr><td class="al">— 客户对其评价</td><td>"听说不错" / "用过"</td></tr>
+        <tr><td class="al">— 强项</td><td>真实优势 3 点</td></tr>
+        <tr><td class="al">— 弱项</td><td>真实劣势 3 点</td></tr>
+        <tr><td class="al">— 我方差异化</td><td>对应 L4 维度迁移</td></tr>
+        <tr><td class="al">— POC 建议</td><td>周期+KPI+指标</td></tr>
+      </tbody>
+    </table>`,
+    voice: '<b>"个人竞品矩阵"模板</b>每打一单前列一遍。字段：项目名称、客户、预算、竞品 N（每个对手单独一列）。每个竞品下：客户内部对标人谁推这个友商、客户对其评价、强项真实优势 3 点、弱项真实劣势 3 点、我方差异化对应 L4 维度迁移、POC 建议周期 KPI 指标。<b>这张表是售前的"作战地图"</b>——每打一单都填一遍 3 年后你的"个人竞品库"是核心竞争力。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 3 章 · 每日复盘 3 问', title: '让你每天进步的核武器',
+    visual: `<div class="scenario-card">
+      <h4>📝 每日复盘三问 · 1 分钟答完</h4>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;"><b>① 今天有客户提到友商？我的回应是 L1/L2/L3/L4 哪一档？</b></div>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;"><b>② 我有没有把客户的"维度"从功能挪到价值？</b></div>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;"><b>③ 下一次面对同样问题，我能给出更好的回答吗？</b></div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);font-size:11.5px;color:#94a3b8;">💎 每天 1 分钟 · 1 年下来你就是公司里最懂竞品的售前</div>
+    </div>`,
+    voice: '每日复盘三问让你每天进步的核武器。一今天有客户提到友商我的回应是 L1 L2 L3 L4 哪一档？二我有没有把客户的"维度"从功能挪到价值？三下一次面对同样问题我能给出更好的回答吗？<b>每天 1 分钟 1 年下来你就是公司里最懂竞品的售前</b>。',
+    fallbackDuration: 22000 },
+
+  { chapter: '💎 面试速查表', title: '6 句一句话总结 · 终极背诵',
+    visual: `<table class="summary-table">
+      <thead><tr><th>对手</th><th>一句话总结</th></tr></thead>
+      <tbody>
+        <tr><td class="key">华为云</td><td>我们不抢底座，AI 应用层切入，双云互补</td></tr>
+        <tr><td class="key">阿里云</td><td>生态厚但工具老，AI 应用工程化我们更快</td></tr>
+        <tr><td class="key">腾讯云</td><td>微信生态他强，抖音生态我强，互补不替代</td></tr>
+        <tr><td class="key">百度云</td><td>AI 老品牌，但 ToB 应用化和迭代速度我们更快</td></tr>
+        <tr><td class="key">AWS</td><td>出海第一站默选，国内回流 + AI 用我们</td></tr>
+        <tr><td class="key">国资云</td><td>身份+网络他强，AI 应用层我们补，做 ISV 生态共赢</td></tr>
+      </tbody>
+    </table>`,
+    voice: '面试速查表 6 句一句话总结终极背诵。华为云：我们不抢底座 AI 应用层切入双云互补。阿里云：生态厚但工具老 AI 应用工程化我们更快。腾讯云：微信生态他强抖音生态我强互补不替代。百度云：AI 老品牌但 ToB 应用化和迭代速度我们更快。AWS：出海第一站默选国内回流加 AI 用我们。国资云：身份加网络他强 AI 应用层我们补做 ISV 生态共赢。<b>这 6 句话打印贴工位每天读一遍直到能不看稿讲出来</b>。',
+    fallbackDuration: 30000 },
+
+  { chapter: '💎 三件事永远记住', title: '竞品视角的灵魂',
+    visual: `<div class="three-col">
+      <div class="col-card" style="background:rgba(239,68,68,.06);border:1.5px solid #ef4444;">
+        <div class="num">❌</div>
+        <h5 style="color:#fca5a5">不贬低</h5>
+        <p>贬对手 = 贬客户过往选择<br>立刻丢信任</p>
+      </div>
+      <div class="col-card" style="background:rgba(245,158,11,.06);border:1.5px solid #f59e0b;">
+        <div class="num">🔄</div>
+        <h5 style="color:#fde68a">承认 + 迁移</h5>
+        <p>先承认对手优势<br>再把比较维度挪走</p>
+      </div>
+      <div class="col-card" style="background:rgba(34,197,94,.06);border:1.5px solid #22c55e;">
+        <div class="num">✅</div>
+        <h5 style="color:#86efac">给可验证路径</h5>
+        <p>所有竞争话术最终<br>落到 POC + 指标 + 时间表</p>
+      </div>
+    </div>`,
+    voice: '永远记住的三件事是竞品视角的灵魂。一不贬低贬低对手等于贬低客户的过往选择立刻丢信任。二承认加迁移先承认对手优势再把比较维度挪走。三给可验证路径所有竞争话术最终落到 POC 加指标加时间表。<b>这三件事任何时候被客户问到对手只要记住这 3 个原则就不会出错</b>。',
+    fallbackDuration: 22000 },
+
+  { chapter: '💎 HCSP-Presales', title: '"我懂华为打华为" · 持证者杀招',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">📜</div><h5>懂对手方法论</h5><p>华为售前体系内化训练<br>SA 方法论训练</p></div>
+      <div class="col-card"><div class="num">🔍</div><h5>真实优劣势</h5><p>不是 PPT 滤镜<br>培训过的真实知识<br>ModelArts/HCS/FusionInsight 细节</p></div>
+      <div class="col-card"><div class="num">🗣️</div><h5>客户语言一致</h5><p>政企客户日常用华为话术<br>等保/信创/雪亮工程<br>直接接住不需翻译</p></div>
+      <div class="col-card"><div class="num">💎</div><h5>面试金句</h5><p style="font-size:14px;color:#fde68a;font-weight:700;">"我懂华为打华为"</p><p style="margin-top:4px;">比 10 个豆包参数<br>有说服力得多</p></div>
+    </div>`,
+    voice: 'HCSP-Presales 持证者的差异化优势是火山引擎政企售前最稀缺的能力。一懂对手方法论 HCSP-Presales 是华为售前体系内化训练你被华为的解决方案架构师方法论训练过这是对手都没有的视角。二说得出真实优劣势不是 PPT 滤镜是培训过的真实知识讨论华为产品时你能说出 ModelArts HCS FusionInsight DataArts 的具体细节。三客户语言一致政企客户日常用华为话术等保信创政务云一网通办雪亮工程你能直接接住不需要翻译。<b>面试金句"我懂华为打华为"</b>——这一句话比罗列 10 个豆包参数有说服力得多面试时主动把这个角度讲透。',
+    fallbackDuration: 32000 },
+
+  { chapter: '💎 收官心法', title: '竞品视角的最终落点',
+    visual: `<div class="scenario-card">
+      <h4>🎯 本模块的最终落点</h4>
+      <div class="row" style="color:#fde68a;font-size:14px;font-weight:700;text-align:center;line-height:1.8;margin:12px 0;">"竞品视角不是为了'打赢'对手，<br>而是为了'赢下客户'。"</div>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">客户感受到的是：<br>· <b>你对市场的全局理解</b><br>· <b>不是你对某家厂商的攻击</b></div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);color:#86efac;font-weight:700;">每次面对友商话题，问自己：</div>
+      <div class="row" style="color:#cbd5e1;text-align:center;font-size:13px;">"我让客户对我的信任<b>增加了</b>，还是<b>减少了</b>？"</div>
+    </div>`,
+    voice: '本模块的最终落点：<b>竞品视角不是为了"打赢"对手而是为了"赢下客户"</b>。客户感受到的是你对市场的全局理解不是你对某家厂商的攻击。每次面对友商话题问自己："我让客户对我的信任增加了还是减少了？"这是 6 节竞品课的精神内核也是售前从"销售"进阶为"顾问"的标志。',
+    fallbackDuration: 24000 },
+
+  { chapter: '速查表', title: '面试 · 8 题终极速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 对位话术 4 步？<span style="color:#a5b4fc"> → 承认 / 维度迁移 / 可验证 / 留退路</span><br>
+      <b>Q2</b> 原话模板？<span style="color:#a5b4fc"> → 友商扎实 + 我方差异 + 周期 PoC + 不动底座</span><br>
+      <b>Q3</b> 客户已用通义？<span style="color:#a5b4fc"> → 多模型并存策略，方舟统一调度</span><br>
+      <b>Q4</b> 政企怎么和华为竞争？<span style="color:#a5b4fc"> → 不抢底座 AI 应用层切入 让政务云上多 1 个 AI 选择</span><br>
+      <b>Q5</b> 永远记住 3 件事？<span style="color:#a5b4fc"> → 不贬低 / 承认+迁移 / 给可验证路径</span><br>
+      <b>Q6</b> 6 家对手坐标？<span style="color:#a5b4fc"> → 华为 AI 应用层 / 阿里 AI 工程化 / 腾讯互补 / 百度速度 / AWS 数据回流 / 国资云 ISV</span><br>
+      <b>Q7</b> HCSP 金句？<span style="color:#a5b4fc"> → "我懂华为打华为"</span><br>
+      <b>Q8</b> 收官心法？<span style="color:#a5b4fc"> → "竞品视角不是为了打赢对手而是为了赢下客户"</span>
+    </div>`,
+    voice: '8 题终极速查。一对位话术 4 步承认维度迁移可验证留退路。二原话模板友商扎实加我方差异加周期 PoC 加不动底座。三客户已用通义多模型并存策略方舟统一调度。四政企怎么和华为竞争不抢底座 AI 应用层切入让政务云上多 1 个 AI 选择。五永远记住 3 件事不贬低承认加迁移给可验证路径。六 6 家对手坐标华为 AI 应用层阿里 AI 工程化腾讯互补百度速度 AWS 数据回流国资云 ISV。七 HCSP 金句"我懂华为打华为"。八收官心法"竞品视角不是为了打赢对手而是为了赢下客户"。这 8 道刷熟竞品模块面试稳过。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🎉 毕业', title: '🏆 竞品模块 6 节全部完结',
+    eyebrow: 'COMP-01 → COMP-06 收官',
+    body: '你已学完<b>整个竞品模块 6 节课</b>：<br>L1-L4 方法论 / 2026 市场格局 / 华为对位详解<br>+ 阿里腾讯 / 百度 AWS 国资云 / 对位话术与面试题<br><br><span class="hl">配合你的 HCSP-Presales 持证 = 火山引擎政企售前最稀缺的角色</span>',
+    visual: '<div style="font-size:80px;">🏆</div>',
+    voice: '恭喜你完成整个竞品模块 6 节课：COMP-01 竞品视角四个层次、COMP-02 2026 市场格局、COMP-03 华为对位详解、COMP-04 阿里腾讯对位、COMP-05 百度 AWS 国资云、COMP-06 对位话术加面试题。配合你的 HCSP-Presales 持证你是火山引擎政企售前最稀缺的角色。"我懂华为打华为"加 4 步通用话术加 6 家对手坐标速记表加每日复盘 3 问。<b>火山引擎竞品训练完结祝你前程似锦客户排队</b>。',
+    fallbackDuration: 28000 },
+];
+</script>
+<script src="_player.js?v=27"></script>
+</body>
+</html>

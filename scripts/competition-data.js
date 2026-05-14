@@ -4,6 +4,7 @@ const COMPETITION = [
   // ============================================================
   {
     id: 'comp01',
+    internalVideo: 'lessons/comp01-video.html?v=27',
     videoQueries: ['售前竞品分析方法论', '客户提到友商 怎么应对', '竞品对位话术'],
     title: 'COMP-01 · 竞品视角四个层次',
     summary: '从客户画像到维度迁移，建立售前的竞品方法论：不是参数对照表，而是四件事的合体',
@@ -50,6 +51,7 @@ const COMPETITION = [
   // ============================================================
   {
     id: 'comp02',
+    internalVideo: 'lessons/comp02-video.html?v=27',
     videoQueries: ['国内云厂商对比 2024', '阿里云 华为云 区别', '火山引擎 vs 阿里云'],
     title: 'COMP-02 · 2026 中国云市场竞争格局',
     summary: '掌握主流云厂商的客户画像、强势场景、火山引擎按场景的对手图谱',
@@ -170,13 +172,14 @@ const COMPETITION = [
         ]
       }
     ],
-    internalVideo: 'lessons/comp03-video.html?v=26',
+    internalVideo: 'lessons/comp03-video.html?v=27',
     tips: '本章是整个模块的核心。如果你只看一章，看这章。建议把"五个典型对位场景的逐字话术"打印出来贴在工位旁，每天早上读一遍——直到能不看稿讲出来。'
   },
 
   // ============================================================
   {
     id: 'comp04',
+    internalVideo: 'lessons/comp04-video.html?v=27',
     videoQueries: ['阿里云 通义千问 介绍', '腾讯云 混元大模型', 'DataWorks vs DataLeap'],
     title: 'COMP-04 · 阿里云 / 腾讯云对位（★★★ ★★★）',
     summary: '互联网赛道的两个主要对手：阿里生态最厚 vs 腾讯 C 端入口；火山引擎的差异点在 AI 应用工程化和字节场景',
@@ -245,6 +248,7 @@ const COMPETITION = [
   // ============================================================
   {
     id: 'comp05',
+    internalVideo: 'lessons/comp05-video.html?v=27',
     videoQueries: ['AWS 全球云 介绍', '百度智能云 文心一言', '天翼云 国资云'],
     title: 'COMP-05 · 百度云 / AWS / 国资云对位（★★ ★★ ★★★★）',
     summary: '剩余三类对手：AI 老品牌百度、出海主场 AWS、政企央企国资云（天翼/移动/联通）',
@@ -300,6 +304,7 @@ const COMPETITION = [
   // ============================================================
   {
     id: 'comp06',
+    internalVideo: 'lessons/comp06-video.html?v=27',
     videoQueries: ['售前面试 竞品题', '云厂商对比 销售话术', 'POC 设计 售前'],
     title: 'COMP-06 · 对位话术四步法 + 面试高频题',
     summary: '把方法论收敛成可操作的 4 步话术框架；5 道面试高频题逐字答题示范；竞品调研日常工具',

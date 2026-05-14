@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP-02 · 2026 中国云市场竞争格局 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=27">
+<style>
+  .vendor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 920px; max-width: 96vw; }
+  .vc-card { padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; animation: cardIn .4s both; }
+  .vc-card.al { border-color: #f59e0b; }
+  .vc-card.hw { border-color: #ec4899; animation-delay: .08s; }
+  .vc-card.tc { border-color: #2b5cff; animation-delay: .16s; }
+  .vc-card.ve { border-color: #fde68a; background: rgba(245,158,11,.1); animation-delay: .24s; }
+  .vc-card.bd { border-color: #c4b5fd; animation-delay: .32s; }
+  .vc-card.gov { border-color: #6e3aff; animation-delay: .4s; }
+  .vc-card.aws { border-color: #94a3b8; animation-delay: .48s; }
+  .vc-card .nm { font-size: 14px; font-weight: 700; color: #fff; }
+  .vc-card .strong { font-size: 11.5px; color: #86efac; margin-top: 4px; }
+  .vc-card .play { font-size: 11.5px; color: #cbd5e1; margin-top: 4px; line-height: 1.6; }
+
+  .scene-grid { display: grid; grid-template-columns: 1fr; gap: 10px; width: 880px; max-width: 96vw; }
+  .sc-row { padding: 12px 16px; border-radius: 10px;
+    background: rgba(255,255,255,.04); border: 1.5px solid #6e3aff;
+    display: grid; grid-template-columns: 180px 1fr 1fr;
+    gap: 10px; align-items: center; animation: cardIn .5s both; }
+  .sc-row .scene { font-size: 13px; color: #c4b5fd; font-weight: 700; }
+  .sc-row .opp { font-size: 12px; color: #fca5a5; }
+  .sc-row .play { font-size: 12px; color: #86efac; }
+  .sc-row:nth-child(2) { animation-delay: .08s; }
+  .sc-row:nth-child(3) { animation-delay: .16s; }
+  .sc-row:nth-child(4) { animation-delay: .24s; }
+  .sc-row:nth-child(5) { animation-delay: .32s; }
+  .sc-row:nth-child(6) { animation-delay: .4s; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 'COMP-02', title: 'COMP-02 · 2026 中国云市场竞争格局', intro: '12 分钟 · 7 大厂商画像 + 火山按场景对手图谱 + 2024-2026 三大变化' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'COMP-02 · 2026 中国云市场格局',
+    eyebrow: '火山引擎售前 · 竞品模块第二节',
+    body: '<b>7 大云厂商客户画像 + 火山按场景对手图谱 + 2024-2026 市场三大变化</b><br>12 分钟 + 1 互动 + 1 客户对话 + 售前主战场判断',
+    visual: '<div class="cover-icon">🌐</div>',
+    voice: '欢迎来到 COMP-02 2026 中国云市场竞争格局。COMP-01 讲了方法论今天讲市场地图。12 分钟讲透 7 大云厂商客户画像、火山按场景对手图谱、2024-2026 市场三大变化。学完这节你能判断"是否在友商主场"——这是售前的第一直觉。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 1 章 · 7 大厂商', title: '客户画像速记 · 一图看懂',
+    visual: `<div class="vendor-grid">
+      <div class="vc-card al">
+        <div class="nm">🟧 阿里云</div>
+        <div class="strong">强势：互联网中大 / 零售 / 金融科技</div>
+        <div class="play">生态最厚 + 资历最深 + 价格最灵活</div>
+      </div>
+      <div class="vc-card hw">
+        <div class="nm">🟥 华为云 ★（火山政企第一对手）</div>
+        <div class="strong">强势：政企 / 国企 / 信创 / 大型行业</div>
+        <div class="play">渠道下沉 + 关系经营 + 全栈自主可控</div>
+      </div>
+      <div class="vc-card tc">
+        <div class="nm">🟦 腾讯云</div>
+        <div class="strong">强势：游戏 / 视频 / 微信 / 教育</div>
+        <div class="play">C 端入口 + 生态接入 + 鹅厂资源</div>
+      </div>
+      <div class="vc-card ve">
+        <div class="nm">🟨 火山引擎 (我们)</div>
+        <div class="strong">强势：AI 原生 / 大模型 / 内容 / 增长</div>
+        <div class="play">模型迭代速度 + 字节场景 + 应用工程化</div>
+      </div>
+      <div class="vc-card bd">
+        <div class="nm">🟪 百度智能云</div>
+        <div class="strong">强势：老牌 AI / 智能驾驶 / 部分政企</div>
+        <div class="play">AI 老牌资历 + 部分行业深耕</div>
+      </div>
+      <div class="vc-card gov">
+        <div class="nm">🟦 国资云（天翼/移动/联通）</div>
+        <div class="strong">强势：央国企 / 区县政府 / 行业云</div>
+        <div class="play">国资身份 + 网络资源 + 央企决策路径</div>
+      </div>
+      <div class="vc-card aws" style="grid-column:1/3;">
+        <div class="nm">⬜ AWS / Azure / GCP（外资）</div>
+        <div class="strong">强势：出海企业 / 外企在华 / 跨国 SaaS</div>
+        <div class="play">2024 起合规与服务收缩 / 剩余出海与外企主战场</div>
+      </div>
+    </div>`,
+    voice: '7 大云厂商客户画像速记。阿里云强势互联网中大客户、零售品牌、金融科技、政务一网通办标志单双 11 政务一网通办大商家 ERP 打法生态最厚加资历最深加价格最灵活。华为云是火山政企第一对手强势政企国企大型行业信创标志单数字政府公共安全智慧城市打法渠道下沉加关系经营加全栈自主可控鲲鹏昇腾欧拉高斯 HCS。腾讯云强势游戏视频微信生态教育标志单王者荣耀腾讯会议教育 SaaS 打法 C 端入口加生态接入加鹅厂资源。火山引擎我们强势 AI 原生应用、大模型、内容、增长标志单抖音电商、巨量引擎、大模型客户、智能硬件打法模型迭代速度加字节真实场景加应用工程化。百度智能云强势老牌 AI、智能驾驶、部分政企标志单萝卜快跑文心一言 ToB。国资云天翼移动联通强势央国企、区县政府、行业云打法国资身份加网络资源加央企决策路径 2024 年起份额持续上升挤压华为阿里。AWS Azure GCP 强势出海企业外企在华跨国 SaaS 2024 年起合规与服务收缩国内政企客户大量切走剩余主战场是出海与外企。',
+    fallbackDuration: 65000 },
+
+  { chapter: '第 2 章 · 火山主战场', title: '按场景的主要对手图谱',
+    visual: `<div class="scene-grid">
+      <div class="sc-row">
+        <div class="scene">🏛️ 政企/信创/行业</div>
+        <div class="opp">第一：华为 / 第二：天翼</div>
+        <div class="play">不抢底座 AI 应用层切入</div>
+      </div>
+      <div class="sc-row">
+        <div class="scene">🌐 互联网/中大客户</div>
+        <div class="opp">第一：阿里 / 第二：腾讯</div>
+        <div class="play">字节场景 + AI + 增长</div>
+      </div>
+      <div class="sc-row">
+        <div class="scene">🧠 AI 大模型 / RAG / Agent</div>
+        <div class="opp">第一：阿里通义 / 第二：百度盘古</div>
+        <div class="play">豆包月级 + 方舟一站式 + 多模型路由</div>
+      </div>
+      <div class="sc-row">
+        <div class="scene">✈️ 出海 / 全球架构</div>
+        <div class="opp">第一：AWS / 第二：阿里国际</div>
+        <div class="play">AWS 出海 + 火山做 AI 与回流</div>
+      </div>
+      <div class="sc-row">
+        <div class="scene">🎮 游戏 / 音视频 / 直播</div>
+        <div class="opp">第一：腾讯 / 第二：阿里</div>
+        <div class="play">抖音直播原生 + AI 推荐 + 内容生态</div>
+      </div>
+      <div class="sc-row">
+        <div class="scene">📱 短视频 / 内容运营</div>
+        <div class="opp">★ 几乎无对手</div>
+        <div class="play">火山主场</div>
+      </div>
+    </div>`,
+    voice: '火山引擎按场景的主要对手图谱。政企信创大型行业第一对手华为云第二对手天翼云阿里云打法不抢底座 AI 应用层切入双云互补。互联网中大客户第一对手阿里云第二对手腾讯云打法用字节场景验证过的 AI 加大数据加增长引擎组合突破。AI 大模型 RAG Agent 第一对手阿里云通义第二对手百度文心华为盘古打法豆包月级迭代加火山方舟一站式工程链路加多模型路由。出海全球架构第一对手 AWS 第二对手阿里云国际打法 AWS 出海加火山做 AI 与中国回流数据分析。游戏音视频直播第一对手腾讯云第二对手阿里云打法抖音直播技术原生加 AI 推荐与 NPC 加内容生态。短视频内容运营火山自身就是主场几乎没有对手。<b>判断"是否在友商主场"是售前的第一直觉</b>——这张图建议截图打印贴工位。',
+    fallbackDuration: 50000 },
+
+  { chapter: '第 3 章 · 2024-2026 变化', title: '4 大市场变化 · 售前必懂',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">📡</div><h5>① 国资云崛起</h5><p>天翼/移动/联通成政企默选<br>与华为云形成竞争<br><b>火山学会"和国资云互补"而非对抗</b></p></div>
+      <div class="col-card"><div class="num">🌐</div><h5>② 外资云退场</h5><p>AWS/Azure/GCP 合规收紧<br>多数政企已切走<br>出海是剩余主战场</p></div>
+      <div class="col-card"><div class="num">🧠</div><h5>③ AI 重塑采购心智</h5><p>从"看 IaaS 谁便宜"<br>转向"看 AI 谁能落地"<br><b>火山相对华为/天翼的最大窗口</b></p></div>
+      <div class="col-card"><div class="num">⚖️</div><h5>④ 信创与多云并存</h5><p>既要信创鲲鹏/昇腾<br>又要避免单一绑定<br>火山 AI 应用层是补位</p></div>
+    </div>`,
+    voice: '2024-2026 重要市场变化售前必懂。一国资云崛起天翼云移动云联通云在政企单子里成为默选之一与华为云形成竞争<b>火山引擎要学会"和国资云互补"而非对抗</b>——做 ISV 生态共赢。二外资云退场 AWS Azure GCP 在中国合规收紧多数政企客户已切走出海是它们的剩余主战场。三 AI 重塑采购心智客户从"看 IaaS 谁便宜"转向"看 AI 谁能落地"<b>这是火山引擎相对华为天翼的最大窗口期</b>。四信创与多云并存客户既要信创鲲鹏昇腾海光又要避免单一供应商绑定火山引擎的"AI 应用层"是信创底座之外的差异化补位。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🎯 互动测验', title: '客户类型 · 火山是不是主场？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某省级国资委下属企业要做政务"一网通办"AI 助手 1500 万项目。火山主场还是客场？</div>
+      <div class="quiz-opt wrong" data-k="A">主场（火山 AI 强）</div>
+      <div class="quiz-opt correct" data-k="B">客场（华为/天翼政企主战场）但 AI 应用层有窗口</div>
+      <div class="quiz-opt wrong" data-k="C">主场（豆包政务模型独家）</div>
+      <div class="quiz-opt wrong" data-k="D">客场（直接放弃）</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：典型 L1 客户画像判断题。<b>政企客户是华为/天翼主战场</b>不要硬刚底座。但 <b>"AI 重塑采购心智"</b>给火山一个新窗口期：从 AI 应用层切入做"政务智能客服+政民对话+政策大模型"。<b>正确打法</b>：① 联合本地集成商或国资云做 ISV；② 主推豆包政务+方舟 Coze；③ 1500 万项目我们做 AI 模块 300-500 万分包；④ 不抢底座做"国资云上跑火山 AI"。这就是 COMP-02 心法在落地。</div>
+    </div>`,
+    voice: '思考一下。政企"一网通办"项目火山是主场还是客场？给你 5 秒......正确答案 B 客场但 AI 应用层有窗口。典型 L1 客户画像判断题。政企客户是华为天翼主战场不要硬刚底座。但 AI 重塑采购心智给火山一个新窗口期：从 AI 应用层切入做政务智能客服加政民对话加政策大模型。正确打法联合本地集成商或国资云做 ISV；主推豆包政务加方舟 Coze；1500 万项目我们做 AI 模块 300-500 万分包；不抢底座做"国资云上跑火山 AI"。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🌟 客户对话', title: '"国资云和火山什么关系？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们集团要求用天翼云做底座，火山引擎跟天翼云是竞争还是合作？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型"<b>互补不对抗</b>"。<b>3 角色清晰</b>：① <b>天翼云做底座</b>合规身份加网络资源国资属性；② <b>火山做 AI 应用层</b>豆包加方舟加 DataLeap 作为 ISV 部署在天翼云上；③ <b>客户得到</b>"国资身份+最新 AI 能力"双重保障。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>采购怎么走？分两份合同？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>两种姿势灵活选。<b>① 主合同走天翼云</b>火山作为分包/AI 增值模块；<b>② 平行采购</b>底座天翼云 + AI 应用层火山引擎独立合同。<b>我们在央企已经有 3 家天翼云+火山引擎双子方案备案号</b>。先做 1 个月 PoC 验证 ISV 部署可行性。</div>
+      </div>
+    </div>`,
+    voice: '一段客户对话。客户问国资云和火山关系。售前给"互补不对抗"3 角色清晰：天翼云做底座合规身份网络资源国资属性；火山做 AI 应用层豆包方舟 DataLeap 作为 ISV 部署在天翼云上；客户得到国资身份加最新 AI 能力双重保障。客户问采购怎么走，售前甩两种姿势：主合同走天翼火山作分包；或平行采购独立合同。央企已有 3 家天翼+火山双子方案备案号。先做 1 月 PoC 验证 ISV 部署可行性。<b>"和国资云互补"是 2024 后政企单子的关键打法</b>。',
+    fallbackDuration: 33000 },
+
+  { chapter: '💎 心法', title: '"非对称优势" · 永远找你的强场',
+    visual: `<div class="scenario-card">
+      <h4>🎯 售前的第一直觉 · 判断"是否在友商主场"</h4>
+      <div class="row"><b>① 进华为政企腹地</b>靠 IaaS 价格战 → <b>必死</b>。学华为渠道经验？3 年都追不上。</div>
+      <div class="row"><b>② 进阿里互联网腹地</b>靠生态打 → <b>必死</b>。学阿里生态？10 年积累追不平。</div>
+      <div class="row"><b>③ 进腾讯游戏腹地</b>靠 C 端流量 → <b>必死</b>。微信入口是垄断不是技术。</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);"><b>💎 永远找你的非对称优势 = AI 应用 + 字节场景</b></div>
+      <div class="row">这就是火山在友商主场依然能立足的关键</div>
+    </div>`,
+    voice: '判断"是否在友商主场"是售前的第一直觉。如果你进的是华为政企的腹地靠 IaaS 价格战打不过——学华为渠道经验 3 年都追不上。进的是阿里互联网的腹地靠生态打不过——学阿里生态 10 年积累追不平。进的是腾讯游戏腹地靠 C 端流量打不过——微信入口是垄断不是技术。<b>永远找你的"非对称优势"——AI 应用加字节场景</b>。这就是火山在友商主场依然能立足的关键。',
+    fallbackDuration: 26000 },
+
+  { chapter: '速查表', title: '面试 · 6 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 7 大云厂商画像？<span style="color:#a5b4fc"> → 阿里互联网/华为政企/腾讯游戏/火山 AI/百度老 AI/国资央企/AWS 出海</span><br>
+      <b>Q2</b> 火山政企第一对手？<span style="color:#a5b4fc"> → 华为云 / 不抢底座 AI 应用层切入</span><br>
+      <b>Q3</b> 火山互联网第一对手？<span style="color:#a5b4fc"> → 阿里云 / 字节场景 + AI + 增长</span><br>
+      <b>Q4</b> 国资云怎么打？<span style="color:#a5b4fc"> → 互补不对抗 / ISV 生态共赢</span><br>
+      <b>Q5</b> 2024-2026 最大窗口？<span style="color:#a5b4fc"> → AI 重塑采购心智</span><br>
+      <b>Q6</b> 非对称优势？<span style="color:#a5b4fc"> → AI 应用 + 字节场景</span>
+    </div>`,
+    voice: '6 题速查。一 7 大云厂商画像阿里互联网华为政企腾讯游戏火山 AI 百度老 AI 国资央企 AWS 出海。二火山政企第一对手华为云不抢底座 AI 应用层切入。三火山互联网第一对手阿里云字节场景加 AI 加增长。四国资云怎么打互补不对抗 ISV 生态共赢。五 2024-2026 最大窗口 AI 重塑采购心智。六非对称优势 AI 应用加字节场景。这 6 道刷熟市场格局面试稳过。',
+    fallbackDuration: 26000 },
+
+  { chapter: '完成', title: '🎉 COMP-02 学完！',
+    eyebrow: '关键心法',
+    body: '<b>判断"是否在友商主场"是售前第一直觉</b><br>主场打 → 全力以赴<br>客场打 → 维度迁移找非对称优势<br><span class="hl">永远找你的"非对称优势" = AI 应用 + 字节场景</span>',
+    visual: '<div style="font-size:80px;">🌐</div>',
+    voice: '恭喜 COMP-02 学完。判断"是否在友商主场"是售前第一直觉。主场打全力以赴客场打维度迁移找非对称优势。永远找你的"非对称优势"等于 AI 应用加字节场景。下一站 COMP-04 阿里腾讯对位。',
+    fallbackDuration: 20000 },
+];
+</script>
+<script src="_player.js?v=27"></script>
+</body>
+</html>

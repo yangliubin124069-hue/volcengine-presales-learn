@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP-04 · 阿里云 / 腾讯云对位 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=27">
+<style>
+  .pros-cons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 880px; max-width: 96vw; }
+  .pc-side { padding: 16px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; }
+  .pc-side.pro { border-color: #22c55e; }
+  .pc-side.con { border-color: #f59e0b; }
+  .pc-side h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .pc-side.pro h4 { color: #86efac; }
+  .pc-side.con h4 { color: #fde68a; }
+  .pc-side .item { padding: 4px 0; font-size: 12.5px; color: #cbd5e1; line-height: 1.5; }
+  .pc-side .item::before { content: '· '; color: #94a3b8; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 'COMP-04', title: 'COMP-04 · 阿里 / 腾讯对位', intro: '13 分钟 · 阿里画像 + 优劣势 + 通用话术 + 腾讯画像 + 互补打法' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'COMP-04 · 阿里云 / 腾讯云对位',
+    eyebrow: '火山引擎售前 · 竞品模块第四节',
+    body: '<b>阿里云画像 + 优劣势 + 通用话术 + 腾讯云画像 + 互补不替代</b><br>13 分钟 + 1 互动 + 1 客户对话 + 同生态互联网厂商对位逻辑',
+    visual: '<div class="cover-icon">🟧</div>',
+    voice: '欢迎来到 COMP-04 阿里腾讯对位。阿里腾讯都是互联网厂商和火山是同生态对手。对它们的话术核心不是"打"是"分场景互补"。今天 13 分钟讲透阿里云客户画像优劣势通用话术加腾讯云客户画像与互补打法。',
+    fallbackDuration: 21000 },
+
+  { chapter: '第 1 章 · 阿里云画像', title: '互联网中大客户 · 生态最厚',
+    body: '<b>客户画像</b>：互联网中大客户、零售品牌、金融科技、部分省份政务一网通办<br><span class="hl">资历最深、生态最广、价格最灵活</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🛒</div><h5>标志单</h5><p>双 11<br>政务一网通办<br>大商家 ERP</p></div>
+      <div class="col-card"><div class="num">🏪</div><h5>客户</h5><p>互联网中大<br>零售品牌<br>金融科技</p></div>
+      <div class="col-card"><div class="num">🌐</div><h5>打法</h5><p>生态最厚<br>资历最深<br>价格最灵活</p></div>
+    </div>`,
+    voice: '阿里云客户画像。强势互联网中大客户、零售品牌、金融科技、部分省份政务一网通办。标志单双 11、政务一网通办、大商家 ERP。打法生态最厚加资历最深加价格最灵活。<b>是火山在互联网客户的第一对手</b>。',
+    fallbackDuration: 20000 },
+
+  { chapter: '第 2 章 · 阿里产品对位', title: '通义/百炼/DataWorks 三大强项',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>领域</th><th>阿里云</th><th>火山引擎</th></tr></thead>
+      <tbody>
+        <tr><td>大模型</td><td class="al">通义千问 + 百炼平台</td><td class="ve">豆包 + 火山方舟</td></tr>
+        <tr><td>数仓</td><td class="al">AnalyticDB / Hologres / MaxCompute</td><td class="ve">ByteHouse</td></tr>
+        <tr><td>数据中台</td><td class="al"><b>DataWorks 业内最成熟</b></td><td class="ve">DataLeap 追赶 工具链更快</td></tr>
+        <tr><td>容器</td><td class="al">ACK 资历更老</td><td class="ve">VKE 字节内部打通</td></tr>
+        <tr><td>存储/网络</td><td class="al">OSS / RDS / Redis</td><td class="ve">TOS / RDS / Redis 对位</td></tr>
+        <tr><td>增长营销 ★</td><td class="al">QuickAudience / DataPhin</td><td class="ve"><b>增长引擎 + 抖音生态闭环</b></td></tr>
+      </tbody>
+    </table>`,
+    voice: '阿里产品对位 6 大领域。大模型阿里通义千问加百炼平台对火山豆包加方舟差异通义生态全开源版本社区活跃 vs 豆包迭代快加字节场景。数仓阿里 AnalyticDB Hologres MaxCompute 产品矩阵最细对火山 ByteHouse 单点性能强聚焦云原生数仓。<b>数据中台</b>阿里 DataWorks 业内最成熟对火山 DataLeap 追赶但工具链更新更快这是阿里的强项。容器阿里 ACK 资历更老对火山 VKE 与字节内部运维体系打通。存储网络几乎对位基础层比拼价格与服务。<b>增长营销</b>阿里 QuickAudience DataPhin 对火山增长引擎加抖音生态闭环这是火山的强项内容投放转化链路完整。',
+    fallbackDuration: 36000 },
+
+  { chapter: '第 3 章 · 阿里优劣势', title: '4 优 + 4 短板 · 真实判断',
+    visual: `<div class="pros-cons-grid">
+      <div class="pc-side pro">
+        <h4>✅ 4 大优势</h4>
+        <div class="item">① 生态最厚 - 所有第三方先适配阿里</div>
+        <div class="item">② 数据中台 DataWorks 最成熟</div>
+        <div class="item">③ 价格最灵活 - 大客户折扣极强</div>
+        <div class="item">④ 通义开源 - 海外影响力强</div>
+      </div>
+      <div class="pc-side con">
+        <h4>⚠️ 4 大短板</h4>
+        <div class="item">① AI 应用整合度不够（通义+百炼分散）</div>
+        <div class="item">② 老产品技术栈陈旧迁移成本高</div>
+        <div class="item">③ 零售客户对"做电商+做云"有数据顾虑</div>
+        <div class="item">④ 政企份额近年被华为/天翼挤压</div>
+      </div>
+    </div>`,
+    voice: '阿里 4 大优势加 4 大短板必背。优势一生态最厚合作伙伴 ISV 开发者社区资历最深几乎所有第三方工具都先适配阿里。优势二数据中台最成熟 DataWorks 工具链最完整从开发到治理到资产到服务一套都齐。优势三价格最灵活商务空间大大客户折扣极有竞争力。优势四通义开源生态广 Qwen 开源版本社区活跃海外影响力强。短板一 AI 应用整合度不够通义加百炼的产品组合不如火山方舟一站式从 Demo 到生产链路长。短板二老产品技术栈陈旧部分产品如 ECS 上一代实例族老版本 RDS 迁移成本高。短板三互联网巨头数据顾虑部分客户尤其零售品牌对"阿里同时做电商加做云"有数据安全顾虑。短板四政企份额被挤压近两年政企单子被华为天翼挤压下沉势头放缓。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 4 章 · 阿里通用话术', title: '不否认生态 + AI 工程化 + 多模型',
+    visual: `<div class="scenario-card">
+      <h4>💬 阿里云通用话术框架</h4>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"阿里云的生态是绕不开的优势，咱们不否认。火山引擎的差异在于：</div>
+      <div class="row"><b>① AI 应用工程化更成熟</b>（火山方舟一站式 vs 通义+百炼分散）</div>
+      <div class="row"><b>② 模型选择更开放</b>（方舟接入多家模型可选）</div>
+      <div class="row"><b>③ 字节场景验证过的真实流量</b></div>
+      <div class="row">建议在 <b>AI 应用 + 增长</b> 这两个场景做对比 PoC，不动您现有底座。"</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);font-size:11.5px;color:#94a3b8;">关键词：不否认生态、AI 应用工程化、多模型开放、字节真实场景、不动底座、对比 PoC</div>
+    </div>`,
+    voice: '阿里云通用话术框架。"阿里云的生态是绕不开的优势咱们不否认。火山引擎的差异在于：一 AI 应用工程化更成熟火山方舟一站式 vs 通义加百炼分散；二模型选择更开放方舟接入多家模型可选；三字节场景验证过的真实流量。建议在 AI 应用加增长这两个场景做对比 PoC不动您现有的底座。"<b>关键词不否认生态、AI 应用工程化、多模型开放、字节真实场景、不动底座、对比 PoC</b>。这套话术对阿里互联网客户屡试不爽。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 5 章 · 腾讯云画像', title: '游戏 + 视频 + 微信生态',
+    body: '<b>客户画像</b>：游戏 / 视频 / 微信生态 / 教育 / 部分金融<br><span class="hl">C 端入口和微信生态是核心壁垒</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🎮</div><h5>标志单</h5><p>王者荣耀<br>腾讯会议<br>教育 SaaS</p></div>
+      <div class="col-card"><div class="num">📱</div><h5>客户</h5><p>游戏 / 视频<br>微信生态<br>教育 / 部分金融</p></div>
+      <div class="col-card"><div class="num">🐧</div><h5>打法</h5><p>C 端入口<br>生态接入<br>鹅厂资源整合</p></div>
+    </div>`,
+    voice: '腾讯云客户画像。强势游戏、视频、微信生态、教育、部分金融。标志单王者荣耀、腾讯会议、教育 SaaS。打法 C 端入口加生态接入加鹅厂资源整合。腾讯云的核心壁垒是微信生态——这是垄断不是技术。',
+    fallbackDuration: 18000 },
+
+  { chapter: '第 6 章 · 腾讯产品对位', title: '5 大领域差异点',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>领域</th><th>腾讯云</th><th>火山引擎</th></tr></thead>
+      <tbody>
+        <tr><td>游戏</td><td class="tc">全栈 + 鹅厂资源</td><td class="ve">大模型 + AI NPC + 反外挂 AI</td></tr>
+        <tr><td>音视频</td><td class="tc">TRTC + 腾讯会议（ToB 强）</td><td class="ve">RTC + 抖音直播技术（C 端强）</td></tr>
+        <tr><td>大模型</td><td class="tc">混元 + 微信生态接入</td><td class="ve">豆包 + 方舟开放性</td></tr>
+        <tr><td>C 端营销</td><td class="tc">微信生态 + 视频号</td><td class="ve">抖音生态 + 巨量引擎</td></tr>
+        <tr><td>安全</td><td class="tc">QQ 反外挂经验</td><td class="ve">字节攻防经验 + AI 内容安全</td></tr>
+      </tbody>
+    </table>`,
+    voice: '腾讯 5 大领域产品对位。游戏腾讯优势全栈服务加鹅厂资源整合火山差异大模型加 AI NPC 加反外挂 AI 模型。音视频腾讯 TRTC 加腾讯会议偏 ToB 会议火山 RTC 加抖音直播技术偏 C 端直播。大模型腾讯混元加腾讯文档微信生态接入火山豆包加方舟开放性混元对接微信豆包对接抖音。C 端营销腾讯微信生态加视频号火山抖音生态加巨量引擎两个生态几乎是镜像看客户面向哪个用户群。安全腾讯安全资历厚 QQ 反外挂经验火山借助字节攻防经验 AI 内容安全更新更快。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 7 章 · 腾讯通用话术', title: '互补不替代 · 微信 vs 抖音',
+    visual: `<div class="scenario-card">
+      <h4>💬 腾讯云通用话术 · 互补打法</h4>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"微信生态的客户做腾讯云有天然优势，咱们承认。但如果业务面向短视频/直播/抖音/外向型增长，火山引擎的字节场景就是天然主场。两者经常是<b>互补</b>，不是替代。"</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);font-weight:700;color:#fde68a;">💡 互补打法</div>
+      <div class="row" style="color:#cbd5e1;font-size:12.5px;">· 腾讯云做<b>微信内的转化</b>（小程序/服务号/视频号）</div>
+      <div class="row" style="color:#cbd5e1;font-size:12.5px;">· 火山引擎做<b>抖音/外站的获客与 AI 内容生产</b></div>
+      <div class="row" style="color:#cbd5e1;font-size:12.5px;">· <b>客户不用选边站</b>，按用户群分工</div>
+    </div>`,
+    voice: '腾讯云通用话术核心是"互补不替代"。"微信生态的客户做腾讯云有天然优势咱们承认。但如果业务面向短视频直播抖音外向型增长火山引擎的字节场景就是天然主场。两者经常是互补不是替代。"<b>互补打法</b>：腾讯云做微信内的转化小程序服务号视频号；火山引擎做抖音外站的获客与 AI 内容生产；客户不用选边站按用户群决定厂商选型。<b>关键词微信生态承认、抖音生态主场、互补不替代、面向用户群决定厂商选型</b>。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验', title: '客户已用阿里 · 怎么进？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某零售品牌客户主体业务已用阿里云 3 年。火山引擎想切入怎么打？</div>
+      <div class="quiz-opt wrong" data-k="A">劝客户全部迁过来（90% 概率失败）</div>
+      <div class="quiz-opt correct" data-k="B">不动底座 + AI 应用 + 增长（抖音生态）双场景切入</div>
+      <div class="quiz-opt wrong" data-k="C">价格战 30% 折扣求成交</div>
+      <div class="quiz-opt wrong" data-k="D">说"阿里数据顾虑"拉客户警惕</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：标准互联网客户对位打法。<b>不动底座 + 双场景切入</b>：① <b>AI 应用层</b>火山方舟一站式 vs 阿里通义+百炼分散；② <b>增长营销</b>抖音生态 + 巨量引擎 vs 阿里 QuickAudience。<b>零售品牌特别要点</b>：① 抖音是零售客户必谈的获客渠道；② 阿里电商客户对"阿里同时做电商+做云"有数据顾虑（短板 ③），但售前不要主动挑这一条客户敏感。让客户自己想到。<b>"互补不替代"是同生态厂商对位的精髓</b>。</div>
+    </div>`,
+    voice: '思考一下。零售客户已用阿里 3 年怎么切入？给你 5 秒......正确答案 B 不动底座加 AI 应用加增长双场景切入。标准互联网客户对位打法：不动底座加双场景切入：AI 应用层火山方舟一站式 vs 阿里通义+百炼分散；增长营销抖音生态加巨量引擎 vs 阿里 QuickAudience。零售品牌特别要点抖音是零售客户必谈的获客渠道。阿里电商客户对"阿里同时做电商加做云"有数据顾虑但售前不要主动挑这条客户敏感让客户自己想到。"互补不替代"是同生态厂商对位的精髓。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🌟 客户对话', title: '"已经用了腾讯云能不能用火山？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们做了微信小程序，主要业务在腾讯云上。但现在也想做抖音电商，怎么搞？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>"互补不替代"</b>是答案。<b>① 腾讯云保留</b>微信小程序+服务号转化（你的强场）；<b>② 火山引擎新增</b>抖音店铺+巨量引擎+AI 内容生产；<b>③ 中间打通</b>用户数据库共享，订单系统统一。<b>不要让客户选边站</b>按用户群分工。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>抖音内容生产用什么？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>火山引擎抖音电商套件</b>：① <b>豆包视频模型</b>生成短视频带货脚本+剪辑；② <b>imageX</b>商品图智能处理；③ <b>Coze 自动化</b>评论回复+客服。<b>实测 1 个抖音运营人均 GMV 提升 3-5x</b>。这是阿里腾讯都没有的字节独家。</div>
+      </div>
+    </div>`,
+    voice: '一段客户对话。客户做微信小程序在腾讯云想做抖音电商。售前给"互补不替代"答案：腾讯云保留微信小程序加服务号转化你的强场；火山引擎新增抖音店铺加巨量引擎加 AI 内容生产；中间打通用户数据库共享订单系统统一。不要让客户选边站按用户群分工。客户问抖音内容生产用什么，售前甩火山抖音电商套件：豆包视频模型生成短视频带货脚本加剪辑；imageX 商品图智能处理；Coze 自动化评论回复加客服。实测 1 个抖音运营人均 GMV 提升 3-5x。<b>这是阿里腾讯都没有的字节独家</b>。',
+    fallbackDuration: 33000 },
+
+  { chapter: '⚠️ 售前禁区', title: '互联网对位 3 件不能做',
+    visual: `<div class="danger-zone">
+      <h4>🚫 阿里/腾讯对位 3 件不能做</h4>
+      <div class="x-row"><b>劝客户全迁过来</b>：90% 概率失败 + 客户警觉 → 双输</div>
+      <div class="x-row"><b>价格战求成交</b>：阿里腾讯价格战经验老到 → 你打不过</div>
+      <div class="x-row"><b>主动挑友商数据顾虑</b>：客户敏感觉得你"小动作" → 失信</div>
+      <div class="ok-row">正确做法：<b>① 不动底座</b>双场景切入；<b>② 用 AI 应用 + 字节场景</b>立非对称优势；<b>③ 让客户自己想到数据顾虑</b>你只要主动讲"我们火山引擎不做电商不做零售"。</div>
+    </div>`,
+    voice: '互联网对位 3 件不能做。一劝客户全迁过来 90% 概率失败客户警觉双输。二价格战求成交阿里腾讯价格战经验老到你打不过。三主动挑友商数据顾虑客户敏感觉得你"小动作"失信。正确做法不动底座双场景切入；用 AI 应用加字节场景立非对称优势；让客户自己想到数据顾虑你只要主动讲"我们火山引擎不做电商不做零售"。',
+    fallbackDuration: 26000 },
+
+  { chapter: '速查表', title: '面试 · 6 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 阿里云客户画像？<span style="color:#a5b4fc"> → 互联网中大 / 零售 / 金融科技</span><br>
+      <b>Q2</b> 阿里 4 大优势？<span style="color:#a5b4fc"> → 生态 / DataWorks / 价格 / 通义开源</span><br>
+      <b>Q3</b> 阿里 4 大短板？<span style="color:#a5b4fc"> → AI 应用分散 / 老产品陈旧 / 零售数据顾虑 / 政企被挤</span><br>
+      <b>Q4</b> 阿里通用话术？<span style="color:#a5b4fc"> → 不否认生态 + AI 工程化 + 多模型 + 不动底座 + PoC</span><br>
+      <b>Q5</b> 腾讯 vs 火山微信抖音？<span style="color:#a5b4fc"> → 微信生态他强 / 抖音生态我强 / 互补不替代</span><br>
+      <b>Q6</b> 互联网对位 3 件不能做？<span style="color:#a5b4fc"> → 劝全迁 / 价格战 / 主动挑数据顾虑</span>
+    </div>`,
+    voice: '6 题速查。一阿里云客户画像互联网中大零售金融科技。二阿里 4 大优势生态 DataWorks 价格通义开源。三阿里 4 大短板 AI 应用分散老产品陈旧零售数据顾虑政企被挤。四阿里通用话术不否认生态加 AI 工程化加多模型加不动底座加 PoC。五腾讯 vs 火山微信生态他强抖音生态我强互补不替代。六互联网对位 3 件不能做劝全迁价格战主动挑数据顾虑。这 6 道刷熟阿里腾讯对位面试稳过。',
+    fallbackDuration: 28000 },
+
+  { chapter: '完成', title: '🎉 COMP-04 学完！',
+    eyebrow: '关键心法',
+    body: '阿里腾讯都是<b>同生态对手</b>不是"敌人"。<br>对它们的话术核心：<b>"分场景互补"</b>不是"打"。<br><span class="hl">客户的业务面向哪个用户群、用哪个生态闭环，决定哪家更合适——很多时候答案是两家都用</span>',
+    visual: '<div style="font-size:80px;">🟧</div>',
+    voice: '恭喜 COMP-04 学完。阿里腾讯都是互联网厂商跟火山是同生态对手不是敌人。对它们的话术核心不是"打"是"分场景互补"。客户的业务面向哪个用户群用哪个生态闭环决定哪家更合适很多时候答案是两家都用。下一站 COMP-05 百度 AWS 国资云对位。',
+    fallbackDuration: 22000 },
+];
+</script>
+<script src="_player.js?v=27"></script>
+</body>
+</html>

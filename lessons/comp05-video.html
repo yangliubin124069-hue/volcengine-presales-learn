@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP-05 · 百度/AWS/国资云对位 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=27">
+<style>
+  .target-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; width: 920px; max-width: 96vw; }
+  .tg-card { padding: 14px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; animation: cardIn .5s both; }
+  .tg-card.bd { border-color: #c4b5fd; }
+  .tg-card.aws { border-color: #fed7aa; animation-delay: .15s; }
+  .tg-card.gov { border-color: #6e3aff; animation-delay: .3s; }
+  .tg-card .nm { font-size: 14px; color: #fff; font-weight: 700; margin-bottom: 6px; }
+  .tg-card .pic { font-size: 11.5px; color: #fde68a; margin: 4px 0; line-height: 1.5; }
+  .tg-card .ply { font-size: 11.5px; color: #cbd5e1; margin: 4px 0; line-height: 1.55; }
+  .tg-card .ply b { color: #86efac; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 'COMP-05', title: 'COMP-05 · 百度/AWS/国资云', intro: '12 分钟 · 百度 AI 老品牌 + AWS 出海主场 + 国资云 ISV 互补 + 坐标速记' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'COMP-05 · 百度 / AWS / 国资云对位',
+    eyebrow: '火山引擎售前 · 竞品模块第五节',
+    body: '<b>百度 AI 老品牌 + AWS 出海主场 + 国资云崛起</b><br>12 分钟 + 1 互动 + 1 客户对话 + 对手坐标速记表',
+    visual: '<div class="cover-icon">🎯</div>',
+    voice: '欢迎来到 COMP-05 百度 AWS 国资云对位。这是竞品模块剩余 3 类对手的合并讲解。今天 12 分钟讲透百度 AI 老品牌的对位、AWS 退场后的出海主战场、国资云崛起对政企的影响、对手坐标速记表。',
+    fallbackDuration: 20000 },
+
+  { chapter: '第 1 章 · 三类对手', title: '一图速记 · 画像 + 打法',
+    visual: `<div class="target-grid">
+      <div class="tg-card bd">
+        <div class="nm">🟪 百度智能云</div>
+        <div class="pic">AI 老品牌 / 智能驾驶 / 部分政企</div>
+        <div class="ply"><b>火山打法</b>：迭代速度 + 字节场景</div>
+      </div>
+      <div class="tg-card aws">
+        <div class="nm">⬜ AWS / Azure</div>
+        <div class="pic">出海企业 / 外企在华 / 跨国 SaaS</div>
+        <div class="ply"><b>火山打法</b>：数据回流 + AI 与数据分工</div>
+      </div>
+      <div class="tg-card gov">
+        <div class="nm">🟦 国资云 天翼/移动/联通</div>
+        <div class="pic">央国企 / 区县政府 / 行业云</div>
+        <div class="ply"><b>火山打法</b>：ISV 互补不对抗</div>
+      </div>
+    </div>`,
+    voice: '三类对手一图速记。百度智能云客户画像 AI 老品牌智能驾驶部分政企火山打法迭代速度加字节场景。AWS Azure 客户画像出海企业外企在华跨国 SaaS 火山打法数据回流加 AI 与数据分工。国资云天翼移动联通客户画像央国企区县政府行业云火山打法 ISV 互补不对抗。这三类对手打法完全不一样不能用同一套话术。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 2 章 · 百度智能云', title: 'AI 老品牌 + 智能驾驶',
+    body: '<b>客户画像</b>：AI 老品牌客户、智能驾驶、部分政企、智慧交通<br><span class="hl">文心 + AI 语料是历史资产 · Apollo 萝卜快跑是巨大优势</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🧠</div><h5>核心对位</h5><p>文心一言 vs 豆包<br>百度做 AI 早<br>但迭代被追上</p></div>
+      <div class="col-card"><div class="num">🚗</div><h5>智能驾驶 ★</h5><p>百度 Apollo<br>萝卜快跑商业化<br>巨大优势</p></div>
+      <div class="col-card"><div class="num">🏛️</div><h5>政务</h5><p>北京武汉等基础<br>渠道下沉不如华为/天翼</p></div>
+    </div>`,
+    voice: '百度智能云分析。客户画像 AI 老品牌客户、智能驾驶、部分政企、智慧交通。文心加 AI 语料是历史资产。核心对位文心一言 vs 豆包百度做 AI 早但产品迭代节奏被字节追上。<b>智能驾驶</b>百度 Apollo 是巨大优势萝卜快跑商业化领先。火山在车企数字化、座舱智能、车端大模型上对位。政务方面百度有部分省份基础北京武汉等但渠道下沉度不如华为天翼。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 2 章 · 百度通用话术', title: 'AI 老品牌承认 + 场景真实性',
+    visual: `<div class="scenario-card">
+      <h4>💬 百度通用话术</h4>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"百度在 AI 行业里是<b>老品牌</b>，文心是中国最早的大模型之一，咱们认。"</div>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"差异在于业务场景的<b>真实性</b>——豆包来自<b>抖音、电商、客服</b>等高频高量场景，反馈循环更短。"</div>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"建议按 [客户业务] 对比指标。"</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);font-size:11.5px;color:#94a3b8;">关键词：AI 老品牌承认 + 场景真实性 + 反馈循环短 + 按指标对比</div>
+    </div>`,
+    voice: '百度通用话术。"百度在 AI 行业里是老品牌文心是中国最早的大模型之一咱们认。差异在于业务场景的真实性——豆包来自抖音、电商、客服等高频高量场景反馈循环更短。建议按客户业务对比指标。"<b>关键词 AI 老品牌承认加场景真实性加反馈循环短加按指标对比</b>。这套话术对百度客户屡试不爽。承认百度 AI 老品牌的资历就能进入"场景对比"的战场。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 3 章 · AWS / Azure', title: '退场背景 + 剩余主战场',
+    body: '<b>国内退场背景</b>：2024 年起合规与服务收缩多数政企客户已切走<br><span class="hl">剩余主战场：出海企业 + 外企在华 + 跨国 SaaS</span>',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>✅ AWS 赢的点</h4>
+        <p><span class="tag">合规</span>合规友好（受出口限制）</p>
+        <p><span class="tag">价格</span>本土化</p>
+        <p><span class="tag">AI</span>大模型不受出口限制</p>
+        <p><span class="tag">合规</span>数据出境合规支持</p>
+      </div>
+      <div class="acl-box">
+        <h4>❌ AWS 认输的点</h4>
+        <p><span class="tag">节点</span>全球节点 + 国际生态</p>
+        <p><span class="tag">外企</span>外企采购流程默选</p>
+        <p><span class="tag">社区</span>海外开发者社区</p>
+      </div>
+    </div>`,
+    voice: 'AWS Azure 国内退场背景。2024 年起 AWS Azure 在中国合规与服务收缩多数政企客户已切走。主要剩下出海企业、外企在华、跨国 SaaS。<b>AWS 赢的点</b>：合规友好中国版本受出口限制、价格本土化、AI 大模型不受出口限制、数据出境合规支持。<b>AWS 认输的点</b>：全球节点和国际生态、外企采购流程默选 AWS、海外开发者社区。售前对 AWS 客户要会分场景判断——国内业务进攻、出海业务互补。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 3 章 · AWS 通用话术', title: '出海第一站承认 + 混合架构',
+    visual: `<div class="scenario-card">
+      <h4>💬 AWS 通用话术</h4>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"出海第一站走 AWS 是合理选择，节点和生态成熟。"</div>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"但两类场景火山更合适：<b>① 出海业务回中国分析的数据回流</b>；<b>② 中国客户用 AI 做内容/营销面向海外用户</b>。"</div>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"我们可以做<b>混合架构</b>，AWS 出海 + 火山做 AI 与数据。"</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);font-size:11.5px;color:#94a3b8;">关键词：出海第一站承认 + 混合架构 + 数据回流 + AI 与数据分工</div>
+    </div>`,
+    voice: 'AWS 通用话术。"出海第一站走 AWS 是合理选择节点和生态成熟。但两类场景火山更合适：一出海业务回中国分析的数据回流；二中国客户用 AI 做内容营销面向海外用户。我们可以做混合架构 AWS 出海加火山做 AI 与数据。"<b>关键词出海第一站承认加混合架构加数据回流加 AI 与数据分工</b>。<b>不抢 AWS 出海主场只补它的中国回流和 AI 短板</b>这是聪明的姿势。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 4 章 · 国资云', title: '崛起 · 央国企默选',
+    body: '<b>客户画像</b>：央国企 / 区县政府 / 行业云<br><span class="hl">2024 年起在政企单子里份额持续上升，挤压华为/阿里</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🆔</div><h5>核心壁垒</h5><p>国资身份<br>采购合规天然加分</p></div>
+      <div class="col-card"><div class="num">📡</div><h5>网络资源</h5><p>运营商 IDC<br>专线一体化销售</p></div>
+      <div class="col-card"><div class="num">⚙️</div><h5>产品成熟度</h5><p>基础 IaaS 强<br>AI 大数据相对薄弱<br>多采购第三方贴牌</p></div>
+    </div>`,
+    voice: '国资云分析。客户画像央国企、区县政府、行业云。2024 年起在政企单子里份额持续上升挤压华为阿里。<b>核心壁垒</b>国资身份采购合规天然加分加网络资源运营商 IDC 加专线一体化销售加央企决策路径同体系内推动快。<b>产品成熟度</b>基础 IaaS 与运营商捆绑销售（专线+云一体化）。AI 与大数据相对薄弱多采购第三方含华为阿里能力贴牌。这给火山引擎一个独家机会——做国资云的 AI ISV。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 4 章 · 国资云打法', title: '互补不对抗 · 火山做 ISV',
+    visual: `<div class="scenario-card">
+      <h4>💬 国资云通用话术 · ISV 互补</h4>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"在政企央国企客户里，国资云的<b>身份和网络资源</b>是基础选择。"</div>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"火山引擎更多是站在 <b>AI 应用层</b>做补充——豆包大模型、火山方舟、DataLeap 可以作为 <b>ISV</b> 在国资云的底座上交付。"</div>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">"客户既有<b>合规身份保障</b>，又有<b>最新的 AI 能力</b>。"</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);font-size:11.5px;color:#94a3b8;">💎 双赢路径：国资云抢底座 + 火山做 AI 应用层 + 客户得到双重保障</div>
+    </div>`,
+    voice: '国资云火山打法核心是<b>互补不对抗</b>。"在政企央国企客户里国资云的身份和网络资源是基础选择。火山引擎更多是站在 AI 应用层做补充——豆包大模型、火山方舟、DataLeap 可以作为 ISV 在国资云的底座上交付。客户既有合规身份保障又有最新的 AI 能力。"国资云抢底座加火山做 AI 应用层。可以把豆包加火山方舟加 DataLeap 作为国资云的 ISV 解决方案接入让客户在国资云底座上跑火山的 AI。<b>这是火山引擎和运营商生态的双赢路径</b>。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🎯 互动测验', title: '央企客户主体已在天翼云 · 怎么进？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某央企集团主体云已在天翼云，AI 中台 1200 万项目。火山怎么进？</div>
+      <div class="quiz-opt wrong" data-k="A">推全套火山方案替换天翼云</div>
+      <div class="quiz-opt correct" data-k="B">联合天翼云做 ISV / 双子合同：底座天翼 + AI 应用火山</div>
+      <div class="quiz-opt wrong" data-k="C">价格战 30% 折扣求成交</div>
+      <div class="quiz-opt wrong" data-k="D">放弃央企客户</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：国资云客户的标准打法 — <b>ISV 互补</b>。① <b>底座天翼云保留</b>合规身份+网络资源国资属性；② <b>AI 应用火山引擎</b>豆包+方舟+DataLeap 作为 ISV 部署；③ <b>合同两种姿势</b>：主合同走天翼火山分包，或平行采购双合同；④ <b>客户得到</b>"国资身份+最新 AI"双重保障。<b>3 家央企双子方案备案号</b>可参考。这是火山在国资云客户的标准打法 — 不抢底座做 AI 应用层 ISV。</div>
+    </div>`,
+    voice: '思考一下。央企已在天翼云火山怎么进？给你 5 秒......正确答案 B 联合天翼云做 ISV 双子合同。国资云客户的标准打法 ISV 互补：底座天翼云保留合规身份加网络资源；AI 应用火山引擎豆包加方舟加 DataLeap 作为 ISV 部署；合同两种姿势主合同走天翼火山分包或平行采购双合同；客户得到国资身份加最新 AI 双重保障。3 家央企双子方案备案号可参考。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🌟 客户对话', title: '"我们出海用 AWS 国内用什么？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们跨境电商出海，海外站点已经在 AWS。国内的 AI 内容生产用啥？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型<b>"混合架构"</b>。<b>3 角色清晰</b>：① <b>AWS 海外</b>用户访问加海外节点保留不动；② <b>火山引擎国内</b>豆包视频生成短视频带货 + imageX 商品图 + 巨量引擎广告联动；③ <b>数据回流</b>海外业务数据回中国进 ByteHouse 做实时分析。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>AWS 不能做 AI 内容吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>能做但<b>3 个差异</b>：① <b>中文场景</b>豆包训练语料更对路 AWS Bedrock 中文 SOTA 不及；② <b>抖音生态联动</b>抖音店铺直接对接；③ <b>价格</b>豆包同等任务 AWS Bedrock 的 1/5。<b>AWS 适合"全球底座"，火山适合"AI 内容工厂"</b>各管各的。</div>
+      </div>
+    </div>`,
+    voice: '一段经典客户对话。客户出海 AWS 国内 AI 用什么。售前给"混合架构"3 角色清晰：AWS 海外用户访问加海外节点保留不动；火山引擎国内豆包视频生成短视频带货加 imageX 商品图加巨量引擎广告联动；数据回流海外业务数据回中国进 ByteHouse 做实时分析。客户问 AWS 不能做 AI 吗，售前给 3 个差异：中文场景豆包训练语料更对路；抖音生态联动直接对接；价格豆包同等任务 AWS Bedrock 的 1/5。AWS 适合全球底座火山适合 AI 内容工厂各管各的。',
+    fallbackDuration: 33000 },
+
+  { chapter: '💎 对手坐标速记表', title: '6 家对手 · 一句话总结',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>对手</th><th>一句话总结</th></tr></thead>
+      <tbody>
+        <tr><td class="hw">华为云</td><td>政企渠道+全栈自主 → 不抢底座抢 AI 应用层</td></tr>
+        <tr><td class="al">阿里云</td><td>生态厚但工具老 → AI 应用工程化我们更快</td></tr>
+        <tr><td class="tc">腾讯云</td><td>微信生态他强 → 抖音生态我强 → 互补不替代</td></tr>
+        <tr><td class="bd">百度智能云</td><td>AI 老品牌 → ToB 应用化和迭代速度我们更快</td></tr>
+        <tr><td class="aws">AWS</td><td>出海第一站默选 → 国内回流 + AI 用我们</td></tr>
+        <tr><td class="ve">国资云</td><td>身份+网络他强 → AI 应用层我们补 → ISV 双赢</td></tr>
+      </tbody>
+    </table>`,
+    voice: '6 家对手坐标速记表一句话总结。华为云政企渠道加全栈自主火山不抢底座抢 AI 应用层。阿里云生态厚但工具老火山 AI 应用工程化更快。腾讯云微信生态他强抖音生态我强互补不替代。百度智能云 AI 老品牌但 ToB 应用化和迭代速度我们更快。AWS 出海第一站默选国内回流加 AI 用我们。国资云身份加网络他强 AI 应用层我们补 ISV 双赢。<b>记忆口诀：华为打 AI 应用层、阿里打 AI 工程化、腾讯打抖音生态、百度打迭代速度、AWS 打数据回流、国资云打 ISV 互补</b>。这张表打印贴工位每天看一遍。',
+    fallbackDuration: 36000 },
+
+  { chapter: '💎 一句话心法', title: '"非对称优势" · 在每家强势之外补 AI',
+    visual: `<div class="scenario-card">
+      <h4>💎 火山引擎的位置 · 一句话心法</h4>
+      <div class="row" style="color:#fde68a;font-size:14px;font-weight:700;text-align:center;line-height:1.8;margin:10px 0;">"在每家强势之外，补上 AI 应用与字节场景"</div>
+      <div class="row" style="color:#cbd5e1;line-height:1.7;">同样的客户，<b>不同场景下你的对手可能不一样</b>：</div>
+      <div class="row" style="color:#cbd5e1;font-size:12.5px;">· 做底座 → 对手是华为 / 国资云</div>
+      <div class="row" style="color:#cbd5e1;font-size:12.5px;">· 做生态 → 对手是阿里 / 腾讯</div>
+      <div class="row" style="color:#cbd5e1;font-size:12.5px;">· 做 AI → 对手是阿里通义 / 百度文心</div>
+      <div class="row" style="color:#cbd5e1;font-size:12.5px;">· 做出海 → 对手是 AWS</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);font-weight:700;color:#86efac;">先判断场景，再选打法 — 这是 COMP-05 的灵魂</div>
+    </div>`,
+    voice: '所有对手都不是非黑即白。火山引擎的位置是"在每家强势之外补上 AI 应用与字节场景"。同样的客户不同场景下你的对手可能不一样——做底座对手是华为或国资云、做生态对手是阿里或腾讯、做 AI 对手是阿里通义或百度文心、做出海对手是 AWS。<b>先判断场景再选打法</b>这是 COMP-05 的灵魂。',
+    fallbackDuration: 26000 },
+
+  { chapter: '速查表', title: '面试 · 6 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 百度强场？<span style="color:#a5b4fc"> → AI 老品牌 + Apollo 智能驾驶</span><br>
+      <b>Q2</b> 百度通用话术？<span style="color:#a5b4fc"> → AI 老品牌承认 + 场景真实性 + 反馈循环</span><br>
+      <b>Q3</b> AWS 国内现状？<span style="color:#a5b4fc"> → 2024 起合规收紧 / 出海剩余主战场</span><br>
+      <b>Q4</b> AWS 通用话术？<span style="color:#a5b4fc"> → 出海第一站承认 + 混合架构 + 数据回流</span><br>
+      <b>Q5</b> 国资云怎么打？<span style="color:#a5b4fc"> → ISV 互补 / 底座他做 / AI 应用我做</span><br>
+      <b>Q6</b> 一句话心法？<span style="color:#a5b4fc"> → "在每家强势之外补上 AI 应用 + 字节场景"</span>
+    </div>`,
+    voice: '6 题速查。一百度强场 AI 老品牌加 Apollo 智能驾驶。二百度通用话术 AI 老品牌承认加场景真实性加反馈循环。三 AWS 国内现状 2024 起合规收紧出海剩余主战场。四 AWS 通用话术出海第一站承认加混合架构加数据回流。五国资云怎么打 ISV 互补底座他做 AI 应用我做。六一句话心法在每家强势之外补上 AI 应用加字节场景。这 6 道刷熟剩余对手对位面试稳过。',
+    fallbackDuration: 26000 },
+
+  { chapter: '完成', title: '🎉 COMP-05 学完！',
+    eyebrow: '关键心法',
+    body: '所有对手都<b>不是非黑即白</b>。<br>同样客户不同场景下对手可能不一样。<br><b>先判断场景，再选打法</b>。<br><span class="hl">火山引擎的位置 = "在每家强势之外，补上 AI 应用与字节场景"</span>',
+    visual: '<div style="font-size:80px;">🎯</div>',
+    voice: '恭喜 COMP-05 学完。所有对手都不是非黑即白同样的客户不同场景下你的对手可能不一样先判断场景再选打法。火山引擎的位置等于"在每家强势之外补上 AI 应用与字节场景"。下一站 COMP-06 对位话术四步法加面试高频题——竞品模块收官。',
+    fallbackDuration: 21000 },
+];
+</script>
+<script src="_player.js?v=27"></script>
+</body>
+</html>
