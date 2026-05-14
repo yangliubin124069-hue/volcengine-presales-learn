@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 6 · 云安全与合规 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=23">
+<style>
+  /* 责任共担 */
+  .shared { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 880px; max-width: 96vw; }
+  .sh-side { padding: 18px; border-radius: 12px; text-align: left;
+    background: rgba(255,255,255,.04); border: 1.5px solid; }
+  .sh-side.vendor { border-color: #2b5cff; }
+  .sh-side.client { border-color: #f59e0b; }
+  .sh-side h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .sh-side.vendor h4 { color: #a5b4fc; }
+  .sh-side.client h4 { color: #fde68a; }
+  .sh-side p { padding: 4px 0; font-size: 13px; color: #cbd5e1; line-height: 1.6; }
+
+  /* 分层防御金字塔 */
+  .defense-tower { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .dt-layer { padding: 10px 18px; border-radius: 8px; text-align: center;
+    border: 1.5px solid; animation: cardIn .5s both; }
+  .dt-layer.l1 { width: 280px; border-color: #ec4899; background: rgba(236,72,153,.1); }
+  .dt-layer.l2 { width: 360px; border-color: #f59e0b; background: rgba(245,158,11,.1); animation-delay: .1s; }
+  .dt-layer.l3 { width: 440px; border-color: #6e3aff; background: rgba(110,58,255,.1); animation-delay: .2s; }
+  .dt-layer.l4 { width: 520px; border-color: #2b5cff; background: rgba(43,92,255,.1); animation-delay: .3s; }
+  .dt-layer.l5 { width: 600px; border-color: #22c55e; background: rgba(34,197,94,.1); animation-delay: .4s; }
+  .dt-layer .nm { font-size: 14px; font-weight: 700; color: #fff; }
+  .dt-layer .ic { font-size: 11.5px; color: #cbd5e1; margin-top: 2px; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 6, title: 'Day 6 · 云安全与合规', intro: '12 分钟 · 责任共担 + IAM + 5 层防御 + 零信任 + 等保信创 + 金融案例' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 6 · 云安全与合规',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>责任共担 + IAM + 5 层防御 + 零信任 + 等保 / GDPR / 信创</b><br>12 分钟 + 2 互动 + 3 客户对话 + 金融云 6 月过等保三级真实案例',
+    visual: '<div class="cover-icon">🛡️</div>',
+    voice: '欢迎来到 Day 6 云安全与合规。这是售前最容易踩雷的话题——客户问"够不够安全"，答"我们有 WAF DDoS IAM"是错误打开方式。今天 12 分钟讲透责任共担、IAM、分层防御、零信任、合规体系，加 3 客户对话和金融云 6 月过等保三级真实案例。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 1 章 · 责任共担', title: '云上 80% 事故是客户配置失误',
+    visual: `<div class="shared">
+      <div class="sh-side vendor">
+        <h4>☁️ 云厂商负责"云的安全"</h4>
+        <p>· 物理机房 / 虚拟化层</p>
+        <p>· 骨干网 / 平台 SLA</p>
+        <p>· 可信第三方审计</p>
+        <p>· SOC 2 / ISO 27001 / 等保运维侧</p>
+      </div>
+      <div class="sh-side client">
+        <h4>👤 客户负责"云上的安全"</h4>
+        <p>· IAM 配置 / 应用代码</p>
+        <p>· 数据加密 / 补丁</p>
+        <p>· 合规配置 / 业务逻辑</p>
+        <p><b>· 80% 云上事故源于客户配置失误</b></p>
+      </div>
+    </div>`,
+    voice: '云上安全第一原则：责任共担。云厂商负责"云的安全"——物理机房、虚拟化层、骨干网、平台 SLA、第三方审计。客户负责"云上的安全"——IAM 配置、应用代码、数据加密、补丁、合规配置。<b>80% 的云上事故源于客户配置失误</b>不是云的锅。典型反例：对象存储桶设置为公共读导致数据泄漏；安全组 0.0.0.0/0:22 让 SSH 被爆破。售前讲安全先把这条说清楚，客户责任界限明确才能聊后面。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 1 章 · 服务模型边界', title: 'IaaS / PaaS / SaaS 各管哪一段？',
+    body: '<b>IaaS</b> 客户管 OS 及以上 · <b>PaaS</b> 厂商管到中间件 · <b>SaaS</b> 厂商几乎全包<br><span class="hl">SaaS 客户为啥仍出事？应用层鉴权和数据所有权还在客户手里</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🖥️</div><h5>IaaS</h5><p>客户管 OS+补丁<br>+ 中间件 + 应用<br>+ 数据 + 鉴权</p></div>
+      <div class="col-card"><div class="num">🧱</div><h5>PaaS</h5><p>客户管应用 + 数据<br>+ 鉴权配置</p></div>
+      <div class="col-card"><div class="num">📱</div><h5>SaaS</h5><p>客户管<br>账户 + 数据所有权</p></div>
+    </div>`,
+    voice: '不同服务模型责任边界。IaaS 客户管 OS 及以上含补丁、中间件、应用、数据、鉴权。PaaS 厂商管到中间件客户管应用和数据。SaaS 厂商几乎全包客户只管账户和数据所有权。售前对客户讲清楚边界，避免客户上 SaaS 后觉得"安全全归厂商"——账户被钓鱼仍然客户责任。',
+    fallbackDuration: 18000 },
+
+  { chapter: '第 2 章 · IAM', title: '主账号 / 子账号 / 角色 · 三层身份',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">👑</div><h5>主账号 Root</h5><p>根权限<br>不日常使用<br>必开 MFA<br>仅紧急用</p></div>
+      <div class="col-card"><div class="num">👤</div><h5>子账号 IAM User</h5><p>个人账号<br>按职责分配<br>必开 MFA</p></div>
+      <div class="col-card"><div class="num">🎭</div><h5>角色 Role</h5><p>应用/服务调用<br>STS 临时凭证<br>15min-12h 有效</p></div>
+    </div>`,
+    voice: 'IAM 身份三层。主账号是 Root 根权限不应日常使用必开 MFA 仅紧急用。子账号给每个个人按职责分配并强制 MFA。角色给应用或服务调用，颁发 STS 临时凭证 15 分钟到 12 小时自动过期，比长期 AK SK 安全 100 倍。售前讲方案要主动给客户讲"应用层用角色不要用 AK SK"，这是云上身份治理的核心心法。',
+    fallbackDuration: 21000 },
+
+  { chapter: '第 2 章 · 最小权限', title: '权限策略 + ABAC + 定期回收',
+    body: '<b>Policy</b> JSON 描述谁可以对什么资源做什么操作<br>推荐 <span class="hl">基于 Tag 的 ABAC</span> 而非 RBAC<br>定期审视未使用权限并回收',
+    visual: `<div class="code-block" style="text-align:left;font-size:13px;">
+{
+  "Effect": "Allow",
+  "Action": ["ecs:Describe*", "ecs:StartInstance"],
+  "Resource": "trn:ve:ecs:cn-beijing:*:instance/*",
+  "Condition": {
+    "StringEquals": {
+      "ecs:ResourceTag/<span class="kw">env</span>": "<span class="str">dev</span>"
+    }
+  }
+}
+<span class="cmt"># 只允许操作 env=dev 标签的 ECS · 这就是 ABAC</span>
+</div>`,
+    voice: 'IAM 权限两个心法。第一最小权限只给完成工作所需最小权限，定期审视未使用权限并回收。火山引擎 IAM 支持权限分析报表自动找出"3 个月没用过的权限"。第二基于 Tag 的 ABAC 比 RBAC 优秀——看这个例子：策略说"允许操作 env=dev 标签的 ECS"。这样一条策略管所有 dev 环境，不用为每个 ECS 单独写规则。ABAC 是 2025 年企业 IAM 治理的标杆。',
+    fallbackDuration: 25000 },
+
+  { chapter: '🎯 互动测验 #1', title: '客户对象存储桶设公开读，泄漏了 100 万用户数据',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户对象存储桶因配置失误设为公开读，泄漏 100 万用户数据。这是谁的责任？</div>
+      <div class="quiz-opt wrong" data-k="A">云厂商：没主动告警危险配置</div>
+      <div class="quiz-opt correct" data-k="B">客户：责任共担模型下数据配置归客户</div>
+      <div class="quiz-opt wrong" data-k="C">双方各 50%（无依据）</div>
+      <div class="quiz-opt wrong" data-k="D">用户：没用 HTTPS 访问</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：典型的责任共担边界题。<b>对象存储桶配置归客户</b>云厂商不会主动改你的桶 ACL。但优秀云厂商会<b>主动给安全告警</b>——火山 TOS 内置"<b>公开桶提醒</b>"功能，桶设公开读发现即推送 IM。售前讲方案要主动给客户讲<b>"安全配置最佳实践"</b>——10 条配置 SOP + 自动巡检脚本 + 桶级告警，这是把"客户事故"提前规避的关键。</div>
+    </div>`,
+    voice: '思考一下。对象存储桶设公开读泄漏数据是谁的责任？给你 5 秒......正确答案 B 客户责任。云厂商责任共担模型下数据配置归客户云厂商不会主动改桶 ACL。但优秀云厂商会主动告警——火山 TOS 内置公开桶提醒功能桶设公开读发现即推送 IM。售前讲方案要主动给客户讲安全配置最佳实践 10 条 SOP 加自动巡检脚本加桶级告警，把客户事故提前规避。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 3 章 · 分层防御', title: '5 层防御金字塔 · 售前讲安全必杀',
+    visual: `<div class="defense-tower">
+      <div class="dt-layer l1"><div class="nm">🎯 身份层</div><div class="ic">IAM + MFA + 零信任</div></div>
+      <div class="dt-layer l2"><div class="nm">🔐 数据层</div><div class="ic">KMS + 脱敏 + DLP</div></div>
+      <div class="dt-layer l3"><div class="nm">🖥️ 主机层</div><div class="ic">HIDS + 漏洞扫描 + 基线核查</div></div>
+      <div class="dt-layer l4"><div class="nm">🚪 入口层</div><div class="ic">API 网关 + 限流 + 鉴权</div></div>
+      <div class="dt-layer l5"><div class="nm">🌐 边界层</div><div class="ic">DDoS 高防 + WAF + 堡垒机</div></div>
+    </div>`,
+    voice: '5 层防御金字塔是售前讲安全的"必杀图"。客户听到"我们有 WAF + DDoS + HIDS"是产品罗列没安全感。听到 5 层从外到内的防御才有"全景图"安全感。边界层 DDoS 高防加 WAF 加堡垒机抗洪泛和应用层攻击。入口层 API 网关加限流加鉴权防爬虫和接口刷量。主机层 HIDS 加漏洞扫描加基线核查抓入侵和配置问题。数据层 KMS 加脱敏加 DLP 防数据泄漏。身份层 IAM 加 MFA 加零信任是底座。这张图建议截图打印贴工位。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 4 章 · 边界 + 入口', title: 'DDoS / WAF / 堡垒机 / API 网关',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🌊</div><h5>DDoS 高防</h5><p>抗百 Gbps-Tbps<br>基础免费 5G<br>高防按防御带宽收费</p></div>
+      <div class="col-card"><div class="num">🛡️</div><h5>WAF</h5><p>OWASP Top 10<br>SQL 注入/XSS/命令注入<br>电商 SaaS 必备</p></div>
+      <div class="col-card"><div class="num">🏰</div><h5>堡垒机</h5><p>运维统一入口<br>SSH/RDP 必经<br>操作录像 / 等保必备</p></div>
+      <div class="col-card"><div class="num">🚪</div><h5>API 网关</h5><p>统一鉴权 + 限流<br>防刷接口/爬虫<br>应用层 DDoS 防护</p></div>
+    </div>`,
+    voice: '边界和入口 4 件套。DDoS 高防抗百 Gbps 到 Tbps 级洪泛攻击基础免费 5 Gbps 高防按防御带宽收费。WAF 防 OWASP Top 10 包括 SQL 注入 XSS 命令注入电商和 SaaS 必备。堡垒机是运维统一入口所有 SSH 和 RDP 必须经过它操作录像可审计等保 2.0 必备。API 网关做统一鉴权加限流加监控防刷接口爬虫和应用层 DDoS 攻击。这 4 件套是售前推安全方案的"基础包"。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 5 章 · 主机 + 数据', title: 'HIDS / KMS / DLP · 内层防护',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🦠</div><h5>HIDS 主机</h5><p>ECS Agent<br>异常进程/反弹 shell/挖矿<br>火山主机安全 7×24</p></div>
+      <div class="col-card"><div class="num">🔐</div><h5>KMS 加密</h5><p>信封加密<br>HSM 硬件保护<br>BYOK 自带密钥</p></div>
+      <div class="col-card"><div class="num">🔍</div><h5>DLP 数据防泄漏</h5><p>内容识别 + 流量监控<br>防机密文档外发</p></div>
+    </div>`,
+    voice: '主机和数据层。HIDS 主机入侵检测在 ECS 上跑 Agent 检测异常进程、反弹 shell、挖矿。火山主机安全 7×24 自动响应。漏洞扫描定期扫 CVE 加配置基线高危漏洞 24 小时内修复。基线核查按 CIS Benchmark 检查 OS 中间件配置如 SSH 禁 root 直连。<b>防勒索备份</b>关键数据快照加异地副本加 WORM 加离线归档勒索病毒近年增长 200%+。KMS 信封加密 HSM 硬件保护 BYOK 自带密钥。DLP 数据防泄漏基于内容识别加流量监控防机密文档外发。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 6 章 · 零信任', title: 'BeyondCorp · 永不信任始终验证',
+    body: '<b>传统边界失效</b>：远程办公 / SaaS / 混合云让"内网=可信"假设不成立<br><b>新范式</b>：每次访问都鉴权（身份+设备+上下文），<span class="hl">不预设网络信任</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🛤️</div><h5>BeyondCorp</h5><p>Google 提出<br>理念框架<br>2014 后行业标杆</p></div>
+      <div class="col-card"><div class="num">🚧</div><h5>SDP</h5><p>软件定义边界<br>"应用级 VPN"<br>访问应用前先认证</p></div>
+      <div class="col-card"><div class="num">☁️</div><h5>SASE</h5><p>Gartner 提出<br>网络+安全融合<br>SD-WAN + SSE</p></div>
+    </div>`,
+    voice: '零信任为什么火？传统边界失效——远程办公、SaaS、混合云让"内网等于可信"的假设不成立。2020 后 BeyondCorp 模型成为新标准。三个概念：BeyondCorp 是 Google 提出的理念，SDP 软件定义边界是落地实现，SASE 是 Gartner 提出的网络加安全融合架构。<b>核心原则：永不信任始终验证</b>——每次访问都鉴权身份加设备加上下文不预设网络信任。工程要点：IAM + MDM 设备管理 + 单点登录 + 多因子 + 流量加密 + 持续行为分析。分阶段落地 12-24 个月。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 7 章 · 合规', title: '5 大合规框架 · 一图速记',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>合规</th><th>适用</th><th>关键要求</th></tr></thead>
+      <tbody>
+        <tr><td>等保 2.0</td><td class="ve">中国 关键信息基础设施</td><td>分一/二/三/四级，互联网多走三级</td></tr>
+        <tr><td>ISO 27001</td><td class="al">海外客户 / IPO 准备</td><td>信息安全管理体系国际标准</td></tr>
+        <tr><td>SOC 2</td><td class="tc">美国 SaaS 客户</td><td>第三方审计安全/可用性/隐私</td></tr>
+        <tr><td>GDPR / CCPA</td><td class="hw">欧盟 / 加州个人数据</td><td>最高罚款全球营收 4%</td></tr>
+        <tr><td>"两法" 信创</td><td class="bd">中国数据出境 / 党政金融能源</td><td>数据出境需安全评估 / 国产 CPU OS DB</td></tr>
+      </tbody>
+    </table>`,
+    voice: '5 大合规框架一图速记。等保 2.0 中国关键信息基础设施合规底线分一二三四级互联网公司多走三级。ISO 27001 国际信息安全管理体系面向海外客户和 IPO 准备的常规要求。SOC 2 美国 SaaS 客户常见第三方审计安全可用性隐私。GDPR 和 CCPA 欧盟和加州个人数据保护最高罚款全球营收 4%。中国"两法"数据安全法和个人信息保护法关键数据出境需安全评估金融医疗政务尤为严格。信创合规党政、金融、能源等关键行业要求采用国产 CPU OS 数据库中间件。<b>火山引擎信创云已覆盖鲲鹏海光麒麟</b>。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 8 章 · SOC', title: 'SIEM + SOAR + 红蓝对抗',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">📊</div><h5>SIEM</h5><p>Splunk/Elastic<br>火山 TLS<br>日志聚合 + UEBA 行为分析</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>SOAR</h5><p>Playbook 自动响应<br>隔离主机/封 IP<br>小时 → 分钟</p></div>
+      <div class="col-card"><div class="num">⚔️</div><h5>红蓝对抗</h5><p>红队真实攻击<br>蓝队防守<br>每年 1-4 次</p></div>
+    </div>`,
+    voice: '安全运营三件套。SOC 安全运营中心 7×24 监控响应复盘中型企业自建 5-10 人团队小公司常采购托管 MSSP。SIEM 日志聚合分析 Splunk Elastic 火山 TLS 把分散日志汇总 UEBA 行为分析检测内部威胁。SOAR 自动化响应安全事件触发剧本自动隔离主机封 IP 通知，将平均响应时间从小时降到分钟。红蓝对抗定期攻防演练红队模拟真实攻击蓝队防守典型行业每年 1-4 次。售前讲方案要主动给客户提"<b>安全运营托管服务</b>"——中小客户最缺的就是 SOC 团队。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验 #2', title: '客户上线手机银行 6 个月过等保三级，怎么规划？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某金融客户 6 月内上线手机银行 + 过等保三级 + 国密 + 数据不出境，安全团队 3 人。怎么做？</div>
+      <div class="quiz-opt wrong" data-k="A">全部自建（一定来不及）</div>
+      <div class="quiz-opt wrong" data-k="B">外包给安全公司（成本高且不熟业务）</div>
+      <div class="quiz-opt correct" data-k="C">火山金融云 + 信创基座 + 5 件套 + SOC 托管</div>
+      <div class="quiz-opt wrong" data-k="D">不做等保只做基础防护</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：3 人 6 月过等保三级是非常紧的目标。<b>标准方案</b>：① <b>火山金融云</b>带等保合规基座；② <b>信创基座</b>满足国产化要求；③ <b>5 件套</b> DDoS 高防 + WAF + API 网关 + 堡垒机 + KMS 国密 SM4；④ <b>SOC 托管</b>火山安全团队 7×24 监控减轻 3 人压力；⑤ 一次过测评省合规整改 2 轮约 800 万。这是金融云的标杆打法。</div>
+    </div>`,
+    voice: '思考一下。金融客户 6 月过等保三级安全 3 人怎么做？给你 5 秒......正确答案 C 火山金融云加信创基座加 5 件套加 SOC 托管。3 人 6 月过等保三级目标紧。标准方案：火山金融云带等保合规基座；信创基座满足国产化；5 件套 DDoS + WAF + API 网关 + 堡垒机 + KMS 国密 SM4；SOC 托管 7×24 监控减轻 3 人压力；一次过测评省合规整改 2 轮约 800 万。这是金融云的标杆打法。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🌟 客户对话 #1', title: '客户问"够不够安全？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们要上云，安全够不够？你给我讲讲你们安全产品。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>不直接讲产品。<b>先讲框架</b>：① <b>责任共担</b> 我们 + 您各管什么；② <b>分层防御</b> 5 层从外到内的防御金字塔；③ <b>合规对照</b> 等保几级 / 是否信创 / 跨境业务。框架讲清后产品自然落位。您的<b>关注点</b>是哪一层？</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>主要担心数据泄漏。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>聚焦数据层。<b>4 道防线</b>：① <b>分类分级</b> 公开/内部/敏感/机密；② <b>静态加密</b> SSE-KMS 自动加密；③ <b>访问最小化</b> IAM ABAC + 角色化；④ <b>DLP 防外发</b> 内容识别 + 流量监控。配 <b>每月泄漏演练</b> + 自动巡检报表。这种<b>"框架→聚焦→具体动作"</b>三段式比堆产品有效 10 倍。</div>
+      </div>
+    </div>`,
+    voice: '一段经典安全对话。客户问够不够安全要听产品。售前不直接讲产品先讲框架：责任共担、分层防御、合规对照。框架清后产品自然落位。客户聚焦"数据泄漏"，售前转 4 道防线：分类分级、SSE-KMS 静态加密、IAM ABAC 最小化、DLP 防外发。配每月演练加自动巡检。<b>"框架→聚焦→具体动作"</b>三段式比堆产品有效 10 倍。这是高级 SE 讲安全的标准节奏。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🌟 客户对话 #2', title: '"我们零信任怎么落地？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>领导要求做零信任，但 1500 员工 + 200 应用，怎么 12 月内落地？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>4 阶段 12 月路径</b>：<b>① Q1 基础</b> 全员 MFA + 单点登录 + IAM 角色化；<b>② Q2 设备</b> MDM 设备管理 + 入网认证；<b>③ Q3 应用</b> SDP 软件定义边界 20 个核心应用接入；<b>④ Q4 持续</b> 行为分析 + UEBA + 自适应认证。每阶段都见效不堆到最后。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>员工会不会嫌麻烦？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>关键是<b>"无感安全"</b>：① <b>条件访问</b> 公司网+公司设备 = 免 MFA；② <b>SSO</b> 1 次登录全应用通；③ <b>行为基线</b> 异常时才拉起强认证。员工感觉<b>更顺畅</b>不是更麻烦。火山方舟内置零信任套件 1 周即可上 5 应用做<b>无感登录演示</b>。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话客户要做零信任不知怎么落地。售前给 4 阶段 12 月路径：Q1 全员 MFA 加 SSO 加 IAM 角色化；Q2 MDM 设备管理加入网认证；Q3 SDP 20 个核心应用接入；Q4 UEBA 加自适应认证。每阶段都见效不堆到最后。客户担心员工嫌麻烦，售前甩"无感安全"：条件访问、SSO、行为基线，员工感觉更顺畅不是更麻烦。火山零信任套件 1 周即可上 5 应用做无感登录演示。',
+    fallbackDuration: 32000 },
+
+  { chapter: '案例', title: '🌟 金融云 · 6 月过等保三级',
+    body: '<b>痛点</b>：手机银行 6 月上线 + 等保三级 + 国密 + 数据不出境 / 安全 3 人<br><b>方案</b>：火山金融云 + 信创 + 5 件套 + SOC 托管<br><br>📅 <b>6 月一次过测评</b><br>⚡ 响应 30 分钟<br>💰 省合规整改 2 轮约 <b>800 万</b>',
+    visual: '<div style="font-size:64px;">🏦</div>',
+    voice: '一个真实案例。某金融客户即将上线手机银行监管要求等保三级加国密加数据不出境安全团队 3 人时间 6 个月。方案：火山金融云加信创基座；接入 DDoS 高防 + WAF + API 网关 + 堡垒机；KMS 国密 SM4 加密；IAM + MFA + 角色化授权；TLS 日志归档 6 个月+；SOC 与火山安全托管。结果 6 个月通过等保三级测评；安全事件平均响应 30 分钟；监管合规一次过审，节省合规整改 2 轮约 800 万。',
+    fallbackDuration: 26000 },
+
+  { chapter: '⚠️ 售前坑', title: '安全方案 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 客户最容易踩的 3 个雷</h4>
+      <div class="x-row"><b>IAM 全员 AdministratorAccess</b>：方便但出事就是大事 → 一个账号被钓鱼 = 全云沦陷</div>
+      <div class="x-row"><b>只买 WAF 不调规则</b>：开默认模板拦不住业务定制攻击 → 客户以为有 WAF 就安全</div>
+      <div class="x-row"><b>日志不外送</b>：勒索/被攻击后日志被加密 → 无法溯源 → 保险也赔不动</div>
+      <div class="ok-row">售前正确做法：<b>① IAM ABAC + 定期回收</b>；<b>② WAF 配置审计</b> + 业务定制规则；<b>③ 日志双写</b> 本地 + 异地不可篡改存储。</div>
+    </div>`,
+    voice: '安全方案 3 大坑。一 IAM 全员 AdministratorAccess 方便但出事就是大事一个账号被钓鱼全云沦陷。二只买 WAF 不调规则开默认模板拦不住业务定制攻击客户以为有 WAF 就安全。三日志不外送勒索或被攻击后日志被加密无法溯源保险也赔不动。正确做法：IAM ABAC 加定期回收；WAF 配置审计加业务定制规则；日志双写本地加异地不可篡改存储。售前推方案要主动把这 3 条作为"安全治理 SOP"打包卖。',
+    fallbackDuration: 27000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 责任共担谁负责什么？<span style="color:#a5b4fc"> → 厂商管"云的"，客户管"云上的"，IaaS/PaaS/SaaS 边界不同</span><br>
+      <b>Q2</b> IAM 三层身份？<span style="color:#a5b4fc"> → 主账号/子账号/角色，角色用 STS 临时凭证最安全</span><br>
+      <b>Q3</b> 5 层防御？<span style="color:#a5b4fc"> → 边界/入口/主机/数据/身份</span><br>
+      <b>Q4</b> ABAC vs RBAC？<span style="color:#a5b4fc"> → ABAC 基于 Tag 更灵活 2025 行业标杆</span><br>
+      <b>Q5</b> 零信任 3 个概念？<span style="color:#a5b4fc"> → BeyondCorp 理念 / SDP 实现 / SASE 网络+安全融合</span><br>
+      <b>Q6</b> 等保几级？<span style="color:#a5b4fc"> → 互联网公司多三级 / 政府关键四级</span><br>
+      <b>Q7</b> SOAR 干啥？<span style="color:#a5b4fc"> → Playbook 自动响应小时→分钟</span><br>
+      <b>Q8</b> 售前讲安全怎么开口？<span style="color:#a5b4fc"> → 框架→聚焦→具体动作三段式，别堆产品</span>
+    </div>`,
+    voice: '8 题速查。一责任共担厂商管云的客户管云上的边界 IaaS PaaS SaaS 不同。二 IAM 三层身份主账号子账号角色，角色 STS 最安全。三 5 层防御边界入口主机数据身份。四 ABAC 基于 Tag 优于 RBAC。五零信任 BeyondCorp 理念 SDP 实现 SASE 网络加安全融合。六等保互联网多三级政府关键四级。七 SOAR Playbook 自动响应小时变分钟。八售前讲安全开口框架到聚焦到具体动作三段式别堆产品。',
+    fallbackDuration: 30000 },
+
+  { chapter: '完成', title: '🎉 Day 6 学完！',
+    eyebrow: '关键心法',
+    body: '客户问"够不够安全" → 不答产品 → 答<b>框架</b>。<br>责任共担 + 5 层防御 + 合规对照<br>= 让客户从"听产品"切换到"看全景"。',
+    visual: '<div style="font-size:80px;">🛡️</div>',
+    voice: '恭喜 Day 6 学完。客户问够不够安全不答产品答框架——责任共担加 5 层防御加合规对照。让客户从听产品切换到看全景。下一站 Day 7 上云迁移与可观测性。',
+    fallbackDuration: 18000 },
+];
+</script>
+<script src="_player.js?v=23"></script>
+</body>
+</html>

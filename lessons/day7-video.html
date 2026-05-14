@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 7 · 上云迁移与可观测性 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=23">
+<style>
+  /* 可观测三大支柱 */
+  .obs-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    width: 880px; max-width: 96vw; }
+  .ob-card { padding: 18px; border-radius: 12px; text-align: left;
+    background: rgba(255,255,255,.04); border: 1.5px solid; animation: cardIn .5s both; }
+  .ob-card.met { border-color: #2b5cff; }
+  .ob-card.log { border-color: #f59e0b; animation-delay: .15s; }
+  .ob-card.tra { border-color: #ec4899; animation-delay: .3s; }
+  .ob-card .ic { font-size: 36px; }
+  .ob-card h5 { font-size: 15px; color: #fff; margin: 6px 0; font-weight: 700; }
+  .ob-card .desc { font-size: 12.5px; color: #cbd5e1; line-height: 1.6; margin-bottom: 8px; }
+  .ob-card .ex { padding: 6px 8px; background: rgba(0,0,0,.3); border-radius: 4px;
+    font-family: monospace; font-size: 11px; color: #94a3b8; }
+
+  /* SLO 错误预算 */
+  .slo-vis { width: 600px; max-width: 92vw; padding: 18px;
+    background: rgba(255,255,255,.04); border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.1); }
+  .slo-bar { height: 24px; border-radius: 12px; overflow: hidden;
+    background: rgba(255,255,255,.06); margin: 12px 0; display: flex; }
+  .slo-ok { background: linear-gradient(90deg, #22c55e, #86efac); width: 99.9%; height: 100%; }
+  .slo-budget { background: linear-gradient(90deg, #ef4444, #f59e0b); width: 0.1%; height: 100%; }
+  .slo-text { font-size: 13px; color: #cbd5e1; line-height: 1.8; }
+  .slo-text b { color: #fde68a; }
+
+  /* 黄金信号 */
+  .signal-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    width: 880px; max-width: 96vw; }
+  .sg-card { padding: 14px 12px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: center; animation: cardIn .5s both; }
+  .sg-card.lat { border-color: #ec4899; }
+  .sg-card.traf { border-color: #6e3aff; animation-delay: .1s; }
+  .sg-card.err { border-color: #ef4444; animation-delay: .2s; }
+  .sg-card.sat { border-color: #f59e0b; animation-delay: .3s; }
+  .sg-card .ic { font-size: 28px; }
+  .sg-card h5 { font-size: 13px; color: #fff; margin: 6px 0; }
+  .sg-card p { font-size: 11.5px; color: #cbd5e1; line-height: 1.5; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 7, title: 'Day 7 · 上云迁移与可观测性', intro: '14 分钟 · 6R + TCO/ROI + Metrics/Logs/Traces + SLI/SLO + 餐饮 1800 万案例' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 7 · 上云迁移与可观测性',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>上云 5 大价值 + 6R + TCO/ROI + 可观测 3 支柱 + SRE</b><br>14 分钟 + 2 互动 + 3 客户对话 + 餐饮 5 年省 1800 万真实案例',
+    visual: '<div class="cover-icon">📈</div>',
+    voice: '欢迎来到 Day 7 上云迁移与可观测性。这是售前最值钱的一节——上云方案 + TCO + 可观测一套组合拳能把客户从"试试看"变成"必须找你"。今天 14 分钟讲透上云 5 大价值、6R 决策、TCO/ROI 模型、可观测三支柱、SRE 实践，加 3 客户对话和餐饮客户 5 年省 1800 万真实案例。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 1 章 · 5 大价值', title: '客户为什么上云？ · 5 个回答',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(5,1fr);font-size:11px;">
+      <div class="col-card"><div class="num">💰</div><h5>① 降本</h5><p>OpEx → CapEx<br>Right-sizing<br>省 20-40%</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>② 提效</h5><p>分钟级开通<br>上线频率 5-10x</p></div>
+      <div class="col-card"><div class="num">📈</div><h5>③ 弹性</h5><p>秒杀大促直播<br>扩缩容自动化</p></div>
+      <div class="col-card"><div class="num">🛡️</div><h5>④ 可靠</h5><p>SLA 99.95-99.99%<br>跨 AZ + 7×24</p></div>
+      <div class="col-card"><div class="num">🚀</div><h5>⑤ 创新</h5><p>大模型/数据湖<br>不从零造轮子<br><b>最被低估</b></p></div>
+    </div>`,
+    voice: '客户问为什么上云的 5 个回答。降本 OpEx 替代 CapEx 按使用付费 Right-sizing 后通常省 20-40% 总 IT 支出。提效资源开通从周级到分钟级研发联调环境一键拉起上线频率 5-10 倍提升。弹性应对秒杀直播大促等突发流量扩容自动化自建机房不可能做到。可靠云厂商 SLA 99.95-99.99% 背后是跨 AZ 冗余加 7×24 SRE 团队。创新直接调用大模型数据湖视频云等高级能力不必从零造轮子<b>这是云最被低估的价值</b>。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 2 章 · 迁移评估', title: '上云前必做的 4 件事',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">📋</div><h5>应用画像</h5><p>200+ 维度<br>CPU/Mem/网络/依赖/合规/SLA<br>CMDB+扫描工具</p></div>
+      <div class="col-card"><div class="num">🕸️</div><h5>依赖梳理</h5><p>应用→中间件→DB→外部 API<br>分层迁移 / 避免切了 A 发现 B 连旧</p></div>
+      <div class="col-card"><div class="num">⚠️</div><h5>风险识别</h5><p>老硬件 HSM/USB Key<br>复杂存储过程<br>未维护代码</p></div>
+      <div class="col-card"><div class="num">🧪</div><h5>试点选择</h5><p>非核心 + 开发活跃 + 依赖少<br>3 个试点跑通再铺开</p></div>
+    </div>`,
+    voice: '上云前必做的 4 件事。一应用画像收集 200+ 维度 CPU 内存磁盘网络依赖版本合规 SLA 所有者通常用 CMDB 加扫描工具。二依赖梳理画依赖图应用到中间件到数据库到外部 API分层迁移避免切了 A 发现 B 还连旧 IP。三风险识别老硬件依赖如 HSM USB Key、复杂存储过程、未维护代码是 6R 决策的关键变量。四试点选择先选"非核心加开发活跃加依赖少"的应用做试点 3 个试点跑通后全面铺开。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 3 章 · 6R 决策', title: '判断顺序：还要不要 → SaaS 吗 → R 系列',
+    body: '<b>先问"还要不要"</b>（Retire/Retain）→ <b>再问"换 SaaS 行不行"</b>（Repurchase）<br>→ <b>最后才在 Rehost/Replatform/Refactor 中选</b><br><span class="hl">迁移工具：火山 MgC / 阿里 ADAM / AWS Migration Hub 自动评估</span>',
+    visual: `<div class="six-r" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:880px;max-width:96vw;">
+      <div class="col-card" style="background:rgba(239,68,68,.06);border:1.5px solid #ef4444;">
+        <h5 style="color:#fca5a5">⚰️ Retire 退役</h5>
+        <p style="font-size:12px;">关停 10-20% 无人用应用<br><b>ROI 最高最被低估</b></p>
+      </div>
+      <div class="col-card" style="background:rgba(245,158,11,.06);border:1.5px solid #f59e0b;">
+        <h5 style="color:#fde68a">📥 Retain 保留</h5>
+        <p style="font-size:12px;">合规/硬件依赖<br>暂留本地 + 专线</p>
+      </div>
+      <div class="col-card" style="background:rgba(34,197,94,.06);border:1.5px solid #22c55e;">
+        <h5 style="color:#86efac">📱 Repurchase 换 SaaS</h5>
+        <p style="font-size:12px;">OA/CRM/邮箱<br>飞书/Salesforce<br>省 60%+</p>
+      </div>
+      <div class="col-card" style="background:rgba(43,92,255,.06);border:1.5px solid #2b5cff;">
+        <h5 style="color:#a5b4fc">🚚 Rehost 搬</h5>
+        <p style="font-size:12px;">原样 ECS / 1-2 周<br>改造最少</p>
+      </div>
+      <div class="col-card" style="background:rgba(110,58,255,.06);border:1.5px solid #6e3aff;">
+        <h5 style="color:#c4b5fd">🔧 Replatform 改</h5>
+        <p style="font-size:12px;">MySQL → veDB<br><b>ROI 最高</b></p>
+      </div>
+      <div class="col-card" style="background:rgba(236,72,153,.06);border:1.5px solid #ec4899;">
+        <h5 style="color:#f9a8d4">🏗️ Refactor 重</h5>
+        <p style="font-size:12px;">K8s/Serverless<br>3-12 月核心业务</p>
+      </div>
+    </div>`,
+    voice: '6R 判断顺序很重要。先问"还要不要"——Retire 关停 10-20% 无人用应用<b>ROI 最高最被低估</b>，Retain 合规或硬件依赖暂留本地加专线。再问"换 SaaS 行不行"——Repurchase OA CRM 邮箱换飞书 Salesforce 省 60%+。最后才在 Rehost、Replatform、Refactor 中选。Rehost 1-2 周改造最少，Replatform 比如 MySQL 换 veDB ROI 最高，Refactor K8s 或 Serverless 3-12 月适合核心业务。迁移工具用火山 MgC、阿里 ADAM、AWS Migration Hub 自动评估生成方案。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 3 章 · 波次规划', title: '12-24 个月分 4-6 波 · 留 1 月稳定+复盘',
+    visual: `<div style="font-family:monospace;font-size:14px;color:#cdd5e0;line-height:2;text-align:left;background:rgba(255,255,255,.04);padding:18px 24px;border-radius:10px;max-width:680px;">
+<span style="color:#a5b4fc">波次 1 (Month 1-3)</span>  20 应用 · 试点验证<br>
+<span style="color:#a5b4fc">波次 2 (Month 4-6)</span>  30 应用 · 第一批生产<br>
+<span style="color:#a5b4fc">波次 3 (Month 7-9)</span>  40 应用 · 加速期<br>
+<span style="color:#a5b4fc">波次 4 (Month 10-12)</span> 30 应用 · 数据库迁移<br>
+<span style="color:#a5b4fc">波次 5 (Month 13-15)</span> 20 应用 · 核心系统<br>
+<span style="color:#a5b4fc">波次 6 (Month 16-18)</span> 收尾 + 老 IDC 退订<br>
+<br>
+<span style="color:#fda4af">⚠️ 关键</span>：前 30 天保留旧环境数据同步通道 → 可一键回切
+</div>`,
+    voice: '波次规划通常 12-24 个月分 4-6 波每波 20-50 个应用留 1 月稳定加复盘。看这个标准排期：波次 1 试点 20 应用 3 个月；波次 2 第一批生产 30 应用；波次 3 加速期 40 应用；波次 4 数据库迁移 30 应用；波次 5 核心系统 20 应用；波次 6 收尾加老 IDC 退订。<b>关键</b>：前 30 天保留旧环境数据同步通道可一键回切，金融客户尤其要求。售前给客户讲方案要主动给"波次时间表"——具体到月才显专业。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 4 章 · TCO', title: 'TCO 5 大科目 · 3-5 年视角',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>科目</th><th>本地 IDC</th><th>云上</th><th>差异</th></tr></thead>
+      <tbody>
+        <tr><td>硬件折旧</td><td>5 年摊销</td><td class="ve">无</td><td>云完胜</td></tr>
+        <tr><td>机房（电/制冷/带宽）</td><td>持续支出</td><td class="ve">包在云费</td><td>云胜</td></tr>
+        <tr><td>软件许可</td><td>Oracle/VMware 等</td><td class="ve">veDB/VKE 替代</td><td>云胜</td></tr>
+        <tr><td>人员</td><td>DBA/SA/运维</td><td class="ve">少 30-50%</td><td>云胜</td></tr>
+        <tr><td>隐性成本</td><td>停机/机会成本</td><td class="ve">SLA 99.95%</td><td>云胜</td></tr>
+      </tbody>
+    </table>`,
+    voice: 'TCO 5 大科目按 3-5 年视角对比。硬件折旧 IDC 5 年摊销云上无。机房电力制冷带宽 IDC 持续支出云上包在云费里。软件许可 Oracle VMware 等 IDC 单独买云上 veDB VKE 替代。人员 IDC 需要 DBA SA 运维云上少 30-50%。隐性成本 IDC 含停机和机会成本云上 SLA 99.95% 覆盖。售前给客户做 TCO 必须 5 年视角不要 1 年看，3-5 年云上累计省 30-50% 是常见结果。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 4 章 · ROI 公式', title: 'ROI = (收益 - 投入) / 投入 × 100%',
+    body: '<b>收益侧 = 直接降本 + 提速带来的业务增量</b><br><span class="hl">"提速业务增量"常被忽略，但 60% 客户 ROI 主要来自这块</span>',
+    visual: `<div style="font-size:15px;color:#cdd5e0;line-height:1.9;text-align:left;background:rgba(255,255,255,.04);padding:18px 24px;border-radius:10px;max-width:720px;">
+<b>典型 ROI 算法：</b><br><br>
+✅ <b style="color:#86efac">直接降本</b>（IDC 节省）：500 万 / 年<br>
+✅ <b style="color:#86efac">人员节省</b>（DBA 减 2 人）：60 万 / 年<br>
+✅ <b style="color:#86efac">提速业务增量</b>（上线快带来的营收）：1500 万 / 年 ★<br>
+─────────────────────<br>
+合计收益：<b style="color:#fde68a">2060 万 / 年</b><br>
+3 年投入：<b style="color:#a5b4fc">800 万</b>（迁移+培训+许可）<br>
+<b style="color:#f9a8d4">ROI = (6180 - 800) / 800 × 100% = 672%</b>
+</div>`,
+    voice: 'ROI 公式收益减投入除以投入。<b>关键是收益侧</b>——除了直接降本要把"提速带来的业务增量"算进来这部分常被忽略。看这个典型算法：直接降本 IDC 节省 500 万/年；人员节省 DBA 减 2 人 60 万/年；<b>提速业务增量上线快带来的营收 1500 万/年</b>。合计收益 2060 万/年。3 年投入 800 万含迁移培训许可。ROI 等于 6180 减 800 除以 800 乘 100% 等于 672%。<b>提速增量这块占了大头</b>这就是为什么"非财务收益"售前必须算。',
+    fallbackDuration: 31000 },
+
+  { chapter: '🎯 互动测验 #1', title: '客户要 5 年降本 30%，怎么用 6R？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户 6 个机房 200 台 + 3 套系统，3 月内出 5 年降本 30% 方案。最优策略？</div>
+      <div class="quiz-opt wrong" data-k="A">全部 Refactor（3 个月做不完）</div>
+      <div class="quiz-opt wrong" data-k="B">全部 Rehost（降本不够 30%）</div>
+      <div class="quiz-opt correct" data-k="C">先用 MgC 全量评估 → 6R 组合 → 输出 TCO 表 + 业务价值</div>
+      <div class="quiz-opt wrong" data-k="D">直接报价让客户决定</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：3 月内出方案是标准售前评估周期。<b>5 年降本 30%</b> 必须 6R 组合：<b>Retain 15% / Replatform 60% / Refactor 25%</b>。Replatform 是降本主力（MySQL→veDB 省许可+DBA）。Refactor 给核心业务带来"上线提速 6 倍"的非财务收益。<b>3 月分 3 段</b>：Day 1-30 MgC 评估；Day 31-60 5 个试点；Day 61-90 输出 TCO 表 + 业务价值。这是 Day 7 真实案例的标准打法。</div>
+    </div>`,
+    voice: '思考一下。客户 3 月内出 5 年降本 30% 方案怎么做？给你 5 秒......正确答案 C 先用 MgC 全量评估再 6R 组合再输出 TCO 表。5 年降本 30% 必须 6R 组合：Retain 15% Replatform 60% Refactor 25%。Replatform 是降本主力 MySQL 换 veDB 省许可加 DBA。Refactor 给核心业务带来"上线提速 6 倍"非财务收益。3 月分 3 段：Day 1-30 MgC 评估、Day 31-60 5 个试点、Day 61-90 输出 TCO 表加业务价值。这是 Day 7 真实案例的标准打法。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 5 章 · 可观测', title: '三大支柱 · Metrics / Logs / Traces',
+    visual: `<div class="obs-pillars">
+      <div class="ob-card met">
+        <div class="ic">📊</div>
+        <h5>Metrics 指标</h5>
+        <div class="desc">数值时间序列<br>CPU / QPS / RT</div>
+        <div class="ex">Prometheus / VMP</div>
+      </div>
+      <div class="ob-card log">
+        <div class="ic">📝</div>
+        <h5>Logs 日志</h5>
+        <div class="desc">文本事件<br>错误堆栈 / 审计</div>
+        <div class="ex">ELK / Loki / 火山 TLS</div>
+      </div>
+      <div class="ob-card tra">
+        <div class="ic">🔗</div>
+        <h5>Traces 链路</h5>
+        <div class="desc">分布式调用链<br>定位慢在哪一跳</div>
+        <div class="ex">Jaeger / 火山 APM</div>
+      </div>
+    </div>`,
+    voice: '可观测三大支柱 Metrics、Logs、Traces。Metrics 指标是数值时间序列如 CPU、QPS、响应时间，Prometheus 是事实标准火山 VMP 提供托管。Logs 日志是文本事件如错误堆栈、审计，ELK、Loki、火山 TLS 是常见栈。Traces 链路是分布式调用链定位"慢在哪一跳"，Jaeger、Zipkin、火山 APM 支持。<b>OpenTelemetry</b> 是 CNCF 项目统一三大支柱的 SDK 与协议——新项目应直接用 OTel 避免厂商锁定。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 5 章 · 方法论', title: 'USE / RED · 监控什么',
+    body: '<b>USE 看资源</b>：Utilization / Saturation / Errors<br><b>RED 看服务</b>：Rate / Errors / Duration<br><span class="hl">两套互补 · 任何监控先做这俩</span>',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>🖥️ USE - 资源视角</h4>
+        <p><span class="tag">U</span>Utilization 使用率</p>
+        <p><span class="tag">S</span>Saturation 饱和度</p>
+        <p><span class="tag">E</span>Errors 错误数</p>
+        <p><span class="tag">用</span>主机 / 数据库 / 网络</p>
+      </div>
+      <div class="acl-box">
+        <h4>🚀 RED - 服务视角</h4>
+        <p><span class="tag">R</span>Rate 请求率</p>
+        <p><span class="tag">E</span>Errors 错误率</p>
+        <p><span class="tag">D</span>Duration 响应时长</p>
+        <p><span class="tag">用</span>微服务 / API / 应用</p>
+      </div>
+    </div>`,
+    voice: 'USE 和 RED 是两套监控方法论。USE 看资源——Utilization 使用率、Saturation 饱和度、Errors 错误数，用于主机、数据库、网络。RED 看服务——Rate 请求率、Errors 错误率、Duration 响应时长，用于微服务、API、应用。两套互补任何监控先做这俩。售前讲监控方案要会用这套方法论显专业度，对客户运维团队特别管用。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 6 章 · APM + AIOps', title: '应用性能 + 智能运维',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🔬</div><h5>APM</h5><p>探针采集 JVM/方法栈/SQL<br>慢请求/内存泄漏<br>DataDog 火山 APM</p></div>
+      <div class="col-card"><div class="num">👁️</div><h5>RUM 前端监控</h5><p>白屏时间/JS 错误<br>API 失败率<br>端到端关联</p></div>
+      <div class="col-card"><div class="num">🤖</div><h5>AIOps</h5><p>异常检测/根因分析<br>容量预测<br>告警千→十</p></div>
+      <div class="col-card"><div class="num">🎯</div><h5>统一平台</h5><p>Metrics+Logs+Traces<br>+RUM+APM+告警<br>2024+ 行业方向</p></div>
+    </div>`,
+    voice: '应用性能加智能运维 4 件套。APM 应用性能管理探针自动采集 JVM 方法栈 SQL 定位慢请求内存泄漏 DataDog 火山 APM 是代表。RUM 前端监控采集真实用户体验白屏时间、JS 错误、API 失败率与后端 APM 关联可端到端分析。AIOps 基于 ML 的异常检测、根因分析、容量预测告警从"千条"压到"十条"。统一可观测平台把 Metrics Logs Traces 加 RUM APM 告警整合一个面板排障，这是 2024+ 行业方向。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 7 章 · SRE', title: 'SLI / SLO / SLA · 三个 SL 别混',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>缩写</th><th>含义</th><th>例子</th></tr></thead>
+      <tbody>
+        <tr><td class="ve">SLI</td><td>Service Level Indicator <b>测什么</b></td><td>成功率 / 延迟 / 吞吐</td></tr>
+        <tr><td class="al">SLO</td><td>Service Level Objective <b>目标</b></td><td>成功率 ≥ 99.9%</td></tr>
+        <tr><td class="hw">SLA</td><td>Service Level Agreement <b>承诺+赔付</b></td><td>未达 99.9% 退 10% 月费</td></tr>
+      </tbody>
+    </table>`,
+    voice: 'SRE 三个 SL 别混。SLI 是 Service Level Indicator 测什么，比如成功率延迟吞吐。SLO 是 Service Level Objective 目标比如成功率大于等于 99.9%。SLA 是 Service Level Agreement 对客户的承诺加赔付比如未达 99.9% 退 10% 月费。SLI 是内部指标 SLO 是内部目标 SLA 是对外合同。售前面试问这三个区别必答能背。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 7 章 · 错误预算', title: '100% - SLO = 允许出错的预算',
+    visual: `<div class="slo-vis">
+      <div class="slo-text">
+        SLO: <b>99.9%</b><br>
+        错误预算 = <b>100% - 99.9% = 0.1%</b><br>
+        每月允许停机: <b>43 分钟</b>
+      </div>
+      <div class="slo-bar">
+        <div class="slo-ok"></div>
+        <div class="slo-budget"></div>
+      </div>
+      <div class="slo-text" style="margin-top:12px;">
+        ⚠️ <b>预算用完</b> → <b>停发布</b>专注稳定性<br>
+        ✅ 预算充足 → 可继续发布迭代<br>
+        <br>
+        <span style="color:#94a3b8;font-size:11.5px;">— SRE 工程化决策机制，避免"稳定性靠抢救"</span>
+      </div>
+    </div>`,
+    voice: '错误预算是 SRE 的核心机制。100% 减 SLO 等于允许出错的预算。SLO 99.9% 意味着错误预算 0.1% 每月允许停机 43 分钟。<b>预算用完就停发布专注稳定性</b>预算充足可继续发布迭代。这是 SRE 工程化决策机制避免"稳定性靠抢救"。售前讲方案要主动给客户讲错误预算——能让客户技术负责人立刻觉得你懂 SRE 不是销售。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 7 章 · 黄金信号', title: '4 个监控 · 任何服务先做这 4 个',
+    visual: `<div class="signal-4">
+      <div class="sg-card lat">
+        <div class="ic">⏱️</div>
+        <h5>① Latency 延迟</h5>
+        <p>P50/P95/P99<br>看尾延迟</p>
+      </div>
+      <div class="sg-card traf">
+        <div class="ic">🌊</div>
+        <h5>② Traffic 流量</h5>
+        <p>QPS/RPS<br>看压力</p>
+      </div>
+      <div class="sg-card err">
+        <div class="ic">❌</div>
+        <h5>③ Errors 错误</h5>
+        <p>5xx/4xx 率<br>看异常</p>
+      </div>
+      <div class="sg-card sat">
+        <div class="ic">🌡️</div>
+        <h5>④ Saturation 饱和</h5>
+        <p>CPU/Mem/磁盘<br>看瓶颈</p>
+      </div>
+    </div>`,
+    voice: 'Google SRE 提的 4 个黄金信号是任何服务先做的监控。Latency 延迟看 P50 P95 P99 尾延迟。Traffic 流量看 QPS RPS 压力。Errors 错误看 5xx 4xx 率异常。Saturation 饱和度看 CPU 内存磁盘瓶颈。售前给客户做监控方案先讲这 4 个再扩到 USE 和 RED 客户技术团队立刻觉得你"懂"。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 7 章 · 混沌工程 + 复盘', title: '主动注入故障 · 不追责追根因',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>🐒 混沌工程</h4>
+        <p><span class="tag">起源</span>Netflix Chaos Monkey</p>
+        <p><span class="tag">动作</span>主动杀 Pod / 断网 / CPU 打满</p>
+        <p><span class="tag">目的</span>验证韧性 / 暴露假设</p>
+        <p><span class="tag">频率</span>季度演练 / 重大发布前</p>
+      </div>
+      <div class="acl-box">
+        <h4>📓 事后复盘</h4>
+        <p><span class="tag">原则</span>不追责追根因</p>
+        <p><span class="tag">方法</span>5 个为什么</p>
+        <p><span class="tag">产出</span>可落地行动项</p>
+        <p><span class="tag">目标</span>组织级学习机制</p>
+      </div>
+    </div>`,
+    voice: '混沌工程主动注入故障——杀 Pod、断网、CPU 打满——验证韧性。Netflix Chaos Monkey 是开端，季度演练或重大发布前做。事后复盘 Postmortem 不追责追根因，问"5 个为什么"输出可落地行动项建立组织级学习机制。<b>"不追责"</b>是关键——只要追责团队就开始隐瞒事故根因永远找不到。售前给政企客户讲方案要主动提"复盘文化"——这种工程文化能让 CIO 立刻觉得你不是销售是顾问。',
+    fallbackDuration: 26000 },
+
+  { chapter: '🎯 互动测验 #2', title: '客户 SLA 拍脑袋 99.999%，怎么破？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户业务负责人要求 SLA 99.999%（年停机 5 分钟），但实际架构跨 1 AZ。怎么破？</div>
+      <div class="quiz-opt wrong" data-k="A">答应 99.999%（赌不出事）</div>
+      <div class="quiz-opt correct" data-k="B">解释"3 个 9 vs 5 个 9"成本差 10x，按业务必要降级</div>
+      <div class="quiz-opt wrong" data-k="C">改架构跨 3 region 容灾（贵 3 倍客户接受不了）</div>
+      <div class="quiz-opt wrong" data-k="D">拒绝该客户</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：典型的"SLA 拍脑袋"题。<b>99.9% 年停机 8.7h，99.99% 年 52min，99.999% 年 5min</b>。每多一个 9 成本 10x（多 AZ → 多 region → 多云）。<b>正确做法</b>：① 反问业务"宕机 1 小时损失多少钱"；② 算出 SLA 投入回报；③ 通常 99.95% 跨 2 AZ 是<b>性价比甜点</b>；④ 用<b>错误预算</b>机制约束发布质量。<b>SLA 拍脑袋的后果是售前永远超预算</b>。</div>
+    </div>`,
+    voice: '思考一下。客户要 SLA 99.999% 但跨 1 AZ怎么破？给你 5 秒......正确答案 B 解释成本差 10x 按业务必要降级。99.9% 年停 8.7 小时 99.99% 年 52 分钟 99.999% 年 5 分钟。每多一个 9 成本 10 倍多 AZ 多 region 多云。正确做法：反问业务"宕机 1 小时损失多少钱"算出 SLA 投入回报通常 99.95% 跨 2 AZ 是性价比甜点配合错误预算约束发布质量。SLA 拍脑袋的后果是售前永远超预算。',
+    fallbackDuration: 29000 },
+
+  { chapter: '🌟 客户对话 #1', title: 'CEO 要"3 月内出方案"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>CEO 要求 3 月内给上云方案 + ROI，6 机房 200 台 + 3 套系统。来得及吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>来得及。<b>3 月 3 段</b>：<b>Day 1-30</b> 火山 MgC 全量评估 → 6R 比例；<b>Day 31-60</b> 5 个非核心试点跑通；<b>Day 61-90</b> 输出 <b>TCO 表（5 年节省 1800 万）+ 业务价值（新店上线 30 天 → 5 天）</b>。一次过会概率 80%+。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>怎么一次过会？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>方案 PPT <b>20 页结构</b>：① 业务现状（CEO 关心）② 5 年 TCO 数字 + 业务增量 ROI（CFO 关心）③ 6R 路径 + 试点结果（CIO 关心）④ 18 月分波次时间表（项目经理关心）⑤ 风险与兜底（法务关心）。每个高管看到自己关心的页 = <b>一次过</b>。</div>
+      </div>
+    </div>`,
+    voice: '一段经典对话。CEO 要 3 月内出方案，售前给 3 月 3 段：Day 1-30 MgC 评估 6R 比例；Day 31-60 5 个非核心试点；Day 61-90 输出 TCO 表加业务价值。一次过会概率 80%+。客户追问怎么一次过会，售前甩 20 页结构：业务现状给 CEO 看、5 年 TCO 给 CFO 看、6R 路径给 CIO 看、波次时间表给项目经理看、风险给法务看。每个高管看到自己关心的页就是一次过。这是售前讲方案的"分角色"心法。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🌟 客户对话 #2', title: '"可观测怎么落地？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们想做可观测，但现状监控很乱：Zabbix + ELK + Skywalking + ...10 套工具。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型"工具墓地"。<b>3 阶段统一</b>：<b>Q1 标准化</b> 全量切 <b>OpenTelemetry SDK</b>避免新增锁定；<b>Q2 收敛</b> Metrics 入 Prometheus / Logs 入 TLS / Traces 入 APM 三大支柱归一；<b>Q3 平台化</b> 上统一可观测平台 + AIOps 告警合并。员工不用切 10 个面板就能定位问题。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>10 套工具不能继续用？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>"逐步替换不是一刀切"</b>。每个工具按 ROI 排序：① 用得最多的最后换；② 用得少的先停用；③ 新业务必须直接上 OTel。1 年后 10 套 → 3 套 → <b>1 个统一平台</b>。员工不抗拒、领导看到工具费降 60%。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话客户 10 套监控工具乱。售前给 3 阶段统一：Q1 标准化全量切 OpenTelemetry SDK；Q2 收敛 Metrics 入 Prometheus、Logs 入 TLS、Traces 入 APM 三大支柱归一；Q3 平台化上统一可观测平台加 AIOps 告警合并。员工不用切 10 个面板。客户担心 10 套不能继续用，售前甩"逐步替换不是一刀切"——用得多的最后换、用得少的先停、新业务直接 OTel。1 年后 10 套到 3 套到 1 个统一平台员工不抗拒领导看到工具费降 60%。',
+    fallbackDuration: 33000 },
+
+  { chapter: '🌟 客户对话 #3', title: '"上完云怎么治理成本？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们 1 年前上云，账单从 100 万涨到 380 万，CFO 炸了。怎么治？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型"<b>上云没建 FinOps</b>"。3 步治理：<b>① Inform 账单可视</b> 按业务/项目/团队打标签 → 1 周；<b>② Optimize 优化</b> Right-sizing + 资源包 + Spot → 2-4 周省 20-40%；<b>③ Operate 持续</b> CCoE 卓越中心 + 月度复盘 → 长期治理。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>能省多少？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>"账单医生"诊断</b>：① 我们派 2 名 FinOps 顾问看您 1 个月账单；② 出 30 页报告找 30+ 优化点；③ 落地后<b>预计省 25-35%</b>（您账单从 380 万降到 250 万）。<b>诊断免费</b>，按落地实际节省的 15% 收咨询费。这种 ROI 模式 CFO 一定签。</div>
+      </div>
+    </div>`,
+    voice: '第三个对话客户上完云账单失控。售前给 3 步治理：Inform 账单可视按业务项目团队打标签 1 周；Optimize 优化 Right-sizing 加资源包加 Spot 2-4 周省 20-40%；Operate 持续 CCoE 卓越中心加月度复盘长期治理。客户追问能省多少，售前甩"账单医生"诊断：2 名 FinOps 顾问看 1 月账单出 30 页报告 30+ 优化点落地预计省 25-35%。<b>诊断免费按落地实际节省的 15% 收咨询费</b>这种 ROI 模式 CFO 一定签。',
+    fallbackDuration: 33000 },
+
+  { chapter: '案例', title: '🌟 餐饮连锁 · 5 年省 1800 万',
+    body: '<b>痛点</b>：6 机房 200 台 + 3 套系统（ERP/POS/会员）/ 运维 8 人<br><b>方案</b>：MgC 全评估 → 6R 组合（Retain 15% / Replatform 60% / Refactor 25%）<br><br>📅 <b>方案一次过会</b><br>💰 5 年节省 <b>1800 万</b><br>🏪 新店上线 <b>30 天 → 5 天</b><br>📊 年 IT 成本降 32%',
+    visual: '<div style="font-size:64px;">🍔</div>',
+    voice: '一个真实案例。某连锁餐饮 IT 总监被 CEO 要求 3 个月内给上云方案加 ROI。自建 6 个机房 200 台服务器 3 套 ERP POS 会员运维 8 人。方案 Day 1-30 用火山 MgC 全量评估出 6R 比例 Retain 15% Replatform 60% Refactor 25%；Day 31-60 做 5 个非核心试点；Day 61-90 输出 TCO 表 5 年节省 1800 万加业务价值新店上线时间从 30 天到 5 天。结果方案一次过会试点 3 月跑通后续 18 月完成 80% 应用上云年 IT 成本降 32% 新店上线提速 6 倍。',
+    fallbackDuration: 30000 },
+
+  { chapter: '⚠️ 售前坑', title: '上云迁移 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 售前推上云方案 3 大坑</h4>
+      <div class="x-row"><b>"先迁完再说"</b>：没做应用画像，迁后发现某老系统离不开机房 USB Key → 回切灾难</div>
+      <div class="x-row"><b>只看降本忘了治理</b>：上完云没建 FinOps，1 年后账单失控 → CFO 找你算账</div>
+      <div class="x-row"><b>SLO 拍脑袋</b>：99.999% 听起来美好按实际架构根本做不到 → 永远超预算 → 客户失信</div>
+      <div class="ok-row">售前正确做法：<b>① MgC 前置评估</b> 找老硬件依赖；<b>② FinOps 建治理 SOP</b> 上线即用；<b>③ SLO 按架构能力算</b> 99.95% 跨 2 AZ 是性价比甜点。</div>
+    </div>`,
+    voice: '上云方案 3 大坑。一"先迁完再说"没做应用画像迁后才发现某老系统离不开机房 USB Key回切灾难。二只看降本忘了治理上完云没建 FinOps 1 年后账单失控 CFO 找你算账。三 SLO 拍脑袋 99.999% 听起来美好按实际架构根本做不到永远超预算客户失信。正确做法：MgC 前置评估找老硬件依赖；FinOps 建治理 SOP 上线即用；SLO 按架构能力算 99.95% 跨 2 AZ 是性价比甜点。',
+    fallbackDuration: 28000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 6R 判断顺序？<span style="color:#a5b4fc"> → 先 Retire/Retain → 再 Repurchase → 最后 Rehost/Replatform/Refactor</span><br>
+      <b>Q2</b> TCO 5 大科目？<span style="color:#a5b4fc"> → 硬件/机房/许可/人员/隐性成本，3-5 年视角</span><br>
+      <b>Q3</b> ROI 收益侧？<span style="color:#a5b4fc"> → 直接降本 + 提速业务增量（常被忽略）</span><br>
+      <b>Q4</b> 可观测三大支柱？<span style="color:#a5b4fc"> → Metrics/Logs/Traces，用 OpenTelemetry 统一</span><br>
+      <b>Q5</b> USE vs RED？<span style="color:#a5b4fc"> → USE 看资源 / RED 看服务</span><br>
+      <b>Q6</b> SLI/SLO/SLA 区别？<span style="color:#a5b4fc"> → 测什么/目标/承诺+赔付</span><br>
+      <b>Q7</b> 错误预算？<span style="color:#a5b4fc"> → 100%-SLO，预算用完停发布</span><br>
+      <b>Q8</b> 黄金 4 信号？<span style="color:#a5b4fc"> → Latency/Traffic/Errors/Saturation</span>
+    </div>`,
+    voice: '8 题速查。一 6R 判断顺序先 Retire Retain 再 Repurchase 最后 Rehost Replatform Refactor。二 TCO 5 大科目硬件机房许可人员隐性成本 3-5 年视角。三 ROI 收益侧含直接降本加提速业务增量常被忽略。四可观测三支柱 Metrics Logs Traces OpenTelemetry 统一。五 USE 看资源 RED 看服务。六 SLI SLO SLA 测什么目标承诺加赔付。七错误预算 100% 减 SLO预算用完停发布。八黄金 4 信号 Latency Traffic Errors Saturation。这 8 道刷熟上云迁移面试稳过。',
+    fallbackDuration: 31000 },
+
+  { chapter: '完成', title: '🎉 Day 7 学完！',
+    eyebrow: '关键心法',
+    body: '上云方案 = <b>6R + TCO + 业务价值</b>三件套。<br>可观测 = <b>OTel + 黄金 4 信号 + 错误预算</b>三件套。<br>客户买的不是"云"，是"<b>分角色都觉得有数</b>"。',
+    visual: '<div style="font-size:80px;">📈</div>',
+    voice: '恭喜 Day 7 学完。上云方案三件套 6R 加 TCO 加业务价值。可观测三件套 OTel 加黄金 4 信号加错误预算。客户买的不是"云"是"分角色都觉得有数"——CEO CFO CIO 项目经理法务每人看到自己关心的页。下一站 Day 8 火山引擎概览与计算。',
+    fallbackDuration: 22000 },
+];
+</script>
+<script src="_player.js?v=23"></script>
+</body>
+</html>

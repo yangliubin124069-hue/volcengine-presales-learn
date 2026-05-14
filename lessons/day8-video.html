@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 8 · 火山引擎概览与计算 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=23">
+<style>
+  /* 九大产品族 */
+  .product-9 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    width: 900px; max-width: 96vw; }
+  .pf-card { padding: 12px 10px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid #6e3aff; text-align: center; animation: cardIn .5s both; }
+  .pf-card .ic { font-size: 26px; display: block; }
+  .pf-card .nm { font-size: 13px; font-weight: 700; color: #fff; margin: 4px 0; }
+  .pf-card .ex { font-size: 11px; color: #cbd5e1; line-height: 1.5; }
+  .pf-card:nth-child(2) { animation-delay: .08s; }
+  .pf-card:nth-child(3) { animation-delay: .16s; }
+  .pf-card:nth-child(4) { animation-delay: .24s; }
+  .pf-card:nth-child(5) { animation-delay: .32s; }
+  .pf-card:nth-child(6) { animation-delay: .4s; }
+  .pf-card:nth-child(7) { animation-delay: .48s; }
+  .pf-card:nth-child(8) { animation-delay: .56s; }
+  .pf-card:nth-child(9) { animation-delay: .64s; }
+
+  /* ECS 规格族 */
+  .ecs-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    width: 880px; max-width: 96vw; }
+  .et-card { padding: 14px 12px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; }
+  .et-card.g { border-color: #2b5cff; }
+  .et-card.c { border-color: #6e3aff; }
+  .et-card.r { border-color: #ec4899; }
+  .et-card.gpu { border-color: #f59e0b; }
+  .et-card.bm { border-color: #22c55e; }
+  .et-card.i { border-color: #c4b5fd; }
+  .et-card h5 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .et-card .ratio { font-size: 11px; color: #fde68a; font-family: monospace; margin-bottom: 6px; }
+  .et-card .use { font-size: 12px; color: #cbd5e1; line-height: 1.5; }
+
+  /* 字节同款 */
+  .byte-stack { display: flex; align-items: center; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .bs-box { padding: 14px 16px; border-radius: 10px; background: rgba(245,158,11,.08);
+    border: 1.5px solid #f59e0b; text-align: center; font-size: 13px;
+    animation: cardIn .5s both; }
+  .bs-box .ic { font-size: 28px; display: block; }
+  .bs-box .name { font-weight: 700; color: #fde68a; margin: 4px 0; }
+  .bs-box:nth-child(3) { animation-delay: .15s; }
+  .bs-box:nth-child(5) { animation-delay: .3s; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 8, title: 'Day 8 · 火山引擎概览与计算', intro: '13 分钟 · 九大产品族 + 字节同款 + ECS/VKE/Faas + 智算中心 + 新能源车 200 卡案例' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 8 · 火山引擎概览与计算',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>九大产品族 + 字节同款 + ECS 6 规格 + VKE + veFaaS + 智算中心</b><br>13 分钟 + 2 互动 + 3 客户对话 + 新能源车 200 张 A100 真实案例',
+    visual: '<div class="cover-icon">🌋</div>',
+    voice: '欢迎来到 Day 8 火山引擎概览与计算。这是售前对火山自家产品的第一节。今天 13 分钟讲透九大产品族、字节同款的真正含义、ECS 6 规格族、VKE 容器、veFaaS Serverless、智算中心，加 3 个客户对话和新能源车企 200 张 A100 真实案例。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 1 章 · 火山引擎', title: '抖音 ToB · 5 年崛起新势力',
+    body: '<b>字节跳动旗下 ToB 云服务品牌</b> · 2020 年 6 月发布<br><b>定位</b>："原生 AI + 字节同款基础设施"<br><span class="hl">IDC 中国 IaaS 2024：Top 5 · 增速行业第一</span>',
+    visual: '<div class="three-col"><div class="col-card"><div class="num">2020</div><h5>发布</h5><p>字节 ToB 入场</p></div><div class="col-card"><div class="num">2022</div><h5>ChatGPT 爆发</h5><p>豆包蓄势</p></div><div class="col-card"><div class="num">2024</div><h5>Top 5</h5><p>IDC 中国 IaaS</p></div></div>',
+    voice: '火山引擎是字节跳动旗下 ToB 云服务品牌 2020 年 6 月发布。定位"原生 AI 加字节同款基础设施"。IDC 中国 IaaS 2024 Top 5 增速行业第一。<b>5 年时间从无到 Top 5</b>背后是字节系业务的真实输出——抖音、TikTok、今日头条等亿级应用所用的技术对外开放。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 1 章 · 字节同款', title: '"字节同款" · 售前必背 3 句话',
+    visual: `<div class="byte-stack">
+      <div class="bs-box">
+        <span class="ic">📱</span>
+        <div class="name">抖音 / TikTok</div>
+        <div>推荐算法</div>
+      </div>
+      <span style="font-size:24px;color:#a5b4fc;">→</span>
+      <div class="bs-box">
+        <span class="ic">🌋</span>
+        <div class="name">火山引擎</div>
+        <div>对外输出</div>
+      </div>
+      <span style="font-size:24px;color:#a5b4fc;">→</span>
+      <div class="bs-box">
+        <span class="ic">🏢</span>
+        <div class="name">企业客户</div>
+        <div>实战验证</div>
+      </div>
+    </div>`,
+    voice: '"字节同款"是售前对话的关键词，三句话讲清楚。第一抖音、TikTok 实际跑出来的基础设施和算法直接对外不是 PPT 概念。第二原生 AI——豆包加方舟加 Coze 一体企业不用拼装。第三视频云第一阵营——直播点播 RTC 体验最直接受益于字节业务沉淀。客户问"火山和阿里华为有什么不同"必答这 3 句。',
+    fallbackDuration: 23000 },
+
+  { chapter: '第 2 章 · 九大产品族', title: '一图速记 · 全景架构',
+    visual: `<div class="product-9">
+      <div class="pf-card"><span class="ic">🖥️</span><div class="nm">计算</div><div class="ex">ECS / VKE / veFaaS</div></div>
+      <div class="pf-card"><span class="ic">💾</span><div class="nm">存储</div><div class="ex">TOS / NAS / EBS</div></div>
+      <div class="pf-card"><span class="ic">🌐</span><div class="nm">网络</div><div class="ex">VPC / CLB / EIP</div></div>
+      <div class="pf-card"><span class="ic">🗄️</span><div class="nm">数据库</div><div class="ex">veDB / RDS / Redis</div></div>
+      <div class="pf-card"><span class="ic">🐳</span><div class="nm">容器</div><div class="ex">VKE / VCI / veCR</div></div>
+      <div class="pf-card"><span class="ic">🧠</span><div class="nm">AI</div><div class="ex">豆包 / 方舟 / Coze</div></div>
+      <div class="pf-card"><span class="ic">🎬</span><div class="nm">视频云</div><div class="ex">CDN / Live / RTC / VOD</div></div>
+      <div class="pf-card"><span class="ic">🛡️</span><div class="nm">安全</div><div class="ex">WAF / DDoS / 堡垒机</div></div>
+      <div class="pf-card"><span class="ic">🏭</span><div class="nm">行业方案</div><div class="ex">汽车 / 金融 / 政务</div></div>
+    </div>`,
+    voice: '九大产品族一图速记。计算 ECS VKE veFaaS。存储 TOS NAS EBS。网络 VPC CLB EIP。数据库 veDB RDS Redis。容器 VKE VCI veCR。AI 豆包 方舟 Coze。视频云 CDN Live RTC VOD。安全 WAF DDoS 堡垒机。行业方案汽车 金融 政务等专属云形态。<b>Region 截至 2025 覆盖华北华东华南国内多 region 加海外新加坡硅谷等多 AZ 部署</b>。售前讲方案先用这 9 个族给客户一个全景图再深入聊具体场景。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 3 章 · ECS', title: '6 大规格族 · 售前选型基础',
+    visual: `<div class="ecs-types">
+      <div class="et-card g">
+        <h5>g · 通用型</h5>
+        <div class="ratio">CPU:Mem = 1:4</div>
+        <div class="use">Web / 应用服务器<br>中型数据库<br><b>最常用规格</b></div>
+      </div>
+      <div class="et-card c">
+        <h5>c · 计算型</h5>
+        <div class="ratio">CPU:Mem = 1:2</div>
+        <div class="use">频率高<br>批处理 / 视频转码 / 科学计算</div>
+      </div>
+      <div class="et-card r">
+        <h5>r · 内存型</h5>
+        <div class="ratio">CPU:Mem = 1:8</div>
+        <div class="use">大型数据库<br>Redis/MC 缓存 / ELK</div>
+      </div>
+      <div class="et-card gpu">
+        <h5>g/p · GPU 异构</h5>
+        <div class="ratio">A100 / H100 / L20</div>
+        <div class="use">g 推理 / p 训练<br>按卡时计费</div>
+      </div>
+      <div class="et-card bm">
+        <h5>bm · 裸金属</h5>
+        <div class="ratio">物理机 + 云的弹性</div>
+        <div class="use">无虚拟化损耗<br>核心 DB / HPC / 合规物理隔离</div>
+      </div>
+      <div class="et-card i">
+        <h5>i · 本地盘</h5>
+        <div class="ratio">NVMe IOPS 百万级</div>
+        <div class="use">高性能 NoSQL<br>Druid / ClickHouse</div>
+      </div>
+    </div>`,
+    voice: 'ECS 6 大规格族售前选型基础。g 通用型 CPU:Mem 1:4 适合 Web 应用服务器中型数据库最常用。c 计算型 CPU:Mem 1:2 频率高适合批处理视频转码科学计算。r 内存型 CPU:Mem 1:8 适合大型数据库 Redis 缓存 ELK。g 系列 GPU 推理 p 系列 GPU 训练 A100 H100 L20 多代按卡时计费。bm 裸金属物理机性能加云的弹性无虚拟化损耗适合核心数据库 HPC 或合规要求物理隔离。i 本地盘机型 NVMe IOPS 百万级适合高性能 NoSQL Druid ClickHouse。售前推方案要先问业务画像再推规格不要一上来就推 g 系列。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 3 章 · 选型 + 计费', title: '三步法 + 混合计费',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">①</div><h5>看 CPU</h5><p>按峰值 70-80% 设计<br>留余量应对突发</p></div>
+      <div class="col-card"><div class="num">②</div><h5>配比内存</h5><p>g/c/r 三档<br>按业务画像选</p></div>
+      <div class="col-card"><div class="num">③</div><h5>选磁盘 PL</h5><p>PL0/1/2/3 性能<br><b>常被遗忘</b></p></div>
+      <div class="col-card"><div class="num">💰</div><h5>混合计费</h5><p>核心包月<br>+ 弹性按量<br>+ 离线 Spot</p></div>
+    </div>`,
+    voice: 'ECS 选型三步法。一看 CPU 核数按峰值 70-80% 设计留余量应对突发。二配比内存 g/c/r 三档按业务画像选。三选磁盘 PL 等级 PL0 PL1 PL2 PL3 性能逐级提升<b>常被遗忘的一步</b>。计费推荐混合模式：核心业务包年包月省 30-50%；弹性扩容按量付费随用随停；离线任务 Spot 抢占式省 50-90%。混合计费综合 TCO 比单一模式省 30%+。<b>Right-sizing</b> 通过监控 CPU Mem 实际利用率定期调规格通常 30-40% ECS 可降一档节省 20%+。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验 #1', title: '客户场景：60% Web + 30% 视频转码 + 10% AI 训练',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户业务画像：60% Web 应用 + 30% 视频转码 + 10% AI 训练。ECS 怎么配？</div>
+      <div class="quiz-opt wrong" data-k="A">全部用 g 通用型最简单</div>
+      <div class="quiz-opt wrong" data-k="B">全部用 c 计算型最快</div>
+      <div class="quiz-opt correct" data-k="C">60% g 通用包月 + 30% c 计算 Spot + 10% p 训练按卡时</div>
+      <div class="quiz-opt wrong" data-k="D">全 r 内存型保险</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：经典"<b>混合配比</b>"题。① <b>60% Web 用 g 通用型 + 包月</b>稳定核心；② <b>30% 视频转码用 c 计算型 + Spot</b> 离线可中断省 50-90%；③ <b>10% AI 训练用 p 系列 GPU + 按卡时</b>用完即停。<b>综合 TCO 比"全 g"省 40%</b>。Spot 适合视频转码因为转码任务可中断重试。售前推方案要会"业务画像 → 规格族 → 计费模式"组合不要一刀切。</div>
+    </div>`,
+    voice: '思考一下。客户 60% Web 加 30% 视频转码加 10% AI 训练 ECS 怎么配？给你 5 秒......正确答案 C 混合配比。60% Web 用 g 通用型加包月稳定核心。30% 视频转码用 c 计算型加 Spot 离线可中断省 50-90%。10% AI 训练用 p 系列 GPU 加按卡时用完即停。综合 TCO 比"全 g"省 40%。Spot 适合视频转码因为转码可中断重试。售前推方案要会"业务画像到规格族到计费模式"组合不要一刀切。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 4 章 · VKE', title: '托管 K8s · 控制面免费',
+    body: '<b>Volcanic Kubernetes Engine</b><br>控制面<span class="hl">免费</span> · 标准 K8s 兼容 · 支持 1.24-1.30<br>抖音内部同款集群经验加持',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">📦</div><h5>托管节点池</h5><p>你买 ECS 跑 Pod<br>K8s 控制面我们管</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>VCI Serverless 容器</h5><p>按 Pod 用量付费<br>秒级启动</p></div>
+      <div class="col-card"><div class="num">🎯</div><h5>混合最划算</h5><p>核心节点池<br>+ 弹性 VCI</p></div>
+    </div>`,
+    voice: 'VKE 是火山的托管 K8s 服务。<b>控制面免费</b>这是相比阿里 ACK 华为 CCE 的差异化卖点——它们都按小时收钱。标准 K8s 兼容支持 1.24 到 1.30 多版本。抖音内部同款集群经验加持。三种用法：托管节点池你买 ECS 跑 Pod、VCI Serverless 容器按 Pod 用量付费秒级启动、混合用最划算核心节点池加弹性 VCI。售前讲 VKE 必提"控制面免费"和"抖音同款"。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 4 章 · VKE 生态', title: '原生集成 + 弹性 + GPU',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🔌</div><h5>原生集成</h5><p>CLB / TOS / EBS<br>CR / APM / TLS / ASM<br>开箱即用</p></div>
+      <div class="col-card"><div class="num">📈</div><h5>弹性</h5><p>CA + HPA 内置<br>veFaaS-K + KEDA<br>分钟级千 Pod</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>GPU 容器</h5><p>原生 GPU Pod 调度<br>MIG 切 7 份共享<br>按卡时计费</p></div>
+    </div>`,
+    voice: 'VKE 生态三大杀手锏。原生集成 CLB TOS EBS CR APM TLS ASM 服务网格开箱即用一套云原生栈。弹性 CA 加 HPA 内置 veFaaS-K 可结合 KEDA 做事件驱动伸缩分钟级千 Pod。GPU 容器原生支持 GPU Pod 调度按卡时按使用计费支持 MIG 把 A100 切 7 份共享。<b>售前推 VKE 一定要把"GPU MIG 切 7 份"这个能力主动提</b>客户做 AI 推理立刻心动。',
+    fallbackDuration: 23000 },
+
+  { chapter: '第 5 章 · veFaaS', title: 'Serverless · 闲时零成本',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">📥</div><h5>事件源</h5><p>API 网关<br>TOS 文件上传<br>定时器 / Kafka</p></div>
+      <div class="col-card"><div class="num">🔧</div><h5>运行时</h5><p>Python/Node/Go/Java/.NET<br>冷启 100-300ms<br>预留可降至 ms</p></div>
+      <div class="col-card"><div class="num">💰</div><h5>计费</h5><p>调用次数 + 运行时长<br>GB·秒<br>闲时零成本</p></div>
+      <div class="col-card"><div class="num">🎯</div><h5>典型场景</h5><p>图片视频转码<br>IoT 上报 / Webhook<br>轻量 API</p></div>
+    </div>`,
+    voice: 'veFaaS 函数计算是 Serverless 模型。事件源 API 网关、TOS 文件上传、定时器、Kafka、消息队列触发执行函数。运行时支持 Python Node Go Java .NET 主流语言冷启动 100-300ms 预留实例可降到毫秒。计费按调用次数加运行时长 GB 秒，免费额度足以覆盖小型 API 闲时零成本。典型场景：图片视频转码、IoT 上报、Webhook、轻量 API。<b>不适合长时计算和有状态服务</b>。<b>FaaS 极致弹性零运维但限制多容器灵活但需运维</b>按业务"突发性加状态"选。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 6 章 · 智算中心', title: '大模型训练 · 万卡集群',
+    body: '<b>智算中心</b>：高性能 GPU 集群 + <span class="hl">InfiniBand 200-400 Gbps</span> + 并行存储<br>万卡级规模 · 抖音内部同款基础设施',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🏭</div><h5>规模</h5><p>千卡 → 万卡<br>InfiniBand 高速互联<br>vePFS 100GB/s+ 存储</p></div>
+      <div class="col-card"><div class="num">🎮</div><h5>弹性 GPU</h5><p>按卡时租 A100/H100/L20<br>容器/ECS/Spot 多种交付</p></div>
+      <div class="col-card"><div class="num">🚀</div><h5>推理优化</h5><p>vLLM/TensorRT-LLM 集成<br>吞吐 3-5x<br>火山方舟托管</p></div>
+    </div>`,
+    voice: '智算中心是为大模型训练加推理打造的高性能集群含 GPU 加 InfiniBand 加并行存储万卡级规模。规模千卡到万卡，InfiniBand 200-400 Gbps 高速互联，vePFS 100 GB/s+ 并行存储。弹性 GPU 按卡时租 A100 H100 L20 支持容器 ECS Spot 多种交付。推理优化与 vLLM TensorRT-LLM 集成吞吐提升 3-5 倍火山方舟提供托管推理服务。售前推 AI 算力要主动"抖音内部同款"加"千卡集群 5 工作日交付"两个卖点。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 7 章 · 专有云 + 边缘', title: '私有/混合/边缘 · 三种部署',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🏰</div><h5>专有云 Stack</h5><p>软硬件一体化<br>金融政务客户机房<br>功能对齐公有云 80%+</p></div>
+      <div class="col-card"><div class="num">🌉</div><h5>混合云一致体验</h5><p>同 API / 同控制台<br>KubeWharf 跨集群</p></div>
+      <div class="col-card"><div class="num">📍</div><h5>边缘计算</h5><p>Edge Stack 部署门店/工厂<br>毫秒级低延迟<br>中心云协同</p></div>
+    </div>`,
+    voice: '专有云加混合云加边缘 3 种部署。专有云 Stack 一体化软硬件交付适合金融政务客户机房功能与公有云对齐 80%+。混合云一致体验同一套 API 控制台工具链公有专有云统一管理典型用 KubeWharf 跨集群编排。边缘计算 ECS Edge 或 Edge Stack 部署到客户站点门店工厂毫秒级低延迟与中心云协同。<b>新零售客户做边缘推理是火山的标准场景</b>——抖店和巨量引擎都有边缘部署经验。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 8 章 · 工具链', title: 'Terraform + MgC + OpenAPI',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🌐</div><h5>Web 控制台</h5><p>资源/监控/计费一站式<br>RAM 多账号<br>API 审计</p></div>
+      <div class="col-card"><div class="num">💻</div><h5>OpenAPI / SDK</h5><p>Python/Go/Java/Node<br>CI/CD 集成必备</p></div>
+      <div class="col-card"><div class="num">🏗️</div><h5>Terraform</h5><p>volcengine Provider<br>IaC 声明<br>GitOps 标配</p></div>
+      <div class="col-card"><div class="num">🚚</div><h5>MgC 迁移中心</h5><p>评估+实施<br>P2V/V2V/应用/DB</p></div>
+    </div>`,
+    voice: '工具链 4 件套。Web 控制台资源开通监控计费一站式支持 RAM 多账号和 API 审计。OpenAPI 和 SDK 官方支持 Python Go Java Node CI/CD 集成 IaC 必备。Terraform Provider 官方 volcengine 提供商把基础设施声明在代码 GitOps 风格运维标配。MgC 迁移中心一站式迁移评估加实施工具支持 P2V V2V 应用迁移数据库迁移。售前讲方案要把 Terraform 主动提——客户 DevOps 团队听到 IaC 立刻觉得你"懂行"。',
+    fallbackDuration: 24000 },
+
+  { chapter: '🎯 互动测验 #2', title: '客户问"你们和 AWS / 阿里 ECS 有什么不一样？"',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户问"你们火山 ECS 和 AWS EC2 / 阿里 ECS 有什么不一样？"。最佳回答？</div>
+      <div class="quiz-opt wrong" data-k="A">规格更全（其实差不多）</div>
+      <div class="quiz-opt wrong" data-k="B">价格最便宜（不一定）</div>
+      <div class="quiz-opt correct" data-k="C">字节同款基础设施 + AI 算力多元 + VKE 控制面免费</div>
+      <div class="quiz-opt wrong" data-k="D">SLA 最高（友商也是 99.95%）</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：售前对位 IaaS 不能讲"规格更全/价格更便宜/SLA 更高"——这些都<b>无法立差异化</b>。正确 3 个角度：① <b>字节同款</b>抖音 TikTok 实际跑出来的同一套底座；② <b>AI 算力多元</b> NVIDIA + 昇腾 + 海光 + 天数 + 字节自有 GPU 集群可调度；③ <b>VKE 控制面免费</b>对比阿里 ACK 华为 CCE 按小时收钱长期下来每月几千差异。这 3 点是火山 ECS 售前的标准答案。</div>
+    </div>`,
+    voice: '思考一下。客户问火山 ECS 和友商有什么不一样？给你 5 秒......正确答案 C 字节同款加 AI 算力多元加 VKE 控制面免费。售前对位 IaaS 不能讲规格更全价格更便宜 SLA 更高——这些都无法立差异化。正确 3 个角度：字节同款抖音 TikTok 实际跑的同一套底座；AI 算力多元 NVIDIA 加昇腾加海光加天数加字节自有 GPU；VKE 控制面免费友商按小时收钱长期省钱。这 3 点是火山 ECS 售前的标准答案。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🌟 客户对话 #1', title: '智驾团队问"200 张 A100 多久能上？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们智驾团队要 200 张 A100 训练大模型，自建机房 6 月。你们多久？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>5 个工作日</b>。火山智算中心：① <b>200 卡包年</b> 锁住核心算力价格优惠 30%；② <b>+50 卡 Spot</b> 应对突增训练任务；③ <b>vePFS 100 GB/s</b> 训练数据吞吐；④ <b>InfiniBand 网络</b>与 ECS 裸金属一致；⑤ <b>veMLP</b> 训练任务调度托管。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>200 卡 / 6 个月对比自建省多少？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>不仅是钱。<b>① 时间</b> 5 工作日 vs 自建 6 月；<b>② 灵活</b> 6 个月后想换 H100 一句话切换；<b>③ 模型迭代</b> 训练任务排队从天级降到小时级；<b>④ 资金占用</b> 不用一次性 6000 万投入。综合下来<b>项目提速 50%</b>是核心价值。</div>
+      </div>
+    </div>`,
+    voice: '一段真实智驾对话。客户要 200 张 A100 训练大模型。售前给"5 个工作日"组合方案：200 卡包年加 50 卡 Spot 加 vePFS 加 InfiniBand 加 veMLP。客户追问对比自建省多少，售前不要只算钱要算综合价值：时间 5 天 vs 6 月；灵活 6 月后想换 H100 一句话切；模型迭代排队从天级到小时；资金占用不用一次性 6000 万。综合项目提速 50% 是核心价值。<b>"不仅是钱"</b>是高级 SE 讲 AI 算力的关键心法。',
+    fallbackDuration: 33000 },
+
+  { chapter: '🌟 客户对话 #2', title: '"我们要上 K8s，VKE 有什么好处？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们决定上 K8s，对比了 VKE/ACK/CCE/EKS，VKE 优势在哪？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>4 个独家点。<b>① 控制面免费</b>友商按小时收钱；<b>② 抖音同款集群经验</b>内部数百万 Pod 跑得稳；<b>③ Cilium eBPF 默认 CNI</b>新一代网络可观测；<b>④ veCI Serverless 容器</b>按 Pod 秒级用量付费。<b>VKE Fleet 多集群管理</b>跨账号跨 region 统一。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>从 ACK 迁过来麻烦吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>K8s 标准兼容</b>YAML 直接复用。3 步迁移：① <b>kubectl apply</b> YAML 到 VKE 灰度环境；② <b>Argo Rollouts</b> 蓝绿切流量；③ <b>30 天双跑</b> 验证后 ACK 下线。我们派 <b>1 周驻场架构师</b>陪迁，过往项目 100% 平滑无停机。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话客户比对 VKE 和友商。售前甩 4 个独家点：控制面免费、抖音同款经验、Cilium eBPF 默认 CNI、veCI Serverless 容器。客户问从 ACK 迁过来麻烦吗，售前给 3 步迁移：kubectl apply YAML 到 VKE 灰度环境、Argo Rollouts 蓝绿切流量、30 天双跑验证后 ACK 下线。派 1 周驻场架构师陪迁过往项目 100% 平滑无停机。"K8s 标准兼容 + 驻场陪跑"这种姿态是 K8s 售前的标杆。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🌟 客户对话 #3', title: '"想做 Serverless，但担心冷启动"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>想用 veFaaS 但听说冷启动慢，会不会影响用户体验？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>3 类场景 3 种姿势。<b>① 离线任务</b>（转码/数据处理）冷启 200ms 完全可接受；<b>② 中等延迟 API</b>（Webhook/查询）<b>预留实例</b>降至 10-50ms；<b>③ 实时 API</b>（&lt; 50ms 要求）不推 FaaS 直接上 VKE。<b>按业务延迟敏感度选</b>。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>预留实例不是又要钱了？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>对，但<b>预留 5 个实例</b>对应 95% QPS 已够，超出走按需调用。<b>对比"全 VKE 部署"</b>预留 5 实例 + FaaS 按需调综合<b>省 60-70%</b>。这就是 Serverless 真正的省钱方式——不是闲时零成本，是<b>"基线小+突发免费"</b>。</div>
+      </div>
+    </div>`,
+    voice: '第三个对话客户担心 FaaS 冷启动。售前要会按延迟敏感度推 3 类场景 3 种姿势：离线任务冷启 200ms 可接受；中等延迟 API 预留实例 10-50ms；实时 API 小于 50ms 不推 FaaS 上 VKE。客户问预留不是又要钱，售前甩"预留 5 实例覆盖 95% QPS 超出按需"对比全 VKE 省 60-70%。Serverless 真正的省钱方式不是闲时零成本是"基线小加突发免费"。',
+    fallbackDuration: 33000 },
+
+  { chapter: '案例', title: '🌟 新能源车企 · 200 张 A100',
+    body: '<b>痛点</b>：智驾团队 200 卡训练自动驾驶大模型 / 自建机房 6 月 / 预算紧<br><b>方案</b>：智算中心 200 包年 + 50 Spot + vePFS + InfiniBand + veMLP<br><br>📅 签约到 <b>5 工作日</b> 200 卡可用<br>⏱ 训练排队 <b>天 → 小时</b><br>🚀 模型迭代 <b>提速 50%</b>',
+    visual: '<div style="font-size:64px;">🚗</div>',
+    voice: '一个真实案例。某新能源车企智驾团队需要 200 张 A100 训练自动驾驶大模型自建机房交付要 6 个月预算紧张。方案：上火山引擎智算中心包年 200 卡加弹性 50 卡 Spot 应对突增；用 vePFS 提供 100 GB/s 训练数据吞吐；veMLP 做训练任务调度；与 ECS 裸金属一致 InfiniBand 网络。结果从签约到 200 卡可用 5 工作日；训练任务排队时间从天级降到小时级；模型迭代周期缩短 50%。这是火山智算中心打动新能源车企的标杆案例。',
+    fallbackDuration: 28000 },
+
+  { chapter: '⚠️ 售前坑', title: '计算选型 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 火山计算方案常见 3 大坑</h4>
+      <div class="x-row"><b>GPU 按卡选错代次</b>：用 V100 跑 70B 模型 → 显存不够训练失败</div>
+      <div class="x-row"><b>VKE 控制面到处暴露</b>：API Server 公网开启 → 被扫到立刻被攻击</div>
+      <div class="x-row"><b>FaaS 跑长任务</b>：单次 15 分钟超时 → 任务断在中间</div>
+      <div class="ok-row">售前正确做法：<b>① 按模型规模推 GPU 代次</b> 13B 用 A100/L20、70B 用 H100；<b>② VKE 控制面默认私网</b>，仅 IP 白名单接入；<b>③ 长任务用 VKE Job</b> 不用 FaaS；FaaS 限于事件触发轻量场景。</div>
+    </div>`,
+    voice: '火山计算方案 3 大坑。一 GPU 按卡选错代次用 V100 跑 70B 模型显存不够训练失败。二 VKE 控制面到处暴露 API Server 公网开启被扫到立刻被攻击。三 FaaS 跑长任务单次 15 分钟超时任务断在中间。正确做法：按模型规模推 GPU 代次 13B 用 A100 L20 70B 用 H100；VKE 控制面默认私网仅 IP 白名单接入；长任务用 VKE Job 不用 FaaS FaaS 限于事件触发轻量场景。售前推 GPU 方案要主动问"模型多大参数"再推卡型。',
+    fallbackDuration: 28000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 火山九大产品族？<span style="color:#a5b4fc"> → 计算/存储/网络/数据库/容器/AI/视频/安全/行业</span><br>
+      <b>Q2</b> 字节同款怎么讲？<span style="color:#a5b4fc"> → 抖音/TikTok 实际跑出来的技术对外</span><br>
+      <b>Q3</b> ECS 6 规格族？<span style="color:#a5b4fc"> → g/c/r/GPU/裸金属/本地盘</span><br>
+      <b>Q4</b> ECS 选型三步？<span style="color:#a5b4fc"> → 看 CPU/配内存/选磁盘 PL</span><br>
+      <b>Q5</b> VKE 独家点？<span style="color:#a5b4fc"> → 控制面免费 + 抖音同款 + Cilium eBPF</span><br>
+      <b>Q6</b> veFaaS 适用场景？<span style="color:#a5b4fc"> → 事件触发轻量场景，不跑长任务</span><br>
+      <b>Q7</b> 智算中心规模？<span style="color:#a5b4fc"> → 千卡到万卡 + InfiniBand + vePFS 100GB/s</span><br>
+      <b>Q8</b> 友商对位回答？<span style="color:#a5b4fc"> → 字节同款 + AI 算力多元 + VKE 控制面免费</span>
+    </div>`,
+    voice: '8 题速查。一火山九大产品族计算存储网络数据库容器 AI 视频安全行业。二字节同款抖音 TikTok 实际跑的技术对外。三 ECS 6 规格族 g c r GPU 裸金属本地盘。四 ECS 选型三步看 CPU 配内存选磁盘 PL。五 VKE 独家点控制面免费加抖音同款加 Cilium eBPF。六 veFaaS 适用事件触发轻量场景不跑长任务。七智算中心千卡到万卡加 InfiniBand 加 vePFS 100GB/s。八友商对位回答字节同款加 AI 算力多元加 VKE 控制面免费。这 8 道刷熟火山计算面试稳过。',
+    fallbackDuration: 30000 },
+
+  { chapter: '完成', title: '🎉 Day 8 学完！',
+    eyebrow: '关键心法',
+    body: '客户问"火山和友商有啥不一样" → 答 <b>3 句话</b>：<br><b>字节同款 + 原生 AI + 视频云第一阵营</b><br>不要罗列产品，要立差异化。',
+    visual: '<div style="font-size:80px;">🌋</div>',
+    voice: '恭喜 Day 8 学完。客户问火山和友商有啥不一样答 3 句话：字节同款加原生 AI 加视频云第一阵营。不要罗列产品要立差异化。下一站 Day 9 火山存储数据库矩阵。',
+    fallbackDuration: 18000 },
+];
+</script>
+<script src="_player.js?v=23"></script>
+</body>
+</html>
