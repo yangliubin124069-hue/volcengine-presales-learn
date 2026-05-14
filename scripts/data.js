@@ -11,6 +11,7 @@ const COURSE = [
   // ============ 阶段一：云计算基础（深度版，Day 1-7） ============
   {
     day: 1,
+    videoQueries: ['云计算入门教程', 'IaaS PaaS SaaS 区别', '公有云 私有云 混合云'],
     stage: 's1',
     title: '云计算基础与全景架构',
     summary: '建立云的整体认知：从起源到 5 大特征、5 类服务、4 种部署、计费与迁移',
@@ -128,6 +129,7 @@ const COURSE = [
 
   {
     day: 2,
+    videoQueries: ['VPC 入门 阿里云', 'VLAN 子网划分 教程', 'CIDR 子网计算'],
     stage: 's1',
     title: '云网络深度（VPC / 负载均衡 / 混合组网 / CDN）',
     summary: '从 OSI 模型到 VPC、SLB、专线、SD-WAN、CDN 的全栈云网络',
@@ -237,6 +239,7 @@ const COURSE = [
 
   {
     day: 3,
+    videoQueries: ['对象存储 S3 入门', '块存储 文件存储 对象存储 区别', '云存储 IOPS 教程'],
     stage: 's1',
     title: '云存储深度（对象 / 块 / 文件 / 归档 / KMS）',
     summary: '掌握四类存储形态、IOPS/吞吐/延迟三大指标、加密与生命周期',
@@ -344,6 +347,7 @@ const COURSE = [
 
   {
     day: 4,
+    videoQueries: ['MySQL Redis 区别', 'NoSQL 数据库对比', 'Kafka 入门教程'],
     stage: 's1',
     title: '云数据库与中间件（NewSQL / Redis / Kafka / 数据湖）',
     summary: 'CAP 与 ACID、关系/NoSQL/NewSQL 选型、缓存设计、消息队列、湖仓一体',
@@ -453,6 +457,7 @@ const COURSE = [
 
   {
     day: 5,
+    videoQueries: ['Docker 入门', 'Kubernetes K8s 入门教程', 'Service Mesh Istio'],
     stage: 's1',
     title: '容器与云原生（Docker / K8s / Service Mesh / GitOps）',
     summary: 'Docker、Kubernetes 全要素、Service Mesh、CI/CD 与 GitOps 完整链路',
@@ -560,6 +565,7 @@ const COURSE = [
 
   {
     day: 6,
+    videoQueries: ['云安全 等保 2.0', '零信任 SASE 架构', 'WAF 防御 教程'],
     stage: 's1',
     title: '云安全与合规（IAM / 零信任 / WAF / 等保 / 信创）',
     summary: '责任共担、IAM 权限、网络/数据/主机安全、零信任与合规体系',
@@ -664,6 +670,7 @@ const COURSE = [
 
   {
     day: 7,
+    videoQueries: ['上云迁移 6R 策略', 'TCO 计算 教程', 'SRE 站点可靠性 入门'],
     stage: 's1',
     title: '上云迁移与可观测性（6R / TCO / SLI/SLO / OTel）',
     summary: '迁移评估、TCO/ROI 模型、监控/日志/链路三大支柱、SRE 实践',
@@ -769,6 +776,7 @@ const COURSE = [
   // ============ 阶段二：火山引擎产品矩阵（Day 8-11） ============
   {
     day: 8,
+    videoQueries: ['火山引擎 入门', 'ECS 弹性云服务器 教程', 'VKE Kubernetes 火山'],
     stage: 's2',
     title: '火山引擎概览与计算（ECS / VKE / veFaaS / 异构）',
     summary: '火山引擎全景、ECS 规格族详解、VKE 容器、Serverless、异构 GPU 算力',
@@ -874,6 +882,7 @@ const COURSE = [
 
   {
     day: 9,
+    videoQueries: ['对象存储 TOS 教程', 'ByteHouse OLAP 教程', 'veDB MySQL'],
     stage: 's2',
     title: '火山引擎存储与网络（TOS / EBS / CDN / DCDN / VPC）',
     summary: '对象存储 TOS、块存储 EBS、CDN、DCDN、VPC/SLB 详细产品参数',
@@ -977,6 +986,7 @@ const COURSE = [
 
   {
     day: 10,
+    videoQueries: ['DataLeap 数据中台', 'ByteHouse 数仓 教程', '湖仓一体 Iceberg'],
     stage: 's2',
     title: '火山引擎数据库与大数据（veDB / ByteHouse / LAS / Kafka）',
     summary: 'veDB 系列、ByteHouse 实时分析、LAS 湖仓一体、消息队列与数据集成',
@@ -1077,6 +1087,7 @@ const COURSE = [
 
   {
     day: 11,
+    videoQueries: ['RTC 直播 推流', 'CDN 直播 教程', '短视频 推荐系统'],
     stage: 's2',
     title: '火山引擎视频云与音视频（VOD / LSS / RTC / 多媒体处理）',
     summary: '点播 VOD、直播 LSS、实时音视频 RTC、视频 AI 处理矩阵',
@@ -1182,6 +1193,7 @@ const COURSE = [
   // ============ 阶段三：AI 与大模型（Day 12-14） ============
   {
     day: 12,
+    videoQueries: ['大语言模型 LLM 入门', 'Transformer 原理 通俗讲解', 'RLHF 训练 教程'],
     stage: 's3',
     title: 'AI / ML / DL 基础',
     summary: '机器学习/深度学习核心概念、模型训练流程、CNN/RNN/Transformer',
@@ -1284,6 +1296,7 @@ const COURSE = [
 
   {
     day: 13,
+    videoQueries: ['豆包大模型 入门', 'RAG 检索增强生成 教程', 'Coze 智能体 搭建'],
     stage: 's3',
     title: '大模型与豆包（Tokenizer / Scaling Law / RLHF / 豆包矩阵）',
     summary: '大模型核心概念、训练流程、豆包模型家族与火山方舟入口',
@@ -1389,6 +1402,7 @@ const COURSE = [
 
   {
     day: 14,
+    videoQueries: ['Function Calling Agent 入门', 'Prompt Engineering 教程', '向量数据库 VikingDB'],
     stage: 's3',
     title: '火山方舟 / Coze / veMLP（一站式 AI 平台）',
     summary: '方舟模型服务、Coze 智能体、veMLP 训练平台、Agent 工程',
@@ -1494,6 +1508,7 @@ const COURSE = [
   // ============ 阶段四：售前专业技能（Day 15-17） ============
   {
     day: 15,
+    videoQueries: ['SPIN 销售方法 教程', 'MEDDIC 销售框架', '客户需求挖掘 售前'],
     stage: 's4',
     title: '售前角色与方法论（SPIN / MEDDIC / BANT / 价值主张）',
     summary: '售前职责、客户分层、需求挖掘方法论、价值主张表达',
@@ -1599,6 +1614,7 @@ const COURSE = [
 
   {
     day: 16,
+    videoQueries: ['FFAB 售前话术', '方案架构图 怎么画', '4+1 视图 架构'],
     stage: 's4',
     title: '解决方案设计与 TCO/ROI（架构图 / 4+1 视图 / 灾备 / 成本）',
     summary: '架构图绘制、4+1 视图、灾备等级、TCO/ROI 实操',
@@ -1704,6 +1720,7 @@ const COURSE = [
 
   {
     day: 17,
+    videoQueries: ['POC 设计 怎么做', '招投标 售前讲标', '售前异议处理'],
     stage: 's4',
     title: '演讲、招投标与竞争分析',
     summary: '客户演讲 5 分钟法则、标书写作、异议处理、友商对比',
@@ -1817,6 +1834,7 @@ const COURSE = [
   // ============ 阶段五：行业方案与综合实战（Day 18-20） ============
   {
     day: 18,
+    videoQueries: ['金融 大数据 风控 案例', '互联网 RAG 智能客服', '汽车云 智能座舱'],
     stage: 's5',
     title: '行业方案 (上)：互联网 / 泛娱乐 / 金融 / 汽车',
     summary: '4 大重点行业的痛点、典型架构、火山引擎对应能力',
@@ -1923,6 +1941,7 @@ const COURSE = [
 
   {
     day: 19,
+    videoQueries: ['零售云 会员营销', '政企云 一网通办', '教育 在线学习方案'],
     stage: 's5',
     title: '行业方案 (下)：零售 / 政企 / 教育 / 出海',
     summary: '4 大行业的核心痛点与火山引擎打法',
@@ -2030,6 +2049,7 @@ const COURSE = [
 
   {
     day: 20,
+    videoQueries: ['售前面试 经验分享', '解决方案架构师 SA 面试题', '火山引擎 面试'],
     stage: 's5',
     title: '综合实战：客户 Q&A、红线、速记卡与考试冲刺',
     summary: '20+ 高频客户 Q&A、售前红线清单、速记卡、考试技巧',

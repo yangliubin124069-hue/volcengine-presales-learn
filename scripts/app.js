@@ -100,6 +100,42 @@ function render() {
   if (state.view === 'about') return renderAbout(app);
 }
 
+// ============ 视频学习推荐 ============
+// 自动给学习章节加"📺 视频学习"模块，每个关键词一键搜 B站/YouTube/抖音
+function renderVideoLearning(queries, themeColor) {
+  if (!queries || !queries.length) return '';
+  const color = themeColor || '#2b5cff';
+  return `
+    <div class="lesson-section video-learning" style="--vt:${color};">
+      <h3>📺 视频学习 <span class="video-tip">不喜欢看文字？点关键词直接看视频</span></h3>
+      <div class="video-queries">
+        ${queries.map(q => {
+          const enc = encodeURIComponent(q);
+          return `
+            <div class="video-query">
+              <span class="vq-text">${escapeHtml(q)}</span>
+              <div class="vq-links">
+                <a href="https://search.bilibili.com/all?keyword=${enc}&order=totalrank" target="_blank" rel="noopener noreferrer" class="vq-link vq-b" title="B 站搜索"><span class="vq-ic">📺</span>B 站</a>
+                <a href="https://www.youtube.com/results?search_query=${enc}" target="_blank" rel="noopener noreferrer" class="vq-link vq-y" title="YouTube 搜索"><span class="vq-ic">🌐</span>YouTube</a>
+                <a href="https://www.douyin.com/search/${enc}?type=video" target="_blank" rel="noopener noreferrer" class="vq-link vq-d" title="抖音搜索"><span class="vq-ic">🎵</span>抖音</a>
+                <a href="https://www.bing.com/videos/search?q=${enc}" target="_blank" rel="noopener noreferrer" class="vq-link vq-g" title="必应视频搜索（汇总多平台）"><span class="vq-ic">🔎</span>必应</a>
+              </div>
+            </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+// 根据课程/章节内容自动推断学习关键词
+function getVideoQueries(d) {
+  if (d.videoQueries && d.videoQueries.length) return d.videoQueries;
+  // 默认：用 title 拆出关键术语
+  if (d.day) return [`${d.title}`, `云计算 ${d.title.split('（')[0].trim()} 入门教程`];
+  if (d.id && d.id.startsWith('comp')) return [`${d.title.split('·')[1]?.trim() || d.title} 售前对位`];
+  if (d.id) return [`售前面试 ${(d.title.split('·')[1] || d.title).trim()}`];
+  return [d.title];
+}
+
 // ============ 仪表盘 ============
 function renderDashboard(app) {
   const total = COURSE.length;
@@ -265,6 +301,8 @@ function renderLesson(app) {
         <h3>学习目标</h3>
         <ul>${d.objectives.map(o => `<li>${o}</li>`).join('')}</ul>
       </div>
+
+      ${renderVideoLearning(getVideoQueries(d), stage.color)}
 
       ${d.sections.map(sec => `
         <div class="lesson-section">
@@ -712,6 +750,8 @@ function renderInterviewChapter(app) {
         </div>
       ` : ''}
 
+      ${renderVideoLearning(getVideoQueries(c), '#7c3aed')}
+
       ${c.sections.map(sec => `
         <div class="lesson-section">
           <h3>${sec.title}</h3>
@@ -875,6 +915,8 @@ function renderCompetitionChapter(app) {
           <ul>${c.objectives.map(o => `<li>${o}</li>`).join('')}</ul>
         </div>
       ` : ''}
+
+      ${renderVideoLearning(getVideoQueries(c), '#dc2626')}
 
       ${c.sections.map(sec => `
         <div class="lesson-section">
