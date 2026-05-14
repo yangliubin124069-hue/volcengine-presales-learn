@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 13 · 豆包矩阵与火山方舟 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=21">
+<style>
+  /* 豆包模型家族卡片 */
+  .doubao-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    width: 880px; max-width: 96vw; }
+  .db-card { padding: 14px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; animation: cardIn .5s both; }
+  .db-card.gen { border-color: #fde68a; }
+  .db-card.pro { border-color: #f9a8d4; animation-delay: .1s; }
+  .db-card.lite { border-color: #86efac; animation-delay: .2s; }
+  .db-card.vis { border-color: #c4b5fd; animation-delay: .3s; }
+  .db-card.voice { border-color: #a5b4fc; animation-delay: .4s; }
+  .db-card.video { border-color: #fda4af; animation-delay: .5s; }
+  .db-card h5 { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: #fff; }
+  .db-card .feat { padding: 3px 0; color: #cbd5e1; font-size: 12px; }
+  .db-card .price { margin-top: 8px; padding-top: 6px;
+    border-top: 1px dashed rgba(255,255,255,.1);
+    font-size: 11px; color: #fde68a; font-family: monospace; }
+
+  /* 训练流水线 */
+  .train-pipe { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center;
+    width: 880px; max-width: 96vw; padding: 16px; background: rgba(255,255,255,.04);
+    border-radius: 12px; border: 1px solid rgba(255,255,255,.1); }
+  .tp-step { padding: 12px 16px; border-radius: 10px; min-width: 130px;
+    text-align: center; font-size: 12px; animation: cardIn .5s both; }
+  .tp-step.pre { background: rgba(43,92,255,.15); border: 1.5px solid #2b5cff; }
+  .tp-step.sft { background: rgba(110,58,255,.15); border: 1.5px solid #6e3aff; animation-delay: .15s; }
+  .tp-step.rlhf { background: rgba(236,72,153,.15); border: 1.5px solid #ec4899; animation-delay: .3s; }
+  .tp-step.dpo { background: rgba(245,158,11,.15); border: 1.5px solid #f59e0b; animation-delay: .45s; }
+  .tp-step .lbl { font-size: 14px; font-weight: 700; display: block; margin-bottom: 4px; color: #fff; }
+  .tp-step .sub { font-size: 11px; color: #94a3b8; }
+  .tp-arrow { color: #7a8db5; font-size: 22px; }
+
+  /* MoE 可视化 */
+  .moe-vis { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px;
+    width: 380px; padding: 14px; background: rgba(255,255,255,.04);
+    border-radius: 10px; border: 1px solid rgba(255,255,255,.1); }
+  .moe-cell { aspect-ratio: 1; background: rgba(165,180,252,.15);
+    border: 1px solid rgba(165,180,252,.3); border-radius: 4px; }
+  .moe-cell.active { background: linear-gradient(135deg, #2b5cff, #6e3aff);
+    border-color: #6e3aff;
+    animation: moeActivate 2s ease-in-out infinite; }
+  @keyframes moeActivate {
+    0%,100% { box-shadow: 0 0 0 rgba(110,58,255,.4); }
+    50% { box-shadow: 0 0 14px rgba(110,58,255,.9); }
+  }
+</style>
+</head>
+<body>
+<script>
+window.META = {
+  day: 13,
+  title: 'Day 13 · 豆包矩阵与火山方舟',
+  intro: '14 分钟 · LLM 原理 + 训练流水线 + 豆包 6 个家族 + 调用方式 + 企业落地'
+};
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 13 · 豆包矩阵与火山方舟',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>Tokenizer / Scaling Law / RLHF / 豆包 6 大家族</b><br>14 分钟 + 2 道互动测验 + 3 个客户对话 + 律所合同审查真实案例',
+    visual: '<div class="cover-icon">🫘</div>',
+    voice: '欢迎来到 Day 13 豆包矩阵与火山方舟。这是售前面试火山引擎最高频被问的一节。今天 14 分钟讲透 LLM 工作原理、训练流水线、豆包 6 大家族、企业落地考量，加 3 个客户对话和 1 个律所合同审查真实案例。',
+    fallbackDuration: 19000 },
+
+  { chapter: '第 1 章 · LLM 原理', title: 'Tokenizer · 计费的基础',
+    body: '<b>BPE/SentencePiece</b> 把文本切成 token<br><span class="hl">中文 ~1.5 字/token，英文 ~0.75 词/token</span><br>计费、上下文限额都按 token 算',
+    visual: `<div class="code-block" style="text-align:left;font-size:16px;">输入："今天天气真好"<br>→ Tokenizer → <br><br><span class="kw">["今天"][" "][" 天气"][" "][" 真好"]</span><br><br><span class="cmt"># 5 个 token，按 ¥0.001/千 token 即 ¥0.000005</span></div>`,
+    voice: 'LLM 的最基础概念是 token。Tokenizer 把文本切成 token，BPE 和 SentencePiece 是主流分词算法。中文大约 1.5 个字一个 token，英文大约 0.75 个词一个 token。重要的是：所有 LLM 计费都按 token，上下文窗口也按 token 限。客户问"100 字客服回答多少钱"，售前要会粗算：100 字约 67 token，按豆包通用 1 厘每千 token，单次约 0.000067 元，便宜得让客户惊喜。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 1 章 · LLM 原理', title: 'Embedding + 上下文窗口 + KV Cache',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🧮</div><h5>Embedding</h5><p>Token → 高维向量<br>768~12288 维<br>语义相近向量近</p></div>
+      <div class="col-card"><div class="num">📏</div><h5>上下文窗口</h5><p>2k → 128k → 1M+<br>O(n²) 成本<br>豆包 1.5 起 256K</p></div>
+      <div class="col-card"><div class="num">💾</div><h5>KV Cache</h5><p>缓存历史 K/V<br>避免重算<br>多轮对话省 50%+</p></div>
+    </div>`,
+    voice: 'LLM 三个核心机制。Embedding 把 token 映射成 768 到 12288 维高维向量，语义相近的 token 向量空间也近。上下文窗口决定模型一次能看多少 token，从 GPT-3 的 2K 演进到 Kimi 200 万，豆包 1.5 起支持 256K。窗口越长越烧钱因为是 O n 平方复杂度。KV Cache 缓存历史已计算的 K 和 V避免重复计算多轮对话能省 50% 以上算力。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 1 章 · LLM 原理', title: '采样温度 · 控制随机性',
+    body: '<b>Temperature</b>：<span class="hl">0 完全确定，1 较随机，2 飘忽</span><br>客服 0.3-0.5（稳定）· 创意写作 0.8-1（有趣）· 代码 0-0.2（精准）',
+    visual: '<div style="font-family:monospace;font-size:16px;color:#a5b4fc;text-align:center;line-height:2;background:rgba(255,255,255,.04);padding:18px 24px;border-radius:10px;">temperature: 0   → "今天天气真好。"<br>temperature: 0.5 → "今天天气挺不错的。"<br>temperature: 1.0 → "天气这么棒，咱们出门吧！"<br>temperature: 2.0 → "天空蔚蓝...云朵飘飘..." 🌀</div>',
+    voice: 'Temperature 温度参数控制 LLM 输出随机性。Temperature 0 完全确定，每次输出一样。Temperature 1 较随机有创意。Temperature 2 飘忽容易胡说。售前要会按场景推荐：客服 0.3 到 0.5 求稳定；创意写作 0.8 到 1 求有趣；代码生成 0 到 0.2 求精准；多轮对话默认 0.7。客户问"模型回答不稳定怎么办"，先看温度配置。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 2 章 · 训练流水线', title: '4 步训练流水线',
+    visual: `<div class="train-pipe">
+      <div class="tp-step pre">
+        <span class="lbl">① Pretraining</span>
+        <span class="sub">海量无标注语料<br>数 T token<br>耗算力最大</span>
+      </div>
+      <span class="tp-arrow">→</span>
+      <div class="tp-step sft">
+        <span class="lbl">② SFT</span>
+        <span class="sub">监督微调<br>人工指令-回答对<br>数十万条</span>
+      </div>
+      <span class="tp-arrow">→</span>
+      <div class="tp-step rlhf">
+        <span class="lbl">③ RLHF</span>
+        <span class="sub">人类反馈<br>PPO 算法<br>对齐偏好</span>
+      </div>
+      <span class="tp-arrow">→</span>
+      <div class="tp-step dpo">
+        <span class="lbl">④ DPO (替代)</span>
+        <span class="sub">直接偏好优化<br>更简单稳定<br>2024 后主流</span>
+      </div>
+    </div>`,
+    voice: '一个生产级 LLM 要经过 4 步训练。第一 Pretraining 预训练，喂数 T token 无标注语料，任务是"预测下一个 token"，耗算力最大花费几亿到几十亿。第二 SFT 监督微调，用数十万条高质量人工指令-回答对调出"听话"的模型。第三 RLHF 人类反馈强化学习，用 PPO 算法对齐人类偏好，ChatGPT 火爆的关键。第四 DPO 直接偏好优化，比 RLHF 简单稳定效果接近，2024 后主流方案。客户问"为什么国内模型刚出来不能用"——就是 SFT 和 RLHF 数据需要时间积累。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 2 章 · 训练流水线', title: 'Scaling Law · Chinchilla 法则',
+    body: '<b>参数量 N : 训练 token 量 D = 1 : 20</b> 最优<br>过参数化 / 欠数据都是浪费算力<br><span class="hl">能力涌现：百亿参数后推理/代码能力突然出现</span>',
+    visual: '<div style="font-size:15px;color:#cdd5e0;line-height:1.9;text-align:left;background:rgba(255,255,255,.04);padding:18px 24px;border-radius:10px;max-width:680px;">规模分级：<br>· <b style="color:#86efac">小 &lt;10B</b> · 端侧/低延迟 · 豆包 Lite<br>· <b style="color:#fde68a">中 10-70B</b> · 通用最优 · 豆包通用<br>· <b style="color:#f9a8d4">大 100B+</b> · 顶级能力 · 豆包 Pro<br>· <b style="color:#a5b4fc">超大 千B+</b> · 研究前沿 · GPT-4 / Claude 4.X</div>',
+    voice: 'Scaling Law 决定模型规模 ROI。Chinchilla 法则：参数量 N 与训练 token 量 D 大致 1:20 最优。过参数化或欠数据都浪费算力。规模分级：小于 10B 端侧豆包 Lite；10 到 70B 通用最优豆包通用；100B+ 顶级豆包 Pro；千 B+ 研究前沿 GPT-4 Claude。重要的是能力涌现——某些能力比如推理和代码在百亿参数后突然出现不是线性提升。售前推荐"小而美"原则——7B 到 13B 平衡性价比 70B 推理成本是 7B 的 10 倍。',
+    fallbackDuration: 31000 },
+
+  { chapter: '第 3 章 · MoE 稀疏化', title: 'MoE · 让大模型推理便宜',
+    body: '<b>稀疏激活</b>：每次只算部分专家，总参数大但计算量小<br><span class="hl">同总参数下，MoE 推理成本低 60-80%</span><br>DeepSeek-V3、Mixtral 是代表',
+    visual: `<div style="text-align:center;"><div class="moe-vis">
+      ${Array(64).fill().map((_,i)=>{
+        const isActive = [3, 7, 15, 22, 28, 35, 42, 51].includes(i);
+        return `<div class="moe-cell${isActive ? ' active' : ''}"></div>`;
+      }).join('')}
+    </div><div style="font-size:13px;color:#7a8db5;margin-top:10px;">64 个专家中 · 这次激活 8 个（路由器决定）</div></div>`,
+    voice: 'MoE 混合专家是 2024 年大模型的关键技术。看这张图 64 个专家方块，发光的是这次激活的 8 个其他都"闲着"。稀疏激活让总参数可以做到几千亿但单次计算只用其中 1/8。同样总参数下 MoE 推理成本低 60 到 80% 适合大规模部署。DeepSeek-V3 671B 总参数激活 37B、Mixtral 8x7B 总 47B 激活 13B 都是 MoE 代表。但工程难度大：路由不均衡、显存峰值、跨节点通信门槛高。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验 #1', title: '客户场景：选哪个规格的豆包？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户做"商品客服机器人"日均 100 万次调用，业务问题为主有时复杂咨询。怎么选模型？</div>
+      <div class="quiz-opt wrong" data-k="A">全用豆包 Pro 顶配（质量优先）</div>
+      <div class="quiz-opt wrong" data-k="B">全用豆包 Lite 最便宜</div>
+      <div class="quiz-opt correct" data-k="C">分级降级链：Lite 兜底 90% 简单问 + Pro 处理 10% 复杂问</div>
+      <div class="quiz-opt wrong" data-k="D">用 GPT-4 因为最强</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：商品客服 80-90% 是"什么时候发货""怎么退款"等简单问题 Lite 完全够用，单价 1/8。10% 复杂咨询路由到 Pro。<b>分级降级链能让平均成本降 70%</b>，业务效果不变。全 Pro 烧钱、全 Lite 复杂问出错率高、GPT-4 跨境合规过不了关。</div>
+    </div>`,
+    voice: '思考一下。客户做商品客服日均 100 万次调用，怎么选模型？给你 5 秒......正确答案 C 分级降级链：Lite 兜底 90% 简单问加 Pro 处理 10% 复杂问。商品客服 80 到 90% 是简单问 Lite 够用单价 1/8。10% 复杂咨询路由 Pro。分级降级链能让平均成本降 70% 业务效果不变。这是售前必须主动推的方案，比直接报 Pro 单价高 5 倍能让客户更愿意成交。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 4 章 · 豆包家族', title: '6 大模型 · 售前必背',
+    visual: `<div class="doubao-grid">
+      <div class="db-card gen">
+        <h5>🫘 豆包通用</h5>
+        <div class="feat">· 默认对话模型</div>
+        <div class="feat">· 能力均衡</div>
+        <div class="feat">· 大多数场景</div>
+        <div class="price">¥0.0008/千 token 输入<br>¥0.002/千 token 输出</div>
+      </div>
+      <div class="db-card pro">
+        <h5>💎 豆包 Pro</h5>
+        <div class="feat">· 复杂推理强</div>
+        <div class="feat">· 金融/技术问答</div>
+        <div class="feat">· 复杂工具使用</div>
+        <div class="price">¥0.003/千 token 输入<br>¥0.009/千 token 输出</div>
+      </div>
+      <div class="db-card lite">
+        <h5>⚡ 豆包 Lite</h5>
+        <div class="feat">· 轻量化</div>
+        <div class="feat">· 端侧/低延迟</div>
+        <div class="feat">· 客服/IoT</div>
+        <div class="price">¥0.0003/千 token 输入<br>¥0.0006/千 token 输出</div>
+      </div>
+      <div class="db-card vis">
+        <h5>👁️ 豆包视觉</h5>
+        <div class="feat">· 图文理解</div>
+        <div class="feat">· OCR/图表/UI 截图</div>
+        <div class="feat">· 电商/教育/办公</div>
+        <div class="price">按图片张数计费</div>
+      </div>
+      <div class="db-card voice">
+        <h5>🎙️ 豆包语音</h5>
+        <div class="feat">· TTS 多音色</div>
+        <div class="feat">· ASR 多语种</div>
+        <div class="feat">· 车载/客服/硬件</div>
+        <div class="price">按合成字数计费</div>
+      </div>
+      <div class="db-card video">
+        <h5>🎬 豆包视频</h5>
+        <div class="feat">· 视频生成与理解</div>
+        <div class="feat">· 广告/内容生产</div>
+        <div class="feat">· 2025 重点</div>
+        <div class="price">按生成秒数计费</div>
+      </div>
+    </div>`,
+    voice: '豆包 6 大家族售前必背。豆包通用是默认对话模型能力均衡价格亲民大多数场景用。豆包 Pro 复杂推理强金融分析技术问答用。豆包 Lite 轻量化端侧低延迟客服 IoT 用单价是通用的 1/3。豆包视觉图文理解 OCR 图表 UI 截图电商教育办公用。豆包语音 TTS 加 ASR 加语音对话车载客服智能硬件用。豆包视频生成与理解 2025 重点广告内容生产用。售前讲方案要按客户场景推荐组合，比如"客服用 Lite + 复杂用 Pro + UI 截图用视觉"——三个产品打包卖比单卖容易。',
+    fallbackDuration: 34000 },
+
+  { chapter: '第 5 章 · 调用方式', title: '4 种调用 · 各有场景',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(2,1fr);">
+      <div class="col-card"><div class="num">🔌</div><h5>API 实时</h5><p>OpenAI 兼容接口<br>毫秒级首字延迟<br>按 token 计费</p></div>
+      <div class="col-card"><div class="num">📦</div><h5>批量推理</h5><p>离线大批任务<br>单价比实时低 50%+<br>数据标注/内容生成</p></div>
+      <div class="col-card"><div class="num">📡</div><h5>Stream 流式</h5><p>SSE 推送 token<br>提升首字感知<br>聊天场景必用</p></div>
+      <div class="col-card"><div class="num">🛠️</div><h5>Function Call</h5><p>模型决定调外部函数<br>Agent 基础</p></div>
+    </div>`,
+    voice: '豆包 4 种调用方式各有场景。API 实时调用，OpenAI 兼容接口，应用零改造迁移，毫秒级首字延迟，按 token 计费。批量推理用于离线大批任务比如数据标注、内容生成，单价比实时低 50% 以上。Stream 流式用 SSE 推送 token 提升首字感知速度聊天场景必用。Function Call 让模型决定调外部函数是 Agent 基础。售前讲方案要主动提批量推理这个降本利器——客户标注数据用批量比实时省一半。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 6 章 · Prompt 4 要素', title: '清晰指令 + 角色 + 格式 + 示例',
+    visual: `<div class="code-block" style="text-align:left;font-size:14px;">
+<span class="kw">[角色]</span> 你是金融行业 SE，5 年经验
+<span class="kw">[指令]</span> 根据下面 Q3 销售数据，写总结报告
+<span class="kw">[格式]</span> 输出 markdown，包含 4 部分：
+  ① 关键数字 ② 同环比 ③ 3 条洞察 ④ Q4 行动项
+<span class="kw">[示例]</span> 类似上季度的报告（附 1 个示例）
+<span class="kw">[约束]</span> 所有结论标 [数据]，&lt; 500 字
+<span class="cmt"># 4 要素全到位 → 输出质量提升 30%+</span>
+</div>`,
+    voice: 'Prompt 4 要素背下来：角色、指令、格式、示例，外加约束。看这个例子：角色"金融行业 SE 5 年经验"；指令"根据 Q3 数据写总结"；格式"markdown 4 部分"；示例附 1 个；约束"所有结论标数据小于 500 字"。同一个模型 4 要素全到位输出质量提升 30%。售前讲 AI 方案要把 Prompt 工程作为咨询服务卖让客户认识到模型只是基础工程能力才是落地关键。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 6 章 · 进阶 Prompt', title: 'CoT 思考链 + Few-shot 示例学习',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>🧩 Chain-of-Thought</h4>
+        <p><span class="tag">机制</span>让模型"分步思考"</p>
+        <p><span class="tag">触发</span>"让我一步步分析..."</p>
+        <p><span class="tag">效果</span>复杂推理正确率显著提升</p>
+        <p><span class="tag">场景</span>数学/逻辑/多跳问答</p>
+      </div>
+      <div class="acl-box">
+        <h4>📚 Few-shot</h4>
+        <p><span class="tag">机制</span>提供 2-5 个示例</p>
+        <p><span class="tag">触发</span>"参考以下例子格式"</p>
+        <p><span class="tag">效果</span>无需微调即学新格式</p>
+        <p><span class="tag">场景</span>分类/抽取/特定格式输出</p>
+      </div>
+    </div>`,
+    voice: 'Prompt 两个进阶技巧。Chain-of-Thought 思考链让模型分步思考，触发短语"让我一步步分析"，对数学逻辑多跳问答正确率显著提升。Few-shot 示例学习提供 2 到 5 个例子，让模型零微调学新格式，分类抽取特定格式输出场景必用。这两个组合用——既给示例又让分步思考——是高级 Prompt 工程师的标准动作。',
+    fallbackDuration: 21000 },
+
+  { chapter: '🎯 互动测验 #2', title: '客户问"API Key 怎么管？"',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">前端工程师说"我把 API Key 写在 JS 里方便调试"，你怎么办？</div>
+      <div class="quiz-opt wrong" data-k="A">通过没问题反正测试环境</div>
+      <div class="quiz-opt wrong" data-k="B">让他改成环境变量传给前端</div>
+      <div class="quiz-opt correct" data-k="C">立刻阻止！前端永不写 Key，必须后端代理 + Key 轮换 + 配额限制</div>
+      <div class="quiz-opt wrong" data-k="D">写但加个加密</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：API Key 写前端等于<b>公开</b>——浏览器 DevTools 一打开就能看见，开源代码扫描器 8 分钟内能在 GitHub 公开仓库发现。加密更糟——加密 Key 也在前端能被还原。<b>唯一正确做法</b>：① 前端调你的后端 ② 后端调 LLM API ③ Key 写后端环境变量 ④ 用户级配额限制 ⑤ 定期轮换。新创业公司一周烧 30 万 token 的故障 80% 是这个原因。</div>
+    </div>`,
+    voice: '第二道题。前端工程师把 API Key 写在 JS 里你怎么办？给你 5 秒......正确答案 C 立刻阻止。前端写 Key 等于公开浏览器 DevTools 打开就能看见，GitHub 公开仓库 8 分钟被扫描器发现。加密更糟解密 Key 也在前端能被还原。唯一正确做法五步：前端调你后端、后端调 LLM API、Key 写后端环境变量、用户级配额限制、定期轮换。Day 12 讲过的创业公司一周烧 30 万 token 故障 80% 是这个原因。售前讲方案要主动给客户讲这一条。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 7 章 · 企业落地', title: '4 大考量 · 售前必谈',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(2,1fr);">
+      <div class="col-card"><div class="num">🔒</div><h5>数据安全</h5><p>API 调用是否进训练？<br>火山方舟承诺：<b>不入训练池</b></p></div>
+      <div class="col-card"><div class="num">🏢</div><h5>私有部署</h5><p>专有云部署豆包<br>数据不出企业<br>金融/政务必须</p></div>
+      <div class="col-card"><div class="num">💰</div><h5>成本控制</h5><p>缓存 + Prompt 压缩 + 分级<br>平均省 40-70%</p></div>
+      <div class="col-card"><div class="num">⚖️</div><h5>合规审核</h5><p>生成内容审核<br>有害/版权/敏感<br>必接入</p></div>
+    </div>`,
+    voice: '企业落地 4 大考量售前必谈。数据安全：API 调用是否被用于训练？火山方舟承诺数据不入训练池这是金融政企客户的红线。私有部署：专有云部署豆包模型权重不出企业金融政务必须。成本控制：缓存加 Prompt 压缩加模型分级平均省 40 到 70%。合规审核：生成内容审核有害版权敏感必接入火山引擎内容安全 API 配套。这四点是售前讲完豆包能力之后必带的"专业度收尾"。',
+    fallbackDuration: 24000 },
+
+  { chapter: '🌟 客户对话 #1', title: '客户问"GPT 最强为什么用豆包？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>GPT-4 / Claude 听说最强，为什么我要用豆包？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>四个角度：<b>① 合规</b> 跨境数据进境外 LLM 等保和数据出境都过不了；<b>② 中文场景</b> 豆包来自抖音电商 C 端真实流量打磨中文 SOTA；<b>③ 价格</b> 豆包同等任务 GPT 4o 的 1/15；<b>④ 一站式</b> 方舟+Coze+veMLP 减少自己拼装。跨境业务才用 GPT，国内业务豆包更稳。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>"中文 SOTA"有具体数据吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>第三方评测：<b>SuperCLUE 中文综合榜豆包 Pro 排名前 3</b>，C-Eval 中文知识榜豆包前 5。比榜单更重要的是您自己业务场景对比 PoC——我们做<b>同样 500 条对话样本</b>跑豆包/GPT-4/Claude，按准确率/时延/成本 3 指标对比，5 天出报告，让数据说话。</div>
+      </div>
+    </div>`,
+    voice: '第一个对话最常见。客户问 GPT 最强为什么用豆包。售前四角度：合规、中文场景、价格、一站式。客户追问"中文 SOTA 有数据吗"，售前要会甩第三方榜单：SuperCLUE 豆包 Pro 前 3、C-Eval 前 5。但更重要的下一步是甩"500 条 PoC + 3 指标对比 + 5 天报告"。把销售话题从"谁最强"转化为"在你业务场景哪个最适合"，这是高级 SE 的肌肉记忆。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🌟 客户对话 #2', title: '客户问"API 还是私有部署？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们是银行，数据绝对不能出企业。API 还是私有部署？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>银行场景<b>三层选型</b>：<b>① 通用咨询</b>用方舟 API + 数据不入训练承诺；<b>② 内部知识问答</b>专有云部署豆包 Lite/通用；<b>③ 风控/反洗钱</b>专有云豆包 Pro + 私有数据微调。三层组合既合规又控成本，比"全部私有部署"省 60%。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>私有部署一次性投入多少？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>豆包 Lite/通用私有部署 <b>8 台 A800 起步 ~ 600 万</b>；Pro 私有 <b>32 台 H800 ~ 3000 万</b>。看您日调用量：&lt; 500 万 token 优先 API + 数据不出企业承诺；&gt; 5000 万 token 才考虑私有部署。先做 30 天 PoC 测真实流量，再决定。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话银行场景。售前要给三层选型方案：通用咨询走 API + 不入训练承诺；内部知识专有云 Lite/通用；风控反洗钱专有云 Pro + 私有数据微调。三层组合既合规又控成本比全私有省 60%。客户追问私有投入，售前要给具体数字：Lite/通用 8 台 A800 起约 600 万、Pro 32 台 H800 约 3000 万。然后给阈值：500 万 token 以下走 API、5000 万以上才考虑私有。先 30 天 PoC 测真实流量再决定。具体数字 + 决策阈值是赢得 CTO 信任的关键。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🌟 客户对话 #3', title: '客户问"每月烧多少？怎么控制？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我担心 AI 上线后 token 费失控。每月预计烧多少？怎么控？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>我用<b>"百万次调用账单模型"</b>给您算：客服场景平均单次 800 token 输入 / 300 输出，豆包通用 100 万次约 ¥1400。日调 10 万次 = 月 ¥4.2 万。<b>降本 4 招</b>：① 分级（70% Lite 30% Pro）省 40%；② 缓存高频问省 30%；③ Prompt 压缩省 20%；④ 批量推理离线任务省 50%。综合后约 ¥1.2 万。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>失控怎么办？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>火山方舟内置<b>"3 级告警 + 自动熔断"</b>：① 用户级月度配额；② 项目级费用预警 80% 短信；③ 项目级费用上限达到自动停。配合<b>日/周/月费用大盘</b>实时可视。我们给您建一份<b>《AI 成本治理 SOP》</b>30 页模板，按您行业定制。</div>
+      </div>
+    </div>`,
+    voice: '第三个对话是客户最关心的成本控制。售前要会用百万次调用账单模型快速算账：客服平均 800 输入 300 输出，豆包通用 100 万次约 1400 元，日调 10 万次月 4.2 万。降本 4 招：分级省 40% 缓存省 30% Prompt 压缩省 20% 批量推理省 50%。综合后月 1.2 万。客户追问失控怎么办，售前甩出火山方舟内置 3 级告警加自动熔断：用户配额、80% 预警、上限熔断、配合费用大盘。最后送一份 AI 成本治理 SOP 30 页模板。这种"具体数字+降本招数+成本治理 SOP"组合让客户立刻安心。',
+    fallbackDuration: 34000 },
+
+  { chapter: '⚠️ 故障案例', title: 'API Key 写前端 · 一夜烧光月度预算',
+    visual: `<div class="incident-card">
+      <div class="incident-header">
+        <span class="badge-time">2025 · 某 SaaS</span>
+        <h4>API Key 前端泄露 · 一夜烧 18 万</h4>
+      </div>
+      <div class="incident-row">📅 <b>事故</b>：开发图省事把豆包 API Key 写在前端 JS 里。当晚被 GitHub 公开扫描器发现。</div>
+      <div class="incident-row">💀 <b>损失</b>：8 小时内被恶意调用 1.2 亿 token，账单 18 万。早 9 点查 Console 才发现。</div>
+      <div class="incident-row">🔍 <b>根因</b>：① Key 写前端 = 公开；② 没设项目级费用上限；③ 没接告警短信。三条共错。</div>
+      <div class="incident-row ok">✅ <b>修复</b>：① <b>立刻轮换 Key</b>；② 改成 BFF 后端代理 + Key 放环境变量；③ <b>项目级费用上限 = 日预算 2 倍</b>，达到自动熔断；④ 接<b>飞书机器人告警</b>每 5 分钟推送日花费；⑤ <b>用户级速率限制</b> RPS+RPM 双层；⑥ 每月做一次 GitHub 公开仓库 Key 扫描。</div>
+    </div>`,
+    voice: '一个真实故障。某 SaaS 公司开发图省事把豆包 API Key 写前端 JS。当晚被 GitHub 公开扫描器发现。8 小时内被恶意调用 1.2 亿 token 账单 18 万。早 9 点查 Console 才发现。三条共错：Key 写前端、无项目费用上限、无告警。修复 6 招：立刻轮换 Key、BFF 后端代理、项目费用上限=日预算 2 倍自动熔断、飞书机器人 5 分钟告警、用户级双层速率限制、每月扫 GitHub 公开仓库 Key。售前讲方案必须把这一条作为"AI 安全 SOP"标配卖给客户，能让客户立刻把你当专家。',
+    fallbackDuration: 36000 },
+
+  { chapter: '案例', title: '🌟 律所合同审查 · 真实落地账',
+    body: '<b>痛点</b>：3 名律师每天处理 200+ 合同，每份 1.5 小时<br><b>方案</b>：私有部署豆包 Pro + 向量库 + 5 万历史合同<br><br>📈 单合同 <b>1.5h → 25min</b><br>📊 高风险条款识别 <b>70% → 96%</b><br>💼 律师承接业务 <b>提升 3 倍</b>',
+    visual: '<div style="font-size:64px;">⚖️</div>',
+    voice: '一个真实案例。某律所 3 名律师每天处理 200 多份合同每份 1.5 小时要求数据绝不外泄。方案私有化部署豆包 Pro 加向量库加 5 万份历史合同知识库按合同类型路由模型规格——标准合同 Lite、并购合同 Pro。前端集成飞书插件 3 个月上线。结果：单合同处理时间从 1.5 小时降到 25 分钟。高风险条款识别覆盖率从 70% 提升到 96%。律师可承接业务量提升 3 倍。这是私有部署豆包的标杆案例，售前 pitch 政企客户时一定要用。',
+    fallbackDuration: 26000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> Tokenizer 中英文 token 比？<span style="color:#a5b4fc"> → 中文 ~1.5字/token，英文 ~0.75词/token</span><br>
+      <b>Q2</b> RLHF 和 DPO 关系？<span style="color:#a5b4fc"> → DPO 是 RLHF 简化版，2024 后主流</span><br>
+      <b>Q3</b> Chinchilla 法则比例？<span style="color:#a5b4fc"> → 参数:Token = 1:20 最优</span><br>
+      <b>Q4</b> MoE 推理优势？<span style="color:#a5b4fc"> → 同总参数推理低 60-80%</span><br>
+      <b>Q5</b> 豆包 6 大家族？<span style="color:#a5b4fc"> → 通用/Pro/Lite/视觉/语音/视频</span><br>
+      <b>Q6</b> Temperature 怎么选？<span style="color:#a5b4fc"> → 客服 0.3-0.5、创意 0.8-1、代码 0-0.2</span><br>
+      <b>Q7</b> API Key 怎么放？<span style="color:#a5b4fc"> → 永不写前端，必须后端代理 + 轮换 + 配额</span><br>
+      <b>Q8</b> 降本 4 招？<span style="color:#a5b4fc"> → 分级/缓存/Prompt 压缩/批量推理 → 综合省 40-70%</span>
+    </div>`,
+    voice: '8 题速查。一 Tokenizer 中文 1.5 字 token 英文 0.75 词 token。二 DPO 是 RLHF 简化 2024 后主流。三 Chinchilla 法则参数对 Token 1 比 20。四 MoE 推理低 60-80%。五豆包 6 家族：通用 Pro Lite 视觉语音视频。六 Temperature：客服 0.3-0.5 创意 0.8-1 代码 0-0.2。七 API Key 永不写前端必须后端代理加轮换加配额。八降本 4 招：分级 缓存 Prompt 压缩 批量推理综合省 40-70%。这 8 道刷熟豆包矩阵面试稳过。',
+    fallbackDuration: 30000 },
+
+  { chapter: '完成', title: '🎉 Day 13 学完！',
+    eyebrow: '关键心法',
+    body: '客户讲豆包不要只比技术参数。<br>用 <b>合规 + 中文场景 + 价格 + 一站式</b> 四角度立差异化。<br>具体数字 + 决策阈值 + 30 天 PoC 三件套，<br><b>是高级 SE 的标准动作</b>。',
+    visual: '<div style="font-size:80px;">🫘</div>',
+    voice: '恭喜 Day 13 学完。讲豆包不要只比技术参数，用合规加中文场景加价格加一站式四角度立差异化。具体数字加决策阈值加 30 天 PoC 三件套是高级 SE 的标准动作。下一站 Day 14 火山方舟 Coze veMLP 应用工程。',
+    fallbackDuration: 21000 },
+];
+</script>
+<script src="_player.js?v=21"></script>
+</body>
+</html>

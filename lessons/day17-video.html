@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 17 · 演讲招投标与竞争分析 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=21">
+<style>
+  /* SCQA 结构 */
+  .scqa-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    width: 880px; max-width: 96vw; }
+  .scqa-card { padding: 18px 14px; border-radius: 12px;
+    background: rgba(255,255,255,.04); border: 1.5px solid;
+    text-align: center; animation: cardIn .5s both; }
+  .scqa-card .num { font-size: 32px; font-weight: 800; display: block; margin-bottom: 4px; }
+  .scqa-card h5 { font-size: 14px; margin: 6px 0; color: #fff; }
+  .scqa-card p { font-size: 12px; color: #cbd5e1; line-height: 1.6; }
+  .scqa-card.s { border-color: #2b5cff; }
+  .scqa-card.s .num { color: #a5b4fc; }
+  .scqa-card.c { border-color: #f59e0b; animation-delay: .15s; }
+  .scqa-card.c .num { color: #fde68a; }
+  .scqa-card.q { border-color: #ec4899; animation-delay: .3s; }
+  .scqa-card.q .num { color: #f9a8d4; }
+  .scqa-card.a { border-color: #22c55e; animation-delay: .45s; }
+  .scqa-card.a .num { color: #86efac; }
+
+  /* 招投标流程 */
+  .bid-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+    width: 920px; max-width: 96vw; }
+  .bid-step { padding: 12px 8px; border-radius: 8px; text-align: center;
+    background: rgba(255,255,255,.04); border: 1.5px solid;
+    font-size: 11px; animation: cardIn .5s both; }
+  .bid-step.s1 { border-color: #2b5cff; }
+  .bid-step.s2 { border-color: #6e3aff; animation-delay: .15s; }
+  .bid-step.s3 { border-color: #ec4899; animation-delay: .3s; }
+  .bid-step.s4 { border-color: #f59e0b; animation-delay: .45s; }
+  .bid-step.s5 { border-color: #22c55e; animation-delay: .6s; }
+  .bid-step .lbl { font-size: 13px; font-weight: 700; color: #fff; display: block; margin-bottom: 4px; }
+  .bid-step .desc { font-size: 11px; color: #cbd5e1; line-height: 1.5; }
+
+  /* 异议处理 7 步 */
+  .obj-steps { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px;
+    width: 920px; max-width: 96vw; }
+  .obj-step { padding: 12px 6px; border-radius: 8px;
+    background: linear-gradient(180deg, rgba(34,197,94,.15), rgba(34,197,94,.03));
+    border: 1.5px solid #22c55e; text-align: center; font-size: 10.5px;
+    color: #cbd5e1; animation: cardIn .5s both; }
+  .obj-step:nth-child(2) { animation-delay: .1s; }
+  .obj-step:nth-child(3) { animation-delay: .2s; }
+  .obj-step:nth-child(4) { animation-delay: .3s; }
+  .obj-step:nth-child(5) { animation-delay: .4s; }
+  .obj-step:nth-child(6) { animation-delay: .5s; }
+  .obj-step:nth-child(7) { animation-delay: .6s; }
+  .obj-step .num { font-size: 18px; font-weight: 800; color: #86efac;
+    display: block; margin-bottom: 4px; }
+  .obj-step .name { font-size: 12px; font-weight: 700; color: #fff; display: block; }
+
+  /* 标书结构 */
+  .doc-tree { width: 720px; max-width: 94vw;
+    background: rgba(255,255,255,.04); border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.1); padding: 18px; text-align: left; }
+  .doc-tree .item { padding: 8px 0; font-size: 13.5px; color: #cbd5e1;
+    border-bottom: 1px dashed rgba(255,255,255,.08); }
+  .doc-tree .item b { color: #a5b4fc; }
+  .doc-tree .item .req { display: inline-block; padding: 2px 6px; margin-left: 8px;
+    background: rgba(239,68,68,.15); color: #fca5a5; border-radius: 4px;
+    font-size: 10.5px; font-weight: 700; }
+  .doc-tree .item .req.req-ok { background: rgba(34,197,94,.15); color: #86efac; }
+</style>
+</head>
+<body>
+<script>
+window.META = {
+  day: 17,
+  title: 'Day 17 · 演讲招投标与竞争分析',
+  intro: '14 分钟 · 5 分钟黄金法则 + SCQA + 招投标 + 7 步异议处理 + 真实政企标真实模拟'
+};
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 17 · 演讲招投标与竞争分析',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>5 分钟黄金法则 / SCQA / 7 步异议处理 / 价格策略 / 招投标流程</b><br>14 分钟 + 2 互动测验 + 3 真实场景演练 + 政企标真实模拟',
+    visual: '<div class="cover-icon">🎤</div>',
+    voice: '欢迎来到 Day 17 演讲招投标与竞争分析。这是售前最难的一节——讲技术容易讲方案容易，到了客户面前 30 分钟决胜负就难了。今天 14 分钟讲透 5 分钟黄金法则、SCQA 开场、7 步异议处理、价格策略、招投标流程，加 3 个真实场景演练和政企标真实模拟。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 1 章 · 客户演讲', title: '5 分钟黄金法则 · 决定成败',
+    body: '<b>前 5 分钟客户决定要不要听完</b><br>用 <span class="hl">3 个数据 + 1 个故事</span> 开场抓注意力<br>❌ 永远不要从"目录页"开始',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">📊</div><h5>3 个数据</h5><p>"某客户接入后<br>① 响应 10x<br>② 成本 -40%<br>③ 营收 +25%"</p></div>
+      <div class="col-card"><div class="num">📖</div><h5>1 个故事</h5><p>具体客户/具体场景<br>"上周深夜 2 点<br>他们 SRE 接到告警"</p></div>
+      <div class="col-card"><div class="num">🎯</div><h5>1 个钩子</h5><p>"今天我要讲的<br>就是怎么让您的团队<br>不用半夜爬起来"</p></div>
+    </div>`,
+    voice: '5 分钟黄金法则：客户在你开口 5 分钟内决定要不要听完。开场公式：3 个数据加 1 个故事加 1 个钩子。3 个数据是具体的客户成绩——响应 10 倍、成本降 40%、营收升 25%。1 个故事是具体客户具体场景——上周深夜 2 点他们 SRE 接到告警......。1 个钩子是承诺——今天我要讲的就是怎么让您团队不用半夜爬起来。永远不要从"目录页"开场——客户跑了一天疲惫看到目录立刻打哈欠。',
+    fallbackDuration: 25000 },
+
+  { chapter: '第 1 章 · 客户演讲', title: 'SCQA · 麦肯锡咨询经典',
+    visual: `<div class="scqa-grid">
+      <div class="scqa-card s">
+        <span class="num">S</span>
+        <h5>Situation 现状</h5>
+        <p>"贵司业务规模...增速..."<br>客户点头：嗯，对</p>
+      </div>
+      <div class="scqa-card c">
+        <span class="num">C</span>
+        <h5>Complication 矛盾</h5>
+        <p>"但 [核心痛点]...<br>每月损失/掉单..."<br>客户：戳痛点了</p>
+      </div>
+      <div class="scqa-card q">
+        <span class="num">Q</span>
+        <h5>Question 问题</h5>
+        <p>"那么如何 [核心问题]<br>同时不增加成本？"<br>客户：对啊咋办</p>
+      </div>
+      <div class="scqa-card a">
+        <span class="num">A</span>
+        <h5>Answer 方案</h5>
+        <p>"我们的方案是 [核心动作]<br>同行 X 客户 [真实成绩]"<br>客户：听下去</p>
+      </div>
+    </div>`,
+    voice: 'SCQA 是麦肯锡咨询经典开场结构。S 现状描述客户业务规模增速让客户点头嗯对。C 矛盾点出客户痛点每月损失或掉单让客户戳到痛点。Q 问题提出核心问题"如何解决又不增加成本"让客户觉得对啊咋办。A 方案给出你的核心动作加同行真实成绩让客户愿意听下去。SCQA 短短 4 张 PPT 5 分钟讲完比铺垫 20 分钟还有效。售前面试问怎么开场必答 SCQA。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 1 章 · 客户演讲', title: 'PPT 设计 5 原则',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">①</div><h5>一页一观点</h5><p>不要"信息爆炸"<br>客户记住 1 句话就够</p></div>
+      <div class="col-card"><div class="num">②</div><h5>图&gt;表&gt;字</h5><p>架构图/对比图优先<br>表格其次<br>纯文字垫底</p></div>
+      <div class="col-card"><div class="num">③</div><h5>字号 &gt;24pt</h5><p>会议室后排能看见<br>客户老板视力 50+</p></div>
+      <div class="col-card"><div class="num">④</div><h5>数据带出处</h5><p>"IDC 2025 报告"<br>"客户 X 实测"<br>没出处 = 编的</p></div>
+      <div class="col-card"><div class="num">⑤</div><h5>2-3 分钟/页</h5><p>30 页 PPT 讲 1 小时<br>多则被赶<br>少则没讲透</p></div>
+      <div class="col-card"><div class="num">💡</div><h5>记忆口诀</h5><p><b>一页一图一观点</b><br><b>大字带源 2 分钟</b></p></div>
+    </div>`,
+    voice: 'PPT 设计 5 原则售前面试常考。第一一页一观点不要信息爆炸客户记住 1 句话就够。第二图大于表大于字架构图对比图优先。第三字号大于 24pt 会议室后排能看见客户老板视力 50+。第四数据带出处 IDC 报告或客户实测没出处等于编的。第五 2-3 分钟一页 30 页讲 1 小时，多则被赶少则没讲透。记忆口诀：一页一图一观点，大字带源 2 分钟。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 2 章 · 招投标', title: '5 阶段流程 · 售前必懂',
+    visual: `<div class="bid-flow">
+      <div class="bid-step s1">
+        <span class="lbl">① 标前</span>
+        <span class="desc">立项 / 需求摸底<br>邀请厂商演示<br><b>争取参与撰写需求</b></span>
+      </div>
+      <div class="bid-step s2">
+        <span class="lbl">② 发标</span>
+        <span class="desc">RFP/RFQ 公开<br>7-30 天准备<br>技术+商务+资质三本</span>
+      </div>
+      <div class="bid-step s3">
+        <span class="lbl">③ 应答</span>
+        <span class="desc">点对点回答<br>应答/部分/偏离/超越<br><b>遗漏一条可能废标</b></span>
+      </div>
+      <div class="bid-step s4">
+        <span class="lbl">④ 答辩</span>
+        <span class="desc">20-40 分钟现场<br>评委 5-15 人<br>应答清晰+数字+案例</span>
+      </div>
+      <div class="bid-step s5">
+        <span class="lbl">⑤ 中标</span>
+        <span class="desc">公示 7 天<br>签合同进交付<br><b>1 月内是续签最佳窗口</b></span>
+      </div>
+    </div>`,
+    voice: '招投标 5 阶段售前必懂。标前期客户立项、需求摸底、邀请厂商演示——售前要争取参与撰写需求把"我们能干的"写成需求条款。发标期 RFP 或 RFQ 公开发布 7 到 30 天准备，分技术、商务、资质三本。应答期点对点回答每条要求写"应答 / 部分应答 / 偏离 / 替代方案 / 超越"遗漏一条可能被废标。答辩 20-40 分钟现场或视频评委 5-15 人，关键是应答清晰加数字有支撑加案例可信。中标后公示 7 天签合同进交付，注意中标后 1 个月内是续签扩单的最佳窗口千万别躺平。',
+    fallbackDuration: 33000 },
+
+  { chapter: '第 2 章 · 招投标', title: '标书 · 7 类标配结构',
+    visual: `<div class="doc-tree">
+      <div class="item"><b>① 响应表</b> 一项一行应答 <span class="req">必填</span></div>
+      <div class="item"><b>② 公司介绍</b> 资历 + 团队 + 案例数 <span class="req">必填</span></div>
+      <div class="item"><b>③ 技术方案</b> 架构/产品/部署 <span class="req">核心</span></div>
+      <div class="item"><b>④ 实施计划</b> 里程碑 + 时间表 + 责任人 <span class="req">必填</span></div>
+      <div class="item"><b>⑤ 服务承诺</b> SLA + 培训 + 驻场 <span class="req">必填</span></div>
+      <div class="item"><b>⑥ 案例库</b> 同行业/同体量/3 年内 <span class="req">加分</span></div>
+      <div class="item"><b>⑦ 资质证书</b> 等保/ISO/CMMI/行业认证 <span class="req">必填</span></div>
+      <div class="item" style="border:none;padding-top:14px;color:#fca5a5;font-weight:700;">⚠️ 常见废标雷区：过盖章 / 过期资质 / 缺响应表 / 报价错位（人民币写美元）→ 至少 2 人交叉审</div>
+    </div>`,
+    voice: '一本完整标书 7 类标配。响应表一项一行应答，"完全响应"是底线"超越响应"是加分项。公司介绍含资历团队案例数。技术方案是核心写架构产品部署。实施计划要里程碑加时间表加责任人三件套。服务承诺写 SLA 培训驻场。案例库选同行业同体量 3 年内。资质证书等保 ISO CMMI 行业认证扫描件清晰有效期内。常见废标雷区：过盖章、过期资质、缺响应表、报价错位（人民币写美元）。建议至少 2 人交叉审。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验 #1', title: '客户标书要求 5 个项目案例，你只有 2 个，怎么办？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">标书要求"5 个同行业项目案例"，你只有 2 个直接案例。应答怎么写？</div>
+      <div class="quiz-opt wrong" data-k="A">只写 2 个老实回答（被同行 5 个比下去）</div>
+      <div class="quiz-opt wrong" data-k="B">编 3 个假案例（一查就穿帮 → 列入黑名单）</div>
+      <div class="quiz-opt correct" data-k="C">2 个直接案例 + 3 个"类比案例"（不同行业但同技术/同规模）+ 案例参考函</div>
+      <div class="quiz-opt wrong" data-k="D">放弃这个标书</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：标书写"案例库"不要硬扛 2 个，要扩为"<b>2 个直接 + 3 个类比</b>"。类比案例方向：① 同技术不同行业（如银行→保险）；② 同规模不同领域（5 万员工央企）；③ 同场景不同业务（智能客服→智能问答）。每个类比案例附 <b>客户参考函</b>（盖章可用）。组合写法既诚实又显厚度，评委会觉得专业。</div>
+    </div>`,
+    voice: '思考一下。标书要求 5 个案例你只有 2 个，怎么应答？给你 5 秒......正确答案 C：2 个直接加 3 个类比加参考函。新人最容易选 A 只写 2 个被同行 5 个比下去。B 编假案例一查穿帮列入黑名单是死路。D 放弃太消极。正确做法把类比案例方向写好：同技术不同行业、同规模不同领域、同场景不同业务。每个附客户参考函盖章可用。这种"诚实加厚度"的组合在评委眼里专业度满分。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 3 章 · 异议处理', title: '7 步异议处理法 · 售前肌肉记忆',
+    visual: `<div class="obj-steps">
+      <div class="obj-step"><span class="num">1</span><span class="name">倾听</span>不打断 让客户说完</div>
+      <div class="obj-step"><span class="num">2</span><span class="name">复述</span>"您的意思是..."</div>
+      <div class="obj-step"><span class="num">3</span><span class="name">共情</span>"许多客户最初也这么想"</div>
+      <div class="obj-step"><span class="num">4</span><span class="name">澄清</span>"具体哪方面让您顾虑？"</div>
+      <div class="obj-step"><span class="num">5</span><span class="name">举证</span>用数据/案例/第三方报告</div>
+      <div class="obj-step"><span class="num">6</span><span class="name">试探</span>"解决了能推进下一步？"</div>
+      <div class="obj-step"><span class="num">7</span><span class="name">跟进</span>当场没解决就承诺时间表</div>
+    </div>`,
+    voice: '7 步异议处理法是售前的肌肉记忆。一倾听让客户说完不打断很多异议客户自己说时就解了一半。二复述"您的意思是......"复述后客户要么修正要么确认避免双方误解。三共情"许多客户最初也这么想"化解对立。四澄清"具体哪方面让您顾虑"继续挖根因。五举证用数据案例第三方报告纯口述无效。六试探"如果解决了能否推进下一步"测试是不是真异议。七跟进当场没解决的承诺会后给方案每条落到时间表。背下来反复练，每次客户异议就走 7 步流程不会慌。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 3 章 · 5 大典型异议', title: '客户最常问的 5 个 · 标准答',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;font-size:11.5px;">
+      <div class="col-card"><div class="num">🌐</div><h5>"我们已经用阿里云"</h5><p>多云已成常态<br>用"互补 + AI 强 + 视频强"切入<br>先小试点</p></div>
+      <div class="col-card"><div class="num">💰</div><h5>"价格太贵"</h5><p>拆组件 + 找 3 共识点<br>低优先级处削减<br>总价合预算</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>"性能跟得上吗"</h5><p>案例（同行业某 X）<br>+ 数据（QPS/延迟实测）<br>+ PoC 邀约</p></div>
+      <div class="col-card"><div class="num">🔒</div><h5>"安全怎么保证"</h5><p>责任共担<br>+ 等保几级<br>+ 客户 IAM/加密配置</p></div>
+      <div class="col-card"><div class="num">⏰</div><h5>"项目时间紧"</h5><p>拆"先 1 月上 1 核心场景<br>+ 后 6 月扩展"<br>降低决策成本</p></div>
+      <div class="col-card"><div class="num">💎</div><h5>记忆口诀</h5><p>互补 / 拆 / 案例 + PoC<br>责任 / 拆阶段<br>—— 五题通杀</p></div>
+    </div>`,
+    voice: '5 大典型异议背下来。一"已经用阿里云"：多云已成常态用"互补加 AI 强加视频强"切入先小试点。二"价格太贵"：拆组件找 3 个共识点在低优先级处削减让总价合预算。三"性能跟得上"：同行业案例加 QPS 延迟实测加 PoC 邀约。四"安全怎么保证"：责任共担加等保几级加客户 IAM 加密配置。五"项目时间紧"：拆"先 1 月上 1 核心场景加后 6 月扩展"降低决策成本。这 5 道刷熟，售前面试客户异议题稳过。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 4 章 · 价格策略', title: '3 轮报价 · 售前节奏',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">1️⃣</div><h5>初次</h5><p>刊例价 + 细节透明<br>不要先降<br>探客户预算 + 决策链</p></div>
+      <div class="col-card"><div class="num">2️⃣</div><h5>二次</h5><p>看竞争给折扣<br>不直接降价<br>换"加资源/加服务/锁年度"</p></div>
+      <div class="col-card"><div class="num">3️⃣</div><h5>终轮</h5><p>承诺量打包<br>赠送服务（驻场/培训/优先 feature）<br>保单价 让总价</p></div>
+    </div>`,
+    voice: '报价 3 轮节奏售前必懂。初次报刊例价加细节透明不要先降，要探客户预算和决策链——客户问降多少前先确认还有什么需求未满足、决策权是否到位、签单时间能否锁定。二次看竞争给折扣但不直接降价——换"加资源 / 加服务 / 锁年度"这种价值置换，纯让利会让客户怀疑你原价就贵。终轮报"承诺量打包加赠送服务"，比如驻场陪跑、培训、优先 feature 接入。<b>保单价让总价</b>——保住未来续费基准。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 4 章 · 价格策略', title: '⚠️ 报价 3 大禁忌',
+    body: '<b>① 永远不要先降价</b><br><b>② 永远不要纯让利</b>（换价值）<br><b>③ 永远不要破单价</b>（保未来续费基准）',
+    visual: `<div class="danger-zone">
+      <h4>🚫 客户说"再优惠 20%" · 永远不要直接答应</h4>
+      <div class="x-row">立刻答应 → 客户觉得"原价虚高"，下次还要砍</div>
+      <div class="x-row">"我们利润已经很薄了" → 像求人，丢专业度</div>
+      <div class="x-row">"让我请示老板" → 表面给面子，实际授权混乱</div>
+      <div class="ok-row">"20% 我们可以争取，但前提是 ① 锁年付预付；② 量从 X 提到 Y；③ 同意 PoC 后立即签单。这样我们就有空间申请。"——<b>把价格谈判转为条件交换</b>，客户得到折扣你得到承诺量、付款周期、签单时间三个关键 KPI。</div>
+    </div>`,
+    voice: '报价 3 大禁忌。一永远不要先降价。二永远不要纯让利要换价值。三永远不要破单价保未来续费基准。客户说"再优惠 20%"，错误做法：立刻答应让客户觉得"原价虚高"下次还要砍；说"利润已经很薄"像求人丢专业度；说"让我请示老板"表面给面子实际授权混乱。正确做法："20% 可以争取但前提是锁年付预付加量从 X 提到 Y 加同意 PoC 后立即签单"。把价格谈判转为条件交换，客户得到折扣你得到承诺量、付款周期、签单时间三个 KPI。',
+    fallbackDuration: 33000 },
+
+  { chapter: '🎯 互动测验 #2', title: '终轮谈判 · 客户要 30% 折扣怎么破？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">终轮谈判客户说"华为给我打 8 折，你 7 折我就签"。最佳应对？</div>
+      <div class="quiz-opt wrong" data-k="A">应承 7 折求成交（找老板审批）</div>
+      <div class="quiz-opt wrong" data-k="B">说"华为不可能给您 8 折"质疑</div>
+      <div class="quiz-opt correct" data-k="C">"价格能争取，但建议先拉齐对比维度：SLA / 模型迭代 / 应用工程化 / 年度服务"</div>
+      <div class="quiz-opt wrong" data-k="D">立刻转项目总监谈判，自己退场</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：A 是新人坑——纯价格战 = 把对手留作竞品下次还砍价。B 质疑客户立刻丢信任。D 是甩锅不专业。正确做法<b>"把价格战转为价值战"</b>——拉齐 SLA、模型迭代、应用层工程化、年度额外服务（驻场陪跑/技术答疑/优先 feature 接入）。同等条件下你的方案可能价值更高，客户愿意接受同价或溢价。这是销售里"<b>定义比较坐标</b>"的关键心法。</div>
+    </div>`,
+    voice: '第二道。终轮客户要 30% 折扣怎么破？给你 5 秒......正确答案 C 拉齐对比维度。A 应承 7 折是新人最大坑——纯价格战把对手留作竞品下次还砍价。B 质疑客户丢信任。D 甩锅不专业。正确做法把价格战转为价值战：拉齐 SLA、模型迭代、应用工程化、年度服务（驻场陪跑、技术答疑、优先 feature 接入）。同等条件下你的方案价值更高客户愿意接受同价或溢价。这是销售里"定义比较坐标"的关键心法。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 5 章 · 友商对比', title: '一图速记 · 客观对位（不抹黑）',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>友商</th><th>客户画像</th><th>强项</th><th>火山打法</th></tr></thead>
+      <tbody>
+        <tr><td>阿里云</td><td class="al">电商/SaaS/政务</td><td class="al">生态最全 + 价格灵活</td><td class="ve">AI 工程化 + 视频云</td></tr>
+        <tr><td>腾讯云</td><td class="tc">游戏/视频/微信生态</td><td class="tc">微信入口 + 游戏</td><td class="ve">抖音生态 / 互补不替代</td></tr>
+        <tr><td>华为云</td><td class="hw">政企/信创/央国企</td><td class="hw">全栈自主 + 行业方案</td><td class="ve">AI 应用层 + 数据中台</td></tr>
+        <tr><td>AWS</td><td class="aws">出海企业/外企</td><td class="aws">全球节点 + 国际生态</td><td class="ve">出海后数据回流 + AI 用我们</td></tr>
+        <tr><td>百度智能云</td><td class="bd">AI/智能驾驶</td><td class="bd">文心 + Apollo</td><td class="ve">迭代速度 + 字节场景</td></tr>
+      </tbody>
+    </table>`,
+    voice: '友商对比一图速记。阿里云电商 SaaS 政务客户为主，强项生态全加价格灵活，火山打 AI 工程化加视频云。腾讯云游戏视频微信生态，强项微信入口加游戏，火山打抖音生态互补不替代。华为云政企信创央国企，强项全栈自主加行业方案，火山打 AI 应用层加数据中台。AWS 出海企业外企，强项全球节点加国际生态，火山打出海后数据回流加 AI。百度 AI 智能驾驶，强项文心 Apollo，火山打迭代速度加字节场景。<b>对比原则：不抹黑友商用客观数据</b>。客户问"你们和阿里比怎么样"先反问"看您最在意什么"再分场景作答。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 6 章 · 合同细节', title: '5 大条款 · 售前必关注',
+    body: '<b>SLA 赔付公式</b> · <b>数据所有权</b> · <b>退出条款</b> · <b>价格保护</b> · <b>NDA 保密</b>',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>条款</th><th>关键内容</th><th>常见坑</th></tr></thead>
+      <tbody>
+        <tr><td>SLA 赔付</td><td class="ve">未达 99.95% 退 10% 月费</td><td>赔付上限单月费用，多了赔不起</td></tr>
+        <tr><td>数据所有权</td><td class="ve">客户数据归客户，不可二次使用</td><td>没写清 → 合规客户拒签</td></tr>
+        <tr><td>退出条款</td><td class="ve">365 天内可下载所有数据</td><td>少于 90 天，客户怕被锁定</td></tr>
+        <tr><td>价格保护</td><td class="ve">合同期内刊例价下降同步享受</td><td>跟续费谈判挂钩</td></tr>
+        <tr><td>NDA 保密</td><td class="ve">双向 MNDA / 接触客户业务前必走</td><td>没签就报方案 = 大事故</td></tr>
+      </tbody>
+    </table>`,
+    voice: '合同 5 大条款售前必关注。SLA 赔付公式如未达 99.95% 退 10% 月费上限单月费用多了赔不起。数据所有权客户数据归客户不可被云厂商二次使用合规客户必看。退出条款合作终止后多久可下载所有数据 365 天是常见承诺少于 90 天客户怕被锁定。价格保护合同期内刊例价下降可同步享受跟续费谈判挂钩。NDA 保密通常签 MNDA 双向保密售前接触客户业务前必走流程没签就报方案是大事故。这 5 条售前讲方案要主动提，让客户觉得你不是"销售"是"顾问"。',
+    fallbackDuration: 31000 },
+
+  { chapter: '🌟 政企标真实模拟', title: '某省 AI 政务助手 · 4 周投标全程',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">📋</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span><b>第 1 周</b>：发标。5 家厂商参与（华为、阿里、火山、紫光、新加坡）。要求"AI 政务助手 + RAG 知识库 + 飞书集成 + 等保三级"。30 天交标。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>第 1 周末</b>：组 8 人投标小组（售前主笔、产品架构、商务、法务、案例库、资质、答辩、复核）。售前主笔技术方案突出豆包+方舟一体性。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">📋</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span><b>第 2-3 周</b>：标书撰写。火山没有"省政务"直接案例。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>用<b>2 直接 + 3 类比案例</b>：① 司法 AI 助手（同政务属性）② 央企税务 RAG（同合规级别）③ 某地市政府 AI 客服。每个附盖章参考函。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">📋</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span><b>第 4 周</b>：答辩日。每家 60 分钟。评委 12 人（信息中心 + 业务局 + 第三方专家）。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>答辩策略</b>：SCQA 开场（数据：政务热线响应慢、案例：某地一线案例）→ 方案讲 30 分钟 → 准备 18 类异议预案 → 价格策略"承诺量打包 + 前 3 月免费"。<b>结果：技术分 95/100，商务分 92/100 → 中标</b>。</div>
+      </div>
+    </div>`,
+    voice: '一段真实政企标模拟。第 1 周发标 5 家厂商 30 天交标。售前组 8 人投标小组：售前主笔、产品架构、商务、法务、案例库、资质、答辩、复核。第 2-3 周标书撰写，火山没有省政务直接案例，用 2 直接加 3 类比案例附盖章参考函。第 4 周答辩日 60 分钟评委 12 人。答辩策略 SCQA 开场、方案 30 分钟、18 类异议预案、价格策略"承诺量打包加前 3 月免费"。结果技术 95 商务 92 中标。整个过程节奏：组队→撰写→案例补足→答辩演练→价格策略→中标。这是政企招投标的标准动作。',
+    fallbackDuration: 50000 },
+
+  { chapter: '🌟 客户对话', title: '"评委追问：你们案例少，凭什么中标？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">🎓</div>
+        <div class="dlg-bubble"><span class="dlg-tag">评委</span>你们火山引擎案例只有 2 个直接的，华为有 30+。我们凭什么选你？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>评委老师，案例数量确实是华为的护城河，我们承认。但请允许我换个角度看：<b>火山引擎 AI 应用层的 2 个直接案例 + 3 个类比案例都是 2024 年后落地的最新技术</b>。华为 30+ 案例中超过 60% 是 2022 年前的 IaaS 项目，AI 应用类不到 20%。<b>选我们 = 选最新最相关的能力</b>。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">🎓</div>
+        <div class="dlg-bubble"><span class="dlg-tag">评委</span>万一你们做不出来呢？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>我们承诺<b>"60 天 MVP 验收节点"</b>：若 60 天未达预设 5 个 KPI（响应率/准确率/接入完成/合规通过/用户接受度），<b>预付款全额退还合同自动终止</b>，赔付按月费 30%。这是<b>书面承诺写入合同</b>。评委可以问任何客户验证，我们落地敢承诺，是因为有<b>抖音内部成熟技术栈打底</b>。</div>
+      </div>
+    </div>`,
+    voice: '一段评委追问真实模拟。评委质疑"你们案例少凭什么中标"。售前不要慌也不要硬扛。正确做法换角度看：承认案例数是华为护城河，但火山 AI 应用层 2 直接加 3 类比案例都是 2024 后最新技术，华为 30 案例中 60% 是 2022 前 IaaS。选火山等于选最新最相关能力。评委进一步追问"做不出来呢"，售前甩出"60 天 MVP 验收 + 不达标全额退款 + 赔付 30% + 书面写入合同"组合。这种"敢承诺敢兜底"的姿态是中小厂打大厂的关键武器。',
+    fallbackDuration: 40000 },
+
+  { chapter: '⚠️ 投标禁区', title: '3 件投标永不能犯的错',
+    visual: `<div class="danger-zone">
+      <h4>🚫 投标过程的"自杀级"错误</h4>
+      <div class="x-row"><b>答辩超时</b>：评委每家 30 分钟，超时直接打断 → 后面没讲就结束</div>
+      <div class="x-row"><b>抹黑友商</b>："华为做这种政务都失败过" → 评委记仇，下次不带你玩</div>
+      <div class="x-row"><b>价格谈判先松口</b>：客户从此把你当"可压价"的厂商，每次招标都让你先报价</div>
+      <div class="ok-row">正确做法：<b>① 答辩严控 25 分钟内</b>留 5 分钟答疑；<b>② 友商对比客观陈述</b>用第三方数据；<b>③ 价格策略坚持"换价值"</b>不直接降。这 3 条做到，2026 年所有招投标场合通杀。</div>
+    </div>`,
+    voice: '投标 3 大禁区永不能犯。一答辩超时：评委每家 30 分钟超时直接打断后面没讲就结束。二抹黑友商："华为做这种政务都失败过"——评委记仇下次不带你玩。三价格谈判先松口：客户从此把你当可压价厂商每次招标都让你先报价。正确做法：答辩严控 25 分钟内留 5 分钟答疑；友商对比客观陈述用第三方数据；价格策略坚持换价值不直接降。这 3 条做到 2026 所有招投标场合通杀。',
+    fallbackDuration: 28000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 客户演讲 5 分钟法则？<span style="color:#a5b4fc"> → 3 数据 + 1 故事 + 1 钩子，永不从目录页</span><br>
+      <b>Q2</b> SCQA 结构？<span style="color:#a5b4fc"> → Situation/Complication/Question/Answer</span><br>
+      <b>Q3</b> 招投标 5 阶段？<span style="color:#a5b4fc"> → 标前/发标/应答/答辩/中标</span><br>
+      <b>Q4</b> 异议处理 7 步？<span style="color:#a5b4fc"> → 倾听/复述/共情/澄清/举证/试探/跟进</span><br>
+      <b>Q5</b> 客户说价格贵怎么办？<span style="color:#a5b4fc"> → 拆组件 + 3 共识 + 低优先级削减</span><br>
+      <b>Q6</b> 报价 3 大禁忌？<span style="color:#a5b4fc"> → 不先降/不纯让利/不破单价</span><br>
+      <b>Q7</b> 案例不够怎么应答？<span style="color:#a5b4fc"> → 2 直接 + 3 类比 + 参考函</span><br>
+      <b>Q8</b> 投标 3 大禁区？<span style="color:#a5b4fc"> → 答辩超时/抹黑友商/价格先松口</span>
+    </div>`,
+    voice: '8 题速查。一 5 分钟法则：3 数据 1 故事 1 钩子永不目录页。二 SCQA：Situation Complication Question Answer。三招投标 5 阶段：标前发标应答答辩中标。四异议 7 步：倾听复述共情澄清举证试探跟进。五价格贵：拆组件加 3 共识加低优先级削减。六报价 3 禁忌：不先降不纯让利不破单价。七案例不够：2 直接 + 3 类比 + 参考函。八投标 3 禁区：超时抹黑先松口。这 8 道刷熟招投标售前面试稳过。',
+    fallbackDuration: 32000 },
+
+  { chapter: '完成', title: '🎉 Day 17 学完！',
+    eyebrow: '关键心法',
+    body: '<b>30 分钟答辩 = 30 天准备</b><br>5 分钟决定能不能继续 · 30 分钟决定能不能中标。<br><span class="hl">客户买的不是产品，是"放心"</span><br><br>下一站：Day 18 行业方案上</span>',
+    visual: '<div style="font-size:80px;">🏆</div>',
+    voice: '恭喜 Day 17 学完。30 分钟答辩等于 30 天准备。5 分钟决定能不能继续 30 分钟决定能不能中标。客户买的不是产品是放心。售前是个"看人下菜碟"的工种，把今天 8 题速查刷熟，下一次答辩你就能在评委面前淡定 30 分钟。下一站 Day 18 行业方案。',
+    fallbackDuration: 22000 },
+];
+</script>
+<script src="_player.js?v=21"></script>
+</body>
+</html>

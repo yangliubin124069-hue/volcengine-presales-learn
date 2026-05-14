@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 14 · 火山方舟 / Coze / veMLP · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=21">
+<style>
+  /* RAG 切片可视化 */
+  .chunks-vis { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .chunk-doc { padding: 14px 12px; background: rgba(255,255,255,.04);
+    border: 1.5px dashed rgba(165,180,252,.4); border-radius: 10px;
+    width: 200px; text-align: center; font-size: 11px; color: #cbd5e1; }
+  .chunk-doc .name { font-size: 13px; color: #fff; font-weight: 700; }
+  .chunk-blocks { display: grid; grid-template-columns: 1fr; gap: 4px; margin-top: 8px; }
+  .chunk-blk { padding: 4px 6px; background: rgba(43,92,255,.2);
+    border: 1px solid #2b5cff; border-radius: 4px; font-size: 10px;
+    animation: cardIn .4s both; }
+  .chunk-blk.hi { background: linear-gradient(135deg, #ec4899, #6e3aff);
+    border-color: #ec4899; color: #fff; font-weight: 700;
+    box-shadow: 0 0 12px rgba(236,72,153,.5); }
+
+  /* 微调 vs RAG vs Prompt 三角 */
+  .tri-pick { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+    width: 900px; max-width: 96vw; }
+  .tri-card { padding: 16px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; font-size: 12.5px; }
+  .tri-card.pp { border-color: #22c55e; }
+  .tri-card.rag { border-color: #f59e0b; }
+  .tri-card.ft { border-color: #ec4899; }
+  .tri-card h5 { font-size: 14px; margin-bottom: 8px; font-weight: 700; }
+  .tri-card.pp h5 { color: #86efac; }
+  .tri-card.rag h5 { color: #fde68a; }
+  .tri-card.ft h5 { color: #f9a8d4; }
+  .tri-card .row { padding: 4px 0; color: #cbd5e1; font-size: 12px; }
+  .tri-card .row b { color: #fff; }
+
+  /* Coze 工作流 */
+  .coze-flow { display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 18px; background: rgba(110,58,255,.06);
+    border: 2px dashed rgba(110,58,255,.4); border-radius: 12px;
+    width: 600px; max-width: 92vw; }
+  .coze-node { padding: 10px 18px; border-radius: 8px;
+    background: rgba(255,255,255,.04); border: 1.5px solid;
+    font-size: 12px; text-align: center; min-width: 200px;
+    animation: cardIn .5s both; }
+  .coze-node.start { border-color: #22c55e; background: rgba(34,197,94,.1); }
+  .coze-node.llm { border-color: #ec4899; background: rgba(236,72,153,.1); }
+  .coze-node.kb { border-color: #f59e0b; background: rgba(245,158,11,.12); }
+  .coze-node.api { border-color: #6e3aff; background: rgba(110,58,255,.1); }
+  .coze-node.cond { border-color: #a5b4fc; background: rgba(165,180,252,.08); }
+  .coze-node.end { border-color: #2b5cff; background: rgba(43,92,255,.1); }
+  .coze-node:nth-child(2) { animation-delay: .15s; }
+  .coze-node:nth-child(3) { animation-delay: .3s; }
+  .coze-node:nth-child(4) { animation-delay: .45s; }
+  .coze-node:nth-child(5) { animation-delay: .6s; }
+  .coze-node:nth-child(6) { animation-delay: .75s; }
+  .coze-arrow-down { color: #7a8db5; font-size: 18px; }
+
+  /* Agent 范式 */
+  .agent-pattern { display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    width: 880px; max-width: 96vw; }
+  .ap-card { padding: 18px; border-radius: 12px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; }
+  .ap-card.react { border-color: #f59e0b; }
+  .ap-card.pe { border-color: #6e3aff; }
+  .ap-card h5 { font-size: 14px; margin-bottom: 10px; font-weight: 700; }
+  .ap-card.react h5 { color: #fde68a; }
+  .ap-card.pe h5 { color: #c4b5fd; }
+  .ap-loop { background: rgba(0,0,0,.3); padding: 10px 14px; border-radius: 8px;
+    font-family: monospace; font-size: 11.5px; color: #cbd5e1; line-height: 1.7; }
+  .ap-loop .kw { color: #a5b4fc; }
+  .ap-loop .cmt { color: #64748b; }
+</style>
+</head>
+<body>
+<script>
+window.META = {
+  day: 14,
+  title: 'Day 14 · 火山方舟 / Coze / veMLP',
+  intro: '14 分钟 · RAG / 微调 / Function Call / Coze 智能体 / Agent 工程化'
+};
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 14 · 火山方舟 / Coze / veMLP',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>RAG / 微调 / Function Call / Coze / Agent / veMLP</b><br>14 分钟 + 2 互动测验 + 3 客户对话 + 智能保单顾问真实案例',
+    visual: '<div class="cover-icon">🚀</div>',
+    voice: '欢迎来到 Day 14 火山方舟和 Coze 和 veMLP。这是企业 AI 落地最关键的一节。今天 14 分钟讲透 RAG 工作流、SFT/LoRA 微调、Function Call、Coze 智能体、Agent 工程化，加 3 个客户对话和智能保单顾问真实案例。',
+    fallbackDuration: 19000 },
+
+  { chapter: '第 1 章 · 方舟概览', title: '一站式 AI 平台 · 企业落地入口',
+    body: '<b>模型 API + Prompt 调试 + 知识库（RAG）+ 微调 + Agent + 工具市场</b><br>豆包系列 + DeepSeek/Llama/Qwen 等第三方模型<br><span class="hl">从开发者到企业的统一接入</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🧠</div><h5>模型服务</h5><p>豆包 + 多家第三方<br>统一 API 接口<br>批量/Stream 都支持</p></div>
+      <div class="col-card"><div class="num">📚</div><h5>RAG + 微调</h5><p>知识库自动 Embedding<br>SFT/LoRA/DPO 一站式</p></div>
+      <div class="col-card"><div class="num">🤖</div><h5>Agent + 工具</h5><p>Function Call<br>插件市场<br>多渠道发布</p></div>
+    </div>`,
+    voice: '火山方舟是企业 AI 落地的统一入口。三大模块：模型服务接入豆包加 DeepSeek、Llama、Qwen 等多家统一 API；RAG 加微调一站式做知识库自动 Embedding 和 SFT、LoRA、DPO 三种微调；Agent 加工具支持 Function Call 加 200+ 插件市场加多渠道发布。售前讲方舟要强调"开发者到企业的统一接入"——客户既可以试也可以扩，避免重复采购。',
+    fallbackDuration: 25000 },
+
+  { chapter: '第 2 章 · RAG', title: 'RAG · 让大模型懂私有知识',
+    body: '<b>文档 → 切片 → Embedding → 向量库</b><br><b>查询 → Top-K 检索 → 拼到 Prompt → LLM 生成</b><br><span class="hl">解决：① 不知道内部知识 ② 容易幻觉</span>',
+    visual: `<div class="rag-flow" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;">
+      <div style="padding:10px 14px;border:1.5px solid #2b5cff;background:rgba(43,92,255,.1);border-radius:8px;font-size:12px;">❓ 问题</div>
+      <span style="color:#7a8db5;font-size:18px;">→</span>
+      <div style="padding:10px 14px;border:1.5px solid #6e3aff;background:rgba(110,58,255,.1);border-radius:8px;font-size:12px;">🧮 Embedding</div>
+      <span style="color:#7a8db5;font-size:18px;">→</span>
+      <div style="padding:10px 14px;border:1.5px solid #f59e0b;background:rgba(245,158,11,.12);border-radius:8px;font-size:12px;">📚 向量库<br>检索 Top-K</div>
+      <span style="color:#7a8db5;font-size:18px;">→</span>
+      <div style="padding:10px 14px;border:1.5px solid #ec4899;background:rgba(236,72,153,.12);border-radius:8px;font-size:12px;">🤖 LLM</div>
+      <span style="color:#7a8db5;font-size:18px;">→</span>
+      <div style="padding:10px 14px;border:1.5px solid #22c55e;background:rgba(34,197,94,.12);border-radius:8px;font-size:12px;">✅ 带出处<br>的回答</div>
+    </div>`,
+    voice: 'RAG 检索增强生成是企业落地 LLM 的事实标准。问题进来先 Embedding 向量化，去向量库检索 Top K 相似片段，把片段加问题一起喂给 LLM，让它基于上下文生成答案。RAG 解决两个核心痛点：LLM 不知道企业内部知识和容易幻觉。火山方舟内置 VikingDB 企业级向量库，10 万份文档分分钟入库。这是售前最容易卖的 AI 落地姿势。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 2 章 · RAG', title: '切片策略 · 200-1000 字最优',
+    visual: `<div class="chunks-vis">
+      <div class="chunk-doc">
+        <div class="name">📄 原始文档</div>
+        <div class="chunk-blocks">
+          <div class="chunk-blk">第 1 段</div>
+          <div class="chunk-blk">第 2 段</div>
+          <div class="chunk-blk">第 3 段</div>
+        </div>
+      </div>
+      <span style="color:#7a8db5;font-size:20px;">→</span>
+      <div class="chunk-doc">
+        <div class="name">✂️ 切片 200-1000 字</div>
+        <div class="chunk-blocks">
+          <div class="chunk-blk">块 1 (300字)</div>
+          <div class="chunk-blk hi">块 2 (450字) ✓</div>
+          <div class="chunk-blk">块 3 (250字)</div>
+          <div class="chunk-blk">块 4 (600字)</div>
+        </div>
+      </div>
+      <span style="color:#7a8db5;font-size:20px;">→</span>
+      <div class="chunk-doc">
+        <div class="name">🧮 Embedding 入库</div>
+        <div class="chunk-blocks">
+          <div class="chunk-blk">[0.12, 0.4, ...]</div>
+          <div class="chunk-blk hi">[0.85, 0.3, ...] ✓</div>
+          <div class="chunk-blk">[0.21, 0.7, ...]</div>
+          <div class="chunk-blk">[0.05, 0.5, ...]</div>
+        </div>
+      </div>
+    </div>`,
+    voice: 'RAG 第一坑是切片策略。原始文档按字数、段落或语义切片。典型 200 到 1000 字一块。过短丢上下文模型理解不连贯。过长稀释相关性模型注意力分散。火山方舟默认 500 字带 50 字重叠是中文场景的甜点。客户做 RAG 效果差 70% 是切片没搞好——售前讲方案要主动给客户做"切片策略评估"。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 2 章 · RAG', title: '检索质量 · 三层提升',
+    body: '<b>Embedding 召回 Top-20 → BM25 关键词召回 Top-20 → Rerank 重排留 Top-5</b><br><span class="hl">三层混合检索 vs 纯 Embedding：准确率提升 25%</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🧮</div><h5>① Embedding</h5><p>语义召回<br>Top-20<br>抓"意思相近"</p></div>
+      <div class="col-card"><div class="num">🔍</div><h5>② BM25</h5><p>关键词召回<br>Top-20<br>抓"字面命中"</p></div>
+      <div class="col-card"><div class="num">📊</div><h5>③ Rerank</h5><p>重排留 Top-5<br>送入 LLM<br>准确率 ↑25%</p></div>
+    </div>`,
+    voice: 'RAG 检索质量靠三层混合。第一层 Embedding 语义召回 Top 20，抓"意思相近"的片段。第二层 BM25 关键词召回 Top 20，抓"字面命中"。两层合并去重后用 Rerank 重排模型留 Top 5 送给 LLM。三层混合检索比纯 Embedding 准确率提升 25%。这是 RAG 进阶水平。售前讲方案如果只提 Embedding 客户技术团队会觉得你不够专业。',
+    fallbackDuration: 23000 },
+
+  { chapter: '🎯 互动测验 #1', title: 'RAG 效果差 · 客户问怎么排查？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户做 RAG 客服效果差，模型经常答非所问。最该先排查什么？</div>
+      <div class="quiz-opt wrong" data-k="A">换更大的模型（Pro → 千 B）</div>
+      <div class="quiz-opt correct" data-k="B">看检索召回的 Top-K 片段是否相关</div>
+      <div class="quiz-opt wrong" data-k="C">调高 Temperature 让模型更灵活</div>
+      <div class="quiz-opt wrong" data-k="D">删掉知识库让模型靠自己</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：RAG 效果差 80% 是<b>检索没召回到对的</b>，不是模型不行。看 Top-K 召回片段：如果不相关→排查切片策略/Embedding 模型/检索算法。换大模型治标不治本只会让账单翻倍。<b>正确链路</b>：① 看召回片段 → ② 看 Prompt 是否强制"只用提供资料" → ③ 看模型 → ④ 看 Temperature。<b>从下到上</b>排查，不是从上到下。</div>
+    </div>`,
+    voice: '思考一下。客户 RAG 客服效果差怎么排查？给你 5 秒......正确答案 B 看检索召回的 Top-K 片段是否相关。RAG 效果差 80% 是检索没召回到对的不是模型不行。看片段不相关就排查切片策略 Embedding 模型检索算法。换大模型治标不治本只让账单翻倍。正确排查链路从下到上：召回片段→Prompt 是否限制"只用提供资料"→模型→Temperature。售前讲 RAG 必须懂这个排查顺序客户运维才会跟你聊深度。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 3 章 · 微调', title: '微调 3 种姿势 · SFT/LoRA/DPO',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🔧</div><h5>SFT 全参</h5><p>调所有参数<br>效果最好<br>显存爆炸<br>仅特别数据多用</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>LoRA/QLoRA</h5><p>冻结主参<br>训低秩适配器<br>省 90% 显存<br>中小企业首选</p></div>
+      <div class="col-card"><div class="num">💎</div><h5>DPO 偏好对齐</h5><p>用"好/坏"对训<br>对齐风格价值观<br>客服话术品牌语气</p></div>
+    </div>`,
+    voice: '微调 3 种姿势。SFT 全参数微调调所有参数效果最好但显存爆炸只在数据特别多场景用。LoRA 和 QLoRA 冻结主参数只训低秩适配器省 90% 显存质量接近 SFT 是中小企业首选。DPO 用偏好对训练对齐风格和价值观，客服话术、品牌语气适用。售前推荐客户 90% 场景用 LoRA 加 RAG 组合，比 SFT 便宜 10 倍效果差不大。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 3 章 · 选型', title: 'Prompt vs RAG vs 微调 · 选谁？',
+    visual: `<div class="tri-pick">
+      <div class="tri-card pp">
+        <h5>📝 Prompt 工程</h5>
+        <div class="row"><b>解决</b>：通用任务调优</div>
+        <div class="row"><b>成本</b>：¥ 0（只写文字）</div>
+        <div class="row"><b>速度</b>：分钟级</div>
+        <div class="row"><b>更新</b>：改字即可</div>
+        <div class="row"><b>用</b>：99% 场景的起点</div>
+      </div>
+      <div class="tri-card rag">
+        <h5>📚 RAG 检索增强</h5>
+        <div class="row"><b>解决</b>：私有知识、时效性</div>
+        <div class="row"><b>成本</b>：¥ 5K-5万（向量库）</div>
+        <div class="row"><b>速度</b>：1-2 周</div>
+        <div class="row"><b>更新</b>：秒级（文档入库）</div>
+        <div class="row"><b>用</b>：企业知识/客服/搜索</div>
+      </div>
+      <div class="tri-card ft">
+        <h5>🔧 微调</h5>
+        <div class="row"><b>解决</b>：特定风格/术语/格式</div>
+        <div class="row"><b>成本</b>：¥ 5万-30万</div>
+        <div class="row"><b>速度</b>：2-6 周</div>
+        <div class="row"><b>更新</b>：贵（重训）</div>
+        <div class="row"><b>用</b>：行业风格 + 预算大</div>
+      </div>
+    </div>`,
+    voice: '客户最常问的 AI 选型问题：Prompt vs RAG vs 微调。三张卡看清楚。Prompt 工程零成本分钟级是 99% 场景起点。RAG 检索增强 5 千到 5 万成本 1-2 周上线解决私有知识和时效性问题秒级更新文档。微调 5 万到 30 万成本 2-6 周上线解决特定风格术语格式问题但更新贵。结论：先 Prompt 调到极限 → 不够再加 RAG → 还不够再叠微调。<b>新手最容易直接跳到微调，钱花了效果不一定好</b>。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 4 章 · Function Call', title: '让模型调外部 API',
+    body: '<b>原理</b>：模型决定何时调外部函数（查 DB / 调 API / 下单）<br><b>典型工具</b>：搜索 / 天气 / DB 查询 / 邮件 / SaaS 接口<br><span class="hl">Agent 的能力基础</span>',
+    visual: `<div class="code-block" style="text-align:left;font-size:13px;">
+<span class="cmt"># 用户问："今天北京天气如何，适合穿什么？"</span>
+<span class="kw">tool_call</span>: {
+  name: <span class="str">"get_weather"</span>,
+  args: {city: <span class="str">"北京"</span>}
+}
+<span class="cmt"># 系统调用 → 返回 {temp: 12, weather: "晴"}</span>
+<span class="kw">LLM 回答</span>: <span class="str">"今天北京 12°C 晴，建议穿薄外套..."</span>
+</div>`,
+    voice: 'Function Call 是让模型调外部函数的基础。看这个例子：用户问"北京天气适合穿什么"。模型不会编天气，而是发出 tool_call 调用 get_weather 函数。系统调用真实天气 API 返回 12 度晴，模型再基于这个事实回答"建议穿薄外套"。Function Call 是 Agent 的能力基础——没有它 AI 只能做问答有了它可以做任何带工具的任务。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 5 章 · Coze', title: 'Coze · 低代码搭智能体',
+    body: '<b>coze.cn 国内 / coze.com 海外</b><br>可视化工作流 + 200+ 插件 + 知识库 + 多渠道发布<br><span class="hl">从 0 到 1 部署 bot：半小时内</span>',
+    visual: `<div class="coze-flow">
+      <div class="coze-node start">▶️ 开始 · 用户提问</div>
+      <div class="coze-arrow-down">↓</div>
+      <div class="coze-node kb">📚 知识库检索 (RAG)</div>
+      <div class="coze-arrow-down">↓</div>
+      <div class="coze-node llm">🤖 豆包 Pro 生成答案</div>
+      <div class="coze-arrow-down">↓</div>
+      <div class="coze-node cond">🔀 是否要下单？</div>
+      <div class="coze-arrow-down">↓</div>
+      <div class="coze-node api">🛍️ HTTP 调用订单 API</div>
+    </div>`,
+    voice: 'Coze 是火山的低代码智能体平台。看这张工作流：开始接收用户提问，知识库检索 RAG，豆包 Pro 生成答案，条件判断要不要下单，下单则调订单 API。整个流程图形化拖拽搭出来不写一行代码。200 多个官方插件覆盖搜索绘图办公电商。一键发布到飞书、抖音、微信、API。从 0 到 1 部署一个 bot 半小时内。这是售前给客户做"AI 落地速度"演示的最强武器。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 6 章 · Agent', title: 'Agent · ReAct vs Plan-and-Execute',
+    visual: `<div class="agent-pattern">
+      <div class="ap-card react">
+        <h5>🔁 ReAct（思考-行动循环）</h5>
+        <div class="ap-loop">
+          <span class="kw">while</span> 任务未完成:
+            <span class="cmt"># 思考</span>
+            thought = LLM(...)
+            <span class="cmt"># 决定行动</span>
+            action = tool_call(...)
+            <span class="cmt"># 观察结果</span>
+            observation = run(action)
+        </div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:8px;">适合：简单工具调用、问答<br>风险：可能死循环</div>
+      </div>
+      <div class="ap-card pe">
+        <h5>📋 Plan-and-Execute（先计划后执行）</h5>
+        <div class="ap-loop">
+          <span class="cmt"># 1. 拆解</span>
+          plan = LLM.plan(task)
+          <span class="cmt"># 2. 执行每步</span>
+          <span class="kw">for</span> step <span class="kw">in</span> plan:
+            run(step)
+          <span class="cmt"># 3. 总结</span>
+          summary = LLM.review()
+        </div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:8px;">适合：复杂多步任务<br>优势：可控、可审计</div>
+      </div>
+    </div>`,
+    voice: 'Agent 工程化有两种范式。ReAct 是思考-行动循环：思考要做什么、调工具、看结果、再思考......简单工具调用问答场景用，但风险是死循环。Plan-and-Execute 先做完整计划再依次执行：先 LLM 拆解任务为多步骤、按步骤执行、最后总结评估。复杂任务用后者优势可控可审计。售前做 Agent 方案要按任务复杂度推荐——简单用 ReAct 复杂用 Plan-and-Execute。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 6 章 · Agent', title: 'Memory · 让 Agent 记住用户',
+    body: '<b>三层记忆体系</b>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">⏱️</div><h5>短期</h5><p>上下文窗口<br>本轮对话<br>豆包 1.5 起 256K</p></div>
+      <div class="col-card"><div class="num">📚</div><h5>长期</h5><p>向量库<br>用户偏好/历史<br>跨会话记忆</p></div>
+      <div class="col-card"><div class="num">💭</div><h5>反思总结</h5><p>定期摘要<br>压缩历史<br>避免 token 爆炸</p></div>
+    </div>`,
+    voice: 'Agent 不只是"问一句答一句"。要让它记住用户偏好就要做三层 Memory。短期是上下文窗口本轮对话豆包 1.5 起 256K 装得下。长期是向量库存用户偏好和跨会话历史。反思总结是定期把历史对话压缩成摘要避免上下文 token 爆炸。三层组合让 Agent 像真人一样"认识你"。售前讲企业 AI 助手要主动提 Memory 设计。',
+    fallbackDuration: 22000 },
+
+  { chapter: '🎯 互动测验 #2', title: '设计 Agent · 用户问"帮我订机票"',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">用户跟 Agent 说"帮我订一张明天到上海最便宜的机票"。哪种 Agent 范式合适？</div>
+      <div class="quiz-opt wrong" data-k="A">ReAct 直接循环（查→订）</div>
+      <div class="quiz-opt correct" data-k="B">Plan-and-Execute（拆 5 步 + 关键步骤人工确认）</div>
+      <div class="quiz-opt wrong" data-k="C">Multi-Agent 用 3 个 Agent 协作</div>
+      <div class="quiz-opt wrong" data-k="D">单次 LLM 调用直接生成订单</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：订机票涉及<b>真金白银</b>，必须 Plan-and-Execute + 人工兜底。<b>5 步规划</b>：① 查日期/出发地 ② 查航班列表 ③ 比价排序 ④ <b>用户确认</b>（关键！） ⑤ 调用订单 API。ReAct 可能循环错误下错单。Multi-Agent 过度设计。单次 LLM 必出错。<b>金钱交易场景 Agent 必带人工确认</b>，这是售前推 Agent 方案的合规底线。</div>
+    </div>`,
+    voice: '思考一下。用户让 Agent 订机票，哪种范式合适？给你 5 秒......正确答案 B Plan-and-Execute 加人工确认。订机票涉及真金白银必须 5 步规划：查日期、查航班、比价、用户确认、调单 API。ReAct 可能循环错误下错单。Multi-Agent 过度设计。单次 LLM 必出错。<b>金钱交易场景 Agent 必带人工确认</b>这是售前推 Agent 方案的合规底线。客户问 Agent 安全吗，售前甩这一条立刻立专业度。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 7 章 · veMLP', title: 'veMLP · AI 工程师的训练平台',
+    body: '<b>面向 AI 工程师</b> · 与方舟（应用层）互补<br>训练 · 部署 · 监控 一体化<br><span class="hl">兼容 PyTorch/TensorFlow/Megatron/DeepSpeed</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🏋️</div><h5>训练</h5><p>单机/分布式/千卡<br>vePFS 高吞吐存储<br>Spot 抢占降本 60%</p></div>
+      <div class="col-card"><div class="num">🚀</div><h5>部署</h5><p>API 服务一键<br>批量推理任务<br>自带监控+弹性</p></div>
+      <div class="col-card"><div class="num">🔌</div><h5>生态</h5><p>PyTorch/TF/Megatron<br>不绑定 / 模型可迁出</p></div>
+    </div>`,
+    voice: 'veMLP 是火山引擎面向 AI 工程师的训练平台。和方舟应用层互补——方舟是给应用开发者用的 veMLP 是给 AI 工程师用的。训练支持单机分布式千卡集群，与 vePFS 高吞吐存储联动，Spot 抢占降本 60%。部署一键发布为 API 服务或批量推理任务自带监控弹性。生态兼容 PyTorch、TensorFlow、Megatron、DeepSpeed 不绑定模型可迁出。售前讲 AI 平台要把 veMLP 作为"你们 AI 团队的工程化保障"卖。',
+    fallbackDuration: 26000 },
+
+  { chapter: '第 8 章 · 落地方案', title: '8 类企业落地 · 一图速记',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;font-size:11px;">
+      <div class="col-card"><div class="num">💬</div><h5>智能客服</h5><p>RAG+工具+多轮+兜底转人工<br>3-6 周上线</p></div>
+      <div class="col-card"><div class="num">📚</div><h5>内部知识助手</h5><p>员工提问→RAG→生成<br>解放 10x 人力 / 飞书部署</p></div>
+      <div class="col-card"><div class="num">🎨</div><h5>营销内容生产</h5><p>商品图→文案→短视频脚本<br>广告电商在用</p></div>
+      <div class="col-card"><div class="num">🛡️</div><h5>风控/审核</h5><p>文本/图片审核<br>判别+生成结合<br>合规留痕</p></div>
+      <div class="col-card"><div class="num">💻</div><h5>研发提效</h5><p>Code Copilot<br>单测生成 + 代码审查<br>研发 +30%</p></div>
+      <div class="col-card"><div class="num">📞</div><h5>销售辅助</h5><p>话术生成<br>客户画像<br>跟进提醒</p></div>
+    </div>`,
+    voice: '8 类企业 AI 落地一图速记售前必背。智能客服用 RAG 加工具加多轮加兜底 3-6 周上线。内部知识助手解放 10 倍人力飞书部署。营销内容生产广告电商在用。风控审核文本图片合规留痕。研发提效 Code Copilot 加单测加代码审查研发效率 30%。销售辅助话术生成加客户画像加跟进提醒。售前讲方案不要广撒网先帮客户选 1 个最痛的"小而美"先做 PoC 见效再扩。',
+    fallbackDuration: 26000 },
+
+  { chapter: '🌟 客户对话 #1', title: '客户问"AI 项目从哪开始？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们想做 AI 应用但没经验，从哪开始？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>三步走。<b>① 痛点诊断 1 周</b>：找 3 个可量化痛点（响应慢/审核贵/转化低）；<b>② 第一个 PoC 4-6 周</b>：选 1 个最痛的用 Coze 做 RAG 智能问答；<b>③ 见效后扩</b>：3 个月扩到 3-5 个场景。预算 30 万起步。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>怎么选第一个场景？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>三个标准：<b>① ROI 可量化</b>（人力/时长/转化能算）；<b>② 数据已有</b>（文档/对话日志现成）；<b>③ 失败可接受</b>（不影响核心业务）。<b>最常见首选：内部知识问答</b>——员工每天问 10 次的问题 90% 是重复的，做 RAG 立刻见效，员工反馈直接。</div>
+      </div>
+    </div>`,
+    voice: '第一个对话最常见。客户想做 AI 没经验从哪开始。售前给三步走：1 周痛点诊断、4-6 周第一个 PoC、3 月扩到 3-5 个场景。客户追问怎么选第一场景，售前甩三标准：ROI 可量化、数据已有、失败可接受。最常见首选内部知识问答——员工每天问 10 次问题 90% 重复 RAG 立刻见效。这种"具体到周+具体到场景"的回答让客户立刻能落地。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🌟 客户对话 #2', title: '客户问"Coze 和方舟关系？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>方舟、Coze、veMLP 三个产品，我应该买哪个？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>三个角色不一样。<b>方舟</b>是<b>模型服务 + API</b>给开发者；<b>Coze</b>是<b>低代码 Agent 平台</b>给业务/产品；<b>veMLP</b>是<b>训练平台</b>给 AI 工程师。三者底层共享豆包+方舟模型服务。按团队画像选：业务多用 Coze、开发多直接调方舟 API、有 AI 工程师团队再加 veMLP。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>都买一份会不会浪费？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>不会，三者<b>互补不重叠</b>。Coze 做 80% 简单场景（半小时一个 bot）；20% 复杂场景才进方舟开发 API；AI 工程师团队偶尔需要 veMLP 微调时按需开通。<b>付费上各自独立计费</b>，您只为用到的部分付费。这种<b>"平台分层定价"</b>模式比一次卖全套灵活得多。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话客户问三个产品关系。售前要清楚三角色：方舟模型服务给开发者、Coze 低代码给业务产品、veMLP 训练给 AI 工程师。按团队画像选：业务多用 Coze、开发多调方舟、有 AI 工程师加 veMLP。客户担心浪费，售前甩"三者互补不重叠 + 各自独立计费 + 平台分层定价"组合让客户立刻安心。这是售前讲多产品组合的标准姿势。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🌟 客户对话 #3', title: '客户问"Agent 怎么保证不乱跑？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我担心 Agent 自动跑乱来，比如下错单、删错数据。怎么保证安全？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>5 件套防护</b>：<b>① 最大步数限制</b>（默认 20 步防死循环）；<b>② 高风险操作人工确认</b>（涉及金钱/删除/外发）；<b>③ 工具权限白名单</b>（每个 Agent 只能调指定 API）；<b>④ 沙盒环境</b>（Agent 试错先在影子环境）；<b>⑤ 全链路审计日志</b>（每步可追溯回放）。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>出问题怎么追责？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>责任链清晰：<b>① Agent 跑步骤</b>有完整日志；<b>② 关键步骤人工确认</b>有用户签字；<b>③ 工具调用</b>有 API 网关 audit；<b>④ 模型输出</b>有内容安全审核留痕。出问题可逐步定位是<b>模型决策错 / 工具异常 / 用户误确认</b>。我们给您一份<b>《Agent 治理 SOP》20 页模板</b>，按行业定制。</div>
+      </div>
+    </div>`,
+    voice: '第三个对话客户担心 Agent 乱跑。售前甩 5 件套防护：最大步数限制、高风险人工确认、工具权限白名单、沙盒环境、全链路审计日志。客户追问追责，售前给责任链：Agent 步骤日志加人工确认签字加 API 网关 audit 加内容安全审核留痕。出问题逐步定位模型决策错、工具异常或用户误确认。最后送一份 Agent 治理 SOP 20 页模板。"治理 SOP"这个词在政企客户耳朵里是黄金——比"功能"更让 CIO 安心。',
+    fallbackDuration: 35000 },
+
+  { chapter: '⚠️ 故障案例', title: '智能保单顾问幻觉投诉',
+    visual: `<div class="incident-card">
+      <div class="incident-header">
+        <span class="badge-time">2025 · 某保险</span>
+        <h4>RAG 客服胡说条款 · 投诉炸锅</h4>
+      </div>
+      <div class="incident-row">📅 <b>事故</b>：上线 2 周智能保单顾问，开始模型回答"重疾险包括美容手术"<b>这条条款根本不存在</b>。客户投诉 50+ 通。</div>
+      <div class="incident-row">🔍 <b>根因</b>：① RAG 知识库切片把"不包括"和"美容手术"切到了不同块 ② Prompt 没强制"只引用提供的资料" ③ Temperature 设了 0.8 偏高</div>
+      <div class="incident-row ok">✅ <b>修复</b>：① 切片改<b>语义切片</b>不按字数；② Prompt 加 <b>"若资料未提及，必须回答'未在条款中找到'"</b>；③ Temperature 改 0.3；④ 上线<b>反事实评估</b>每周抽 100 条人工标注修正；⑤ <b>高频投诉问题</b>建立 FAQ 直接命中不走 LLM</div>
+    </div>`,
+    voice: '一个真实故障。某保险公司上线智能保单顾问 2 周，模型开始胡说重疾险包括美容手术这条条款根本不存在。客户投诉 50+ 通。三个根因：切片把"不包括"和"美容手术"切到不同块；Prompt 没强制"只引用提供资料"；Temperature 0.8 偏高。修复 5 招：语义切片不按字数、Prompt 强制不存在就说"未找到"、Temperature 调 0.3、每周反事实评估、高频投诉问题建 FAQ 不走 LLM。售前讲 RAG 客服方案必须主动把这些治理动作打包卖，否则客户上线就翻车。',
+    fallbackDuration: 35000 },
+
+  { chapter: '案例', title: '🌟 智能保单顾问 · 真实落地账',
+    body: '<b>某互联网保险</b>：员工查询保单 → 智能助手<br>方案：Coze 主 Agent + 豆包 Pro + 200 产品条款 RAG + 保单系统 API<br><br>📈 查询耗时 <b>15min → 1min</b><br>📚 新人培训 <b>2 月 → 2 周</b><br>📊 保单转化率 <b>+12%</b>',
+    visual: '<div style="font-size:64px;">🤖</div>',
+    voice: '一个真实落地案例。某互联网保险想做智能保单顾问员工内部用。方案 Coze 搭主 Agent 集成豆包 Pro 知识库导入 200 多产品条款火山方舟 RAG 插件接保单系统 API 加 CRM 飞书机器人渠道发布 veMLP 微调话术风格。结果员工查询生成话术耗时从 15 分钟降到 1 分钟。新人上岗培训周期从 2 月缩短到 2 周。保单转化率提升 12%。这是 Coze 加方舟一站式落地的标杆案例。',
+    fallbackDuration: 26000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> RAG 三层混合？<span style="color:#a5b4fc"> → Embedding 召回 + BM25 召回 + Rerank 重排</span><br>
+      <b>Q2</b> 切片字数范围？<span style="color:#a5b4fc"> → 200-1000 字，过短丢上下文过长稀释相关性</span><br>
+      <b>Q3</b> Prompt/RAG/微调选谁？<span style="color:#a5b4fc"> → 先 Prompt → 不够加 RAG → 还不够叠微调</span><br>
+      <b>Q4</b> LoRA vs SFT？<span style="color:#a5b4fc"> → LoRA 省 90% 显存效果接近，中小企业首选</span><br>
+      <b>Q5</b> ReAct vs Plan-and-Execute？<span style="color:#a5b4fc"> → 简单 ReAct，复杂 Plan，金钱场景必带人工确认</span><br>
+      <b>Q6</b> Agent 安全 5 件套？<span style="color:#a5b4fc"> → 步数限制/人工确认/权限白名单/沙盒/审计日志</span><br>
+      <b>Q7</b> Coze 和方舟关系？<span style="color:#a5b4fc"> → Coze 低代码给业务，方舟 API 给开发者，互补</span><br>
+      <b>Q8</b> RAG 效果差先查哪？<span style="color:#a5b4fc"> → 从下到上：召回片段 → Prompt → 模型 → Temperature</span>
+    </div>`,
+    voice: '8 题速查。一 RAG 三层：Embedding + BM25 + Rerank。二切片 200-1000 字。三选型先 Prompt 后 RAG 最后微调。四 LoRA 省 90% 显存中小企业首选。五简单 ReAct 复杂 Plan 金钱场景必人工确认。六 Agent 安全 5 件套：步数 + 确认 + 权限 + 沙盒 + 审计。七 Coze 给业务方舟给开发者。八 RAG 效果差从下到上查：召回→Prompt→模型→Temperature。这 8 道刷熟方舟 Coze 面试稳过。',
+    fallbackDuration: 30000 },
+
+  { chapter: '完成', title: '🎉 Day 14 学完！',
+    eyebrow: '关键心法',
+    body: '客户做 AI 应用不要先讲产品。<br>先帮他选第一个场景：<b>ROI 可量化 + 数据已有 + 失败可接受</b><br>把"30 天 PoC"打包成<b>诊断+方案+治理 SOP</b>三件套。',
+    visual: '<div style="font-size:80px;">🚀</div>',
+    voice: '恭喜 Day 14 学完。讲方舟 Coze veMLP 不要直接卖产品。先帮客户选第一个场景：ROI 可量化加数据已有加失败可接受。把 30 天 PoC 打包成诊断加方案加治理 SOP 三件套。下一站 Day 17 POC 与招投标。',
+    fallbackDuration: 21000 },
+];
+</script>
+<script src="_player.js?v=21"></script>
+</body>
+</html>

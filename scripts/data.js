@@ -130,7 +130,7 @@ const COURSE = [
   {
     day: 2,
     videoQueries: ['VPC 入门 阿里云', 'VLAN 子网划分 教程', 'CIDR 子网计算'],
-    internalVideo: 'lessons/day2-video.html?v=20',
+    internalVideo: 'lessons/day2-video.html?v=21',
     stage: 's1',
     title: '云网络深度（VPC / 负载均衡 / 混合组网 / CDN）',
     summary: '从 OSI 模型到 VPC、SLB、专线、SD-WAN、CDN 的全栈云网络',
@@ -459,7 +459,7 @@ const COURSE = [
   {
     day: 5,
     videoQueries: ['Docker 入门', 'Kubernetes K8s 入门教程', 'Service Mesh Istio'],
-    internalVideo: 'lessons/day5-video.html?v=20',
+    internalVideo: 'lessons/day5-video.html?v=21',
     stage: 's1',
     title: '容器与云原生（Docker / K8s / Service Mesh / GitOps）',
     summary: 'Docker、Kubernetes 全要素、Service Mesh、CI/CD 与 GitOps 完整链路',
@@ -1196,7 +1196,7 @@ const COURSE = [
   {
     day: 12,
     videoQueries: ['大语言模型 LLM 入门', 'Transformer 原理 通俗讲解', 'RLHF 训练 教程'],
-    internalVideo: 'lessons/day12-video.html?v=20',
+    internalVideo: 'lessons/day12-video.html?v=21',
     stage: 's3',
     title: 'AI / ML / DL 基础',
     summary: '机器学习/深度学习核心概念、模型训练流程、CNN/RNN/Transformer',
@@ -1299,6 +1299,7 @@ const COURSE = [
 
   {
     day: 13,
+    internalVideo: 'lessons/day13-video.html?v=21',
     videoQueries: ['豆包大模型 入门', 'RAG 检索增强生成 教程', 'Coze 智能体 搭建'],
     stage: 's3',
     title: '大模型与豆包（Tokenizer / Scaling Law / RLHF / 豆包矩阵）',
@@ -1405,6 +1406,7 @@ const COURSE = [
 
   {
     day: 14,
+    internalVideo: 'lessons/day14-video.html?v=21',
     videoQueries: ['Function Calling Agent 入门', 'Prompt Engineering 教程', '向量数据库 VikingDB'],
     stage: 's3',
     title: '火山方舟 / Coze / veMLP（一站式 AI 平台）',
@@ -1723,6 +1725,7 @@ const COURSE = [
 
   {
     day: 17,
+    internalVideo: 'lessons/day17-video.html?v=21',
     videoQueries: ['POC 设计 怎么做', '招投标 售前讲标', '售前异议处理'],
     stage: 's4',
     title: '演讲、招投标与竞争分析',
