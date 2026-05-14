@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 11 · 火山视频云 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=24">
+<style>
+  /* 延迟阶梯 */
+  .latency-ladder { display: flex; gap: 4px; width: 920px; max-width: 96vw; }
+  .ll-step { flex: 1; padding: 14px 8px; border-radius: 8px;
+    text-align: center; border: 1.5px solid; animation: cardIn .5s both; }
+  .ll-step.std { border-color: #ef4444; background: rgba(239,68,68,.08); }
+  .ll-step.low { border-color: #f59e0b; background: rgba(245,158,11,.08); animation-delay: .15s; }
+  .ll-step.ultra { border-color: #22c55e; background: rgba(34,197,94,.08); animation-delay: .3s; }
+  .ll-step.rtc { border-color: #6e3aff; background: rgba(110,58,255,.08); animation-delay: .45s; }
+  .ll-step .num { font-size: 18px; font-weight: 800; color: #fff; }
+  .ll-step .nm { font-size: 12.5px; color: #cbd5e1; margin-top: 4px; font-weight: 700; }
+  .ll-step .sc { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+
+  /* VOD 工作流 */
+  .vod-flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center;
+    width: 900px; max-width: 96vw; padding: 18px; background: rgba(255,255,255,.04);
+    border-radius: 12px; border: 1px solid rgba(255,255,255,.1); }
+  .vod-step { padding: 10px 14px; border-radius: 8px; font-size: 12px;
+    background: rgba(110,58,255,.15); border: 1.5px solid #6e3aff;
+    text-align: center; animation: cardIn .5s both; }
+  .vod-step .ic { font-size: 22px; display: block; margin-bottom: 3px; }
+  .vod-step:nth-child(2) { animation-delay: .1s; }
+  .vod-step:nth-child(4) { animation-delay: .2s; }
+  .vod-step:nth-child(6) { animation-delay: .3s; }
+  .vod-step:nth-child(8) { animation-delay: .4s; }
+  .vod-step:nth-child(10) { animation-delay: .5s; }
+  .vod-arrow { color: #7a8db5; font-size: 18px; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 11, title: 'Day 11 · 火山视频云', intro: '12 分钟 · VOD + LSS + RTC + AI 视频 + AIGC + 短视频出海 App 案例' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 11 · 火山视频云',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>VOD / LSS / RTC + AI 视频处理 + AIGC + 数字人</b><br>12 分钟 + 2 互动 + 2 客户对话 + 短视频出海 App 海外加载 12s → 1.2s 真实案例',
+    visual: '<div class="cover-icon">🎬</div>',
+    voice: '欢迎来到 Day 11 火山视频云。这是火山自家产品矩阵第四节也是火山最强壁垒之一——抖音 TikTok 西瓜视频日均处理百亿次播放。今天 12 分钟讲透 VOD、LSS、RTC、AI 视频处理、AIGC，加 2 个客户对话和短视频出海 App 海外加载 12 秒到 1.2 秒真实案例。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 1 章 · 视频云背景', title: '抖音同款 · 视频云第一阵营',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">📱</div><h5>字节系基础</h5><p>抖音/TikTok/西瓜<br>日均百亿次播放<br>视频技术最强壁垒</p></div>
+      <div class="col-card"><div class="num">💰</div><h5>行业格局</h5><p>市场 200 亿+<br>火山 Top 3<br>vs 阿里 / 腾讯</p></div>
+      <div class="col-card"><div class="num">🎯</div><h5>客户类型</h5><p>OTT/IPTV<br>短视频/直播<br>在线教育/会议/医疗</p></div>
+    </div>`,
+    voice: '视频云是火山的最强护城河。字节系基础抖音 TikTok 西瓜视频日均处理百亿次播放视频技术是火山引擎最强壁垒之一。行业格局视频云市场约 200 亿+ 火山引擎份额 Top 3 与阿里云腾讯云三足鼎立。客户类型 OTT IPTV、短视频直播平台、在线教育、企业会议、医疗远程各自参数差异巨大。售前讲视频云第一句必带"抖音同款"——别的话术都不如这 4 字直接。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 2 章 · VOD', title: '点播工作流 · 端到端托管',
+    visual: `<div class="vod-flow">
+      <div class="vod-step"><span class="ic">📤</span>上传</div>
+      <span class="vod-arrow">→</span>
+      <div class="vod-step"><span class="ic">🎞️</span>转码</div>
+      <span class="vod-arrow">→</span>
+      <div class="vod-step"><span class="ic">🔐</span>DRM</div>
+      <span class="vod-arrow">→</span>
+      <div class="vod-step"><span class="ic">🌐</span>CDN 分发</div>
+      <span class="vod-arrow">→</span>
+      <div class="vod-step"><span class="ic">📱</span>播放 SDK</div>
+    </div>`,
+    voice: 'VOD 点播工作流端到端托管。上传转码加密分发 CDN 播放 SDK 一站式开发者无需自建。转码支持 H.264 H.265 AV1 加 HLS DASH 切片按分辨率码率编码自动适配。DRM 版权保护支持 Widevine FairPlay HLS AES 禁防录屏限地域限设备是版权方核心需求。播放器 SDK iOS Android Web 小程序全平台自动选码率断网续播弹幕互动开箱即用。',
+    fallbackDuration: 23000 },
+
+  { chapter: '第 2 章 · VOD AI', title: '智能字幕 + 翻译 + AIGC',
+    body: '<b>ASR 语音转文字 + NMT 翻译 30+ 语种</b><br>TikTok 模式让内容跨地域分发<br><span class="hl">出海客户必备 · 翻译人力降 90%</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🎙️</div><h5>ASR 字幕</h5><p>语音转文字<br>多语种识别<br>自动加时间轴</p></div>
+      <div class="col-card"><div class="num">🌍</div><h5>NMT 翻译</h5><p>30+ 语种<br>本地化分发<br>TikTok 同款</p></div>
+      <div class="col-card"><div class="num">🎨</div><h5>AIGC</h5><p>豆包视频模型<br>短片生成<br>广告创意</p></div>
+    </div>`,
+    voice: 'VOD 三大 AI 能力。ASR 语音转文字加 NMT 翻译 30+ 语种是 TikTok 模式让内容跨地域分发出海客户必备翻译人力降 90%。AIGC 视频基于豆包视频模型生成短片广告创意 2025 年快速演进中。售前推出海客户必带"智能字幕加翻译 30+ 语种"——这是火山对位 AWS 的 ToC 视频差异化卖点。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 3 章 · LSS 直播', title: '推流 + 播放 + 延迟阶梯',
+    visual: `<div class="latency-ladder">
+      <div class="ll-step std">
+        <span class="num">3-5 秒</span>
+        <div class="nm">标准直播</div>
+        <div class="sc">RTMP/FLV/HLS<br>电视台 / 综艺</div>
+      </div>
+      <div class="ll-step low">
+        <span class="num">1-2 秒</span>
+        <div class="nm">低延迟</div>
+        <div class="sc">LL-HLS<br>体育赛事</div>
+      </div>
+      <div class="ll-step ultra">
+        <span class="num">&lt;500ms</span>
+        <div class="nm">超低延迟</div>
+        <div class="sc">WebRTC<br>电商带货 ★</div>
+      </div>
+      <div class="ll-step rtc">
+        <span class="num">&lt;400ms</span>
+        <div class="nm">RTC 实时</div>
+        <div class="sc">音视频通信<br>会议 / 教育</div>
+      </div>
+    </div>`,
+    voice: '直播延迟阶梯 4 档售前必背。标准直播 3-5 秒走 RTMP FLV HLS 电视台综艺用。低延迟 1-2 秒走 LL-HLS 体育赛事用。<b>超低延迟小于 500 毫秒</b>走 WebRTC 电商直播带货必须，这是火山的强项。RTC 实时通信小于 400 毫秒会议教育用。<b>电商直播带货必须小于 1.5 秒</b>否则下单瞬间用户已划走，售前推电商必带"超低延迟"。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 3 章 · LSS 互动 + 画质', title: '互动 + 窄带高清 1.0/2.0',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>🎉 互动能力</h4>
+        <p><span class="tag">连麦</span>PK / 主播互动</p>
+        <p><span class="tag">特效</span>礼物 / 弹幕 / 白板</p>
+        <p><span class="tag">联动</span>与 RTC "边看边连麦"</p>
+      </div>
+      <div class="acl-box">
+        <h4>🖼️ 窄带高清</h4>
+        <p><span class="tag">1.0</span>同码率画质 +30%</p>
+        <p><span class="tag">2.0</span>同画质带宽 -40%</p>
+        <p><span class="tag">价值</span>抖音同款省流量</p>
+      </div>
+    </div>`,
+    voice: 'LSS 直播两大杀手锏。互动能力连麦 PK 礼物特效弹幕白板与 RTC 联动做"边看边连麦"。<b>窄带高清 1.0/2.0</b> 相同码率画质提升 30%+ 相同画质带宽节省 40%+ 这是火山技术沉淀的差异化能力。售前推视频客户必带"窄带高清 -40% 流量"这是火山对位友商的杀手锏单这一条能让客户立即心动。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 4 章 · RTC', title: '<400ms / 千人 / 弱网 50% 丢包仍通话',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">⚡</div><h5>核心指标</h5><p>端到端 &lt; 400ms<br>丢包率 50% 仍可通话<br>单房间千人在线</p></div>
+      <div class="col-card"><div class="num">📱</div><h5>SDK 平台</h5><p>iOS/Android/Web<br>小程序/Electron<br>1v1/多人/互动直播</p></div>
+      <div class="col-card"><div class="num">🤖</div><h5>AI 增强</h5><p>降噪 + 回声消除<br>超分 + 虚拟背景<br>实时字幕 + 翻译</p></div>
+      <div class="col-card"><div class="num">🎯</div><h5>场景套件</h5><p>会议 / 互动课堂<br>社交连麦 / 互动直播<br>减少 80% 开发</p></div>
+    </div>`,
+    voice: 'RTC 实时音视频核心指标端到端延迟小于 400 毫秒丢包率 50% 仍可通话单房间千人在线用于会议教育。SDK 平台 iOS Android Web 小程序 Electron 支持 1v1 多人互动直播多种模式。AI 增强降噪、回声消除、超分、虚拟背景豆包大模型可做实时字幕翻译。场景套件会议套件互动课堂社交连麦互动直播开箱即用减少 80% 开发。售前推教育客户必带"互动课堂套件"——节省 80% 开发让客户立刻签。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 5 章 · AI 视频处理', title: '5 大 AI 能力 · 行业领先',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(5,1fr);font-size:11px;">
+      <div class="col-card"><div class="num">⚙️</div><h5>智能转码</h5><p>码率降 20-40%<br>带宽存储双省</p></div>
+      <div class="col-card"><div class="num">📈</div><h5>超分辨率</h5><p>480p → 1080p<br>老视频焕新</p></div>
+      <div class="col-card"><div class="num">🛡️</div><h5>智能审核</h5><p>色情/暴恐/政治<br>99%+ 准确率</p></div>
+      <div class="col-card"><div class="num">✂️</div><h5>智能剪辑</h5><p>体育精彩/新闻摘要<br>新华社/央视已用</p></div>
+      <div class="col-card"><div class="num">🤖</div><h5>数字人</h5><p>豆包+RTC<br>AI 主播 7×24<br>新零售试水</p></div>
+    </div>`,
+    voice: '视频 AI 处理 5 大能力。智能转码基于内容感知的码率分配相同画质码率降 20-40% 带宽与存储双省。超分辨率 480p 到 1080p 实时增强老视频焕新电视台版权方需求大。智能审核色情暴恐政治敏感内容识别准确率 99%+ UGC 平台合规必备。智能剪辑体育精彩片段新闻摘要短视频自动生成新华社央视已用。<b>数字人</b>基于豆包+RTC AI 主播 7×24 直播带货新零售场景试水中。售前讲方案要按客户行业匹配——UGC 推审核版权推超分电商推数字人。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 6 章 · 媒体处理', title: 'imageX + TTS + ASR + AIGC',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🖼️</div><h5>imageX</h5><p>智能图像处理<br>压缩/裁剪/水印/AI 修图<br>CDN 集成按需</p></div>
+      <div class="col-card"><div class="num">🗣️</div><h5>TTS/ASR</h5><p>多音色 TTS<br>多语种 ASR<br>客服/教育/媒体</p></div>
+      <div class="col-card"><div class="num">🎨</div><h5>AIGC 视频</h5><p>豆包视频模型<br>短片/广告创意<br>2025 演进</p></div>
+      <div class="col-card"><div class="num">💼</div><h5>典型计费</h5><p>VOD 存+转+CDN<br>LSS 95th 计费<br>RTC 分辨率·分钟</p></div>
+    </div>`,
+    voice: '媒体处理与 AIGC 4 件套。imageX 智能图像处理压缩裁剪水印 AI 修图 CDN 集成按需处理。TTS 多音色 ASR 多语种客服教育媒体广泛应用。AIGC 视频基于豆包视频模型生成短片广告创意 2025 年快速演进中。典型计费 VOD 存储加转码加 CDN，LSS 推流加转码加播放 95th 计费，RTC 按"分辨率·分钟"档位千人会议成本约几毛钱一分钟。售前讲价格要会算"95 计费"——这是视频客户最关心的成本话题。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验 #1', title: '电商直播带货 · 用 LSS 还是 RTC？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户做电商直播带货要求边看边连麦下单转化率高。用 LSS 还是 RTC？</div>
+      <div class="quiz-opt wrong" data-k="A">纯 LSS 标准直播（3-5 秒延迟）</div>
+      <div class="quiz-opt wrong" data-k="B">纯 RTC（成本太高）</div>
+      <div class="quiz-opt correct" data-k="C">LSS 超低延迟 WebRTC（&lt;500ms）+ RTC 连麦</div>
+      <div class="quiz-opt wrong" data-k="D">用 HLS 标准协议</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：电商直播带货<b>组合方案</b>。① <b>主直播流走 LSS 超低延迟 WebRTC 小于 500ms</b>下单瞬间不漏；② <b>连麦走 RTC</b>主播间互动；③ <b>互动功能</b>礼物弹幕白板都用 LSS 互动套件。纯 LSS 标准 3-5 秒下单慢；纯 RTC 千人成本太高且没有 CDN 分发能力。<b>"LSS + RTC 联动"</b>是抖音电商直播的同款架构。售前推电商直播必带这个组合不要二选一。</div>
+    </div>`,
+    voice: '思考一下。电商直播带货用 LSS 还是 RTC？给你 5 秒......正确答案 C LSS 超低延迟 WebRTC 加 RTC 连麦组合。电商直播带货组合方案：主直播流走 LSS 超低延迟 WebRTC 小于 500ms 下单瞬间不漏；连麦走 RTC 主播间互动；互动功能礼物弹幕白板都用 LSS 互动套件。纯 LSS 标准 3-5 秒下单慢，纯 RTC 千人成本太高且没 CDN 分发。LSS+RTC 联动是抖音电商直播的同款架构。售前推电商直播必带这个组合。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 7 章 · 行业应用', title: '电商 / 教育 / 医疗 / 泛娱 / 会议',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(5,1fr);font-size:11px;">
+      <div class="col-card"><div class="num">🛒</div><h5>电商直播</h5><p>LSS 低延迟<br>连麦 + 货品弹窗</p></div>
+      <div class="col-card"><div class="num">🎓</div><h5>在线教育</h5><p>互动课堂 + 录课<br>智能字幕 + 防作弊</p></div>
+      <div class="col-card"><div class="num">⚕️</div><h5>远程医疗</h5><p>高清会诊<br>影像调阅 + 合规留档</p></div>
+      <div class="col-card"><div class="num">🎤</div><h5>泛娱乐</h5><p>语聊房 / 播客<br>虚拟演唱会</p></div>
+      <div class="col-card"><div class="num">💼</div><h5>会议办公</h5><p>飞书会议<br>同套底层</p></div>
+    </div>`,
+    voice: '5 大行业应用。电商直播低延迟连麦加货品弹窗加实时数据看板典型客户抖音电商生态。在线教育互动课堂加录课 VOD 加智能字幕加录屏防作弊 K12 大学职业教育。远程医疗高清会诊加影像调阅加录像合规留档与医院 HIS 集成。泛娱乐语聊房播客虚拟演唱会豆包 AI 增强互动玩法。会议办公飞书会议依托同套底层企业会议中心 SaaS 化方案。售前对话开始就要问客户"用户场景是什么"再推产品。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验 #2', title: '客户突发 10 万观众瞬时打爆推流',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某直播平台一场顶流活动 10 万观众瞬时打爆推流，怎么避免？</div>
+      <div class="quiz-opt wrong" data-k="A">事后扩节点（已经炸了）</div>
+      <div class="quiz-opt wrong" data-k="B">让用户分批进入（用户骂）</div>
+      <div class="quiz-opt correct" data-k="C">预先扩容 + 多 region 调度 + 边缘节点缓冲</div>
+      <div class="quiz-opt wrong" data-k="D">降低画质</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：直播架构<b>必须留缓冲</b>。预防三件套：<b>① 预先扩容</b>顶流活动前 2 小时扩 3x 容量；<b>② 多 region 调度</b>智能 DNS 把用户分散到 3-4 个 region 推流；<b>③ 边缘节点缓冲</b>2800+ 边缘节点抗瞬时峰值。<b>抖音春晚 3 倍洪峰</b>就是靠这套抗的。售前推直播平台必带"<b>洪峰预案 SOP</b>"——这是从抖音内部沉淀的运营经验。</div>
+    </div>`,
+    voice: '思考一下。直播 10 万观众瞬时打爆推流怎么避免？给你 5 秒......正确答案 C 预先扩容加多 region 调度加边缘节点缓冲。直播架构必须留缓冲。预防三件套：预先扩容顶流活动前 2 小时扩 3x 容量；多 region 调度智能 DNS 把用户分散到 3-4 个 region 推流；边缘节点缓冲 2800+ 边缘节点抗瞬时峰值。抖音春晚 3 倍洪峰就是靠这套抗的。售前推直播平台必带洪峰预案 SOP——这是从抖音内部沉淀的运营经验。',
+    fallbackDuration: 27000 },
+
+  { chapter: '🌟 客户对话 #1', title: '"出海 App 海外加载慢 + 翻译手工"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>短视频出海 App 海外 200 万 DAU，加载慢、字幕靠手工、UGC 审核延迟 1 小时。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型"<b>抖音出海"</b>套件场景。<b>四件套</b>：<b>① VOD 自动转码 + 智能字幕 30+ 语种</b>翻译人力 8 人 → 1 人审校；<b>② DCDN 海外 80+ POP</b>首屏 12s → 1.2s；<b>③ imageX + 智能审核</b>UGC 上传秒级过审；<b>④ Anycast EIP</b>全球同 IP 加速。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>留存能升多少？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>实测 +18% 次日留存</b>。播放成功率 92% → 99% 用户不流失；UGC 上线秒级而非小时级提升参与感；字幕翻译质量大幅提升海外用户感觉"本地化"。<b>2 周 PoC 1 月全量切换</b>预算约 50 万。这是字节系出海产品同款基础设施。</div>
+      </div>
+    </div>`,
+    voice: '一段经典出海对话。客户短视频出海加载慢翻译手工 UGC 审核慢。售前给"抖音出海"四件套：VOD 智能字幕 30+ 语种翻译人力 8 人到 1 人审校；DCDN 海外 80+ POP 首屏 12s 到 1.2s；imageX 加智能审核 UGC 秒级过审；Anycast EIP 全球同 IP。客户问留存能升多少，售前甩实测 +18% 次日留存。播放成功率 92% 到 99% UGC 秒级上线字幕本地化质量提升。2 周 PoC 1 月全量切换预算 50 万。<b>"字节系出海产品同款基础设施"</b>这一句能让出海客户立刻签。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🌟 客户对话 #2', title: '"教育平台要互动课堂 + 防作弊"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>K12 在线教育要互动课堂、录课、防作弊、智能字幕，6 周上线行吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>6 周完全够。<b>火山互动课堂套件开箱即用</b>：<b>① RTC 1 师 N 生</b>延迟 &lt; 400ms 举手抢答；<b>② 录课 VOD + 智能字幕</b>课后复习；<b>③ 录屏防作弊</b>检测画面切换 + 多设备登录；<b>④ AI 增强</b>降噪 + 虚拟背景。开发量减 80% 1 周 PoC 4 周上线 1 周稳定运营。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>价格呢？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>分两块。<b>① RTC 按分辨率·分钟</b>1080p 单人单分钟约 1 分钱，1 节 60 分钟 20 人课成本约 12 元；<b>② VOD 录课</b>转码+存储+CDN 综合约 0.1 元/GB。<b>对比自建</b>省 50%+，更重要的是<b>开发周期从 6 月降到 6 周</b>这是教育公司最关心的。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话教育客户要 6 周上线。售前推火山互动课堂套件开箱即用：RTC 1 师 N 生延迟小于 400ms 举手抢答；录课 VOD 加智能字幕；录屏防作弊检测画面切换加多设备登录；AI 增强降噪加虚拟背景。开发量减 80% 1 周 PoC 4 周上线 1 周稳定运营。客户问价格，售前给具体数字：RTC 按分辨率分钟 1080p 单人单分钟约 1 分钱 60 分钟 20 人课约 12 元；VOD 录课综合约 0.1 元/GB。对比自建省 50%+ 更重要的是开发周期从 6 月降到 6 周。',
+    fallbackDuration: 35000 },
+
+  { chapter: '案例', title: '🌟 短视频出海 App · 海外加载 12s → 1.2s',
+    body: '<b>痛点</b>：海外 200 万 DAU / 通用云 + 第三方 CDN 海外慢 / 字幕手工 / UGC 审核 1h<br><b>方案</b>：VOD 智能字幕 + DCDN 海外 80 POP + imageX + 智能审核<br><br>📈 首屏 <b>12s → 1.2s</b><br>✅ 播放成功率 <b>92% → 99%</b><br>👥 翻译 8 人 → 1 人审校<br>🚀 次日留存 <b>+18%</b>',
+    visual: '<div style="font-size:64px;">📱</div>',
+    voice: '一个真实案例。某短视频出海 App 海外日活 200 万使用通用云对象存储加第三方 CDN 海外加载慢字幕翻译靠手工 UGC 审核延迟 1 小时。方案迁到火山引擎 VOD 自动转码加智能字幕 30+ 语种 DCDN 海外 80+ 节点 UGC 上传走 imageX 加智能审核秒级点播首屏由 12s 优化到 1.2s。结果播放成功率从 92% 升到 99% 翻译人力从 8 人降到 1 人审校 UGC 上线时间从 1 小时到秒级海外用户次日留存 +18%。',
+    fallbackDuration: 28000 },
+
+  { chapter: '⚠️ 售前坑', title: '视频云 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 视频云方案 3 大坑</h4>
+      <div class="x-row"><b>直播架构不留缓冲</b>：突发 10 万观众瞬时打爆推流 → 业务停摆</div>
+      <div class="x-row"><b>不开 DRM</b>：版权片源被盗录上架其他平台 → 法律纠纷</div>
+      <div class="x-row"><b>RTC 用 HLS 思路调参</b>：以为延迟低就够忽略弱网恢复 → 移动端体验崩</div>
+      <div class="ok-row">售前正确做法：<b>① 直播必带"洪峰预案 SOP"</b>预扩 + 多 region；<b>② 版权片源必开 DRM</b> Widevine + 限地域；<b>③ RTC 配 SDK 默认弱网参数</b>50% 丢包仍通话。</div>
+    </div>`,
+    voice: '视频云方案 3 大坑。一直播架构不留缓冲突发 10 万观众瞬时打爆推流业务停摆。二不开 DRM 版权片源被盗录上架其他平台法律纠纷。三 RTC 用 HLS 思路调参以为延迟低就够忽略弱网恢复移动端体验崩。正确做法：直播必带洪峰预案 SOP 预扩加多 region；版权片源必开 DRM Widevine 加限地域；RTC 配 SDK 默认弱网参数 50% 丢包仍通话。',
+    fallbackDuration: 25000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 直播延迟 4 档？<span style="color:#a5b4fc"> → 3-5s / 1-2s / &lt;500ms / RTC&lt;400ms</span><br>
+      <b>Q2</b> 电商直播延迟要求？<span style="color:#a5b4fc"> → &lt; 1.5s，必须超低延迟 WebRTC</span><br>
+      <b>Q3</b> 窄带高清价值？<span style="color:#a5b4fc"> → 同码率画质 +30% / 同画质带宽 -40%</span><br>
+      <b>Q4</b> RTC 核心指标？<span style="color:#a5b4fc"> → &lt;400ms + 50% 丢包通话 + 千人</span><br>
+      <b>Q5</b> AI 视频 5 大能力？<span style="color:#a5b4fc"> → 智能转码/超分/审核/剪辑/数字人</span><br>
+      <b>Q6</b> 出海客户 4 件套？<span style="color:#a5b4fc"> → VOD 字幕 + DCDN POP + imageX 审核 + Anycast EIP</span><br>
+      <b>Q7</b> 计费三种？<span style="color:#a5b4fc"> → VOD 存+转+CDN / LSS 95th / RTC 分辨率·分钟</span><br>
+      <b>Q8</b> 直播洪峰预防？<span style="color:#a5b4fc"> → 预扩 + 多 region + 边缘缓冲</span>
+    </div>`,
+    voice: '8 题速查。一直播延迟 4 档 3-5 秒 1-2 秒 小于 500ms RTC 小于 400ms。二电商直播必须超低延迟 WebRTC 小于 1.5 秒。三窄带高清同码率画质 +30% 同画质带宽 -40%。四 RTC 小于 400ms 加 50% 丢包通话加千人。五 AI 视频 5 大转码超分审核剪辑数字人。六出海 4 件套 VOD 字幕加 DCDN POP 加 imageX 审核加 Anycast EIP。七计费 VOD 存转 CDN LSS 95th RTC 分辨率分钟。八洪峰预防预扩加多 region 加边缘缓冲。这 8 道刷熟视频云面试稳过。',
+    fallbackDuration: 30000 },
+
+  { chapter: '完成', title: '🎉 Day 11 学完！',
+    eyebrow: '关键心法',
+    body: '视频客户对话<b>不堆产品</b>。<br>先问<b>"用户场景是什么"</b> → 推对应组合：<br>电商 LSS+RTC / 教育互动课堂 / 出海 4 件套。<br><span class="hl">所有方案用"窄带高清 -40% 流量"做价值钩子</span>',
+    visual: '<div style="font-size:80px;">🎬</div>',
+    voice: '恭喜 Day 11 学完。视频客户对话不堆产品先问"用户场景是什么"再推对应组合：电商 LSS+RTC、教育互动课堂、出海 4 件套。所有方案用窄带高清 -40% 流量做价值钩子。下一站 Day 12 AI/ML/DL 你已经学过增强版。',
+    fallbackDuration: 21000 },
+];
+</script>
+<script src="_player.js?v=24"></script>
+</body>
+</html>

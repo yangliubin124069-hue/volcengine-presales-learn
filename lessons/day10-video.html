@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 10 · 火山数据库与大数据 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=24">
+<style>
+  /* 4 类典型架构 */
+  .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    width: 920px; max-width: 96vw; }
+  .arch-card { padding: 14px 16px; border-radius: 10px;
+    background: rgba(255,255,255,.04); border: 1.5px solid;
+    text-align: left; animation: cardIn .5s both; }
+  .arch-card.web { border-color: #2b5cff; }
+  .arch-card.fin { border-color: #ec4899; animation-delay: .1s; }
+  .arch-card.iot { border-color: #f59e0b; animation-delay: .2s; }
+  .arch-card.rec { border-color: #22c55e; animation-delay: .3s; }
+  .arch-card h5 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .arch-card .flow { font-family: monospace; font-size: 11px;
+    color: #cbd5e1; line-height: 1.7; }
+  .arch-card .key { color: #fde68a; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 10, title: 'Day 10 · 火山数据库与大数据', intro: '12 分钟 · veDB + ByteHouse + LAS + BMQ + DataSail + 电商 5 亿订单实时分析案例' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 10 · 火山数据库与大数据',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>veDB / ByteHouse / LAS / BMQ / DataSail / DataLeap</b><br>12 分钟 + 2 互动 + 2 客户对话 + 电商 5 亿订单 T+1 → 秒级真实案例',
+    visual: '<div class="cover-icon">📊</div>',
+    voice: '欢迎来到 Day 10 火山数据库与大数据。这是火山自家产品矩阵第三节也是 ToB 客户最关心的一节。今天 12 分钟讲透 veDB、ByteHouse、LAS、BMQ、DataSail、DataLeap，加 2 个客户对话和电商 5 亿订单 T+1 到秒级真实案例。',
+    fallbackDuration: 21000 },
+
+  { chapter: '第 1 章 · veDB MySQL', title: '云原生 MySQL · 数十 TB QPS 百万',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🏗️</div><h5>架构</h5><p>共享存储云原生<br>计算存储解耦<br>100% 兼容 5.7/8.0</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>性能</h5><p>单实例 88 vCPU/710GB<br>QPS 100 万级<br>单库数十 TB</p></div>
+      <div class="col-card"><div class="num">🛡️</div><h5>高可用</h5><p>跨 AZ 自动 HA<br>秒级故障切换<br>多副本 RPO=0</p></div>
+      <div class="col-card"><div class="num">🚀</div><h5>弹性</h5><p>只读节点秒级扩缩<br>Serverless 弹性版</p></div>
+    </div>`,
+    voice: 'veDB MySQL 是火山的云原生 MySQL。基于共享存储计算与存储解耦 100% 兼容 MySQL 5.7 和 8.0。性能单实例最大 88 vCPU 710 GB QPS 100 万级单库可达数十 TB。高可用自动跨 AZ 秒级故障切换存储多副本 RPO=0。弹性只读节点秒级扩缩容支持 Serverless 弹性版按使用付费。<b>DTS 工具支持自建 MySQL Oracle SQL Server 平滑迁移停机分钟级</b>。',
+    fallbackDuration: 25000 },
+
+  { chapter: '第 1 章 · veDB 系列', title: 'PG / Mongo / Redis / 时序',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>产品</th><th>兼容</th><th>场景</th></tr></thead>
+      <tbody>
+        <tr><td class="ve">veDB PostgreSQL</td><td>PG 14+</td><td>GIS / JSON / 金融国产化</td></tr>
+        <tr><td class="al">veDB MongoDB</td><td>4.x / 5.x</td><td>内容 / 用户画像 / 分片数十亿</td></tr>
+        <tr><td class="hw">veDB Redis</td><td>5.x / 6.x</td><td>缓存 / 会话 / 排行榜</td></tr>
+        <tr><td class="tc">veDB 时序版</td><td>InfluxDB 协议</td><td>IoT / 监控 / 压缩 10x</td></tr>
+      </tbody>
+    </table>`,
+    voice: 'veDB 系列除了 MySQL 还有 4 个变种。PostgreSQL 兼容 PG 14+ 适合 GIS JSON 复杂查询金融政企国产化主选。MongoDB 兼容 4.x 5.x 适合内容用户画像分片集群可达数十亿文档。Redis 兼容 5.x 6.x 主从 Cluster 读写分离适合缓存会话排行榜。时序版基于 InfluxDB 协议适合 IoT 监控指标写入压缩比 10x。<b>一个 veDB 品牌覆盖关系、文档、KV、时序四大类</b>客户不用拼 4 个厂商。',
+    fallbackDuration: 25000 },
+
+  { chapter: '第 2 章 · ByteHouse', title: '抖音同款数仓 · 毫秒返回',
+    body: '<b>基于 ClickHouse 深度优化 · 字节内部日处理万亿行</b><br>单节点亿行毫秒返回 · 千节点百亿行秒级<br><span class="hl">2022 年外发 · 互联网 BI/广告/推荐分析主选</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🌋</div><h5>内核</h5><p>ClickHouse 深度优化<br>字节内部每日万亿行</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>性能</h5><p>亿行毫秒<br>百亿行秒级</p></div>
+      <div class="col-card"><div class="num">📡</div><h5>实时入库</h5><p>Kafka 直连秒级可查<br>Upsert 实时更新</p></div>
+    </div>`,
+    voice: 'ByteHouse 是抖音同款数仓。基于 ClickHouse 深度优化是字节内部数仓每日处理万亿级行 2022 年外发。查询性能单节点亿行毫秒返回千节点查询百亿行秒级适合 BI 广告推荐分析。存算分离 CDW 存算一体性能极致 CSP 存算分离成本最优两种部署形态。<b>实时入库与 Kafka 直连秒级可查支持 Upsert 实时更新</b>这是 ByteHouse 的杀手锏。典型场景互联网用户行为分析、广告归因、风控、IoT 实时监控 TPS 10 万级写入加复杂聚合。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 3 章 · LAS', title: '湖仓一体 · 存储省 60% 查询慢 3-5x',
+    visual: `<div class="vs-grid" style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;width:820px;max-width:96vw;align-items:center;">
+      <div class="vs-side" style="padding:16px;border-radius:10px;border:1.5px solid #2b5cff;background:rgba(43,92,255,.06);">
+        <h4 style="color:#a5b4fc;font-size:14px;">🏪 ByteHouse 数仓</h4>
+        <p style="font-size:12px;color:#cbd5e1;line-height:1.7;">· 性能极致（毫秒）<br>· 单价较贵<br>· 适合热数据 / BI 报表</p>
+      </div>
+      <div style="font-size:18px;color:#a5b4fc;font-weight:800;">+</div>
+      <div class="vs-side" style="padding:16px;border-radius:10px;border:1.5px solid #f59e0b;background:rgba(245,158,11,.06);">
+        <h4 style="color:#fde68a;font-size:14px;">🌊 LAS 湖仓一体</h4>
+        <p style="font-size:12px;color:#cbd5e1;line-height:1.7;">· 存储 -60% / 查询 3-5x 慢<br>· 适合冷数据 / 历史归档<br>· Iceberg/Hudi 事务支持</p>
+      </div>
+    </div>`,
+    voice: 'LAS Lakehouse Analytics Service 是基于 Apache Iceberg 和 Hudi 的湖仓一体平台存储用 TOS。统一元数据一份数据多种引擎查询 Spark Presto Trino ClickHouse 不重复 ETL。ACID 事务湖上支持事务可做 GDPR 删除修正错误数据传统数据湖做不到。<b>成本对比相同数据量比传统数仓存储成本低 60%+ 但查询性能比 ByteHouse 慢 3-5 倍</b>。售前推方案常用"ByteHouse 热加 LAS 冷"组合最优。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 4 章 · 消息队列', title: '云 Kafka / RocketMQ / BMQ',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">📨</div><h5>云原生 Kafka</h5><p>分钟级开通<br>自动伸缩 + 跨 AZ<br>TPS 百万级</p></div>
+      <div class="col-card"><div class="num">💎</div><h5>RocketMQ 兼容</h5><p>事务消息<br>定时消息<br>金融电商下单</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>BMQ 字节自研 ★</h5><p>存算分离<br><b>万亿 TPS</b><br>推荐/日志</p></div>
+    </div>`,
+    voice: '消息队列 3 选 1。云原生 Kafka 托管 Kafka 分钟级开通支持自动伸缩跨 AZ 高可用 TPS 百万级。RocketMQ 兼容支持事务消息定时消息金融电商下单等强一致场景。<b>BMQ 是字节自研</b>存算分离架构万亿 TPS 适合推荐系统和日志采集场景这是抖音内部同款。售前讲方案要按客户场景推：互联网常规推 Kafka 金融推 RocketMQ 大规模日志推 BMQ。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 5 章 · DataSail', title: '一站式数据集成 · 50+ 数据源',
+    body: '<b>MySQL/Oracle/Kafka/TOS</b> 等 50+ 数据源互通<br>支持 <b>CDC 实时同步（毫秒延迟）+ 批量离线</b><br>可视化任务编排 · 与 LAS/ByteHouse 上下游打通',
+    visual: `<div class="cdn-flow" style="font-size:28px;"><span class="node">📊 数据源</span><span class="arrow">→</span><span class="node">🚀 DataSail</span><span class="arrow">→</span><span class="node">🎯 数仓/湖</span></div><div style="font-size:13px;color:#7a8db5;margin-top:14px;text-align:center;">不只搬数据，还做轻量清洗、维度建模</div>`,
+    voice: 'DataSail 是火山的一站式数据集成。MySQL Oracle Kafka TOS 等 50+ 数据源互通可视化任务编排。支持 CDC 实时同步毫秒延迟加批量离线用同一平台。<b>与传统 ETL 区别</b>：不只搬数据还能做轻量清洗加维度建模与 LAS ByteHouse 上下游打通。售前讲数据架构必带 DataSail——客户技术团队听到"可视化拖拽建数仓"立刻心动。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 6 章 · 数据治理', title: 'DataLeap + EMR + StarRocks',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🗺️</div><h5>DataLeap</h5><p>数据地图/血缘/质量/权限<br>中型 6-12 月治理标配</p></div>
+      <div class="col-card"><div class="num">🐘</div><h5>E-MapReduce</h5><p>托管 Hadoop/Spark/Flink<br>按任务弹性付费</p></div>
+      <div class="col-card"><div class="num">⭐</div><h5>StarRocks</h5><p>MySQL 协议<br>近实时分析<br>自助 BI 毫秒级</p></div>
+    </div>`,
+    voice: '数据治理三件套。DataLeap 数据开发治理数据地图加血缘加质量加权限一站式中型企业 6-12 个月数据治理标配。E-MapReduce 托管 Hadoop Spark Flink Presto Hive 按任务弹性付费不必长跑集群。StarRocks 极速分析兼容 MySQL 协议近实时分析自助 BI 报表毫秒级。售前讲方案要会按客户成熟度推——刚起步推 EMR 进阶推 DataLeap 加 StarRocks 大型推全套。',
+    fallbackDuration: 24000 },
+
+  { chapter: '🎯 互动测验 #1', title: 'ByteHouse 当 OLTP 用 · 写性能炸',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户把 ByteHouse 当 MySQL 用做明细更新 → 写性能炸。最佳修复？</div>
+      <div class="quiz-opt wrong" data-k="A">加 ByteHouse 节点</div>
+      <div class="quiz-opt correct" data-k="B">把明细更新切回 veDB MySQL，ByteHouse 只做分析</div>
+      <div class="quiz-opt wrong" data-k="C">关掉 ByteHouse 索引</div>
+      <div class="quiz-opt wrong" data-k="D">升级 ByteHouse 内核</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：典型"用错产品"题。<b>ByteHouse 是 OLAP 分析型数据库</b>列存写入性能不擅长高频明细更新。OLTP 业务必须用 <b>veDB MySQL</b>。正确架构：<b>veDB 写入 + CDC 同步到 ByteHouse 做分析</b>——OLTP 和 OLAP 分开各管各的。这就是 HTAP "双轨"思路。售前讲方案要主动给客户讲"<b>OLTP 走 veDB / OLAP 走 ByteHouse</b>"避免客户自己拍脑袋用错。</div>
+    </div>`,
+    voice: '思考一下。客户把 ByteHouse 当 MySQL 用写性能炸怎么办？给你 5 秒......正确答案 B 把明细更新切回 veDB MySQL ByteHouse 只做分析。ByteHouse 是 OLAP 分析型数据库列存写入性能不擅长高频明细更新。OLTP 业务必须用 veDB MySQL。正确架构 veDB 写入加 CDC 同步到 ByteHouse 做分析——OLTP 和 OLAP 分开各管各的这是 HTAP 双轨思路。售前讲方案要主动给客户讲 OLTP 走 veDB OLAP 走 ByteHouse 避免拍脑袋用错。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 7 章 · 4 类典型架构', title: '互联网 / 金融 / IoT / 推荐',
+    visual: `<div class="arch-grid">
+      <div class="arch-card web">
+        <h5>🌐 互联网"湖+仓双轨"</h5>
+        <div class="flow">原始日志 → <span class="key">LAS 湖</span><br>清洗+主题 → <span class="key">ByteHouse</span><br>BI 直连 → 报表 5 秒</div>
+      </div>
+      <div class="arch-card fin">
+        <h5>🏦 金融"主备双中心"</h5>
+        <div class="flow"><span class="key">veDB MySQL</span> 跨 AZ 主写<br>DTS → 异地灾备库<br>合规 → <span class="key">TLS</span> 全留档</div>
+      </div>
+      <div class="arch-card iot">
+        <h5>📡 物联网时序</h5>
+        <div class="flow">设备 → <span class="key">Kafka</span><br>→ <span class="key">veDB 时序版</span> + <span class="key">ByteHouse</span><br>告警 → EventBridge</div>
+      </div>
+      <div class="arch-card rec">
+        <h5>🎯 推荐系统</h5>
+        <div class="flow">行为 → <span class="key">BMQ</span><br>→ Flink 实时特征 → <span class="key">Redis</span><br>离线 → <span class="key">LAS</span>+Spark 模型在方舟</div>
+      </div>
+    </div>`,
+    voice: '4 类典型数据架构一图速记。互联网湖加仓双轨：原始日志进 LAS 湖清洗主题数据进 ByteHouse 报表 BI 直连 ByteHouse。金融主备双中心：veDB MySQL 主写跨 AZ 副本 DTS 同步到异地灾备库合规审计 TLS 全留档。物联网时序：设备上报 Kafka veDB 时序版加 ByteHouse 实时分析告警走 EventBridge。推荐系统：行为日志 BMQ Flink 实时特征 Redis 离线特征 LAS+Spark 模型在方舟训练。售前讲方案选一类客户对号入座立刻显专业。',
+    fallbackDuration: 34000 },
+
+  { chapter: '🎯 互动测验 #2', title: 'LAS 单表 PB 级查询小时级',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户 LAS 单表 PB 级查询从 1 分钟降到 1 小时。最大可能根因？</div>
+      <div class="quiz-opt wrong" data-k="A">LAS 性能瓶颈，换 ByteHouse</div>
+      <div class="quiz-opt correct" data-k="B">没分区！PB 级表必须按时间/业务键分区</div>
+      <div class="quiz-opt wrong" data-k="C">缓存失效</div>
+      <div class="quiz-opt wrong" data-k="D">数据格式不对</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：LAS 单表 PB 级<b>不分区 = 全表扫</b>。修复：① <b>按时间分区</b>（dt=2026-05-14）；② <b>按业务键二级分区</b>（user_region/product_category）；③ <b>启用谓词下推</b>查询时只扫相关分区；④ <b>启用 Z-Order 排序</b>多列过滤场景加速 5-10x。<b>分区是湖仓一体的"分库分表"</b>不分必出事。售前讲 LAS 必须主动给客户上"<b>分区策略评估服务</b>"——这种"治理 SOP"是把售前从产品销售变成方案顾问的关键。</div>
+    </div>`,
+    voice: '思考一下。LAS 单表 PB 级查询慢根因？给你 5 秒......正确答案 B 没分区 PB 级表必须分区。修复 4 步：按时间分区 dt=2026-05-14、按业务键二级分区、启用谓词下推查询时只扫相关分区、启用 Z-Order 排序多列过滤加速 5-10x。分区是湖仓一体的"分库分表"不分必出事。售前讲 LAS 必须主动给客户上分区策略评估服务这种治理 SOP 让售前从产品销售变方案顾问。',
+    fallbackDuration: 27000 },
+
+  { chapter: '🌟 客户对话 #1', title: '电商客户问"T+1 报表怎么变实时？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们每天 5 亿订单事件，自建 Hadoop+Hive 数仓 T+1 报表。业务要小时级用户画像和实时大屏，传统架构撑不住。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型 HTAP 实时分析需求。<b>4 步架构</b>：<b>① 订单 MySQL → DataSail CDC → BMQ</b> 秒级实时同步；<b>② BMQ → ByteHouse 实时表</b>支持 Upsert；<b>③ 同时落 LAS</b>做明细存档；<b>④ 运营大屏直接查 ByteHouse</b> 5 秒返回。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>能省多少？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>三块：<b>① 性能</b>报表从 T+1 降到秒级运营 A/B 效率 +10x；<b>② 成本</b>相比自建 Hadoop+Kafka+OLAP 拼装<b>总成本降 30%</b>；<b>③ 团队</b>2 个 DBA 解放出来做业务建模。<b>3 个月 PoC + 6 个月平稳上线</b>。</div>
+      </div>
+    </div>`,
+    voice: '一段经典对话。客户每天 5 亿订单 Hadoop+Hive T+1 撑不住。售前给 4 步架构：MySQL CDC 到 BMQ 秒级实时同步、BMQ 到 ByteHouse 实时表支持 Upsert、同时落 LAS 明细存档、运营大屏直查 ByteHouse 5 秒返回。客户问能省多少，售前算三块：性能 T+1 变秒级运营效率 +10x、成本相比自建拼装总成本降 30%、团队解放 2 DBA 投入业务建模。3 月 PoC 加 6 月平稳上线。这是 Day 10 真实案例的标准打法。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🌟 客户对话 #2', title: '金融客户问"国产化数据库怎么选？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>信创要求 100% 国产化数据库，Oracle 怎么替？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>金融场景<b>主推 veDB PostgreSQL</b>。<b>3 大理由</b>：<b>① PG 兼容 Oracle 多数语法</b>存储过程 Sequence PL/SQL 可移植；<b>② 信创认证齐全</b>等保金融行业云已过；<b>③ 跨 AZ 高可用 + DTS 平滑迁移</b> 停机分钟级。比直接换 MySQL 强切兼容性深坑少 10 倍。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>许可费能省多少？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>典型省 50-65%</b>。Oracle 单实例年许可 80-150 万 + 硬件，veDB PG 包年 25-45 万。我做过<b>3 家城商行的 TCO 对比</b>有备案号可参考。先做 <b>1 个非核心库 3 个月 PoC</b> 验证语法兼容率，再决定大批量切换。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话金融客户国产化。售前推 veDB PostgreSQL 3 大理由：PG 兼容 Oracle 多数语法存储过程可移植；信创认证齐全等保金融行业云已过；跨 AZ 高可用加 DTS 平滑迁移。客户问许可费省多少，售前给具体数字：Oracle 单实例年 80-150 万加硬件，veDB PG 包年 25-45 万典型省 50-65%。3 家城商行 TCO 对比有备案号。先 1 个非核心库 3 月 PoC 验证语法兼容率再决定大批量切换。',
+    fallbackDuration: 33000 },
+
+  { chapter: '案例', title: '🌟 电商 · 5 亿订单 T+1 → 秒级',
+    body: '<b>痛点</b>：日 5 亿订单 / Hadoop+Hive T+1 / 业务要小时级画像和实时大屏<br><b>方案</b>：MySQL → DataSail CDC → BMQ → ByteHouse 实时 + LAS 存档<br><br>📅 报表 <b>T+1 → 秒级</b><br>📈 运营 A/B 效率 <b>+10x</b><br>💰 总成本 <b>-30%</b>',
+    visual: '<div style="font-size:64px;">🛒</div>',
+    voice: '一个真实案例。某电商平台每天 5 亿订单事件自建 Hadoop+Hive 数仓 T+1 报表延迟业务要小时级用户画像和实时大屏但传统架构无法支撑。方案订单 MySQL DataSail CDC BMQ ByteHouse 实时表同时落 LAS 做明细存档运营大屏直接查 ByteHouse 报表 5 秒级用户画像通过 DataLeap 编排定时任务。结果报表延迟从 T+1 降到秒级运营 A/B 测试效率提升 10x 总数据栈成本降 30% 相比自建 Hadoop+Kafka+OLAP 拼装。',
+    fallbackDuration: 28000 },
+
+  { chapter: '⚠️ 售前坑', title: '数据库/大数据 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 数据栈方案 3 大坑</h4>
+      <div class="x-row"><b>ByteHouse 当 OLTP 用</b>：明细更新场景写性能差 → 应该走 veDB</div>
+      <div class="x-row"><b>LAS 没分区</b>：单表 PB 级直接全表扫 → 查询小时级</div>
+      <div class="x-row"><b>Kafka 消费组没备份</b>：消费组 offset 丢 → 重复消费百亿条</div>
+      <div class="ok-row">售前正确做法：<b>① 一图明示</b> OLTP 走 veDB / OLAP 走 ByteHouse；<b>② 上线即配分区</b>按时间+业务键；<b>③ 消费组 offset 双写</b>到 etcd 或 Redis。</div>
+    </div>`,
+    voice: '数据栈方案 3 大坑。一 ByteHouse 当 OLTP 用明细更新场景写性能差应该走 veDB。二 LAS 没分区单表 PB 级直接全表扫查询小时级。三 Kafka 消费组没备份消费组 offset 丢重复消费百亿条。正确做法：一图明示 OLTP 走 veDB OLAP 走 ByteHouse；上线即配分区按时间加业务键；消费组 offset 双写到 etcd 或 Redis。',
+    fallbackDuration: 25000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> veDB 5 个变种？<span style="color:#a5b4fc"> → MySQL/PG/Mongo/Redis/时序</span><br>
+      <b>Q2</b> ByteHouse 内核来源？<span style="color:#a5b4fc"> → ClickHouse 深度优化，抖音同款</span><br>
+      <b>Q3</b> LAS vs ByteHouse？<span style="color:#a5b4fc"> → LAS 冷数据存储省 60% / ByteHouse 热数据查询毫秒</span><br>
+      <b>Q4</b> BMQ 独家点？<span style="color:#a5b4fc"> → 字节自研，存算分离万亿 TPS</span><br>
+      <b>Q5</b> DataSail 干啥？<span style="color:#a5b4fc"> → 50+ 数据源 CDC + 批量同步可视化</span><br>
+      <b>Q6</b> 4 类典型架构？<span style="color:#a5b4fc"> → 互联网湖+仓 / 金融主备 / IoT 时序 / 推荐系统</span><br>
+      <b>Q7</b> 客户用错 ByteHouse 怎么破？<span style="color:#a5b4fc"> → OLTP 切回 veDB CDC 同步给 ByteHouse</span><br>
+      <b>Q8</b> Oracle 国产化怎么选？<span style="color:#a5b4fc"> → veDB PG 兼容多数语法 + DTS 平滑迁移</span>
+    </div>`,
+    voice: '8 题速查。一 veDB 5 个变种 MySQL PG Mongo Redis 时序。二 ByteHouse 内核 ClickHouse 抖音同款。三 LAS 冷数据存储省 60% ByteHouse 热数据查询毫秒。四 BMQ 字节自研存算分离万亿 TPS。五 DataSail 50+ 数据源 CDC 加批量同步可视化。六 4 类架构互联网湖仓双轨金融主备 IoT 时序推荐系统。七用错 ByteHouse OLTP 切回 veDB CDC 同步。八 Oracle 国产化 veDB PG 加 DTS。这 8 道刷熟火山数据栈面试稳过。',
+    fallbackDuration: 30000 },
+
+  { chapter: '完成', title: '🎉 Day 10 学完！',
+    eyebrow: '关键心法',
+    body: '数据栈方案的关键不在产品多少。<br>而在<b>"演示一次 1 亿行 MySQL → ByteHouse 实时同步 + 一条 SQL 5 秒返回"</b><br><span class="hl">眼见为实比 20 页 PPT 强 100 倍</span>',
+    visual: '<div style="font-size:80px;">📊</div>',
+    voice: '恭喜 Day 10 学完。数据栈方案的关键不在产品多少而在演示一次 1 亿行 MySQL 到 ByteHouse 实时同步加一条 SQL 5 秒返回。眼见为实比 20 页 PPT 强 100 倍。下一站 Day 11 火山视频云。',
+    fallbackDuration: 20000 },
+];
+</script>
+<script src="_player.js?v=24"></script>
+</body>
+</html>

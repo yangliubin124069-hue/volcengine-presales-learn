@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 9 · 火山引擎存储与网络 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=24">
+<style>
+  .cdn-pop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 720px; max-width: 92vw; }
+  .pop-card { padding: 14px; border-radius: 10px; background: rgba(43,92,255,.08);
+    border: 1.5px solid #2b5cff; text-align: center; animation: cardIn .5s both; }
+  .pop-card .big { font-size: 32px; font-weight: 800; color: #a5b4fc; display: block; }
+  .pop-card .lbl { font-size: 12px; color: #cbd5e1; margin-top: 4px; }
+  .pop-card:nth-child(2) { animation-delay: .15s; }
+  .pop-card:nth-child(3) { animation-delay: .3s; }
+  .storage-arch { display: flex; flex-direction: column; gap: 8px; width: 720px; max-width: 92vw;
+    background: rgba(255,255,255,.04); padding: 18px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.1); }
+  .arch-row { display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px; border-radius: 8px; font-size: 13px;
+    color: #cbd5e1; background: rgba(255,255,255,.03); }
+  .arch-row .lbl { font-weight: 700; min-width: 80px; color: #a5b4fc; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 9, title: 'Day 9 · 火山存储与网络', intro: '11 分钟 · TOS/EBS + CDN/DCDN + VPC/CLB + EIP/Anycast + 图片社交 App 案例' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 9 · 火山存储与网络',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>TOS / EBS / NAS / CDN / DCDN / VPC / CLB / Anycast EIP</b><br>11 分钟 + 2 互动 + 2 客户对话 + 图片社交 App 海外加速 40% 真实案例',
+    visual: '<div class="cover-icon">📦</div>',
+    voice: '欢迎来到 Day 9 火山存储与网络。这是火山自家产品矩阵第二节。今天 11 分钟讲透 TOS 对象存储、EBS 块存储、CDN/DCDN、VPC/CLB/Anycast EIP，加 2 个客户对话和图片社交 App 海外加速 40% 真实案例。',
+    fallbackDuration: 21000 },
+
+  { chapter: '第 1 章 · TOS', title: '对象存储 · 11 个 9 + 千万 QPS',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🌍</div><h5>规模</h5><p>单桶 <b>EB 级</b><br>千万 QPS<br>11 个 9 可靠性</p></div>
+      <div class="col-card"><div class="num">📊</div><h5>4 档存储</h5><p>Standard / IA / Archive / Deep<br>生命周期省 50%+</p></div>
+      <div class="col-card"><div class="num">🚀</div><h5>加速</h5><p>内置 CDN<br>DCDN 联动全球分发</p></div>
+    </div>`,
+    voice: 'TOS 是火山的对象存储兼容 S3 API。基本能力：单桶 EB 级容量、千万 QPS、多 AZ 副本 11 个 9 数据可靠性。4 档存储 Standard、IA、Archive、Deep Archive 按生命周期自动转换可省 50%+。Deep Archive 单价仅 Standard 的 1/10 适合 1 年+ 合规留存。加速能力内置 CDN 可与 DCDN 联动全球分发。售前讲 TOS 必提"S3 协议兼容"——客户最怕换厂商代码全改。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 2 章 · EBS', title: 'PL3 · 单盘 100 万 IOPS',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>等级</th><th>IOPS</th><th>吞吐</th><th>延迟</th></tr></thead>
+      <tbody>
+        <tr><td>PL0</td><td>1 万</td><td>180 MB/s</td><td>1-3 ms</td></tr>
+        <tr><td>PL1</td><td>5 万</td><td>350 MB/s</td><td>0.5-2 ms</td></tr>
+        <tr><td>PL2</td><td>10 万</td><td>750 MB/s</td><td>0.3-1 ms</td></tr>
+        <tr><td class="ve">PL3 ★</td><td class="ve">100 万</td><td class="ve">4 GB/s</td><td class="ve">0.2 ms</td></tr>
+      </tbody>
+    </table>`,
+    voice: 'EBS 块存储 PL0 到 PL3 性能逐级提升。PL3 单盘 100 万 IOPS、吞吐 4 GB/s、延迟 0.2ms 是极致 OLTP 选型。快照增量秒级触发支持自动策略与跨 region 复制是数据库备份基石。默认 KMS 加密性能损耗 <3%。<b>在线扩容不停机</b>文件系统层用 resize2fs 或 xfs_growfs 配合，缩容需要重建。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 3 章 · 文件存储', title: 'NAS / vePFS / CFS · 三种姿势',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">📁</div><h5>NAS</h5><p>NFS/SMB 通用<br>企业网盘/CMS<br>按容量计费</p></div>
+      <div class="col-card"><div class="num">🚀</div><h5>vePFS</h5><p>并行文件系统<br>100 GB/s+<br>千卡 AI 训练</p></div>
+      <div class="col-card"><div class="num">⚡</div><h5>CFS 极速版</h5><p>全闪 NAS<br>IOPS 30 万+<br>中型 ML / 视频</p></div>
+    </div>`,
+    voice: '文件存储三种姿势。NAS 通用型 NFS SMB 适合企业网盘 CMS 应用共享按容量计费。vePFS 并行文件系统单 FS 100 GB/s+ 吞吐配合 GPU 集群千卡训练。CFS 极速版全闪 NAS IOPS 30 万+ 毫秒级延迟适合中型 ML 视频生产场景。售前推 AI 训练必提 vePFS——这是抖音内部同款。',
+    fallbackDuration: 19000 },
+
+  { chapter: '第 4 章 · CDN', title: '国内 1500+ 节点 / 100 Tbps+ 峰值',
+    visual: `<div class="cdn-pop">
+      <div class="pop-card"><span class="big">1500+</span><span class="lbl">国内节点 · 覆盖 31 省</span></div>
+      <div class="pop-card"><span class="big">80+</span><span class="lbl">海外节点 · 6 大洲</span></div>
+      <div class="pop-card"><span class="big">100Tbps+</span><span class="lbl">带宽峰值 · 抖音同款</span></div>
+    </div>`,
+    voice: '火山 CDN 国内 1500+ 节点覆盖 31 省境外 80+ 节点支持 100 Tbps+ 带宽峰值。这套基础设施和抖音 TikTok 共用。静态加速图片 JS CSS 视频文件命中率 90%+ 回源带宽降低 10x。<b>自定义日志投递 5 分钟级到 TOS 或 TLS 可对接 BI 做用户行为分析</b>。售前讲 CDN 必提"抖音同款"——客户技术团队听到立刻有感觉。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 4 章 · DCDN + 视频 CDN', title: '动态加速 + 视频 CDN · 一体化',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>🚀 DCDN 全站加速</h4>
+        <p><span class="tag">机制</span>动态 + 静态一体</p>
+        <p><span class="tag">优化</span>TCP 优化 + 智能选路</p>
+        <p><span class="tag">场景</span>电商详情页 / API 类业务</p>
+      </div>
+      <div class="acl-box">
+        <h4>🎬 视频 CDN</h4>
+        <p><span class="tag">机制</span>HLS/DASH 切片优化</p>
+        <p><span class="tag">联动</span>VOD/LSS 全套</p>
+        <p><span class="tag">指标</span>首屏卡顿率行业领先</p>
+      </div>
+    </div>`,
+    voice: 'DCDN 全站加速动态请求加静态加速一体支持 TCP 优化加智能选路电商详情页和 API 类业务首选。视频 CDN 专为 HLS DASH 切片优化与 VOD LSS 联动首屏卡顿率行业领先。售前推电商客户主推 DCDN 推视频客户主推视频 CDN——按场景对号入座。',
+    fallbackDuration: 20000 },
+
+  { chapter: '🎯 互动测验 #1', title: '客户 CDN 命中率从 90% 降到 30%',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户上线后 CDN 命中率从 90% 降到 30% 回源带宽炸了。最可能根因？</div>
+      <div class="quiz-opt wrong" data-k="A">CDN 节点出问题</div>
+      <div class="quiz-opt correct" data-k="B">缓存键带了 Cookie / 动态参数（每个用户不同）</div>
+      <div class="quiz-opt wrong" data-k="C">用户突然变多</div>
+      <div class="quiz-opt wrong" data-k="D">网络抖动</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：CDN 命中率暴跌 80% 是<b>缓存键配置问题</b>。常见错误：① 缓存键带 Cookie / Session ID 每个用户独立缓存命中率必然差；② 缓存键带 ?timestamp 动态参数永不命中；③ URL 有大小写不归一化。<b>修复</b>：缓存键只保留 Path + 必要查询参数（如版本号），<b>移除 Cookie 和动态参数</b>。售前讲 CDN 必带"缓存键配置审计"作为最佳实践动作。</div>
+    </div>`,
+    voice: '思考一下。CDN 命中率从 90% 降到 30% 根因？给你 5 秒......正确答案 B 缓存键带了 Cookie 或动态参数。命中率暴跌 80% 是缓存键配置问题。常见错误：缓存键带 Cookie Session ID 每个用户独立缓存；缓存键带 timestamp 动态参数永不命中；URL 大小写不归一化。修复缓存键只保留 Path 加必要查询参数移除 Cookie 和动态参数。售前讲 CDN 必带"缓存键配置审计"作为最佳实践。',
+    fallbackDuration: 27000 },
+
+  { chapter: '第 5 章 · VPC', title: '默认 5 VPC × 24 子网 × 50 路由',
+    body: '<b>规模</b>：默认账号 5 个 VPC，每 VPC 24 个子网，每路由表 50 条<br>可工单扩展至上百<br><span class="hl">PrivateLink 无需公网即可访问 SaaS · 攻击面降低</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🌐</div><h5>VPC + 子网</h5><p>5 VPC × 24 子网<br>路由 50 条<br>可扩展</p></div>
+      <div class="col-card"><div class="num">🔗</div><h5>PrivateLink</h5><p>访问 SaaS 不公网<br>合规友好</p></div>
+      <div class="col-card"><div class="num">🌉</div><h5>CEN 云企业网</h5><p>跨 region/账号 VPC 互联<br>星型替代 N×N</p></div>
+    </div>`,
+    voice: 'VPC 规模默认账号 5 个 VPC 每 VPC 24 个子网每路由表 50 条可工单扩展至上百。<b>PrivateLink 私网连接</b>无需公网即可访问 SaaS 服务比如 ByteHouse TLS攻击面降低合规友好。CEN 云企业网跨 region 跨账号 VPC 互联中心星型拓扑替代 N×N。售前讲网络要会按客户规模推 CEN——超过 3 个 VPC 必上 CEN 否则路由乱。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 6 章 · 负载均衡', title: 'CLB 七层 + NLB 四层',
+    visual: `<div class="sg-acl">
+      <div class="sg-box">
+        <h4>🧠 CLB 七层</h4>
+        <p><span class="tag">协议</span>HTTP/HTTPS/HTTP2/WebSocket</p>
+        <p><span class="tag">能力</span>转发规则 + WAF 集成</p>
+        <p><span class="tag">场景</span>Web / API / SaaS</p>
+      </div>
+      <div class="acl-box">
+        <h4>⚡ NLB 四层</h4>
+        <p><span class="tag">协议</span>TCP / UDP</p>
+        <p><span class="tag">性能</span>百万 QPS + 亚 ms 延迟</p>
+        <p><span class="tag">场景</span>游戏 / 金融交易 / IoT</p>
+      </div>
+    </div>`,
+    voice: '负载均衡分七层 CLB 四层 NLB。CLB 支持 HTTP HTTPS HTTP2 WebSocket 监听器加转发规则灵活与 WAF 集成。NLB 百万级 QPS 亚毫秒延迟游戏金融交易 IoT 长连接首选。健康检查支持 HTTP TCP UDP 2-60 秒间隔连续失败次数可调。默认部署多 AZ 单 AZ 故障自动切换与 ECS 多 AZ 配合做高可用。<b>会话保持基于 Cookie 或源 IP 但新架构推荐无状态化把 Session 外置 Redis</b>。',
+    fallbackDuration: 25000 },
+
+  { chapter: '第 7 章 · 公网接入', title: 'EIP + Anycast + 专线 / VPN / SD-WAN',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">📌</div><h5>EIP</h5><p>弹性公网 IP<br>按占用 + 流量计费</p></div>
+      <div class="col-card"><div class="num">🌍</div><h5>Anycast EIP ★</h5><p>全球同 IP 多 POP 接入<br>海外加速 30-50%</p></div>
+      <div class="col-card"><div class="num">🚄</div><h5>专线 / VPN</h5><p>专线 &lt;20ms<br>VPN 走公网加密</p></div>
+      <div class="col-card"><div class="num">🌉</div><h5>SD-WAN</h5><p>智能选路<br>多分支零售/制造</p></div>
+    </div>`,
+    voice: '公网与混合云 4 件套。EIP 弹性公网 IP 按 IP 占用加流量带宽计费可绑定 ECS SLB NAT HAVIP。<b>Anycast EIP</b> 全球同 IP 多 POP 接入海外用户加速 30-50% 游戏外贸首选这是火山差异化能力。专线接入云 POP 延迟小于 20ms VPN 走公网加密开通快成本低。SD-WAN 智能选路连锁分支融合 4G 5G MPLS多分支零售制造常见。售前讲出海业务必提 Anycast EIP——这是火山对位 AWS 的关键卖点。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 8 章 · 安全防护', title: 'DDoS / WAF / 云防火墙 / Bot 管理',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🌊</div><h5>DDoS 高防</h5><p>Tbps 清洗<br>基础 5G 免费<br>高防按带宽计</p></div>
+      <div class="col-card"><div class="num">🛡️</div><h5>WAF</h5><p>OWASP Top 10<br>CC 攻击 / Bot<br>按域名/QPS</p></div>
+      <div class="col-card"><div class="num">🔥</div><h5>云防火墙</h5><p>南北/东西流量<br>零信任基础</p></div>
+      <div class="col-card"><div class="num">🤖</div><h5>Bot 管理</h5><p>防爬虫/抢券/羊毛<br>电商必备</p></div>
+    </div>`,
+    voice: '网络安全 4 件套。DDoS 高防清洗能力 Tbps 级分基础免费 5 Gbps 加高防 IP 按防御带宽计费。WAF 防 OWASP Top 10 加 CC 攻击加爬虫支持自定义规则加 Bot 管理按域名 QPS 计费。云防火墙统一管控南北加东西流量可视化规则零信任基础设施一环。Bot 管理防爬虫抢券薅羊毛指纹识别加行为分析电商必备。售前推电商客户必带 Bot 管理——双 11 黑产损失能让客户立刻签。',
+    fallbackDuration: 26000 },
+
+  { chapter: '🌟 售前心法', title: '存储/网络对话 · 业务三联问',
+    visual: `<div class="scenario-card">
+      <h4>📋 别陷入"参数比对" → 用业务三联问</h4>
+      <div class="row"><b>① 延迟</b>业务对延迟敏感吗？毫秒/秒级</div>
+      <div class="row"><b>② 数据冷热比</b>30/70 还是 70/30？</div>
+      <div class="row"><b>③ 用户分布</b>国内/全国/全球？</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);"><b>👉 输出</b>一张分层架构图：边缘 CDN → 入口 SLB → 业务 VPC → 存储 TOS+EBS</div>
+    </div>`,
+    voice: '存储和网络客户对话最容易陷入"参数比对"。建议用业务三联问切入：业务对延迟敏感吗毫秒还是秒级；数据热冷比例大概是什么 30/70 还是 70/30；用户分布国内全国还是全球。答案出来后给一张分层架构图——边缘 CDN 入口 SLB 业务 VPC 存储 TOS+EBS。单价讨论留到最后。客户记得住的是"图"不是 PL3 单盘 100 万 IOPS。',
+    fallbackDuration: 26000 },
+
+  { chapter: '🎯 互动测验 #2', title: '客户出海业务海外用户加载慢',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某出海 App 美国用户加载 8 秒 国内用户 1 秒。最优组合？</div>
+      <div class="quiz-opt wrong" data-k="A">买更大带宽（治标）</div>
+      <div class="quiz-opt wrong" data-k="B">海外用户给 IP 白名单优化</div>
+      <div class="quiz-opt correct" data-k="C">Anycast EIP + 海外 80+ POP + 智能字幕</div>
+      <div class="quiz-opt wrong" data-k="D">迁到 AWS 海外</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：海外加速三件套。① <b>Anycast EIP</b> 全球同 IP 多 POP 自动选最近接入；② <b>火山 CDN 海外 80+ POP</b> 覆盖 6 大洲；③ <b>智能字幕 + 翻译</b> 30+ 语种支持本地化。这是火山对位 AWS 海外的核心方案。<b>实测美国用户首屏从 8s → 1.2s</b>同等用户体验。比"迁 AWS"省 50% 成本且不用拆架构。这是 Day 9 真实案例的标准打法。</div>
+    </div>`,
+    voice: '思考一下。出海 App 美国用户加载 8 秒怎么破？给你 5 秒......正确答案 C Anycast EIP 加海外 80+ POP 加智能字幕三件套。Anycast EIP 全球同 IP 多 POP 自动选最近接入。火山 CDN 海外 80+ POP 覆盖 6 大洲。智能字幕加翻译 30+ 语种支持本地化。这是火山对位 AWS 海外的核心方案，实测美国用户首屏从 8s 到 1.2s 同等用户体验。比"迁 AWS"省 50% 成本且不用拆架构。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🌟 客户对话 #1', title: '客户问"S3 兼容 TOS 怎么迁？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们 1.2 PB 图片在某厂 OSS，迁到 TOS 麻烦吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>SDK 级 99% 兼容。<b>3 步迁移</b>：<b>① 闪电立方</b> 1.2 PB 实体寄送 1-2 周到货；<b>② 增量同步</b> rclone 跑差量；<b>③ 切流量</b> DNS 切到 TOS 域名。<b>整体 3-4 周 + 业务零停机</b>。我们派 1 周陪跑工程师做集成。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>成本降多少？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>两块：<b>① 生命周期</b> 30 天 Standard / 180 天 IA / 1 年 Archive，存储费<b>降 35%</b>；<b>② 流量出口免费</b> 火山公有云内网下载 0 流量费 vs 某厂收钱，每月省 ~15-20 万。综合<b>降 35%+</b>。先做 1 PB 试点 1 月真实账单对比再决定全量。</div>
+      </div>
+    </div>`,
+    voice: '一段客户对话。客户 1.2 PB 图片迁 TOS。售前给 3 步迁移：闪电立方 1-2 周到货、增量同步 rclone 跑差量、DNS 切到 TOS。整体 3-4 周零停机加 1 周陪跑。客户问成本降多少，售前算两块账：生命周期降 35%、内网流量出口免费每月省 15-20 万综合降 35%+。先 1 PB 试点 1 月真实账单对比再决定全量。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🌟 客户对话 #2', title: '"我们要做电商详情页全球加速"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>电商详情页有静态图片也有动态价格库存，全球用户怎么加速？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>DCDN 是答案</b>。动态请求 + 静态加速一体：① <b>静态资源</b>图片/JS/CSS 走传统 CDN 缓存；② <b>动态 API</b>价格库存通过 TCP 优化 + 智能选路加速 30-50%；③ <b>HTTPS</b> 自动签发不掉性能。全球用户首屏从 5 秒到 1.5 秒。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>对比纯 CDN 贵多少？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>DCDN 单价是 CDN 的 1.3-1.5x。但<b>用 DCDN 替代"CDN + 应用层加速"组合</b>反而省钱——少建一套加速链路、少养 SLB 节点。<b>综合 TCO 持平或略省</b>。关键收益是首屏体验提升带来的转化率<b>+8-12%</b>，这部分增量足以覆盖差价。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话客户电商详情页全球加速。售前推 DCDN：动态请求加静态加速一体静态走传统 CDN 缓存动态 API 通过 TCP 优化加智能选路加速 30-50% HTTPS 自动签发不掉性能。客户对比 CDN 价格，售前甩 DCDN 单价 1.3-1.5x 但替代"CDN+应用层加速"组合反而省钱综合 TCO 持平或略省。关键收益是首屏体验带来转化率+8-12% 覆盖差价。这是"换价值不换价格"的高级用法。',
+    fallbackDuration: 32000 },
+
+  { chapter: '案例', title: '🌟 图片社交 App · 海外加速 40%',
+    body: '<b>痛点</b>：月活 800 万 / 1.2 PB UGC / 某友商 CDN 海外慢 / 月费 80 万<br><b>方案</b>：TOS 生命周期 + DCDN 海外 80 POP + Anycast EIP + 智能压缩<br><br>💰 存储费降 <b>35%</b><br>📉 CDN 月费降 <b>22%</b><br>🌍 海外加载时延降 <b>40%</b><br>⚡ CDN 配置时间 2 天 → 30 分钟',
+    visual: '<div style="font-size:64px;">📸</div>',
+    voice: '一个真实案例。某图片社交 App 月活 800 万 UGC 图片 1.2 PB 累积使用某友商对象存储 CDN 单月 80 万但海外回源慢新功能上线 CDN 配置复杂。方案迁到 TOS 30 天 Standard 180 天 IA 1 年后 Archive；CDN 切到火山 DCDN 配置自动签 HTTPS 加智能压缩；海外用 Anycast EIP 加海外 POP。结果存储费降 35% CDN 月费降 22% 海外加载时延降 40% 新功能 CDN 配置时间从 2 天到 30 分钟。',
+    fallbackDuration: 26000 },
+
+  { chapter: '⚠️ 售前坑', title: '存储/网络 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 存储/网络方案 3 大坑</h4>
+      <div class="x-row"><b>TOS 桶忘开生命周期</b>：1 年后存储费 4 倍预算 → 客户被账单吓退</div>
+      <div class="x-row"><b>CDN 缓存键带 Cookie</b>：命中率从 90% 降到 30% → 回源带宽炸</div>
+      <div class="x-row"><b>NLB 健康检查 2 秒一次过敏</b>：业务高峰期误剔除节点 → 雪崩</div>
+      <div class="ok-row">售前正确做法：<b>① 上线即配生命周期</b> Day 1 不是后补；<b>② CDN 缓存键审计</b>只留 Path + 版本号；<b>③ 健康检查 5-10 秒间隔</b>失败 3 次再剔除。</div>
+    </div>`,
+    voice: '存储网络 3 大坑。一 TOS 桶忘开生命周期 1 年后存储费 4 倍预算客户被账单吓退。二 CDN 缓存键带 Cookie 命中率从 90% 降到 30% 回源带宽炸。三 NLB 健康检查 2 秒一次过敏业务高峰期误剔除节点雪崩。正确做法：上线即配生命周期 Day 1 不是后补；CDN 缓存键审计只留 Path 加版本号；健康检查 5-10 秒间隔失败 3 次再剔除。',
+    fallbackDuration: 26000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> TOS 4 档存储？<span style="color:#a5b4fc"> → Standard/IA/Archive/Deep，省 50%+</span><br>
+      <b>Q2</b> EBS PL 等级？<span style="color:#a5b4fc"> → PL0-PL3，PL3 单盘 100 万 IOPS</span><br>
+      <b>Q3</b> vePFS 适合场景？<span style="color:#a5b4fc"> → AI 训练千卡，100GB/s+ 吞吐</span><br>
+      <b>Q4</b> 火山 CDN 节点规模？<span style="color:#a5b4fc"> → 国内 1500+ / 海外 80+ / 100Tbps+</span><br>
+      <b>Q5</b> CDN vs DCDN？<span style="color:#a5b4fc"> → CDN 静态 / DCDN 动+静一体</span><br>
+      <b>Q6</b> Anycast EIP 价值？<span style="color:#a5b4fc"> → 海外加速 30-50%，对位 AWS 关键</span><br>
+      <b>Q7</b> CLB vs NLB？<span style="color:#a5b4fc"> → 七层 HTTP / 四层 TCP UDP 百万 QPS</span><br>
+      <b>Q8</b> 业务三联问？<span style="color:#a5b4fc"> → 延迟/冷热比/用户分布</span>
+    </div>`,
+    voice: '8 题速查。一 TOS 4 档 Standard IA Archive Deep 省 50%+。二 EBS PL3 单盘 100 万 IOPS。三 vePFS 千卡训练 100GB/s+。四火山 CDN 国内 1500+ 海外 80+ 100Tbps+。五 CDN 静态 DCDN 动静一体。六 Anycast EIP 海外加速 30-50%。七 CLB 七层 NLB 四层百万 QPS。八业务三联问延迟冷热比用户分布。这 8 道刷熟火山存储网络面试稳过。',
+    fallbackDuration: 29000 },
+
+  { chapter: '完成', title: '🎉 Day 9 学完！',
+    eyebrow: '关键心法',
+    body: '存储网络客户对话<b>不堆参数</b>。<br>用<b>业务三联问 + 分层架构图</b>立框架。<br>价格留到最后，客户记得住"图"不是"PL3"。',
+    visual: '<div style="font-size:80px;">📦</div>',
+    voice: '恭喜 Day 9 学完。存储网络对话不堆参数用业务三联问加分层架构图立框架。价格留到最后客户记得住"图"不是"PL3"。下一站 Day 10 火山数据库与大数据。',
+    fallbackDuration: 19000 },
+];
+</script>
+<script src="_player.js?v=24"></script>
+</body>
+</html>
