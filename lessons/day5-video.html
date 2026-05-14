@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 5 · 容器与云原生 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=16">
+</head>
+<body>
+<script>
+window.META = {
+  day: 5,
+  title: 'Day 5 · 容器与云原生',
+  intro: '11 分钟讲透 Docker / Kubernetes / Service Mesh / GitOps'
+};
+window.SLIDES = [
+  // ===== 开场 =====
+  { chapter: '开场', title: 'Day 5 · 容器与云原生',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>Docker / Kubernetes / Service Mesh / GitOps</b><br>从容器化的价值到现代研发链路，11 分钟全打通',
+    visual: '<div class="cover-icon">🐳</div>',
+    voice: '欢迎来到 Day 5 容器与云原生课。这是售前最高频被问的话题——客户都在问"我能不能上 K8s"。今天用 11 分钟，从 Docker 讲到 Service Mesh 和 GitOps，让你能给客户讲清楚每一层。',
+    fallbackDuration: 11000 },
+
+  // ===== 第 1 章 容器化价值 =====
+  { chapter: '第 1 章 · 容器化的价值', title: '虚拟机 vs 容器：10 倍差距',
+    body: '<b>虚拟机</b>：启动 1-3 分钟，内存 GB 级<br><b>容器</b>：启动毫秒到秒，内存 MB 级<br><span class="hl">同一台机器，容器密度比虚拟机高 10 倍</span>',
+    visual: `<div class="lb-compare">
+      <div class="lb-box" style="border-color:#f59e0b;">
+        <h4>🖥️ 虚拟机</h4>
+        <div style="font-size:13px;color:#cbd5e1;line-height:1.8;">
+          含完整 OS 内核<br>启动 <b>1-3 分钟</b><br>内存 <b>GB 级</b><br>1 台机器跑 10 个虚机<br>资源利用率 30%
+        </div>
+      </div>
+      <div class="lb-box" style="border-color:#22c55e;">
+        <h4>📦 容器</h4>
+        <div style="font-size:13px;color:#cbd5e1;line-height:1.8;">
+          共享宿主 OS 内核<br>启动 <b>毫秒到秒</b><br>内存 <b>MB 级</b><br>1 台机器跑 <b>100+ 容器</b><br>资源利用率 70%
+        </div>
+      </div>
+    </div>`,
+    voice: '为什么这几年所有云厂商都在推容器？因为它比虚拟机高效 10 倍。虚拟机启动要 1 到 3 分钟，每个占 GB 级内存。容器启动只要几毫秒到几秒，内存只占几十兆。同一台物理机，能跑 10 个虚机，但能跑 100 多个容器。资源利用率从 30% 拉到 70%。',
+    fallbackDuration: 17000 },
+
+  { chapter: '第 1 章 · 容器化的价值', title: '"一次构建，到处运行"',
+    body: '镜像把 <b>代码 + 运行时 + 系统库</b> 全部打包成一个不可变文件。<br>开发→测试→生产环境完全一致。<br><span class="hl">根除"在我电脑上是好的"</span>',
+    visual: '<div class="cdn-flow"><span class="node">💻</span><span class="arrow">→</span><span class="node">🧪</span><span class="arrow">→</span><span class="node">☁️</span></div><div style="font-size:13px;color:#7a8db5;margin-top:12px;text-align:center;">同一份镜像 · 开发 → 测试 → 生产</div>',
+    voice: '容器还有一个杀手锏：一次构建，到处运行。镜像把代码、运行时、系统库全打包成一个文件。开发机、测试机、生产服务器跑的是完全同一份。彻底根除"在我电脑上是好的"这种甩锅式 bug。',
+    fallbackDuration: 13000 },
+
+  // ===== 第 2 章 Docker =====
+  { chapter: '第 2 章 · Docker 核心', title: 'Docker 镜像：分层的乐高',
+    body: '<b>Image = 多层只读模板</b><br>基础层（如 alpine 5MB）+ 业务层 + 配置层。<br>多阶段构建可把镜像缩小 <span class="hl">80%</span>。',
+    visual: `<div class="code-block">
+<span class="kw">FROM</span> alpine:3.18           <span class="cmt"># 基础层 5MB</span>
+<span class="kw">RUN</span> apk add nodejs            <span class="cmt"># Node 运行时</span>
+<span class="kw">COPY</span> package*.json ./
+<span class="kw">RUN</span> npm install --production  <span class="cmt"># 依赖层</span>
+<span class="kw">COPY</span> . .                     <span class="cmt"># 业务代码层</span>
+<span class="kw">EXPOSE</span> 3000
+<span class="kw">CMD</span> [<span class="str">"node"</span>, <span class="str">"server.js"</span>]
+</div>`,
+    voice: 'Docker 镜像是分层结构，像乐高积木。最底层是基础镜像，比如 alpine 只有 5MB。上面叠业务运行时层、代码层、配置层。Dockerfile 里每条 RUN 和 COPY 都生成一层。多阶段构建可以把最终镜像缩小 80%，比如把构建工具丢掉只保留运行时。',
+    fallbackDuration: 17000 },
+
+  { chapter: '第 2 章 · Docker 核心', title: '镜像仓库（Registry）',
+    body: '<b>公有</b>：Docker Hub（限速）<br><b>企业必建</b>：Harbor / 火山 veCR<br>核心能力：访问控制 + 漏洞扫描（Trivy）+ 镜像签名',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🐋</div><h5>Docker Hub</h5><p>公有 · 全球最大<br>免费但限速</p></div>
+      <div class="col-card"><div class="num">🏰</div><h5>Harbor</h5><p>开源企业仓库<br>VMware 出品</p></div>
+      <div class="col-card"><div class="num">🌋</div><h5>火山 veCR</h5><p>托管镜像仓库<br>原生支持扫描+复制</p></div>
+    </div>`,
+    voice: '镜像存哪里？公有的 Docker Hub 限速且不安全，企业必须自建私有仓库。开源 Harbor 是 VMware 的，社区版免费。如果不想自己运维，用云上托管的，火山引擎 veCR、阿里 ACR、华为 SWR 都行。这些托管仓库直接集成漏洞扫描和跨地域复制。',
+    fallbackDuration: 15000 },
+
+  // ===== 第 3 章 Kubernetes 架构 =====
+  { chapter: '第 3 章 · Kubernetes 架构', title: '控制面 + 数据面',
+    body: '<b>控制面（大脑）</b>：决定集群该是什么样子<br><b>数据面（手脚）</b>：真正跑容器的工作节点<br>这两个分离的设计，是 K8s 高可用的根',
+    visual: `<div class="k8s-cluster">
+      <div class="k8s-control">
+        <div class="k8s-title">🧠 控制面（Master）</div>
+        <div class="k8s-comp"><span class="ic">🚪</span>API Server</div>
+        <div class="k8s-comp"><span class="ic">💾</span>etcd</div>
+        <div class="k8s-comp"><span class="ic">📋</span>Scheduler</div>
+        <div class="k8s-comp"><span class="ic">⚙️</span>Controller</div>
+      </div>
+      <div class="k8s-data">
+        <div class="k8s-title">⚡ 数据面（Worker Nodes）</div>
+        <div class="k8s-node">
+          <b>Node A · kubelet + kube-proxy</b>
+          <span class="k8s-pod"></span><span class="k8s-pod"></span><span class="k8s-pod"></span><span class="k8s-pod"></span>
+        </div>
+        <div class="k8s-node">
+          <b>Node B · kubelet + kube-proxy</b>
+          <span class="k8s-pod"></span><span class="k8s-pod"></span><span class="k8s-pod"></span>
+        </div>
+        <div class="k8s-node">
+          <b>Node C · kubelet + kube-proxy</b>
+          <span class="k8s-pod"></span><span class="k8s-pod"></span>
+        </div>
+      </div>
+    </div>`,
+    voice: 'K8s 集群分两层。左边蓝色是控制面，也叫 Master，是集群大脑。包含四个核心组件：API Server 是统一入口，etcd 存所有状态，Scheduler 决定 Pod 调度到哪台机器，Controller Manager 跑各种控制器。右边粉色是数据面，是真正干活的工作节点，每个节点上的 kubelet 拉镜像启动 Pod，粉色方块就是正在闪烁运行的 Pod。',
+    fallbackDuration: 19000 },
+
+  { chapter: '第 3 章 · Kubernetes 架构', title: '声明式 API · K8s 的灵魂',
+    body: '<b>命令式</b>：启动一个进程（你告诉它怎么做）<br><b>声明式</b>：我要 3 副本（你告诉它你要什么）<br><span class="hl">控制器会自动协调到目标态——这才是 K8s 真正的魔法</span>',
+    visual: `<div class="code-block">
+apiVersion: apps/v1
+<span class="kw">kind</span>: <span class="str">Deployment</span>
+<span class="kw">metadata</span>:
+  name: web
+<span class="kw">spec</span>:
+  <span class="kw">replicas</span>: <span class="str">3</span>      <span class="cmt"># ← 我要 3 副本</span>
+  <span class="kw">template</span>:
+    spec:
+      containers:
+      - name: web
+        image: nginx:1.27
+</div>`,
+    voice: 'K8s 最重要的概念是声明式。传统命令式：你告诉机器"启动一个 nginx 进程"。声明式：你告诉 K8s "我要 3 个 nginx 副本"，然后 K8s 自己想办法保持 3 个。挂了一个自动补一个，挂了节点自动换台机器跑。这就是 K8s 真正的魔法，叫自愈。',
+    fallbackDuration: 17000 },
+
+  // ===== 第 4 章 十大资源对象 =====
+  { chapter: '第 4 章 · 十大资源对象', title: 'Pod · K8s 最小调度单元',
+    body: '<b>Pod = 1 个或多个共享网络/存储的容器</b><br>99% 场景是 1 主容器 + 0-N 个 sidecar。<br>同一 Pod 内容器可通过 <span class="hl">localhost 直接互访</span>。',
+    visual: `<div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <div style="background:rgba(43,92,255,.1);border:2px dashed rgba(43,92,255,.5);border-radius:14px;padding:18px;">
+        <div style="font-size:11px;color:#a5b4fc;margin-bottom:8px;letter-spacing:1px;">📦 POD</div>
+        <div style="display:flex;gap:8px;">
+          <div style="background:rgba(34,197,94,.3);border:1px solid #22c55e;border-radius:6px;padding:14px 18px;font-size:13px;">主容器<br>nginx</div>
+          <div style="background:rgba(236,72,153,.3);border:1px solid #ec4899;border-radius:6px;padding:14px 18px;font-size:13px;">sidecar<br>日志收集</div>
+        </div>
+        <div style="font-size:10px;color:#7a8db5;margin-top:8px;text-align:center;">共享网络 + 存储</div>
+      </div>
+    </div>`,
+    voice: 'Pod 是 K8s 调度的最小单元，不是容器。一个 Pod 里可以塞一个或多个共享网络和存储的容器。99% 场景是一个主容器加零到几个 sidecar。比如主容器是业务进程，sidecar 是日志收集 agent，两个共享网络可以通过 localhost 互访，非常方便。',
+    fallbackDuration: 17000 },
+
+  { chapter: '第 4 章 · 十大资源对象', title: 'Deployment · 管 Pod 的"管家"',
+    body: 'Deployment 管 ReplicaSet，ReplicaSet 管 Pod。<br>支持<b>滚动升级、回滚、暂停发布</b>。<br><span class="hl">99% 的无状态业务都用 Deployment</span>',
+    visual: `<div class="cdn-flow" style="font-size:32px;">
+      <span class="node">📋 Deployment</span>
+      <span class="arrow">→</span>
+      <span class="node">📦 ReplicaSet</span>
+      <span class="arrow">→</span>
+      <span class="node">🟢 Pod×3</span>
+    </div>`,
+    voice: '光有 Pod 不够，因为 Pod 挂了不会自己重建。所以需要 Deployment，它管理 ReplicaSet，ReplicaSet 管理多个 Pod，保证副本数恒定。滚动升级、一键回滚、暂停发布都是 Deployment 的标配。无状态业务，比如 Web、API 服务，99% 用 Deployment。',
+    fallbackDuration: 15000 },
+
+  { chapter: '第 4 章 · 十大资源对象', title: '其他 7 个常用对象',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">📊</div><h5>StatefulSet</h5><p>有状态应用<br>稳定网络名 web-0/1/2<br>数据库 / ZK 集群</p></div>
+      <div class="col-card"><div class="num">🛡️</div><h5>DaemonSet</h5><p>每节点一个<br>日志收集 / 监控 agent<br>CSI/CNI 守护</p></div>
+      <div class="col-card"><div class="num">🌐</div><h5>Service</h5><p>稳定的内部 LB<br>Pod IP 漂移它不变</p></div>
+      <div class="col-card"><div class="num">🚪</div><h5>Ingress</h5><p>七层入口<br>HTTPS / WAF / 路径路由<br>常配 Nginx</p></div>
+      <div class="col-card"><div class="num">📝</div><h5>ConfigMap</h5><p>外置配置<br>不用重新打包镜像就能改配置</p></div>
+      <div class="col-card"><div class="num">🔐</div><h5>Secret</h5><p>密钥/证书<br>默认 base64 ≠ 加密<br>生产配 KMS</p></div>
+    </div>`,
+    voice: '剩下七个常用对象快速过一遍。StatefulSet 给有状态应用用，比如数据库，Pod 名 web-0、web-1 不变。DaemonSet 每个节点跑一个，常用于日志收集和监控。Service 提供稳定的内部入口，让 Pod IP 漂移业务也不受影响。Ingress 是七层入口，做 HTTPS 和路径路由。ConfigMap 存配置，Secret 存密钥，注意 Secret 默认只是 base64 不是真加密，生产环境要配 KMS。',
+    fallbackDuration: 22000 },
+
+  // ===== 第 5 章 网络与存储 =====
+  { chapter: '第 5 章 · K8s 网络存储', title: 'CNI · K8s 的网络插件',
+    body: '<b>CNI（Container Network Interface）</b>：让 Pod 之间能通信。',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🟢</div><h5>Flannel</h5><p>VXLAN<br>简单稳定<br>中小集群首选</p></div>
+      <div class="col-card"><div class="num">🦓</div><h5>Calico</h5><p>BGP 路由<br>性能高<br>大型企业首选</p></div>
+      <div class="col-card"><div class="num">🐝</div><h5>Cilium</h5><p>eBPF 新一代<br>L3-L7 可观测<br>火山 VKE 默认</p></div>
+    </div>`,
+    voice: 'K8s 网络靠 CNI 插件实现。三个主流方案：Flannel 用 VXLAN，简单稳定，中小集群够用。Calico 用 BGP 路由，性能高，企业级标配。Cilium 是新一代，基于 eBPF，能做 L3 到 L7 全链路可观测，火山引擎 VKE 默认就是它。',
+    fallbackDuration: 15000 },
+
+  { chapter: '第 5 章 · K8s 网络存储', title: 'CSI · 容器存储接口',
+    body: '<b>PV / PVC / StorageClass</b><br>PV = 集群存储资源 · PVC = Pod 申请 · SC = 模板自动创建 PV<br><span class="hl">StatefulSet 必配 PVC，让 Pod 重建不丢数据</span>',
+    visual: '<div class="cdn-flow" style="font-size:28px;"><span class="node">📦 Pod</span><span class="arrow">⇄</span><span class="node">🎫 PVC</span><span class="arrow">⇄</span><span class="node">💾 PV</span></div>',
+    voice: '存储靠 CSI 接口。Pod 通过 PVC 申请存储，PVC 绑定到 PV，PV 是真实的存储资源，比如火山 EBS 云盘或 NAS 文件系统。StorageClass 是模板，自动创建 PV。有状态业务，比如数据库，必须配 PVC，否则 Pod 重建数据全没。',
+    fallbackDuration: 16000 },
+
+  // ===== 第 6 章 自动伸缩 =====
+  { chapter: '第 6 章 · 自动伸缩', title: 'HPA / VPA / CA · 三种伸缩',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">📈</div><h5>HPA · 水平伸缩</h5><p>按 CPU / 内存自动加 Pod<br>响应 30 秒到 2 分钟<br>互联网业务标配</p></div>
+      <div class="col-card"><div class="num">⬆️</div><h5>VPA · 垂直伸缩</h5><p>动态调单 Pod 的 CPU/Mem<br>与 HPA 不能混用同指标</p></div>
+      <div class="col-card"><div class="num">🖥️</div><h5>CA · 集群伸缩</h5><p>节点不够自动加 ECS<br>空闲下线<br>配 Spot 省 50-70% 费用</p></div>
+    </div>`,
+    voice: 'K8s 弹性扩容有三层。HPA 是水平 Pod 伸缩，按 CPU 或内存自动加 Pod 副本，秒杀场景从 10 个扩到 100 个再缩回。VPA 是垂直伸缩，动态调单个 Pod 的资源规格，但不能和 HPA 用同一指标。CA 是集群伸缩，节点不够时自动开 ECS，空闲时下线。CA 配合抢占式 Spot 实例能省一半以上计算费用。',
+    fallbackDuration: 19000 },
+
+  // ===== 第 7 章 Service Mesh =====
+  { chapter: '第 7 章 · Service Mesh', title: '为什么需要 Service Mesh？',
+    body: '<b>问题</b>：微服务一多，限流、重试、灰度、加密在每个应用重复实现，成本爆炸。<br><b>方案</b>：把这些能力<span class="hl">下沉到 sidecar</span>，业务代码零侵入。',
+    visual: `<div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <div style="background:rgba(43,92,255,.1);border:2px dashed rgba(43,92,255,.5);border-radius:14px;padding:14px;">
+        <div style="font-size:11px;color:#a5b4fc;margin-bottom:6px;">📦 Pod 1</div>
+        <div style="display:flex;gap:6px;">
+          <div style="background:rgba(34,197,94,.3);border:1px solid #22c55e;border-radius:6px;padding:10px 14px;font-size:12px;">业务<br>容器</div>
+          <div style="background:rgba(110,58,255,.3);border:1px solid #6e3aff;border-radius:6px;padding:10px 14px;font-size:12px;">🚐 Envoy<br>sidecar</div>
+        </div>
+      </div>
+      <div style="align-self:center;font-size:24px;color:#a5b4fc;">⇆</div>
+      <div style="background:rgba(43,92,255,.1);border:2px dashed rgba(43,92,255,.5);border-radius:14px;padding:14px;">
+        <div style="font-size:11px;color:#a5b4fc;margin-bottom:6px;">📦 Pod 2</div>
+        <div style="display:flex;gap:6px;">
+          <div style="background:rgba(110,58,255,.3);border:1px solid #6e3aff;border-radius:6px;padding:10px 14px;font-size:12px;">🚐 Envoy<br>sidecar</div>
+          <div style="background:rgba(34,197,94,.3);border:1px solid #22c55e;border-radius:6px;padding:10px 14px;font-size:12px;">业务<br>容器</div>
+        </div>
+      </div>
+    </div>`,
+    voice: '当微服务从 5 个变成 50 个、500 个的时候，限流、重试、灰度发布、链路加密这些事在每个应用代码里重复实现，成本爆炸。Service Mesh 把这些能力下沉到 sidecar 代理里，业务代码零侵入。每个 Pod 旁边贴一个 Envoy 代理，所有进出流量都经过它，能做流控、能加密、能采集指标。',
+    fallbackDuration: 18000 },
+
+  { chapter: '第 7 章 · Service Mesh', title: 'Istio + Envoy · 流量/安全/可观测',
+    body: '<b>Istio</b> = 控制面（决策） + <b>Envoy</b> = 数据面（执行）<br>金丝雀发布 · mTLS 双向认证 · 自动产 metrics/traces',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🚦</div><h5>流量管理</h5><p>VirtualService 路由<br>按 Header / 百分比<br>金丝雀发布</p></div>
+      <div class="col-card"><div class="num">🔐</div><h5>mTLS 加密</h5><p>服务间双向认证<br>零信任落地<br>性能损耗 5-10%</p></div>
+      <div class="col-card"><div class="num">👀</div><h5>可观测</h5><p>自动产 Prometheus 指标<br>Jaeger 链路<br>无需应用埋点</p></div>
+    </div>`,
+    voice: 'Istio 是 Service Mesh 的代表实现。Istio 是控制面负责下发策略，Envoy 是数据面真正处理流量。三大核心能力：流量管理可以做按 Header 路由的金丝雀发布；mTLS 服务间自动双向加密，是零信任落地的基础；可观测自动产出 Prometheus 指标和 Jaeger 链路，应用代码不用埋点。',
+    fallbackDuration: 19000 },
+
+  // ===== 第 8 章 CI/CD GitOps =====
+  { chapter: '第 8 章 · CI/CD 与 GitOps', title: '完整研发流水线',
+    body: '从 <b>代码提交</b> 到 <b>生产上线</b>，全流程自动化',
+    visual: `<div class="flow-pipeline">
+      <div class="flow-step"><div class="ic">💻</div>代码<br>提交</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="ic">🧪</div>自动<br>测试</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="ic">🏗️</div>构建<br>镜像</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="ic">🔍</div>Trivy<br>扫描</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="ic">📦</div>推到<br>仓库</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="ic">🚀</div>Argo CD<br>部署</div>
+    </div>`,
+    voice: '现代研发流水线长这样。代码 push 触发自动测试、自动构建镜像、Trivy 扫描漏洞、推到镜像仓库、最后 Argo CD 自动拉到 K8s 集群部署。常用工具：Jenkins、GitLab CI、GitHub Actions、火山引擎 CodePipeline 都行。',
+    fallbackDuration: 18000 },
+
+  { chapter: '第 8 章 · CI/CD 与 GitOps', title: 'GitOps · Git 是生产的真相源',
+    body: '<b>所有生产状态都声明在 Git 仓库里</b><br>变更靠 PR + 自动同步<br><span class="hl">Argo CD / Flux CD 是代表工具</span>',
+    visual: `<div class="cdn-flow" style="font-size:30px;">
+      <span class="node">📂 Git</span>
+      <span class="arrow">→</span>
+      <span class="node">👀 Argo CD</span>
+      <span class="arrow">→</span>
+      <span class="node">☸️ K8s</span>
+    </div><div style="font-size:13px;color:#7a8db5;margin-top:14px;text-align:center;">改 YAML → 提 PR → 合并 → 自动同步</div>`,
+    voice: 'GitOps 是 DevOps 的进阶形态。理念是：生产环境长什么样，完全声明在 Git 仓库里。要改配置不是 SSH 登录，是改 YAML 提 PR。Argo CD 持续监控 Git，发现差异就自动同步到 K8s。优势：所有变更有审计记录、回滚秒级、人为操作彻底隔离。',
+    fallbackDuration: 16000 },
+
+  { chapter: '第 8 章 · CI/CD 与 GitOps', title: '蓝绿 / 金丝雀 / 滚动 · 三种发布',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🟦🟩</div><h5>蓝绿</h5><p>新旧两套同时跑<br>切流量一次性<br>回滚最快</p></div>
+      <div class="col-card"><div class="num">🐤</div><h5>金丝雀</h5><p>新版本只放 1-5% 流量<br>观察后逐步放大<br>最稳但慢</p></div>
+      <div class="col-card"><div class="num">🌊</div><h5>滚动</h5><p>逐 Pod 替换<br>无停机<br>K8s 默认</p></div>
+    </div>`,
+    voice: '发布策略三种。蓝绿是新旧两套环境同时跑，一键切流量，回滚也是一键，最快但翻倍资源。金丝雀是新版本只放 1% 到 5% 流量进去观察，确认没问题再逐步放大，最稳但发布周期长。滚动是逐个 Pod 替换，K8s 默认就是这个，平滑无停机。',
+    fallbackDuration: 17000 },
+
+  // ===== 速查 =====
+  { chapter: '速查表', title: '面试要点 · 5 个高频问题',
+    body: `<div style="font-size:14px;line-height:1.9;text-align:left;max-width:800px;">
+      <b>Q1</b>：K8s 控制面有哪些核心组件？<br><span style="color:#a5b4fc">→ API Server / etcd / Scheduler / Controller Manager</span><br>
+      <b>Q2</b>：Deployment 和 StatefulSet 区别？<br><span style="color:#a5b4fc">→ 前者无状态可任意调度，后者有稳定网络名+PVC</span><br>
+      <b>Q3</b>：HPA 按什么指标伸缩？<br><span style="color:#a5b4fc">→ CPU/内存/自定义指标，30秒-2分钟响应</span><br>
+      <b>Q4</b>：Service Mesh 解决什么问题？<br><span style="color:#a5b4fc">→ 把限流/灰度/加密下沉到 sidecar，业务零侵入</span><br>
+      <b>Q5</b>：GitOps 核心是什么？<br><span style="color:#a5b4fc">→ Git 是生产真相源，PR 触发自动同步</span>
+    </div>`,
+    voice: '五个面试高频题。第一，K8s 控制面有四个核心：API Server、etcd、Scheduler、Controller。第二，Deployment 管无状态，StatefulSet 管有状态的稳定网络名和存储。第三，HPA 按 CPU、内存或自定义指标伸缩，响应时间 30 秒到 2 分钟。第四，Service Mesh 把限流、灰度、加密能力下沉到 sidecar，业务代码零侵入。第五，GitOps 把 Git 当生产真相源，PR 合并触发自动同步。',
+    fallbackDuration: 26000 },
+
+  // 案例
+  { chapter: '案例', title: '🌟 某 SaaS 公司迁 VKE 的真实账',
+    body: '<b>之前</b>：60+ 微服务跑 ECS，手工部署，发布常出错<br><b>之后</b>：火山 VKE + Argo CD + Istio + veCR<br><br>📈 发布从<b>周 2 次 → 日 10+ 次</b><br>⏱ 回滚从 <b>30 分钟 → 1 分钟</b><br>💰 ECS 成本 <b>下降 28%</b>',
+    visual: '<div style="font-size:64px;">🚀</div>',
+    voice: '一个真实案例。某 SaaS 公司有 60 多个微服务跑在 ECS 上，手工加 Ansible 部署，发布经常出错。新人上手要两周，节假日扩容靠值班手动。搬到火山引擎 VKE 之后：Argo CD 做 GitOps，Helm Chart 管模板，Cluster Autoscaler 加 HPA 做弹性，Istio 做灰度发布。结果：发布频率从每周 2 次飙到每天 10 次以上，回滚从 30 分钟降到 1 分钟，扩缩容全自动节假日不用值班，总 ECS 成本下降 28%。这就是给客户算账的真实样本。',
+    fallbackDuration: 23000 },
+
+  // 收尾
+  { chapter: '完成', title: '🎉 Day 5 学完！',
+    eyebrow: '关键心法',
+    body: '客户说"我们还在用虚拟机"不要直接劝 K8s。<br>先帮他算账：<span class="hl">发布频率 / 回滚时间 / 扩容自动化</span><br>用"3 个月试点 1 个非核心应用上 VKE"切入。<br><b>客户为"少加班"买单，比为"先进架构"买单容易得多。</b>',
+    visual: '<div style="font-size:80px;">🚀</div>',
+    voice: '最后一个心法：售前讲容器云原生，不要劈头盖脸劝客户上 K8s。先帮客户算笔账：你现在每月发布几次？回滚要多久？节假日扩容是不是值班加机器？再用 3 个月试点 1 个非核心应用上 VKE 切入。客户为"少加班"买单，远比为"先进架构"买单容易得多。Day 5 完结，下一个章节见。',
+    fallbackDuration: 16000 },
+];
+</script>
+<script src="_player.js?v=16"></script>
+</body>
+</html>

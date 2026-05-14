@@ -4,340 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Day 2 · 云网络深度 · 互动教学视频</title>
-<style>
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;background:#0b1020;color:#fff;
-    font-family:"PingFang SC","Microsoft YaHei","HarmonyOS Sans SC",-apple-system,BlinkMacSystemFont,sans-serif;
-    overflow:hidden;-webkit-font-smoothing:antialiased;}
-  body{display:flex;flex-direction:column;}
-
-  /* ============ 顶部进度条 ============ */
-  .topbar{position:relative;height:6px;background:rgba(255,255,255,.08);flex-shrink:0;z-index:5;}
-  .progress{height:100%;background:linear-gradient(90deg,#2b5cff,#6e3aff,#ec4899);
-    width:0%;transition:width .3s linear;box-shadow:0 0 10px rgba(43,92,255,.6);}
-  .chapter-marks{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
-  .chapter-mark{position:absolute;top:0;height:100%;width:1px;background:rgba(255,255,255,.3);}
-
-  /* ============ 主舞台 ============ */
-  .stage{flex:1;position:relative;overflow:hidden;display:flex;
-    background:radial-gradient(ellipse at center,#1a2046 0%,#0b1020 100%);}
-  .slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    padding:6vh 8vw;opacity:0;transition:opacity .5s ease;pointer-events:none;
-    transform:translateY(10px);}
-  .slide.active{opacity:1;pointer-events:auto;transform:translateY(0);
-    transition:opacity .6s ease, transform .6s ease;}
-
-  /* 元素错落入场：用 CSS 变量驱动 delay */
-  .slide.active .slide-eyebrow{animation:slideUp .6s .15s both;}
-  .slide.active .slide-title{animation:slideUp .7s .35s both;}
-  .slide.active .visual{animation:slideUp .8s .55s both;}
-  .slide.active .slide-body{animation:slideUp .8s .75s both;}
-  @keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-
-  .slide-eyebrow{font-size:14px;letter-spacing:8px;color:#7a8db5;
-    text-transform:uppercase;margin-bottom:16px;opacity:0;}
-  .slide-title{font-size:42px;font-weight:800;letter-spacing:2px;margin-bottom:24px;
-    line-height:1.25;text-align:center;opacity:0;
-    background:linear-gradient(135deg,#fff 0%,#a5b4fc 50%,#fff 100%);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-  .slide-body{font-size:18px;line-height:1.7;color:#cdd5e0;max-width:880px;text-align:center;opacity:0;}
-  .slide-body b{color:#fff;font-weight:600;}
-  .slide-body .hl{color:#a5b4fc;font-weight:600;}
-  .visual{margin:18px 0;opacity:0;}
-
-  /* 封面：浮动地球 + 旋转光环 */
-  .cover-icon{font-size:88px;margin-bottom:24px;position:relative;
-    filter:drop-shadow(0 8px 20px rgba(43,92,255,.5));
-    animation:float 4s ease-in-out infinite;}
-  .cover-icon::after{content:"";position:absolute;inset:-40px;border-radius:50%;
-    border:2px dashed rgba(165,180,252,.3);animation:spin 12s linear infinite;}
-  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-  @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-
-  /* ============ OSI 模型可视化 ============ */
-  .osi-table{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:520px;max-width:90vw;}
-  .osi-col{display:flex;flex-direction:column;gap:6px;}
-  .osi-head{font-size:13px;color:#7a8db5;text-align:center;padding:6px;letter-spacing:2px;}
-  .layer{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;
-    padding:10px 14px;font-size:14px;text-align:center;transition:all .4s;}
-  .layer.h{background:linear-gradient(135deg,#2b5cff,#6e3aff);border-color:#6e3aff;
-    transform:scale(1.05);box-shadow:0 6px 20px rgba(43,92,255,.4);font-weight:700;
-    animation:pulseHL 2s ease-in-out infinite;}
-  @keyframes pulseHL{0%,100%{box-shadow:0 6px 20px rgba(43,92,255,.4);}
-    50%{box-shadow:0 6px 30px rgba(110,58,255,.7),0 0 0 4px rgba(43,92,255,.15);}}
-  .layer .badge{font-size:11px;color:#7a8db5;margin-right:6px;}
-
-  /* ============ CIDR 可视化 ============ */
-  .ip-vis{font-size:48px;letter-spacing:6px;font-family:'Courier New',monospace;color:#a5b4fc;
-    text-shadow:0 0 20px rgba(165,180,252,.5);}
-  .ip-vis .seg{display:inline-block;animation:segIn .6s both;}
-  .ip-vis .seg:nth-child(1){animation-delay:.6s}
-  .ip-vis .seg:nth-child(2){animation-delay:.9s}
-  .ip-vis .seg:nth-child(3){animation-delay:1.2s}
-  .ip-vis .seg:nth-child(4){animation-delay:1.5s}
-  @keyframes segIn{from{opacity:0;transform:scale(.5);}to{opacity:1;transform:scale(1);}}
-
-  /* CIDR 切分 */
-  .cidr-split{font-family:'Courier New',monospace;font-size:22px;color:#a5b4fc;
-    text-align:center;line-height:2;}
-  .cidr-split .arrow{display:inline-block;font-size:14px;color:#7a8db5;margin:8px 0;}
-  .cidr-split .chunk{display:inline-block;padding:6px 14px;margin:4px;border-radius:6px;
-    background:rgba(43,92,255,.15);border:1px solid rgba(43,92,255,.4);animation:chunkIn .5s both;}
-  .cidr-split .chunk:nth-child(odd){background:rgba(110,58,255,.15);border-color:rgba(110,58,255,.4);}
-  .cidr-split .chunk:nth-child(3){animation-delay:.5s}
-  .cidr-split .chunk:nth-child(5){animation-delay:1s}
-  @keyframes chunkIn{from{opacity:0;transform:translateY(-15px);}to{opacity:1;transform:translateY(0);}}
-
-  /* ============ VPC 拓扑（加 ECS 闪烁 + 流量动画）============ */
-  .vpc-topo{width:680px;max-width:92vw;height:340px;position:relative;
-    background:rgba(43,92,255,.05);border:2px dashed rgba(43,92,255,.4);border-radius:14px;
-    padding:14px;animation:vpcGlow 4s ease-in-out infinite;}
-  @keyframes vpcGlow{0%,100%{box-shadow:0 0 0 rgba(43,92,255,.2);}50%{box-shadow:0 0 30px rgba(43,92,255,.25);}}
-  .vpc-label{position:absolute;top:-12px;left:20px;background:#0b1020;padding:0 10px;
-    color:#a5b4fc;font-size:13px;font-weight:600;letter-spacing:1px;}
-  .az{position:absolute;background:rgba(110,58,255,.06);border:1px dashed rgba(110,58,255,.5);
-    border-radius:10px;padding:30px 12px 12px;font-size:11px;}
-  .az-label{position:absolute;top:-9px;left:12px;background:#0b1020;padding:0 8px;
-    color:#c4b5fd;font-size:11px;font-weight:600;}
-  .subnet{background:rgba(43,92,255,.15);border:1px solid rgba(43,92,255,.4);
-    border-radius:6px;padding:8px;margin-bottom:8px;font-size:11px;color:#cbd5e1;}
-  .subnet b{color:#a5b4fc;display:block;margin-bottom:4px;font-size:10px;letter-spacing:.5px;}
-  .ecs{display:inline-block;background:rgba(236,72,153,.3);border:1px solid #ec4899;border-radius:4px;
-    width:18px;height:18px;margin:1px;position:relative;
-    animation:ecsBlink 2.6s ease-in-out infinite;}
-  .ecs:nth-child(2){animation-delay:.3s}
-  .ecs:nth-child(3){animation-delay:.6s}
-  .ecs:nth-child(4){animation-delay:.9s}
-  .ecs:nth-child(5){animation-delay:1.2s}
-  @keyframes ecsBlink{
-    0%,60%,100%{background:rgba(236,72,153,.3);box-shadow:none;}
-    75%{background:#ec4899;box-shadow:0 0 12px #ec4899,0 0 24px rgba(236,72,153,.6);}
-  }
-
-  /* ============ 安全组 vs ACL ============ */
-  .sg-acl{display:grid;grid-template-columns:1fr 1fr;gap:24px;width:780px;max-width:94vw;}
-  .sg-box,.acl-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
-    border-radius:14px;padding:20px;position:relative;}
-  .sg-box{border-color:#22c55e;box-shadow:0 4px 20px rgba(34,197,94,.15);}
-  .acl-box{border-color:#f59e0b;box-shadow:0 4px 20px rgba(245,158,11,.15);}
-  .sg-box h4{color:#22c55e;font-size:16px;margin-bottom:10px;}
-  .acl-box h4{color:#f59e0b;font-size:16px;margin-bottom:10px;}
-  .sg-box p,.acl-box p{font-size:13px;color:#cbd5e1;line-height:1.6;margin-bottom:6px;}
-  .sg-box .tag,.acl-box .tag{display:inline-block;font-size:11px;padding:2px 8px;
-    border-radius:4px;background:rgba(255,255,255,.1);margin-right:6px;}
-
-  /* 安全雷区警示动画 */
-  .danger-box{background:rgba(239,68,68,.15);border:2px dashed #ef4444;border-radius:12px;
-    padding:20px;width:500px;max-width:90vw;text-align:center;font-family:'Courier New',monospace;
-    font-size:16px;color:#fca5a5;
-    animation:dangerShake 3s ease-in-out infinite;}
-  @keyframes dangerShake{
-    0%,90%,100%{transform:translateX(0);}
-    92%{transform:translateX(-4px);}94%{transform:translateX(4px);}
-    96%{transform:translateX(-3px);}98%{transform:translateX(3px);}
-  }
-
-  /* ============ NLB vs ALB 流量动画 ============ */
-  .lb-compare{display:grid;grid-template-columns:1fr 1fr;gap:28px;width:840px;max-width:96vw;}
-  .lb-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
-    border-radius:14px;padding:20px;position:relative;}
-  .lb-box h4{color:#fff;font-size:16px;margin-bottom:14px;}
-  .lb-row{display:flex;align-items:center;justify-content:space-between;
-    margin:14px 0;font-size:12px;color:#cbd5e1;position:relative;}
-  .lb-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;
-    justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;position:relative;z-index:2;}
-  .lb-icon.user{background:#2b5cff;}
-  .lb-icon.lb{background:linear-gradient(135deg,#6e3aff,#ec4899);
-    animation:lbPulse 2s ease-in-out infinite;}
-  @keyframes lbPulse{0%,100%{box-shadow:0 0 0 0 rgba(110,58,255,.4);}
-    50%{box-shadow:0 0 0 10px rgba(110,58,255,0);}}
-  .lb-icon.svc{background:rgba(34,197,94,.6);}
-
-  /* 流量箭头：基础线 + 流动小球 */
-  .lb-arrow{flex:1;height:2px;background:rgba(255,255,255,.2);position:relative;margin:0 8px;}
-  .lb-arrow::after{content:"";position:absolute;right:-1px;top:-3px;
-    border-left:6px solid rgba(255,255,255,.4);
-    border-top:4px solid transparent;border-bottom:4px solid transparent;}
-  /* 流动小球 */
-  .lb-arrow::before{content:"";position:absolute;top:-3px;left:0;
-    width:8px;height:8px;background:#fff;border-radius:50%;
-    box-shadow:0 0 8px #fff,0 0 16px rgba(255,255,255,.5);
-    animation:packetFlow 1.8s linear infinite;}
-  @keyframes packetFlow{
-    0%{left:-4px;opacity:0;}
-    10%{opacity:1;}
-    90%{opacity:1;}
-    100%{left:calc(100% - 4px);opacity:0;}
-  }
-  .lb-arrow.delay2::before{animation-delay:.6s;}
-  .lb-arrow.delay3::before{animation-delay:1.2s;}
-
-  .lb-note{font-size:11.5px;color:#7a8db5;line-height:1.6;padding-top:10px;
-    border-top:1px dashed rgba(255,255,255,.1);margin-top:14px;}
-
-  /* ============ 三栏对比卡 ============ */
-  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;width:820px;max-width:94vw;}
-  .col-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;
-    padding:16px;text-align:center;transition:all .3s;animation:cardIn .6s both;}
-  .col-card:nth-child(1){animation-delay:.2s;}
-  .col-card:nth-child(2){animation-delay:.4s;}
-  .col-card:nth-child(3){animation-delay:.6s;}
-  .col-card:nth-child(4){animation-delay:.8s;}
-  .col-card:hover{transform:translateY(-3px);border-color:rgba(165,180,252,.4);}
-  @keyframes cardIn{from{opacity:0;transform:translateY(20px) scale(.95);}to{opacity:1;transform:translateY(0) scale(1);}}
-  .col-card .num{font-size:32px;font-weight:800;
-    background:linear-gradient(135deg,#a5b4fc,#ec4899);-webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;line-height:1;}
-  .col-card h5{font-size:14px;color:#fff;margin-bottom:6px;}
-  .col-card p{font-size:12px;color:#9ca3af;line-height:1.6;}
-
-  /* ============ CDN 流动动画 ============ */
-  .cdn-flow{display:flex;align-items:center;gap:16px;font-size:46px;letter-spacing:6px;
-    padding:14px 22px;background:rgba(255,255,255,.04);border-radius:12px;}
-  .cdn-flow .node{display:inline-block;animation:cdnPulse 2s ease-in-out infinite;}
-  .cdn-flow .node:nth-child(3){animation-delay:.6s;}
-  .cdn-flow .node:nth-child(5){animation-delay:1.2s;}
-  @keyframes cdnPulse{0%,100%{filter:drop-shadow(0 0 0 rgba(165,180,252,0));transform:scale(1);}
-    50%{filter:drop-shadow(0 0 12px rgba(165,180,252,.8));transform:scale(1.1);}}
-  .cdn-flow .arrow{font-size:30px;color:#a5b4fc;
-    animation:arrowSlide 2s ease-in-out infinite;}
-  .cdn-flow .arrow:nth-child(4){animation-delay:.6s;}
-  @keyframes arrowSlide{0%,100%{transform:translateX(0);opacity:.5;}50%{transform:translateX(6px);opacity:1;}}
-
-  /* ============ 字幕条（支持逐字效果）============ */
-  .captions{position:absolute;bottom:90px;left:50%;transform:translateX(-50%);
-    max-width:88vw;min-width:200px;padding:12px 22px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);
-    border-radius:8px;font-size:15px;line-height:1.6;color:#fff;
-    text-align:center;opacity:0;transition:opacity .3s;pointer-events:none;
-    box-shadow:0 4px 20px rgba(0,0,0,.5);}
-  .captions.show{opacity:1;}
-  .captions::after{content:"";display:inline-block;width:6px;height:14px;
-    background:#a5b4fc;margin-left:4px;vertical-align:middle;
-    animation:caretBlink 1s steps(1,start) infinite;}
-  .captions.done::after{display:none;}
-  @keyframes caretBlink{0%,50%{opacity:1;}50.01%,100%{opacity:0;}}
-
-  /* ============ 控制条 ============ */
-  .controls{height:64px;background:rgba(0,0,0,.45);backdrop-filter:blur(20px);
-    border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;
-    gap:8px;padding:0 14px;flex-shrink:0;z-index:5;}
-  .ctrl-btn{background:transparent;border:none;color:#fff;font-size:18px;
-    width:40px;height:40px;border-radius:8px;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;
-    transition:background .15s;-webkit-tap-highlight-color:rgba(255,255,255,.1);}
-  .ctrl-btn:hover{background:rgba(255,255,255,.08);}
-  .ctrl-btn.play{background:linear-gradient(135deg,#2b5cff,#6e3aff);}
-  .ctrl-btn.play:hover{filter:brightness(1.1);}
-  .ctrl-info{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
-  .ctrl-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .ctrl-meta{font-size:11px;color:#7a8db5;}
-  .ctrl-select{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);
-    border-radius:6px;color:#fff;padding:6px 8px;font-size:12px;cursor:pointer;font-family:inherit;
-    max-width:140px;}
-  .ctrl-toggle{font-size:11px;color:#a5b4fc;cursor:pointer;user-select:none;
-    padding:6px 10px;border-radius:6px;border:1px solid rgba(165,180,252,.3);
-    background:rgba(165,180,252,.05);white-space:nowrap;}
-  .ctrl-toggle.on{background:rgba(43,92,255,.25);color:#fff;border-color:#6e3aff;}
-
-  /* 章节列表 */
-  .toc{position:absolute;top:14px;right:16px;background:rgba(0,0,0,.55);backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px;
-    max-height:calc(100vh - 100px);overflow-y:auto;z-index:6;
-    transform:translateX(110%);transition:transform .3s;}
-  .toc.show{transform:translateX(0);}
-  .toc-item{display:flex;align-items:center;gap:8px;padding:6px 10px;font-size:12px;color:#cbd5e1;
-    cursor:pointer;border-radius:6px;min-width:200px;transition:background .15s;}
-  .toc-item:hover{background:rgba(255,255,255,.06);}
-  .toc-item.active{background:rgba(43,92,255,.25);color:#fff;}
-  .toc-num{display:inline-block;width:24px;height:20px;text-align:center;font-size:11px;
-    background:rgba(255,255,255,.1);border-radius:3px;color:#a5b4fc;flex-shrink:0;}
-
-  /* 启动遮罩（解锁 TTS 需用户首次交互） */
-  .splash{position:absolute;inset:0;z-index:99;background:rgba(11,16,32,.95);backdrop-filter:blur(8px);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;cursor:pointer;
-    transition:opacity .4s;}
-  .splash.hide{opacity:0;pointer-events:none;}
-  .splash-icon{font-size:64px;animation:float 3s ease-in-out infinite;}
-  .splash-title{font-size:24px;font-weight:700;letter-spacing:1px;}
-  .splash-sub{font-size:13px;color:#a5b4fc;}
-  .splash-btn{margin-top:14px;padding:14px 32px;border-radius:30px;border:none;
-    background:linear-gradient(135deg,#2b5cff,#6e3aff,#ec4899);color:#fff;
-    font-size:15px;font-weight:600;letter-spacing:2px;cursor:pointer;
-    box-shadow:0 8px 24px rgba(110,58,255,.4);transition:all .2s;font-family:inherit;}
-  .splash-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(110,58,255,.55);}
-
-  /* 响应式 */
-  @media (max-width:768px){
-    .slide{padding:4vh 5vw;}
-    .slide-eyebrow{font-size:11px;letter-spacing:4px;}
-    .slide-title{font-size:26px;letter-spacing:1px;}
-    .slide-body{font-size:14px;}
-    .osi-table{width:100%;gap:6px;}
-    .layer{padding:6px 10px;font-size:11.5px;}
-    .vpc-topo{width:100%;height:280px;padding:8px;}
-    .sg-acl,.lb-compare,.three-col{grid-template-columns:1fr;width:100%;gap:12px;}
-    .ip-vis{font-size:32px;letter-spacing:3px;}
-    .cidr-split{font-size:14px;}
-    .captions{font-size:13.5px;bottom:80px;padding:10px 16px;}
-    .controls{height:56px;gap:4px;padding:0 6px;}
-    .ctrl-title{font-size:12px;}
-    .ctrl-select{font-size:11px;padding:4px 6px;max-width:100px;}
-    .ctrl-toggle{padding:5px 8px;font-size:10.5px;}
-    .toc-item{min-width:160px;}
-    .cdn-flow{font-size:32px;gap:8px;}
-  }
-</style>
+<link rel="stylesheet" href="_player.css?v=16">
 </head>
 <body>
-
-<div class="topbar">
-  <div class="progress" id="progress"></div>
-  <div class="chapter-marks" id="chapterMarks"></div>
-</div>
-
-<div class="stage" id="stage">
-  <div class="captions" id="captions"></div>
-  <div class="toc" id="toc"></div>
-
-  <!-- 启动遮罩：用户必须点击才能开始 TTS -->
-  <div class="splash" id="splash">
-    <div class="splash-icon">🎬</div>
-    <div class="splash-title">Day 2 · 云网络深度</div>
-    <div class="splash-sub">点击开始 · 9 分钟讲透 VPC / CIDR / 安全组 / 负载均衡</div>
-    <button class="splash-btn" id="splashBtn">▶ 开始播放</button>
-    <div style="margin-top:18px;font-size:11px;color:#7a8db5;text-align:center;line-height:1.7;">
-      💡 提示：点击后会用浏览器中文语音朗读 + 自动切换<br>
-      支持暂停（空格）· 上一张/下一张（←/→）· 朗读结束才进入下一张
-    </div>
-  </div>
-</div>
-
-<div class="controls">
-  <button class="ctrl-btn" id="prevBtn" title="上一页 ←">⏮</button>
-  <button class="ctrl-btn play" id="playBtn" title="播放/暂停 (空格)">▶</button>
-  <button class="ctrl-btn" id="nextBtn" title="下一页 →">⏭</button>
-  <div class="ctrl-info">
-    <div class="ctrl-title" id="ctrlTitle">Day 2 · 云网络深度</div>
-    <div class="ctrl-meta" id="ctrlMeta">点击 ▶ 开始</div>
-  </div>
-  <select class="ctrl-select" id="voiceSel" title="选语音"></select>
-  <select class="ctrl-select" id="speedSel" title="语速">
-    <option value="0.85">慢速 0.85×</option>
-    <option value="1" selected>正常 1×</option>
-    <option value="1.15">略快 1.15×</option>
-    <option value="1.3">快速 1.3×</option>
-    <option value="1.5">超快 1.5×</option>
-  </select>
-  <span class="ctrl-toggle on" id="voiceBtn" title="语音朗读开关">🔊</span>
-  <span class="ctrl-toggle on" id="capBtn" title="字幕开关">字幕</span>
-  <button class="ctrl-btn" id="tocBtn" title="章节列表">☰</button>
-</div>
-
 <script>
-// ===================== 幻灯片数据 =====================
-// fallbackDuration 只在没朗读时用。开启朗读时按"朗读完 + 1.5s 缓冲"切换
-const SLIDES = [
-  // 封面
+window.META = {
+  day: 2,
+  title: 'Day 2 · 云网络深度',
+  intro: '9 分钟讲透 VPC / CIDR / 安全组 / 负载均衡'
+};
+window.SLIDES = [
   { chapter: '开场', title: 'Day 2 · 云网络深度',
     eyebrow: '火山引擎售前 · 互动视频课',
     body: '<b>VPC / CIDR / 安全组 / 负载均衡</b><br>从 OSI 模型到混合云组网，一节课讲透',
@@ -345,7 +21,6 @@ const SLIDES = [
     voice: '欢迎来到 Day 2 云网络深度课。今天用 9 分钟，把 VPC、CIDR、安全组、负载均衡四大核心讲透。',
     fallbackDuration: 8000 },
 
-  // 第 1 章
   { chapter: '第 1 章 · 网络协议基础', title: '协议分层：OSI vs TCP/IP',
     body: '理论分 7 层（OSI），实际只用 4 层（TCP/IP）。<br>售前要记住 <span class="hl">L4 = TCP/UDP</span>，<span class="hl">L7 = HTTP</span>。',
     visual: `<div class="osi-table">
@@ -387,7 +62,6 @@ const SLIDES = [
     voice: 'CIDR 这个东西看起来吓人，其实就一句话：斜杠后面的数字越小，IP 就越多。一个 /16 网段有 65536 个 IP，足够大公司用了。VPC 规划必须先想好 CIDR，事后改成本极高。',
     fallbackDuration: 13000 },
 
-  // 第 2 章
   { chapter: '第 2 章 · VPC 专有网络', title: 'VPC = 你在云上的私有机房',
     body: '<b>Virtual Private Cloud</b><br>每个客户在云上有自己的逻辑隔离网络空间。<br>独立 CIDR · 独立路由 · 独立 ACL · 默认 VPC 之间不可达',
     visual: `<div class="vpc-topo">
@@ -420,7 +94,6 @@ const SLIDES = [
     voice: 'CIDR 规划记住三个原则：第一，预留 50% 给未来扩容，现在用 1000 个 IP 就规划 2000 个。第二，绝对不要用 192.168 网段，那是家用路由器常用的，会和客户 IDC 网络冲突。第三，给每个可用区一个独立的 /22 大网段，1024 个 IP，未来扩容不抓瞎。',
     fallbackDuration: 14000 },
 
-  // 第 3 章
   { chapter: '第 3 章 · 安全组 vs ACL', title: '云上"两道防火墙"',
     body: '生产环境的标准做法：<br><b>ACL 做粗粒度子网隔离</b> + <b>安全组做细粒度实例放行</b><br><span class="hl">金融客户尤其依赖这个组合</span>',
     visual: `<div class="sg-acl">
@@ -448,17 +121,14 @@ const SLIDES = [
     voice: '生产环境的安全组必须用白名单模式，默认全部拒绝，再按需放行。最严重的雷区是把 SSH 22 端口对 0.0.0.0/0 全互联网开放——5 分钟内就会被暴力破解、勒索病毒和矿机敲门。等保 2.0 三级也明文禁止这种配置。',
     fallbackDuration: 14000 },
 
-  // 第 4 章
   { chapter: '第 4 章 · 负载均衡', title: 'NLB vs ALB · 一图看懂',
     body: '<b>四层 NLB</b>：极致性能（百万 PPS），TCP/UDP 包级转发<br><b>七层 ALB</b>：看得懂 HTTP，按 URL/Header 路由',
     visual: `<div class="lb-compare">
       <div class="lb-box">
         <h4>⚡ NLB（四层）</h4>
         <div class="lb-row">
-          <span class="lb-icon user">📱</span>
-          <span class="lb-arrow"></span>
-          <span class="lb-icon lb">L4</span>
-          <span class="lb-arrow delay2"></span>
+          <span class="lb-icon user">📱</span><span class="lb-arrow"></span>
+          <span class="lb-icon lb">L4</span><span class="lb-arrow delay2"></span>
           <span class="lb-icon svc">DB</span>
         </div>
         <div class="lb-note">只看 IP+端口 · 不解析应用层<br>百万级 QPS · 适合数据库/游戏/IoT</div>
@@ -466,10 +136,8 @@ const SLIDES = [
       <div class="lb-box">
         <h4>🧠 ALB（七层）</h4>
         <div class="lb-row">
-          <span class="lb-icon user">🌐</span>
-          <span class="lb-arrow"></span>
-          <span class="lb-icon lb">L7</span>
-          <span class="lb-arrow delay3"></span>
+          <span class="lb-icon user">🌐</span><span class="lb-arrow"></span>
+          <span class="lb-icon lb">L7</span><span class="lb-arrow delay3"></span>
           <span class="lb-icon svc">/api</span>
         </div>
         <div class="lb-note">按 URL/Host/Header 路由<br>SSL 卸载 · WAF 联动 · 电商/SaaS 首选</div>
@@ -479,7 +147,6 @@ const SLIDES = [
     fallbackDuration: 17000 },
 
   { chapter: '第 4 章 · 负载均衡', title: 'LB 算法 · 4 种基础姿势',
-    body: '',
     visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
       <div class="col-card"><div class="num">⚖️</div><h5>轮询</h5><p>公平但忽略节点性能</p></div>
       <div class="col-card"><div class="num">⚖️+</div><h5>加权轮询</h5><p>配大小不一的节点</p></div>
@@ -495,9 +162,7 @@ const SLIDES = [
     voice: '健康检查每 2 到 5 秒探测一次后端节点。连续 3 次失败就剔除。注意阈值不要配太敏感，否则业务一抖动就会触发节点雪崩。/health 端点要轻量，不要去查数据库，否则探测本身就成了性能负担。',
     fallbackDuration: 13000 },
 
-  // 第 5 章
   { chapter: '第 5 章 · VPC 互联', title: 'VPC 怎么和 VPC 通话？',
-    body: '',
     visual: `<div class="three-col">
       <div class="col-card"><div class="num">1</div><h5>对等连接</h5><p>两两直连<br>CIDR 不能重叠<br>超过 3 个就乱</p></div>
       <div class="col-card"><div class="num">2</div><h5>云企业网 CEN</h5><p>中心化枢纽<br>跨 region 跨账号<br>N×N 简化为 N×1</p></div>
@@ -512,27 +177,21 @@ const SLIDES = [
     voice: '客户机房怎么连云上？三种方式。第一，IPsec VPN，走互联网最便宜但延迟抖动大。第二，物理专线，最稳定但每月几万块。第三，SD-WAN，用互联网加智能路由加加密，性价比最高，多分支企业的首选。',
     fallbackDuration: 14000 },
 
-  // 第 6 章
   { chapter: '第 6 章 · CDN', title: 'CDN：把内容搬到用户家门口',
     body: '把静态资源（图/视频/JS/CSS）缓存到 <b>边缘节点</b>。<br>用户访问就近 POP（北京用户去北京 POP）。<br><span class="hl">视频、电商、新闻类业务标配</span>',
     visual: `<div class="cdn-flow">
-      <span class="node">🌐</span>
-      <span class="arrow">→</span>
-      <span class="node">📍</span>
-      <span class="arrow">→</span>
+      <span class="node">🌐</span><span class="arrow">→</span>
+      <span class="node">📍</span><span class="arrow">→</span>
       <span class="node">📱</span>
-    </div>
-    <div style="font-size:13px;color:#7a8db5;margin-top:14px;text-align:center;">源站 → 边缘 POP（缓存） → 用户</div>`,
+    </div><div style="font-size:13px;color:#7a8db5;margin-top:14px;text-align:center;">源站 → 边缘 POP（缓存） → 用户</div>`,
     voice: 'CDN 干的事很简单：把静态资源缓存到离用户最近的边缘节点。北京用户访问北京节点，广州用户访问广州节点，延迟从几十毫秒降到个位数毫秒。视频、电商、新闻类业务都是 CDN 的重度用户。',
     fallbackDuration: 14000 },
 
   { chapter: '第 6 章 · CDN', title: 'CDN vs DCDN vs 智能 DNS',
     body: '<b>CDN</b>：静态资源加速（图片/视频）<br><b>DCDN</b>：动态请求加速（API/Web）<br><b>智能 DNS</b>：根据用户位置返回最优 IP',
-    visual: '',
     voice: 'CDN、DCDN、智能 DNS 三个分清楚。CDN 处理静态资源加速。DCDN 处理动态请求加速，比如 API 和动态网页。智能 DNS 根据用户地理位置返回最优 IP，是 CDN 的底层基础。售前面试时如果客户问到，要能秒回区别。',
     fallbackDuration: 13000 },
 
-  // 速查表
   { chapter: '速查表', title: '面试要点 · 4 个高频问题',
     body: `<div style="font-size:14.5px;line-height:2;text-align:left;max-width:780px;">
       <b>Q1</b>：VPC 跨 AZ 部署有什么好处？<br><span style="color:#a5b4fc">→ 单机房故障不影响业务，是高可用标配</span><br>
@@ -540,11 +199,9 @@ const SLIDES = [
       <b>Q3</b>：NLB 和 ALB 怎么选？<br><span style="color:#a5b4fc">→ TCP/UDP 选 NLB，HTTP 路由选 ALB</span><br>
       <b>Q4</b>：会话保持必须吗？<br><span style="color:#a5b4fc">→ 现代设计推无状态，Session 放 Redis</span>
     </div>`,
-    visual: '',
     voice: '最后是 4 个面试高频题。第一，VPC 跨可用区是高可用标配，单个机房故障不影响业务。第二，安全组在 ECS 上、有状态，ACL 在子网上、无状态，组合使用最稳。第三，TCP UDP 选 NLB，HTTP 路由选 ALB。第四，现代设计推无状态，会话放 Redis，让负载均衡能真正水平扩展。',
     fallbackDuration: 22000 },
 
-  // 收尾
   { chapter: '完成', title: '🎉 Day 2 学完！',
     eyebrow: '下一步',
     body: '回到课程页面 → 做 8 道章节小测<br>→ 80 分通过即可解锁 Day 3<br><br><b>📺 还可以去 B 站 / YouTube 搜对应关键词补充观看</b>',
@@ -552,292 +209,7 @@ const SLIDES = [
     voice: '恭喜，Day 2 学完了。回到课程页面做 8 道章节小测，80 分通过即可解锁 Day 3。如果某个概念还想加深，去 B 站搜对应关键词看长视频。学习愉快。',
     fallbackDuration: 12000 },
 ];
-
-// ===================== 播放器 =====================
-const stage = document.getElementById('stage');
-const captions = document.getElementById('captions');
-const progress = document.getElementById('progress');
-const chapterMarks = document.getElementById('chapterMarks');
-const playBtn = document.getElementById('playBtn');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const ctrlTitle = document.getElementById('ctrlTitle');
-const ctrlMeta = document.getElementById('ctrlMeta');
-const speedSel = document.getElementById('speedSel');
-const voiceSel = document.getElementById('voiceSel');
-const voiceBtn = document.getElementById('voiceBtn');
-const capBtn = document.getElementById('capBtn');
-const tocBtn = document.getElementById('tocBtn');
-const toc = document.getElementById('toc');
-const splash = document.getElementById('splash');
-const splashBtn = document.getElementById('splashBtn');
-
-let idx = 0;
-let playing = false;
-let speed = 1;
-let voiceOn = true;
-let capOn = true;
-let currentUtter = null;
-let captionTimer = null;
-let advanceTimer = null;
-let preferredVoiceName = null;
-
-const totalDuration = SLIDES.reduce((s, x) => s + (x.fallbackDuration || 10000), 0);
-
-// 渲染所有幻灯片到 DOM
-SLIDES.forEach((s, i) => {
-  const div = document.createElement('div');
-  div.className = 'slide';
-  div.dataset.idx = i;
-  div.innerHTML = `
-    ${s.eyebrow ? `<div class="slide-eyebrow">${s.eyebrow}</div>` : ''}
-    ${s.title ? `<div class="slide-title">${s.title}</div>` : ''}
-    ${s.visual ? `<div class="visual">${s.visual}</div>` : ''}
-    ${s.body ? `<div class="slide-body">${s.body}</div>` : ''}
-  `;
-  stage.insertBefore(div, captions);
-});
-
-// 渲染 TOC + 章节标记
-let chapterStarts = [];
-let cumDuration = 0;
-const seenCh = new Set();
-SLIDES.forEach((s, i) => {
-  if (!seenCh.has(s.chapter)) {
-    seenCh.add(s.chapter);
-    chapterStarts.push({ idx: i, t: cumDuration, name: s.chapter });
-  }
-  cumDuration += (s.fallbackDuration || 10000);
-});
-chapterStarts.forEach((c, n) => {
-  const mark = document.createElement('div');
-  mark.className = 'chapter-mark';
-  mark.style.left = (c.t / totalDuration * 100) + '%';
-  chapterMarks.appendChild(mark);
-  const item = document.createElement('div');
-  item.className = 'toc-item';
-  item.dataset.idx = c.idx;
-  item.innerHTML = `<span class="toc-num">${String(n + 1).padStart(2, '0')}</span><span>${c.name}</span>`;
-  item.addEventListener('click', () => { goTo(c.idx); toc.classList.remove('show'); });
-  toc.appendChild(item);
-});
-
-function updateToc() {
-  document.querySelectorAll('.toc-item').forEach(el => {
-    el.classList.toggle('active', SLIDES[idx].chapter === SLIDES[+el.dataset.idx].chapter);
-  });
-}
-
-// 字幕逐字
-function showCaption(text) {
-  if (captionTimer) { clearInterval(captionTimer); captionTimer = null; }
-  captions.classList.remove('done');
-  if (!capOn || !text) { captions.classList.remove('show'); return; }
-  captions.textContent = '';
-  captions.classList.add('show');
-  let i = 0;
-  const step = Math.max(40, 90 - speed * 30); // 语速越快字幕越快
-  captionTimer = setInterval(() => {
-    if (i < text.length) {
-      captions.textContent = text.slice(0, i + 1);
-      i++;
-    } else {
-      clearInterval(captionTimer);
-      captionTimer = null;
-      captions.classList.add('done');
-    }
-  }, step);
-}
-
-// 选择最佳中文 voice
-function pickBestVoice() {
-  if (!window.speechSynthesis) return null;
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices.length) return null;
-
-  // 优先名单（排序：从最自然到最一般）
-  const preferred = [
-    /Microsoft Xiaoxiao/i,    // 微软小晓 - 极自然中文女声
-    /Microsoft Yunxi/i,       // 微软云希 - 自然男声
-    /Microsoft Yunyang/i,     // 微软云扬
-    /Microsoft Xiaoyi/i,      // 微软晓伊
-    /Microsoft Xiaoxuan/i,    // 微软晓萱
-    /Microsoft Huihui/i,      // 微软慧慧
-    /Microsoft Yaoyao/i,      // 微软瑶瑶
-    /Microsoft Kangkang/i,    // 微软康康（男声）
-    /Tingting/i,              // macOS 婷婷
-    /Sin-ji/i,                // macOS 粤语女声
-    /^Google.*[Zz]h[-_]CN/,   // Google 中文
-    /Mei-Jia/i,               // macOS 美佳
-  ];
-  // 用户已选的优先
-  if (preferredVoiceName) {
-    const v = voices.find(x => x.name === preferredVoiceName);
-    if (v) return v;
-  }
-  // 按优先名单匹配
-  for (const re of preferred) {
-    const v = voices.find(x => x.lang.startsWith('zh') && re.test(x.name));
-    if (v) return v;
-  }
-  // 任何中文 voice
-  return voices.find(x => x.lang.startsWith('zh')) || voices[0];
-}
-
-// 填充语音选择下拉
-function fillVoiceSelector() {
-  if (!window.speechSynthesis) return;
-  const voices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('zh'));
-  if (!voices.length) {
-    voiceSel.innerHTML = '<option>无中文语音</option>';
-    return;
-  }
-  const best = pickBestVoice();
-  voiceSel.innerHTML = '';
-  voices.forEach(v => {
-    const opt = document.createElement('option');
-    opt.value = v.name;
-    opt.textContent = v.name.replace(/Microsoft\s+/, '').replace(/\s*\(.*\)$/, '');
-    if (best && v.name === best.name) opt.selected = true;
-    voiceSel.appendChild(opt);
-  });
-}
-if (window.speechSynthesis) {
-  // voices 加载是异步的
-  window.speechSynthesis.onvoiceschanged = fillVoiceSelector;
-  fillVoiceSelector();
-}
-voiceSel.addEventListener('change', () => {
-  preferredVoiceName = voiceSel.value;
-  if (playing && currentUtter) {
-    // 重播当前 slide 切换语音
-    showSlide(idx);
-  }
-});
-
-function showSlide(i) {
-  // 清旧定时器 + 旧 TTS
-  if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
-  if (window.speechSynthesis) window.speechSynthesis.cancel();
-  currentUtter = null;
-
-  document.querySelectorAll('.slide').forEach(s => s.classList.toggle('active', +s.dataset.idx === i));
-  const s = SLIDES[i];
-
-  ctrlTitle.textContent = s.title || s.chapter;
-  ctrlMeta.textContent = `第 ${i + 1} / ${SLIDES.length} 张 · ${s.chapter}`;
-  let elapsed = 0;
-  for (let k = 0; k < i; k++) elapsed += (SLIDES[k].fallbackDuration || 10000);
-  progress.style.width = (elapsed / totalDuration * 100) + '%';
-  updateToc();
-
-  // 字幕（逐字）
-  showCaption(s.voice);
-
-  // TTS 朗读：朗读完才推进
-  if (voiceOn && s.voice && window.speechSynthesis) {
-    const u = new SpeechSynthesisUtterance(s.voice);
-    u.lang = 'zh-CN';
-    u.rate = speed * 0.92;  // 略慢一点更自然
-    u.pitch = 1.08;         // 略高一点更明亮
-    u.volume = 1;
-    const voice = pickBestVoice();
-    if (voice) u.voice = voice;
-    currentUtter = u;
-
-    u.onend = () => {
-      // 朗读结束 → 留 1.2 秒让用户看图 → 切下一张
-      if (!playing || currentUtter !== u) return;
-      advanceTimer = setTimeout(() => {
-        if (playing && currentUtter === u) {
-          if (idx < SLIDES.length - 1) { idx++; showSlide(idx); }
-          else pause();
-        }
-      }, 1200);
-    };
-    u.onerror = () => {
-      // 出错也要继续推进，按 fallback 时间
-      if (!playing || currentUtter !== u) return;
-      advanceTimer = setTimeout(() => {
-        if (playing && idx < SLIDES.length - 1) { idx++; showSlide(idx); }
-        else pause();
-      }, (s.fallbackDuration || 10000) / speed);
-    };
-    window.speechSynthesis.speak(u);
-  } else if (playing) {
-    // 没朗读 → 按 fallback 切
-    advanceTimer = setTimeout(() => {
-      if (idx < SLIDES.length - 1) { idx++; showSlide(idx); }
-      else pause();
-    }, (s.fallbackDuration || 10000) / speed);
-  }
-}
-
-function play() {
-  playing = true;
-  playBtn.textContent = '⏸';
-  showSlide(idx);
-}
-function pause() {
-  playing = false;
-  playBtn.textContent = '▶';
-  if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
-  if (window.speechSynthesis) window.speechSynthesis.cancel();
-  currentUtter = null;
-}
-function goTo(i) {
-  if (i < 0 || i >= SLIDES.length) return;
-  idx = i;
-  showSlide(idx);
-}
-
-playBtn.addEventListener('click', () => playing ? pause() : play());
-prevBtn.addEventListener('click', () => goTo(idx - 1));
-nextBtn.addEventListener('click', () => goTo(idx + 1));
-speedSel.addEventListener('change', (e) => {
-  speed = parseFloat(e.target.value);
-  if (playing) showSlide(idx);
-});
-voiceBtn.addEventListener('click', () => {
-  voiceOn = !voiceOn;
-  voiceBtn.classList.toggle('on', voiceOn);
-  voiceBtn.textContent = voiceOn ? '🔊' : '🔇';
-  if (!voiceOn && window.speechSynthesis) window.speechSynthesis.cancel();
-  if (playing) showSlide(idx);
-});
-capBtn.addEventListener('click', () => {
-  capOn = !capOn;
-  capBtn.classList.toggle('on', capOn);
-  if (!capOn) { captions.classList.remove('show'); if (captionTimer) clearInterval(captionTimer); }
-  else if (SLIDES[idx].voice) showCaption(SLIDES[idx].voice);
-});
-tocBtn.addEventListener('click', () => toc.classList.toggle('show'));
-
-document.addEventListener('keydown', (e) => {
-  if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
-  if (e.key === ' ') { e.preventDefault(); playing ? pause() : play(); }
-  else if (e.key === 'ArrowRight') goTo(idx + 1);
-  else if (e.key === 'ArrowLeft') goTo(idx - 1);
-  else if (e.key === 'Escape' && toc.classList.contains('show')) toc.classList.remove('show');
-});
-
-// 启动遮罩：用户首次点击解锁 TTS
-function startPlayback() {
-  splash.classList.add('hide');
-  setTimeout(() => splash.style.display = 'none', 500);
-  // 暖一下 TTS（部分浏览器需要先调用一次）
-  if (window.speechSynthesis) {
-    const warm = new SpeechSynthesisUtterance('');
-    warm.volume = 0;
-    window.speechSynthesis.speak(warm);
-  }
-  setTimeout(() => play(), 200);
-}
-splashBtn.addEventListener('click', startPlayback);
-splash.addEventListener('click', (e) => { if (e.target === splash) startPlayback(); });
-
-// 显示第一张作为预览
-showSlide(0);
 </script>
+<script src="_player.js?v=16"></script>
 </body>
 </html>

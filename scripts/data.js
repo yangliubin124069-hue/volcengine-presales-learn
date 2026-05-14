@@ -130,7 +130,7 @@ const COURSE = [
   {
     day: 2,
     videoQueries: ['VPC 入门 阿里云', 'VLAN 子网划分 教程', 'CIDR 子网计算'],
-    internalVideo: 'lessons/day2-video.html?v=15',
+    internalVideo: 'lessons/day2-video.html?v=16',
     stage: 's1',
     title: '云网络深度（VPC / 负载均衡 / 混合组网 / CDN）',
     summary: '从 OSI 模型到 VPC、SLB、专线、SD-WAN、CDN 的全栈云网络',
@@ -459,6 +459,7 @@ const COURSE = [
   {
     day: 5,
     videoQueries: ['Docker 入门', 'Kubernetes K8s 入门教程', 'Service Mesh Istio'],
+    internalVideo: 'lessons/day5-video.html?v=16',
     stage: 's1',
     title: '容器与云原生（Docker / K8s / Service Mesh / GitOps）',
     summary: 'Docker、Kubernetes 全要素、Service Mesh、CI/CD 与 GitOps 完整链路',
