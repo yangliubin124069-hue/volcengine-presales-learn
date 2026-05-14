@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 18 · 行业方案上：互联网/泛娱乐/金融/汽车 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=26">
+<style>
+  .industry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 900px; max-width: 96vw; }
+  .ind-card { padding: 16px; border-radius: 12px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; animation: cardIn .5s both; }
+  .ind-card.web { border-color: #2b5cff; }
+  .ind-card.ent { border-color: #ec4899; animation-delay: .15s; }
+  .ind-card.fin { border-color: #f59e0b; animation-delay: .3s; }
+  .ind-card.car { border-color: #22c55e; animation-delay: .45s; }
+  .ind-card h5 { font-size: 15px; color: #fff; margin-bottom: 6px; font-weight: 700; }
+  .ind-card .ic { font-size: 28px; }
+  .ind-card .pain { color: #fca5a5; font-size: 12px; margin: 4px 0; }
+  .ind-card .arch { color: #cbd5e1; font-size: 12px; margin: 4px 0; line-height: 1.6; }
+  .ind-card .arch b { color: #fde68a; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 18, title: 'Day 18 · 行业方案上', intro: '12 分钟 · 互联网/泛娱乐/金融/汽车 4 大行业打法 + 新能源车智驾 PB 数据案例' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 18 · 行业方案（上）',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>互联网 / 泛娱乐 / 金融 / 汽车 4 大行业打法</b><br>12 分钟 + 2 互动 + 2 客户对话 + 新能源车智驾 100TB/天数据案例',
+    visual: '<div class="cover-icon">🏢</div>',
+    voice: '欢迎来到 Day 18 行业方案上半场。前面 17 节课讲产品和方法论今天讲怎么落到行业。12 分钟讲透互联网、泛娱乐、金融、汽车 4 大行业的核心痛点和典型架构，加 2 个客户对话和新能源车智驾 100TB/天数据真实案例。',
+    fallbackDuration: 22000 },
+
+  { chapter: '第 1 章 · 4 大行业速记', title: '一图速记 · 痛点 + 方案',
+    visual: `<div class="industry-grid">
+      <div class="ind-card web">
+        <span class="ic">🌐</span>
+        <h5>互联网 / 电商</h5>
+        <div class="pain">😤 大促弹性 + AI 推荐 + 海外加速</div>
+        <div class="arch">CDN/DCDN → ALB → VKE → <b>veDB + Redis + ByteHouse</b> → 方舟</div>
+      </div>
+      <div class="ind-card ent">
+        <span class="ic">🎬</span>
+        <h5>泛娱乐</h5>
+        <div class="pain">😤 低延迟 + 版权 + UGC 审核</div>
+        <div class="arch">LSS/RTC + DCDN + DRM + <b>VOD 智能审核 + 字幕</b></div>
+      </div>
+      <div class="ind-card fin">
+        <span class="ic">🏦</span>
+        <h5>金融</h5>
+        <div class="pain">😤 合规过审 + 国产化 + 风控</div>
+        <div class="arch">金融云 + 信创 + <b>veDB PG + ByteHouse + 两地三中心</b></div>
+      </div>
+      <div class="ind-card car">
+        <span class="ic">🚗</span>
+        <h5>汽车</h5>
+        <div class="pain">😤 智驾算力 + 数据合规 + 座舱</div>
+        <div class="arch">TOS + <b>vePFS + GPU 集群</b> + 豆包语音 + 汽车云</div>
+      </div>
+    </div>`,
+    voice: '4 大行业一图速记。互联网电商最痛大促弹性加 AI 推荐加海外加速架构 CDN DCDN 加 ALB 加 VKE 加 veDB Redis ByteHouse 加方舟。泛娱乐最痛低延迟加版权加 UGC 审核架构 LSS RTC 加 DCDN 加 DRM 加 VOD 智能审核字幕。金融最痛合规过审加国产化加风控架构金融云加信创加 veDB PG ByteHouse 两地三中心。汽车最痛智驾算力加数据合规加座舱架构 TOS 加 vePFS GPU 集群加豆包语音加汽车云。<b>每个行业先搞定一个标杆案例后续可以打 5 年</b>。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 2 章 · 互联网', title: '高并发 + 强弹性 + 短迭代',
+    body: '<b>核心特征</b>：百万 QPS + 5-10x 大促峰值 + 每天 N 次上线 + 用户体验敏感<br><span class="hl">差异化打法：字节同款推荐 + 视频云 + 海外 POP</span>',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🛒</div><h5>电商平台</h5><p>大促弹性 / AI 推荐<br>双 11 5x 流量</p></div>
+      <div class="col-card"><div class="num">💼</div><h5>SaaS / B 端</h5><p>多租户 / API 性能<br>分阶段上云</p></div>
+      <div class="col-card"><div class="num">👥</div><h5>社交 / UGC</h5><p>智能审核 + 推荐<br>Coze 帖子审核</p></div>
+      <div class="col-card"><div class="num">📱</div><h5>O2O / 工具</h5><p>地理位置 + 实时<br>veDB + Redis 缓存</p></div>
+    </div>`,
+    voice: '互联网核心特征高并发百万 QPS、强弹性大促 5-10 倍峰值、短迭代每天上线 N 次、用户体验敏感。差异化打法字节同款推荐算法加视频云加海外 POP 是最强组合。4 个细分场景。电商平台大促弹性 AI 推荐双 11 5x 流量。SaaS B 端多租户隔离 API 性能分阶段上云。社交 UGC 智能审核加推荐豆包加 Coze 评论帖子审核效率提升。O2O 工具高频交易加地理位置 veDB 加 Redis 缓存加 RTC 配送通讯。售前讲互联网必带"字节同款"——这是火山的强场不要避开。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 3 章 · 泛娱乐', title: '直播 / 短视频 / 游戏 / 数字人',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(5,1fr);font-size:11px;">
+      <div class="col-card"><div class="num">📺</div><h5>直播</h5><p>LSS+DCDN<br>超低延迟带货</p></div>
+      <div class="col-card"><div class="num">🎞️</div><h5>短视频</h5><p>VOD+字幕+CDN<br>UGC 审核</p></div>
+      <div class="col-card"><div class="num">🎮</div><h5>游戏</h5><p>NLB 长连接<br>DDoS + RTC</p></div>
+      <div class="col-card"><div class="num">🎙️</div><h5>播客音频</h5><p>TTS+ASR<br>AI 主播</p></div>
+      <div class="col-card"><div class="num">🤖</div><h5>数字人</h5><p>RTC+豆包视频<br>2025 增长最快</p></div>
+    </div>`,
+    voice: '泛娱乐 5 大子赛道。直播低延迟加大规模并发 LSS 推流加 DCDN 分发超低延迟连麦带货必备。短视频 VOD 转码加智能字幕加 CDN UGC 上传需智能审核推荐算法是命脉。游戏 NLB 长连接加全球加速加 DDoS 高防加实时音视频战斗匹配靠 Redis Cluster。播客音频 TTS 加 ASR 加音频处理与 Coze 智能体结合做 AI 主播。<b>虚拟人数字人</b> RTC 加豆包视频加 AI 语音 2025 年增长最快子赛道。<b>4 个泛娱乐方案要点</b>：海外加速 Anycast + 海外 POP；版权保护 DRM + 数字水印；合规审核智能审核加人工复审；体验测量首屏卡顿清晰度评分 BI 看板每天监控。',
+    fallbackDuration: 34000 },
+
+  { chapter: '🎯 互动测验 #1', title: '电商客户大促 5x 流量怎么扛？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">中型电商日 GMV 100 万 + 双 11 5x 流量峰值。最优架构？</div>
+      <div class="quiz-opt wrong" data-k="A">提前买 5x ECS 包月（钱浪费 11 个月）</div>
+      <div class="quiz-opt correct" data-k="B">CDN+DCDN 抗静态 + VKE+HPA 弹性 + 出网带宽切按使用</div>
+      <div class="quiz-opt wrong" data-k="C">大促前 1 周扩容（来不及测）</div>
+      <div class="quiz-opt wrong" data-k="D">把核心业务迁到友商</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：电商大促的标准架构组合。<b>① CDN+DCDN</b> 抗住静态资源 80% 流量；<b>② VKE+HPA</b> 后端 K8s 弹性组从 100 台到 5000 台 3 分钟扩满；<b>③ 出网带宽</b> 用按使用流量模式 0 点前自动切按需付费。配 <b>3 倍余量预热 + 抖音春晚同款洪峰预案</b>。A 提前包月浪费 11 个月成本翻 5 倍。C 大促前 1 周扩容来不及压测。D 跨厂商迁移大促前最忌。售前推电商必带这组合。</div>
+    </div>`,
+    voice: '思考一下。电商大促 5x 流量怎么扛？给你 5 秒......正确答案 B CDN+DCDN 抗静态加 VKE+HPA 弹性加出网带宽切按使用。电商大促的标准架构组合：CDN+DCDN 抗住静态资源 80% 流量；VKE+HPA 后端 K8s 弹性组从 100 台到 5000 台 3 分钟扩满；出网带宽用按使用流量模式 0 点前自动切按需付费。配 3 倍余量预热加抖音春晚同款洪峰预案。售前推电商必带这组合。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 4 章 · 金融', title: '4 强 · 合规 / 灾备 / 一致 / 敏感',
+    body: '<b>强合规</b> 等保+监管报备 · <b>强灾备</b> 两地三中心 · <b>强一致</b> ACID 不能让步 · <b>敏感数据</b> 国密+脱敏<br><span class="hl">资质门槛：金融行业等保三级 + 银保监备案 + 信创认证</span>',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(5,1fr);font-size:11px;">
+      <div class="col-card"><div class="num">🏦</div><h5>核心系统</h5><p>分布式改造<br>3-5 年</p></div>
+      <div class="col-card"><div class="num">🛡️</div><h5>风控</h5><p>AI + ByteHouse<br>毫秒决策</p></div>
+      <div class="col-card"><div class="num">⚖️</div><h5>反洗钱</h5><p>异常检测<br>TLS 留档 6 年</p></div>
+      <div class="col-card"><div class="num">📱</div><h5>手机银行</h5><p>CDN+ALB<br>活体识别</p></div>
+      <div class="col-card"><div class="num">💼</div><h5>保险助理</h5><p>Coze+豆包<br>知识库</p></div>
+    </div>`,
+    voice: '金融 4 强：强合规强灾备强一致强敏感数据。<b>资质门槛</b>客户需要厂商有金融行业等保三级加银保监备案加信创认证新厂商前 3 年最难。<b>"两地三中心"是金融标配</b>同城两个数据中心双活加异地一个灾备监管直接要求。5 个金融细分场景。银行核心系统从 Mainframe 到分布式改造加国产化周期 3-5 年保留旧系统集成。信审风控 AI 模型加 ByteHouse 实时计算加知识图谱风控决策毫秒级。反洗钱合规海量交易扫描加异常检测 TLS 留档 6 年加监管随时调取。数字银行 App CDN+ALB+微服务+端侧 SDK 结合人脸活体识别。保险智能助理 Coze 加豆包加知识库解决保单复杂度提升坐席效率。',
+    fallbackDuration: 33000 },
+
+  { chapter: '第 5 章 · 汽车', title: '智驾 / 座舱 / 营销 · 三大场景',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🚙</div><h5>智驾</h5><p>PB 路测数据存<br>千卡训练 + 仿真<br>自建机房扛不住</p></div>
+      <div class="col-card"><div class="num">🎵</div><h5>座舱</h5><p>豆包语音 + RTC<br>Coze 车载助手<br>车云一体</p></div>
+      <div class="col-card"><div class="num">📢</div><h5>营销</h5><p>抖音生态 + 直播<br>智能推荐 + AIGC<br>新能源标配</p></div>
+    </div>`,
+    voice: '汽车 3 大场景。<b>智驾</b>痛点 PB 级路测数据存储加千卡训练加标注外包加仿真平台自建机房根本扛不住。智驾方案 TOS 海量存储加 vePFS 训练加 GPU 集群加 Volcano 调度加数据闭环工具链。<b>座舱</b>方案豆包语音加 RTC 音视频加 Coze 车载助手加车云一体管理。<b>营销直销</b>抖音生态加直播间加智能推荐加 AIGC 试驾视频新能源车标配。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 5 章 · 汽车专属云', title: 'V2X 车联网 + 数据出境',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">☁️</div><h5>汽车云</h5><p>合规基座<br>智驾工具链<br>多家车企采用</p></div>
+      <div class="col-card"><div class="num">🌍</div><h5>数据出境</h5><p>智驾路测安全评估<br>海外用海外 region</p></div>
+      <div class="col-card"><div class="num">📡</div><h5>V2X 车联网</h5><p>IoT + MQTT<br>实时计算<br>车端 / 路端 / 云端</p></div>
+      <div class="col-card"><div class="num">💰</div><h5>客户规模</h5><p>头部车企<br>年云支出 <b>数亿</b><br>5 年长期合作</p></div>
+    </div>`,
+    voice: '汽车专属云 4 个关键。火山引擎汽车云行业云形态合规基座加数据出境合规加智驾工具链多家车企已采用。数据出境智驾路测数据出境需安全评估境外业务用海外 region 隔离。V2X 车联网 IoT 平台加 MQTT 加实时计算车端、路端、云端三者协同。典型客户规模一家头部新能源车企每年云支出数亿元售前一旦突破即可长期合作。<b>汽车是火山的战略行业之一</b>——售前如果能进汽车行业 5 年回报极高。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验 #2', title: '车企智驾 PB 数据 + 千卡训练 · 怎么搭？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">车企 100TB/天路测数据 + 200 卡训练 + 仿真平台。最优架构？</div>
+      <div class="quiz-opt wrong" data-k="A">本地 IDC 加 SSD（IO 跟不上 200 卡）</div>
+      <div class="quiz-opt wrong" data-k="B">普通 TOS + 普通 NAS（吞吐不够）</div>
+      <div class="quiz-opt correct" data-k="C">TOS 生命周期 + vePFS 100GB/s + GPU 集群 + Volcano + VKE 仿真</div>
+      <div class="quiz-opt wrong" data-k="D">全在 AWS 海外（数据出境违规）</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：智驾完整数据闭环。<b>① 存量数据</b> 闪电立方 PB 级离线迁移到 TOS 生命周期分级；<b>② 增量数据</b> 路测车直传 TOS；<b>③ 训练</b> GPU 集群 + vePFS 100 GB/s 吞吐；<b>④ 仿真</b> VKE 跑容器化仿真任务；<b>⑤ 调度</b> Volcano 优化 GPU 利用率。结果：<b>存储成本年省 1200 万 + 训练排队从 7 天降到 6 小时 + 模型迭代 6 周→2 周</b>。这是 Day 18 真实案例的标准打法。D 数据出境违规直接 GDPR 罚款。</div>
+    </div>`,
+    voice: '思考一下。车企智驾 PB 数据加千卡训练怎么搭？给你 5 秒......正确答案 C TOS 加 vePFS 加 GPU 集群加 Volcano 加 VKE。智驾完整数据闭环：存量数据闪电立方 PB 级离线迁移到 TOS 生命周期分级；增量数据路测车直传 TOS；训练 GPU 集群加 vePFS 100GB/s 吞吐；仿真 VKE 跑容器化任务；调度 Volcano 优化 GPU 利用率。结果存储成本年省 1200 万训练排队从 7 天降到 6 小时模型迭代 6 周到 2 周。',
+    fallbackDuration: 29000 },
+
+  { chapter: '🌟 客户对话 #1', title: '"我们金融客户能用火山吗？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们是城商行核心交易系统能用火山吗？合规怎么过？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>金融场景<b>完全可以</b>。<b>5 大合规件齐全</b>：① <b>火山金融云</b>等保三级基座；② <b>信创认证</b>鲲鹏海光麒麟支持；③ <b>银保监备案</b>已过；④ <b>两地三中心</b>架构默认提供；⑤ <b>国密 SM4</b> KMS 加密。核心交易系统建议 <b>veDB PG 替代 Oracle</b>加 DTS 平滑迁移。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>新厂商监管会卡吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>金融监管要求<b>3 年同类业绩</b>。火山引擎已有 3 家城商行客户做过核心系统案例可参考备案号。建议<b>3 阶段</b>切入：<b>① 第 1 年</b>从非核心营销 / 风控分析切入；<b>② 第 2 年</b>扩到信审客服等准核心；<b>③ 第 3 年</b>主核心系统迁移。<b>稳步建立信任比一次性押注重要</b>。</div>
+      </div>
+    </div>`,
+    voice: '一段金融客户对话。客户问城商行能用火山吗。售前甩 5 大合规件：金融云等保三级基座、信创认证鲲鹏海光麒麟、银保监备案、两地三中心、国密 SM4 KMS。核心交易系统建议 veDB PG 替代 Oracle 加 DTS 平滑迁移。客户担心新厂商监管卡，售前要诚实——金融监管要求 3 年同类业绩。火山有 3 家城商行案例备案号可参考。建议 3 阶段切入：第 1 年非核心营销风控、第 2 年准核心信审客服、第 3 年主核心系统。稳步建立信任比一次性押注重要。',
+    fallbackDuration: 33000 },
+
+  { chapter: '🌟 客户对话 #2', title: '"短视频出海加载慢"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们短视频出海 App 200 万 DAU 海外加载慢翻译靠手工 UGC 审核 1 小时延迟。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>典型 "<b>抖音出海"</b>套件场景。<b>4 件套</b>：<b>① VOD + 智能字幕 30+ 语种</b>翻译人力 8 人 → 1 人；<b>② DCDN 海外 80+ POP</b>首屏 12s → 1.2s；<b>③ imageX + 智能审核</b>UGC 秒级过审；<b>④ Anycast EIP</b>全球同 IP 加速。<b>实测次日留存 +18%</b>。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>预算和上线周期？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>2 周 PoC + 1 月全量切换</b>预算约 50 万试点。<b>核心价值</b>：① 节省 7 个翻译人力 / 年 = 80 万 + ② 用户留存 +18% 折算 ARR 增长约 300 万。<b>1 月 ROI 回本</b>。这是字节系出海产品同款基础设施。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话短视频出海客户。售前推抖音出海 4 件套：VOD+智能字幕 30+ 语种翻译人力 8 人到 1 人；DCDN 海外 80+ POP 首屏 12s 到 1.2s；imageX+智能审核 UGC 秒级过审；Anycast EIP 全球同 IP。实测次日留存 +18%。客户问预算上线周期，售前给 2 周 PoC 加 1 月全量切换预算 50 万试点。核心价值节省 7 个翻译人力年 80 万加用户留存 +18% 折算 ARR 增长 300 万。1 月 ROI 回本。',
+    fallbackDuration: 32000 },
+
+  { chapter: '案例', title: '🌟 新势力车企 · 智驾 100TB/天',
+    body: '<b>痛点</b>：60 人智驾团队 + 200 辆路测车 + 每天 100TB 视频 + 自建 IDC 10PB 扩容追不上<br><b>方案</b>：闪电立方迁存量 + TOS 生命周期 + vePFS 100GB/s + GPU 集群 + VKE 仿真<br><br>💰 存储成本年省 <b>1200 万</b><br>⏱ 训练排队 <b>7 天 → 6 小时</b><br>🚀 模型迭代 <b>6 周 → 2 周</b>',
+    visual: '<div style="font-size:64px;">🚗</div>',
+    voice: '一个真实案例。某新势力车企智驾团队 60 人路测车 200 辆每天产生 100 TB 视频数据自建 IDC 已存 10 PB 新数据扩容追不上。方案存量数据闪电立方 PB 级离线迁移到 TOS 生命周期分级；增量路测车直传 TOS；训练用 GPU 集群加 vePFS 100 GB/s 吞吐；仿真平台跑 VKE。结果存储成本年省 1200 万训练任务排队从 7 天降到 6 小时模型迭代周期由 6 周缩短到 2 周。这是火山汽车云的标杆案例售前推车企必带。',
+    fallbackDuration: 28000 },
+
+  { chapter: '⚠️ 售前坑', title: '行业方案 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 行业方案常犯 3 大坑</h4>
+      <div class="x-row"><b>互联网案例直接套金融</b>：监管要求差异巨大 → 一票否决</div>
+      <div class="x-row"><b>汽车数据未做出境合规</b>：欧洲业务 GDPR 罚款 → 上千万欧</div>
+      <div class="x-row"><b>直播架构没留 5x 余量</b>：突发大主播开播即崩 → 业务停摆</div>
+      <div class="ok-row">售前正确做法：<b>① 案例对号入座</b>同行业同体量；<b>② 出海必做合规审查</b>GDPR/CCPA/LGPD/PDPA；<b>③ 大流量业务 5x 余量</b>预扩 + 边缘缓冲 + 多 region 调度。</div>
+    </div>`,
+    voice: '行业方案 3 大坑。一互联网案例直接套金融监管要求差异巨大会被一票否决。二汽车数据未做出境合规欧洲业务被 GDPR 罚款上千万欧。三直播架构没留 5x 余量突发大主播开播即崩业务停摆。正确做法案例对号入座同行业同体量；出海必做合规审查 GDPR CCPA LGPD PDPA；大流量业务 5x 余量预扩加边缘缓冲加多 region 调度。',
+    fallbackDuration: 25000 },
+
+  { chapter: '🌟 销售心法', title: '"行业语言 3 句话" · 转化率翻倍',
+    visual: `<div class="scenario-card">
+      <h4>🎯 售前能用客户行业语言聊三句话，转化率立刻翻倍</h4>
+      <div class="row"><b>互联网</b>："您大促 5x 流量 + AI 推荐 CTR 提升 + 海外首屏 1.2s 这三件事我们都有抖音同款方案。"</div>
+      <div class="row"><b>金融</b>："您等保三级 + 信创替代 Oracle + 两地三中心三件套我们都有银行客户备案案例。"</div>
+      <div class="row"><b>汽车</b>："您 PB 路测数据 + 千卡训练 + 数据出境合规这三件事我们有头部车企同款架构。"</div>
+      <div class="row"><b>泛娱乐</b>："您超低延迟带货 + 智能审核 UGC + 海外加速这三件事都是抖音 TikTok 原生场景。"</div>
+    </div>`,
+    voice: '行业方案的关键心法是"用客户行业语言聊三句话"。互联网客户："您大促 5x 流量加 AI 推荐 CTR 提升加海外首屏 1.2 秒这三件事我们都有抖音同款方案。"金融客户："您等保三级加信创替代 Oracle 加两地三中心三件套我们都有银行客户备案案例。"汽车客户："您 PB 路测数据加千卡训练加数据出境合规这三件事我们有头部车企同款架构。"泛娱乐客户："您超低延迟带货加智能审核 UGC 加海外加速这三件事都是抖音 TikTok 原生场景。"<b>用客户语言聊三句话转化率立刻翻倍</b>。',
+    fallbackDuration: 36000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 互联网最痛 3 件事？<span style="color:#a5b4fc"> → 大促弹性 + AI 推荐 + 海外加速</span><br>
+      <b>Q2</b> 互联网架构？<span style="color:#a5b4fc"> → CDN+DCDN → ALB → VKE → veDB+Redis+ByteHouse → 方舟</span><br>
+      <b>Q3</b> 泛娱乐 4 要点？<span style="color:#a5b4fc"> → 海外加速 / 版权 DRM / 智能审核 / 体验测量</span><br>
+      <b>Q4</b> 金融 4 强？<span style="color:#a5b4fc"> → 强合规 / 强灾备 / 强一致 / 敏感数据</span><br>
+      <b>Q5</b> 金融资质门槛？<span style="color:#a5b4fc"> → 等保三级 + 银保监备案 + 信创 + 3 年业绩</span><br>
+      <b>Q6</b> 汽车 3 场景？<span style="color:#a5b4fc"> → 智驾 / 座舱 / 营销</span><br>
+      <b>Q7</b> 智驾数据架构？<span style="color:#a5b4fc"> → TOS + vePFS 100GB/s + GPU 集群</span><br>
+      <b>Q8</b> 行业 3 大坑？<span style="color:#a5b4fc"> → 案例套用 / 出境合规 / 5x 余量</span>
+    </div>`,
+    voice: '8 题速查。一互联网最痛 3 件事大促弹性 AI 推荐海外加速。二互联网架构 CDN DCDN 加 ALB 加 VKE 加 veDB Redis ByteHouse 加方舟。三泛娱乐 4 要点海外加速版权 DRM 智能审核体验测量。四金融 4 强合规灾备一致敏感。五金融资质等保三级加银保监备案加信创加 3 年业绩。六汽车 3 场景智驾座舱营销。七智驾数据架构 TOS 加 vePFS 100GB/s 加 GPU 集群。八行业 3 大坑案例套用出境合规 5x 余量。这 8 道刷熟行业方案上面试稳过。',
+    fallbackDuration: 30000 },
+
+  { chapter: '完成', title: '🎉 Day 18 学完！',
+    eyebrow: '关键心法',
+    body: '<b>行业方案的精髓不是"我们行业能力多强"，是"我们能解决你这个行业最痛的 1-2 个问题"</b><br>每个行业先搞定一个标杆案例，<br><span class="hl">后续可以打 5 年</span>',
+    visual: '<div style="font-size:80px;">🏢</div>',
+    voice: '恭喜 Day 18 学完。行业方案的精髓不是"我们行业能力多强"是"我们能解决你这个行业最痛的 1-2 个问题"。每个行业先搞定一个标杆案例后续可以打 5 年。下一站 Day 19 行业方案下半场零售政企教育出海。',
+    fallbackDuration: 20000 },
+];
+</script>
+<script src="_player.js?v=26"></script>
+</body>
+</html>

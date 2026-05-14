@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 20 · 综合实战与终面冲刺 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=26">
+<style>
+  .qa-grid { display: grid; grid-template-columns: 1fr; gap: 10px; width: 880px; max-width: 96vw; }
+  .qa-card { padding: 12px 16px; border-radius: 10px;
+    background: rgba(255,255,255,.04); border: 1.5px solid;
+    text-align: left; animation: cardIn .4s both; }
+  .qa-card.q1 { border-color: #2b5cff; }
+  .qa-card.q2 { border-color: #6e3aff; animation-delay: .08s; }
+  .qa-card.q3 { border-color: #ec4899; animation-delay: .16s; }
+  .qa-card.q4 { border-color: #f59e0b; animation-delay: .24s; }
+  .qa-card.q5 { border-color: #22c55e; animation-delay: .32s; }
+  .qa-card .q { font-size: 13.5px; color: #fff; font-weight: 700; margin-bottom: 4px; }
+  .qa-card .q::before { content: 'Q: '; color: #a5b4fc; }
+  .qa-card .a { font-size: 12.5px; color: #cbd5e1; line-height: 1.6; }
+  .qa-card .a::before { content: 'A: '; color: #86efac; font-weight: 700; }
+  .qa-card b { color: #fde68a; }
+
+  .redline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 900px; max-width: 96vw; }
+  .rl-card { padding: 14px 12px; border-radius: 10px; background: rgba(239,68,68,.06);
+    border: 1.5px solid #ef4444; text-align: center; animation: cardIn .5s both; }
+  .rl-card .ic { font-size: 26px; }
+  .rl-card .nm { font-size: 13px; color: #fca5a5; font-weight: 700; margin: 4px 0; }
+  .rl-card .desc { font-size: 11.5px; color: #cbd5e1; line-height: 1.5; }
+  .rl-card:nth-child(2) { animation-delay: .1s; }
+  .rl-card:nth-child(3) { animation-delay: .2s; }
+  .rl-card:nth-child(4) { animation-delay: .3s; }
+  .rl-card:nth-child(5) { animation-delay: .4s; }
+  .rl-card:nth-child(6) { animation-delay: .5s; }
+
+  .speed-num { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 900px; max-width: 96vw; }
+  .sn-card { padding: 12px 14px; border-radius: 8px; background: rgba(245,158,11,.08);
+    border: 1.5px solid #f59e0b; text-align: left; animation: cardIn .5s both; }
+  .sn-card .nm { font-size: 13px; color: #fde68a; font-weight: 700; margin-bottom: 4px; }
+  .sn-card .val { font-size: 12px; color: #cbd5e1; line-height: 1.55; }
+  .sn-card b { color: #fff; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 20, title: 'Day 20 · 综合实战与终面冲刺', intro: '15 分钟 · 20+ 高频 Q&A + 6 红线 + 速记卡 + 考试技巧 + 终面酒店连锁 80 万签约案例' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 20 · 综合实战与终面冲刺',
+    eyebrow: '火山引擎售前 · 互动视频课 · 收官',
+    body: '<b>20+ 高频 Q&A + 6 红线 + 速记卡 + 考试技巧</b><br>15 分钟 + 2 互动 + 终面演练 + 酒店连锁 80 万签约真实案例',
+    visual: '<div class="cover-icon">🎓</div>',
+    voice: '欢迎来到 Day 20 综合实战与终面冲刺。这是 20 天课程的收官节。今天 15 分钟讲透 20+ 高频客户 Q&A、6 条售前红线、必背速记卡、考试技巧，加 1 个终面模拟和酒店连锁第一单 80 万签约真实案例。学完这节你就是合格的售前。',
+    fallbackDuration: 24000 },
+
+  { chapter: '第 1 章 · Q&A 选型类', title: '5 个客户最常问的选型问题',
+    visual: `<div class="qa-grid">
+      <div class="qa-card q1">
+        <div class="q">火山和阿里云比怎么样？</div>
+        <div class="a">看您最在意什么。<b>AI 和视频是我们强项</b>（字节系生产案例），其他对标主流；建议同负载做 30 天 PoC 数字会说话。</div>
+      </div>
+      <div class="qa-card q2">
+        <div class="q">为什么不直接用 GPT/Claude？</div>
+        <div class="a">① 中文场景豆包训练语料更对路；② 数据安全/合规可承诺不入训练池；③ 一站式（方舟+Coze+veMLP）；④ 国内合规过审更顺。</div>
+      </div>
+      <div class="qa-card q3">
+        <div class="q">私有云还是公有云？</div>
+        <div class="a">核心高合规留私有 + 弹性业务上公有 + 混合云连接。建议先识别哪些应用必须私有合规物理隔离其余进公有。</div>
+      </div>
+      <div class="qa-card q4">
+        <div class="q">用什么替代 Oracle？</div>
+        <div class="a"><b>veDB PostgreSQL</b>（PG 兼容 Oracle 多数语法）+ DTS 平滑迁移 + TCO 通常省 50%+。</div>
+      </div>
+      <div class="qa-card q5">
+        <div class="q">K8s 还是 Serverless？</div>
+        <div class="a">长稳定服务用 K8s（VKE）+ 事件驱动突发任务用 FaaS + 混合用最划算。</div>
+      </div>
+    </div>`,
+    voice: '5 个客户最常问的选型问题及标准答。Q1 火山和阿里云比怎么样：看您最在意什么 AI 和视频是我们强项字节系生产案例其他对标主流建议同负载做 30 天 PoC 数字会说话。Q2 为什么不直接用 GPT：中文场景豆包训练语料更对路加数据安全合规可承诺不入训练池加一站式方舟 Coze veMLP 加国内合规过审更顺。Q3 私有云还是公有云：核心高合规留私有加弹性业务上公有加混合云连接。Q4 用什么替代 Oracle：veDB PostgreSQL 兼容 Oracle 多数语法加 DTS 平滑迁移加 TCO 省 50%+。Q5 K8s 还是 Serverless：长稳定服务用 K8s 加事件驱动突发任务用 FaaS 混合最划算。',
+    fallbackDuration: 38000 },
+
+  { chapter: '第 2 章 · Q&A 合规类', title: '5 个合规与安全标准答',
+    visual: `<div class="qa-grid">
+      <div class="qa-card q1">
+        <div class="q">等保过审需要多久？</div>
+        <div class="a">从架构准备到测评通常 <b>3-6 个月</b>；火山金融云自带等保三级基座可省 1-2 个月。</div>
+      </div>
+      <div class="qa-card q2">
+        <div class="q">数据是否会被云厂商使用？</div>
+        <div class="a">合同明确数据归客户、厂商不得二次使用；<b>方舟可承诺 API 调用不入训练池</b>。</div>
+      </div>
+      <div class="qa-card q3">
+        <div class="q">异地灾备怎么做？</div>
+        <div class="a">按等级选 — 冷备 / 温备 / 热备 / 异地多活；<b>金融通常两地三中心</b>。</div>
+      </div>
+      <div class="qa-card q4">
+        <div class="q">信创要求怎么满足？</div>
+        <div class="a">火山信创云支持<b>鲲鹏/海光/飞腾 + 麒麟/欧拉 + 达梦/人大金仓</b>国产化基座。</div>
+      </div>
+      <div class="qa-card q5">
+        <div class="q">海外业务合规怎么办？</div>
+        <div class="a">欧洲 <b>GDPR + 海外 region</b> / 美国 CCPA / 东南亚 PDPA / 国内出境走安全评估。</div>
+      </div>
+    </div>`,
+    voice: '5 个合规与安全标准答。Q 等保过审：3-6 个月火山金融云自带等保三级基座可省 1-2 个月。Q 数据是否被使用：合同明确数据归客户厂商不得二次使用方舟可承诺 API 调用不入训练池。Q 异地灾备：按等级选冷温热多活金融通常两地三中心。Q 信创：鲲鹏海光飞腾加麒麟欧拉加达梦人大金仓国产化基座。Q 海外合规：欧洲 GDPR 加海外 region 美国 CCPA 东南亚 PDPA 国内出境走安全评估。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 3 章 · Q&A 成本类', title: '5 个成本与价值标准答',
+    visual: `<div class="qa-grid">
+      <div class="qa-card q1">
+        <div class="q">上云比 IDC 真的便宜吗？</div>
+        <div class="a">算同等可用性下 5 年 TCO（IDC 99% vs 云 99.95%）通常<b>省 20-40%</b>；重点是隐性成本（停机/机会/人力）。</div>
+      </div>
+      <div class="qa-card q2">
+        <div class="q">账单失控怎么办？</div>
+        <div class="a">建立 <b>FinOps</b>：账单可视 + Right-sizing + Reserved/SP + Spot；半年通常省 15-25%。</div>
+      </div>
+      <div class="qa-card q3">
+        <div class="q">能否给免费试用？</div>
+        <div class="a">中小 1-3 月免费 + 技术陪跑；大客户 PoC 池预算封顶；商业大单<b>"承诺量打包"</b>。</div>
+      </div>
+      <div class="qa-card q4">
+        <div class="q">刊例价后续会涨吗？</div>
+        <div class="a">合同期内（1-3 年）<b>保护价格不涨</b>；行业整体趋势是降老客户续约同步享受新折扣。</div>
+      </div>
+      <div class="qa-card q5">
+        <div class="q">上云后 IT 团队怎么办？</div>
+        <div class="a">传统 SA → 云架构师 / DBA → 数据工程师 / 运维 → SRE；<b>6-12 个月外训+实战 提升而非裁员</b>。</div>
+      </div>
+    </div>`,
+    voice: '5 个成本与价值标准答。Q 上云便宜吗：算同等可用性 5 年 TCO IDC 99% vs 云 99.95% 通常省 20-40% 重点是隐性成本。Q 账单失控：建立 FinOps 账单可视加 Right-sizing 加 Reserved SP 加 Spot 半年省 15-25%。Q 免费试用：中小 1-3 月免费加技术陪跑大客户 PoC 池预算封顶商业大单承诺量打包。Q 刊例价涨：合同期内 1-3 年保护价格不涨行业趋势是降老客户续约同步享受新折扣。Q IT 团队：传统 SA 变云架构师 DBA 变数据工程师运维变 SRE 6-12 月外训实战提升而非裁员。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 4 章 · Q&A AI 类', title: '5 个 AI 与新技术标准答',
+    visual: `<div class="qa-grid">
+      <div class="qa-card q1">
+        <div class="q">大模型适合我们用吗？</div>
+        <div class="a">先选场景（客服/知识库/营销/审单）→ 评估数据准备度 → 小 PoC → 看 ROI 决定扩展。</div>
+      </div>
+      <div class="qa-card q2">
+        <div class="q">豆包 vs DeepSeek vs Llama？</div>
+        <div class="a">方舟支持调用所有；<b>中文场景豆包优 / 推理深度 DeepSeek 强 / 开源自部署 Llama</b>；可同时用按场景路由。</div>
+      </div>
+      <div class="qa-card q3">
+        <div class="q">RAG vs 微调？</div>
+        <div class="a">知识时效性问题用 RAG / 格式风格问题用微调 / <b>通常组合用</b>。</div>
+      </div>
+      <div class="qa-card q4">
+        <div class="q">AI 出错怎么办？</div>
+        <div class="a">① Prompt 加约束"只用提供材料"；② 内容审核；③ 关键场景<b>人工兜底</b>；④ 日志全留档复盘。</div>
+      </div>
+      <div class="qa-card q5">
+        <div class="q">AI 投入 ROI 多久？</div>
+        <div class="a">常见 <b>6-18 个月</b>。算"提速业务增量 + 节省人力"不只算 API 成本。</div>
+      </div>
+    </div>`,
+    voice: '5 个 AI 与新技术标准答。Q 大模型适合用吗：先选场景客服知识库营销审单加评估数据准备度加小 PoC 加看 ROI 决定扩展。Q 豆包 vs DeepSeek vs Llama：方舟支持调用所有中文场景豆包优推理深度 DeepSeek 强开源自部署 Llama 可同时用按场景路由。Q RAG vs 微调：知识时效性用 RAG 格式风格用微调通常组合用。Q AI 出错：Prompt 加约束只用提供材料加内容审核加关键场景人工兜底加日志全留档复盘。Q AI ROI：常见 6-18 个月算提速业务增量加节省人力不只算 API 成本。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🎯 互动测验 #1', title: '客户问"你们和阿里比怎么样？"',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户问"你们和阿里云比怎么样？"。最佳回答？</div>
+      <div class="quiz-opt wrong" data-k="A">"我们便宜 30%"（价格战陷阱）</div>
+      <div class="quiz-opt wrong" data-k="B">"阿里也有问题"（抹黑友商红线）</div>
+      <div class="quiz-opt correct" data-k="C">"看您最在意什么 → AI 和视频是我们强场 → 30 天 PoC 数字说话"</div>
+      <div class="quiz-opt wrong" data-k="D">"我们更先进"（空话）</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：售前面对友商对比的"高频送命题"。永远不要正面比拼。<b>三步答</b>：① <b>"看您最在意什么"</b>——成本？AI？视频？合规？让客户自己说重点；② <b>"AI 和视频是我们强场"</b>能拿出字节系生产案例稀缺资源；③ <b>"30 天 PoC 数字会说话"</b>不空谈让数据决定。<b>既不抹黑友商又把战场拉到自己擅长的地方</b>。A 价格战让客户当"可压价厂商"。B 抹黑友商客户记仇评委记账。D 空话没有信息量。</div>
+    </div>`,
+    voice: '思考一下。客户问火山和阿里云比怎么样？给你 5 秒......正确答案 C 看您最在意什么加 AI 视频是强场加 30 天 PoC。售前面对友商对比的"高频送命题"永远不要正面比拼。三步答：看您最在意什么让客户自己说重点；AI 和视频是我们强场能拿出字节系生产案例稀缺资源；30 天 PoC 数字会说话不空谈让数据决定。既不抹黑友商又把战场拉到自己擅长的地方。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 5 章 · 售前红线', title: '6 条永不能做的事',
+    visual: `<div class="redline">
+      <div class="rl-card">
+        <span class="ic">❌</span>
+        <div class="nm">不答应做不到的事</div>
+        <div class="desc">签单一时爽<br>交付火葬场</div>
+      </div>
+      <div class="rl-card">
+        <span class="ic">❌</span>
+        <div class="nm">不抹黑友商</div>
+        <div class="desc">客户记得你说过的每句话<br>评委也是</div>
+      </div>
+      <div class="rl-card">
+        <span class="ic">❌</span>
+        <div class="nm">不泄露其他客户信息</div>
+        <div class="desc">NDA 是底线<br>案例必须脱敏</div>
+      </div>
+      <div class="rl-card">
+        <span class="ic">❌</span>
+        <div class="nm">不擅自降价</div>
+        <div class="desc">超权限当场说<br>"我回去申请"</div>
+      </div>
+      <div class="rl-card">
+        <span class="ic">❌</span>
+        <div class="nm">不绕过 AE/采购</div>
+        <div class="desc">按流程走<br>越界一次终身受限</div>
+      </div>
+      <div class="rl-card">
+        <span class="ic">❌</span>
+        <div class="nm">不贬同事/产品</div>
+        <div class="desc">内部问题内部解决<br>客户面前统一战线</div>
+      </div>
+    </div>`,
+    voice: '售前 6 条红线永不能做的事。一不答应做不到的事签单一时爽交付火葬场客户终身记仇。二不抹黑友商客户记得你说过的每句话评委也是。三不泄露其他客户信息 NDA 是底线案例必须脱敏写"某 X 客户"。四不擅自降价价格有权限超过权限当场说"我回去申请"。五不绕过 AE 采购流程按公司流程走不私下承诺越界一次终身受限。六不在客户面前贬同事或产品内部问题内部解决客户面前一直统一战线。这 6 条是售前的职业底线背下来。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 6 章 · 速记卡 · 必背数字', title: '6 个必背数字 · 张口就来',
+    visual: `<div class="speed-num">
+      <div class="sn-card">
+        <div class="nm">SLA 等级</div>
+        <div class="val">99.9% <b>8.7h</b><br>99.95% <b>4.4h</b><br>99.99% <b>52min</b><br>99.999% <b>5min</b></div>
+      </div>
+      <div class="sn-card">
+        <div class="nm">CDN 节点</div>
+        <div class="val">国内 <b>1500+</b><br>海外 <b>80+</b><br>带宽 <b>100Tbps+</b></div>
+      </div>
+      <div class="sn-card">
+        <div class="nm">TOS 可靠性</div>
+        <div class="val"><b>11 个 9</b><br>(99.999999999%)<br>多 AZ 副本</div>
+      </div>
+      <div class="sn-card">
+        <div class="nm">NLB 性能</div>
+        <div class="val"><b>百万 QPS</b><br>亚毫秒延迟</div>
+      </div>
+      <div class="sn-card">
+        <div class="nm">PL3 云盘</div>
+        <div class="val">单盘 <b>100 万 IOPS</b><br>4 GB/s 吞吐<br>0.2ms 延迟</div>
+      </div>
+      <div class="sn-card">
+        <div class="nm">豆包模型</div>
+        <div class="val">通用/Pro/Lite/视觉/语音/视频<br>上下文 <b>256K+</b><br>OpenAI 兼容</div>
+      </div>
+    </div>`,
+    voice: '6 个必背数字售前张口就来。SLA 等级 99.9% 年 8.7 小时 99.95% 4.4 小时 99.99% 52 分钟 99.999% 5 分钟。CDN 节点国内 1500+ 海外 80+ 带宽 100Tbps+。TOS 可靠性 11 个 9 多 AZ 副本。NLB 性能百万 QPS 亚毫秒延迟。PL3 云盘单盘 100 万 IOPS 4 GB/s 吞吐 0.2ms 延迟。豆包模型通用 Pro Lite 视觉语音视频上下文 256K+ OpenAI 兼容。这 6 个数字背下来客户问什么张口能答。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 7 章 · 速记卡 · 必背案例', title: '5 个必背案例 · 行业标杆',
+    visual: `<table class="cloud-table">
+      <thead><tr><th>行业</th><th>案例核心数据</th></tr></thead>
+      <tbody>
+        <tr><td class="ve">互联网电商</td><td>VKE+CDN+ByteHouse · 大促 5x 流量 · 成本降 <b>28%</b></td></tr>
+        <tr><td class="al">金融</td><td>券商两地三中心 · 6 月迁完 · 监管零扣分 · 5 年 TCO 省 <b>3200 万</b></td></tr>
+        <tr><td class="hw">汽车</td><td>车企智驾 100 TB/天 TOS+vePFS · 训练排队 <b>7 天 → 6 小时</b></td></tr>
+        <tr><td class="tc">AI 落地</td><td>保险 AI 信审 · 理赔 <b>7 天 → 8 小时</b> · NPS +22</td></tr>
+        <tr><td class="bd">出海</td><td>连锁茶饮东南亚 · POS <b>800ms → 80ms</b> · 留存 +14%</td></tr>
+      </tbody>
+    </table>`,
+    voice: '5 个必背案例售前必带。互联网电商：某中型电商上 VKE+CDN+ByteHouse 大促支撑 5x 流量整体 IT 成本降 28%。金融：某券商两地三中心方案 6 月迁完监管检查零扣分 5 年 TCO 节省 3200 万。汽车：某新能源车企 100 TB/天路测数据上 TOS+vePFS 训练任务排队从 7 天降到 6 小时。AI 落地：某保险公司 AI 信审理赔时长从 7 天降到 8 小时客户满意度 +22 NPS。出海：某连锁茶饮东南亚扩张 POS 延迟 800ms 到 80ms App 留存 +14%。这 5 个案例打印贴工位每天读一遍直到不看稿能讲出来。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🎯 互动测验 #2', title: '终面客户场景题',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某连锁酒店 IT 总监问"想用 AI 做客服担心安全和成本阿里云已用 3 年 预算 200 万 3 月想见效"。怎么破？</div>
+      <div class="quiz-opt wrong" data-k="A">报方舟+Coze+veMLP 全套方案</div>
+      <div class="quiz-opt wrong" data-k="B">先讲产品矩阵 60 页 PPT</div>
+      <div class="quiz-opt correct" data-k="C">SPIN 确认痛点 → 3 段方案（30 天 PoC + 60 天扩 + 90 天对接）+ TCO 表 + 餐饮案例</div>
+      <div class="quiz-opt wrong" data-k="D">直接降价 30% 求成交</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：标准售前打法。<b>① SPIN 切入</b>确认痛点是"客服人均工单不够"；<b>② 三段方案</b>：30 天 PoC（Coze + 豆包 Lite + 知识库做"房型咨询"）；60 天扩"投诉处理 + 房卡问题"；90 天对接订单系统做"全链路自动化"；<b>③ TCO 表</b> 3 年节省 600 万；<b>④ 案例锚点</b>某连锁餐饮 Coze 客服。<b>客户 1 周决策做 PoC + 30 天后 80 万合同 + 6 月扩单 200 万</b>。这就是 Day 20 的终面真实演练。售前个人 KPI 月度第一。</div>
+    </div>`,
+    voice: '思考一下。终面场景酒店连锁怎么破？给你 5 秒......正确答案 C SPIN 确认痛点加 3 段方案加 TCO 表加餐饮案例。标准售前打法：SPIN 切入确认痛点是"客服人均工单不够"；三段方案 30 天 PoC Coze 加豆包 Lite 加知识库做"房型咨询"；60 天扩"投诉处理加房卡问题"；90 天对接订单系统做"全链路自动化"；TCO 表 3 年节省 600 万；案例锚点某连锁餐饮 Coze 客服。客户 1 周决策做 PoC 加 30 天后 80 万合同加 6 月扩单 200 万。售前个人 KPI 月度第一。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 8 章 · 考试技巧', title: '5 个应试技巧 · 上场不慌',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">⏱️</div><h5>时间管理</h5><p>30 题 30 分钟 = 1 分钟/题<br>剩余时间检查标记</p></div>
+      <div class="col-card"><div class="num">📋</div><h5>先做有把握的</h5><p>标记不会的<br>不会的最后回过来</p></div>
+      <div class="col-card"><div class="num">🔍</div><h5>排除法</h5><p>4 选 1 大多能秒排 1-2 个<br>看关键字"必须""通常""最优"</p></div>
+      <div class="col-card"><div class="num">⚠️</div><h5>陷阱题</h5><p>"以下不正确的是"<br>"以下不属于的是"<br>看清问对还是问错</p></div>
+      <div class="col-card"><div class="num">📚</div><h5>持续学习</h5><p>每月 1 本经典书<br>《架构整洁》《SRE Google》<br>季度复盘案例库</p></div>
+      <div class="col-card"><div class="num">💎</div><h5>5 字心法</h5><p><b>时排选陷复</b><br>背下来</p></div>
+    </div>`,
+    voice: '5 个应试技巧上场不慌。一时间管理 30 题 30 分钟等于 1 分钟一题剩余时间检查标记。二先做有把握的标记不会的不会的最后回过来。三排除法 4 选 1 大多能秒排 1-2 个看关键字"必须""通常""最优"。四陷阱题"以下不正确的是""以下不属于的是"一定看清是问对的还是错的。五持续学习每月看 1 本经典书架构整洁之道 SRE Google 加 1 个开源项目季度复盘案例库。<b>5 字心法时排选陷复</b>。社群与行业活动 CNCF 中国大会火山 OneCC Coze 开发者大会社群比官方 PPT 更新快。',
+    fallbackDuration: 30000 },
+
+  { chapter: '🌟 终面演练', title: '酒店连锁 · 第一单 80 万签约',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>想用 AI 做客服，担心安全和成本。阿里云已用 3 年，预算 200 万，3 个月想见效。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">SPIN</span><b>S</b> 客服现在人均工单多少？<b>P</b> 哪些工单最重复？<b>I</b> 多接 30% 工单需要再招几人？<b>N</b> AI 解决 50% 重复工单一年省多少？</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>50% 是房型咨询确实重复。50 人客服一年人力 600 万省一半就 300 万。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>3 段方案</b>：<b>① 30 天 PoC</b> Coze+豆包 Lite+知识库做房型咨询 80 万预算；<b>② 60 天扩</b>投诉处理+房卡问题 60 万；<b>③ 90 天</b>对接订单全链路 60 万。3 年节省 600 万 ROI 5 倍。<b>同业案例</b>某连锁餐饮已落地。</div>
+      </div>
+    </div>`,
+    voice: '一段终面演练。客户酒店连锁想用 AI 做客服。售前用 SPIN 4 步：S 客服现在人均工单多少；P 哪些工单最重复；I 多接 30% 工单需要再招几人；N AI 解决 50% 重复工单一年省多少。客户自己算出 50 人客服年 600 万省一半 300 万。售前立刻给 3 段方案：30 天 PoC Coze 加豆包 Lite 加知识库做房型咨询 80 万预算；60 天扩投诉处理加房卡问题 60 万；90 天对接订单全链路 60 万。3 年节省 600 万 ROI 5 倍。同业案例某连锁餐饮已落地。<b>客户 1 周决策做 PoC 30 天后 80 万合同 6 月扩单 200 万</b>这就是终面到签约的标准节奏。',
+    fallbackDuration: 38000 },
+
+  { chapter: '⚠️ 售前坑', title: '20 天毕业 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 20 天毕业生最容易犯的 3 个错</h4>
+      <div class="x-row"><b>考试不规划时间</b>：纠结 1 道难题用了 5 分钟后面 5 道没看清</div>
+      <div class="x-row"><b>签单后立刻消失</b>：客户进交付期遇到困难找不到你 → 续签丢</div>
+      <div class="x-row"><b>只学产品不学客户</b>：3 年下来还是"火山引擎产品手册人形版"</div>
+      <div class="ok-row">正确做法：<b>① 考试 1 分钟/题 + 排除法</b>；<b>② 签单后陪跑 90 天</b>每周对接交付 1 次；<b>③ 每个客户都做行业笔记</b>3 年后是杀手锏。</div>
+    </div>`,
+    voice: '20 天毕业生最容易犯的 3 个错。一考试不规划时间纠结 1 道难题用了 5 分钟后面 5 道没看清。二签单后立刻消失客户进交付期遇到困难找不到你续签丢。三只学产品不学客户 3 年下来还是"火山引擎产品手册人形版"。正确做法考试 1 分钟一题加排除法；签单后陪跑 90 天每周对接交付 1 次；每个客户都做行业笔记 3 年后是杀手锏。这 3 条是从课堂到职场的桥梁。',
+    fallbackDuration: 26000 },
+
+  { chapter: '🌟 收官心法', title: '合格 vs 优秀售前的本质差异',
+    visual: `<div class="scenario-card">
+      <h4>💎 合格 vs 优秀 · 只在 2 件事</h4>
+      <div class="row"><b>能力 1</b>：能 30 秒内说出"客户最痛 1 件事 + 我们的核心价值 + 1 个同业案例"</div>
+      <div class="row"><b>能力 2</b>：客户提非预期问题时不慌、能用框架（SCQA / SPIN / 7 步异议处理）兜住</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);"><b>💡 关键</b>技术是基础 · 结构化思考与不慌是分水岭</div>
+      <div class="row"><b>🎯 真正长成</b>这 20 天的内容只是骨架 · 签 100 个单后才有的肌肉</div>
+    </div>`,
+    voice: '20 天课程的收官心法：合格售前 vs 优秀售前的本质差异只在两件事。能力 1 能不能 30 秒内说出"客户最痛 1 件事加我们的核心价值加 1 个同业案例"。能力 2 能不能在客户提非预期问题时不慌能用框架 SCQA SPIN 7 步异议处理兜住。技术是基础结构化思考与不慌是分水岭。这 20 天的内容只是骨架真正长成是签 100 个单后才有的肌肉。',
+    fallbackDuration: 26000 },
+
+  { chapter: '速查表', title: '面试 · 10 题终极速查',
+    body: `<div style="font-size:13px;line-height:1.8;text-align:left;max-width:840px;">
+      <b>Q1</b> 火山 vs 阿里？<span style="color:#a5b4fc"> → 看您最在意什么 + AI/视频是强场 + 30 天 PoC</span><br>
+      <b>Q2</b> SLA 4 档？<span style="color:#a5b4fc"> → 99.9 / 99.95 / 99.99 / 99.999%</span><br>
+      <b>Q3</b> CDN 节点？<span style="color:#a5b4fc"> → 国内 1500+ 海外 80+ 100Tbps+</span><br>
+      <b>Q4</b> SPIN 4 步？<span style="color:#a5b4fc"> → Situation/Problem/Implication/Need-Payoff</span><br>
+      <b>Q5</b> MEDDIC 6 字母？<span style="color:#a5b4fc"> → Metrics/EB/DC/DP/Pain/Champion</span><br>
+      <b>Q6</b> 6R 顺序？<span style="color:#a5b4fc"> → 先 Retire/Retain → Repurchase → Rehost/Replatform/Refactor</span><br>
+      <b>Q7</b> 售前 6 红线？<span style="color:#a5b4fc"> → 做不到/抹黑/泄露/降价/绕过/贬低</span><br>
+      <b>Q8</b> 终面酒店案例 3 段？<span style="color:#a5b4fc"> → 30 天 PoC + 60 天扩 + 90 天对接</span><br>
+      <b>Q9</b> 行业语言 3 句话？<span style="color:#a5b4fc"> → 用客户行业数字聊转化翻倍</span><br>
+      <b>Q10</b> 优秀售前 2 能力？<span style="color:#a5b4fc"> → 30 秒讲清核心 + 框架兜住非预期</span>
+    </div>`,
+    voice: '10 题终极速查。一火山 vs 阿里看您最在意什么加 AI 视频是强场加 30 天 PoC。二 SLA 4 档 99.9 99.95 99.99 99.999%。三 CDN 节点国内 1500+ 海外 80+ 100Tbps+。四 SPIN 4 步 Situation Problem Implication Need-Payoff。五 MEDDIC 6 字母 Metrics EB DC DP Pain Champion。六 6R 顺序先 Retire Retain Repurchase 再 Rehost Replatform Refactor。七售前 6 红线做不到抹黑泄露降价绕过贬低。八终面酒店案例 3 段 30 天 PoC 加 60 天扩加 90 天对接。九行业语言 3 句话用客户行业数字聊转化翻倍。十优秀售前 2 能力 30 秒讲清核心加框架兜住非预期。',
+    fallbackDuration: 34000 },
+
+  { chapter: '🎉 毕业', title: '20 天课程 完结撒花',
+    eyebrow: '恭喜从入门到合格',
+    body: '你已学完 <b>20 天完整课程</b><br>+ 6 章竞品分析<br>+ 26 个互动教学视频<br><br><span class="hl">这只是骨架 · 真正长成是签 100 个单后才有的肌肉</span><br><br><b>下一步</b>：进入面试 → 第一个客户 → 100 个客户 → 行业顾问',
+    visual: '<div style="font-size:80px;">🎓</div>',
+    voice: '恭喜你完成 20 天完整课程加 6 章竞品分析加 26 个互动教学视频。但这只是骨架真正长成是签 100 个单后才有的肌肉。下一步：进入面试加第一个客户加 100 个客户加行业顾问。20 天前你只懂产品 20 天后你能跟客户聊业务跟评委过招辨认机会判断风险。<b>火山引擎售前的征途从今天正式开始</b>。祝你前程似锦客户排队。',
+    fallbackDuration: 28000 },
+];
+</script>
+<script src="_player.js?v=26"></script>
+</body>
+</html>

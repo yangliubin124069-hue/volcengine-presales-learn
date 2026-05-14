@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Day 19 · 行业方案下：零售/政企/教育/出海 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=26">
+<style>
+  .industry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 900px; max-width: 96vw; }
+  .ind-card { padding: 16px; border-radius: 12px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; animation: cardIn .5s both; }
+  .ind-card.retail { border-color: #ec4899; }
+  .ind-card.gov { border-color: #6e3aff; animation-delay: .15s; }
+  .ind-card.edu { border-color: #f59e0b; animation-delay: .3s; }
+  .ind-card.go { border-color: #22c55e; animation-delay: .45s; }
+  .ind-card h5 { font-size: 15px; color: #fff; margin-bottom: 6px; font-weight: 700; }
+  .ind-card .ic { font-size: 28px; }
+  .ind-card .pain { color: #fca5a5; font-size: 12px; margin: 4px 0; }
+  .ind-card .arch { color: #cbd5e1; font-size: 12px; margin: 4px 0; line-height: 1.6; }
+  .ind-card .arch b { color: #fde68a; }
+
+  .compliance-flags { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 900px; max-width: 96vw; }
+  .cf-card { padding: 12px 8px; border-radius: 8px; background: rgba(255,255,255,.04);
+    border: 1.5px solid #ef4444; text-align: center; animation: cardIn .5s both; }
+  .cf-card .flag { font-size: 28px; display: block; margin-bottom: 4px; }
+  .cf-card .nm { font-size: 13px; color: #fca5a5; font-weight: 700; }
+  .cf-card .law { font-size: 11px; color: #cbd5e1; margin-top: 4px; }
+</style>
+</head>
+<body>
+<script>
+window.META = { day: 19, title: 'Day 19 · 行业方案下', intro: '12 分钟 · 零售/政企/教育/出海 4 大行业打法 + 茶饮东南亚 600 店扩张案例' };
+window.SLIDES = [
+
+  { chapter: '开场', title: 'Day 19 · 行业方案（下）',
+    eyebrow: '火山引擎售前 · 互动视频课',
+    body: '<b>零售 / 政企 / 教育 / 出海 4 大行业打法</b><br>12 分钟 + 2 互动 + 2 客户对话 + 茶饮东南亚 600 店扩张真实案例',
+    visual: '<div class="cover-icon">🌏</div>',
+    voice: '欢迎来到 Day 19 行业方案下半场。Day 18 讲了互联网泛娱乐金融汽车今天讲零售政企教育出海。12 分钟讲透 4 大行业核心痛点和打法加 2 客户对话和某连锁茶饮东南亚 600 店扩张真实案例。',
+    fallbackDuration: 20000 },
+
+  { chapter: '第 1 章 · 4 大行业速记', title: '一图速记 · 痛点 + 方案',
+    visual: `<div class="industry-grid">
+      <div class="ind-card retail">
+        <span class="ic">🛍️</span>
+        <h5>零售 / 快消</h5>
+        <div class="pain">😤 O2O 融合 + 千店千面 + 季节性</div>
+        <div class="arch">CDN+ALB+ECS + veDB + <b>ByteHouse + 抖音生态 + Coze 客服</b></div>
+      </div>
+      <div class="ind-card gov">
+        <span class="ic">🏛️</span>
+        <h5>政企 / 制造</h5>
+        <div class="pain">😤 国产化 + 业务现代化 + AI 政务</div>
+        <div class="arch">政务云 + 信创基座 + <b>豆包政务 + Coze 一网通办</b></div>
+      </div>
+      <div class="ind-card edu">
+        <span class="ic">🎓</span>
+        <h5>教育</h5>
+        <div class="pain">😤 内容版权 + 互动 + 防作弊 + AI 答疑</div>
+        <div class="arch">RTC + VOD + DRM + <b>豆包答疑 + Coze 助教</b></div>
+      </div>
+      <div class="ind-card go">
+        <span class="ic">✈️</span>
+        <h5>出海</h5>
+        <div class="pain">😤 多 region + 数据合规 + 全球加速</div>
+        <div class="arch">海外 region + <b>Anycast + 豆包翻译 + TikTok 联动</b></div>
+      </div>
+    </div>`,
+    voice: '4 大行业一图速记。零售快消最痛 O2O 融合加千店千面加季节性架构 CDN+ALB+ECS 加 veDB 加 ByteHouse 加抖音生态加 Coze 客服。政企制造最痛国产化加业务现代化加 AI 政务架构政务云加信创基座加豆包政务加 Coze 一网通办。教育最痛内容版权加课堂互动加防作弊加 AI 答疑架构 RTC+VOD+DRM 加豆包答疑加 Coze 助教。出海最痛多 region 加数据合规加全球加速架构海外 region 加 Anycast 加豆包翻译加 TikTok 联动。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 2 章 · 零售', title: 'O2O 融合 + 千店千面 + 季节性',
+    body: '<b>核心特征</b>：线上线下一体 + 个性化 + 大促季节性 + <span class="hl">低毛利成本敏感</span><br><b>抖音生态联动</b>是零售客户必谈话题——抖音小店 / 巨量引擎 / 抖音直播',
+    visual: `<div class="three-col" style="grid-template-columns:repeat(5,1fr);font-size:11px;">
+      <div class="col-card"><div class="num">🛒</div><h5>电商平台</h5><p>季节性弹性<br>大促核心</p></div>
+      <div class="col-card"><div class="num">👥</div><h5>私域会员</h5><p>豆包文案<br>Coze SOP</p></div>
+      <div class="col-card"><div class="num">🏪</div><h5>门店 IT</h5><p>POS + 电子价签<br>边缘+小型云</p></div>
+      <div class="col-card"><div class="num">📦</div><h5>供应链</h5><p>多仓库存<br>ML 补货</p></div>
+      <div class="col-card"><div class="num">💬</div><h5>客服中心</h5><p>工单+智能客服<br>人力降 30-50%</p></div>
+    </div>`,
+    voice: '零售 5 个细分场景。电商平台同互联网电商但流量更季节性大促弹性是核心。私域会员用户画像加推荐加自动化营销豆包写文案加 Coze 自动 SOP。门店 IT POS 加电子价签加智能称重边缘计算加小型化云。供应链多仓库存调度加智能补货加配送路径优化 ML 模型嵌入。客服中心工单系统加智能客服 Coze 加数字员工人力可降 30-50%。<b>抖音生态联动</b>抖音小店巨量引擎抖音直播是零售客户必谈话题火山引擎天然有协同。部分大型零售要求门店本地数据库加云端汇总混合云架构匹配。',
+    fallbackDuration: 30000 },
+
+  { chapter: '第 3 章 · 政企/制造', title: '4 强 · 合规 / 流程长 / 保守 / 项目制',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🏛️</div><h5>政务</h5><p>一网通办<br>12345 智能热线<br>城市运营大屏</p></div>
+      <div class="col-card"><div class="num">🏭</div><h5>制造</h5><p>OT/IT 融合<br>数字孪生<br>AI 质检</p></div>
+      <div class="col-card"><div class="num">🇨🇳</div><h5>国产化</h5><p>信创基座<br>鲲鹏/海光<br>麒麟/达梦</p></div>
+    </div>`,
+    voice: '政企制造 4 强：强合规等保信创行业法规、流程长审批多、保守容错率低、强项目制。<b>政企典型项目</b>。一网通办群众企业一站式办事后端打通 N 个委办 AI 助手解答加引导 3-12 月项目。12345 智能热线 ASR+NLU+工单自动分派+话术生成坐席效率提升 50%+。城市运营大屏多源数据融合加实时分析加大屏可视化 ByteHouse 加 LAS 加报表平台。数字孪生 3D 建模加实时数据加仿真预测园区工厂能源管网应用。<b>制造痛点</b> OT/IT 融合加工业互联网加数字孪生加设备预测性维护加 AI 质检。<b>制造方案</b> IoT 平台加时序数据库加边缘计算加视觉 AI 质检加数字孪生 3D 引擎。<b>招投标限制</b>政企采购普遍要求 3 年以上同类业绩新厂商先做"小项目+合作伙伴"路径。',
+    fallbackDuration: 38000 },
+
+  { chapter: '🎯 互动测验 #1', title: '一网通办怎么落地？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某省政务"一网通办"项目 3 千万预算 + 6 个月上线 + 火山是新厂商。怎么进？</div>
+      <div class="quiz-opt wrong" data-k="A">独立投标硬刚华为（资质不够）</div>
+      <div class="quiz-opt correct" data-k="B">联合本地集成商 + 提供 AI 应用层（豆包政务 + Coze）</div>
+      <div class="quiz-opt wrong" data-k="C">先做小项目 3 年再投（错过窗口）</div>
+      <div class="quiz-opt wrong" data-k="D">降价 50% 求中标</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：新厂商进政企的标准打法。<b>"联合本地集成商 + 提供 AI 应用层"</b>：① <b>集成商出资质</b>本地 3 年同类业绩；② <b>火山出 AI 模块</b>豆包政务模型 + Coze 一网通办助手 + DataLeap 政务版；③ <b>分包模式</b>火山作为 ISV 软件供应商不出现在主合同；④ <b>3 年积累后</b>独立投标。<b>这就是 Day 17 学过的"AI 增值模块进合同框架"</b>在政企的落地。3 年同类业绩硬性条款躲不过但 ISV 路径可以绕开。</div>
+    </div>`,
+    voice: '思考一下。新厂商进政企怎么打？给你 5 秒......正确答案 B 联合本地集成商加提供 AI 应用层。新厂商进政企的标准打法："联合本地集成商加提供 AI 应用层"：集成商出资质本地 3 年同类业绩；火山出 AI 模块豆包政务模型加 Coze 一网通办助手加 DataLeap 政务版；分包模式火山作为 ISV 软件供应商不出现在主合同；3 年积累后独立投标。这就是 Day 17 学过的"AI 增值模块进合同框架"在政企的落地。3 年同类业绩硬性条款躲不过但 ISV 路径可以绕开。',
+    fallbackDuration: 28000 },
+
+  { chapter: '第 4 章 · 教育', title: '双减后 · 4 类细分增长',
+    body: '<b>行业现状</b>：双减后 K12 收缩 · <span class="hl">职业教育/高等教育/企业培训/海外留学增长</span><br><b>核心痛点</b>：内容版权 + 课堂互动 + 防作弊 + AI 答疑 + 学生数据安全',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🏫</div><h5>K12 / 大学课堂</h5><p>RTC 多人互动<br>白板 + AI 监课<br>防 P2P 作弊</p></div>
+      <div class="col-card"><div class="num">💼</div><h5>职业教育</h5><p>直播 + 实操平台<br>考证模拟<br>考试作弊检测严苛</p></div>
+      <div class="col-card"><div class="num">🏢</div><h5>企业培训</h5><p>飞书 + 视频学习<br>AI 测评<br>企业 LMS 集成</p></div>
+      <div class="col-card"><div class="num">🌍</div><h5>留学 / 雅思</h5><p>AI 口语陪练<br>写作批改 / 模考<br>豆包多语种优势</p></div>
+    </div>`,
+    voice: '教育行业现状双减后 K12 收缩职业教育高等教育企业培训海外留学增长。核心痛点内容版权加课堂互动体验加防作弊加 AI 答疑批改加学生数据安全。<b>4 类细分场景</b>。K12 大学课堂 RTC 多人互动加白板加 AI 监课加录播回放防 P2P 作弊。职业教育直播加实操平台加考证模拟考试系统对作弊检测严苛。企业培训飞书加视频学习加 AI 测评企业 LMS 集成。留学雅思 AI 口语陪练加写作批改加模考豆包多语种是优势。<b>AI 教育新机会</b> AI 助教 24 小时答疑加智能作业批改加个性化学习路径 2025 快速增长。<b>合规</b>未成年人个人信息保护加内容审核加数据本地化不能马虎。',
+    fallbackDuration: 35000 },
+
+  { chapter: '第 5 章 · 出海', title: '3 大模式 + 4 大合规',
+    visual: `<div class="compliance-flags">
+      <div class="cf-card">
+        <span class="flag">🇪🇺</span>
+        <div class="nm">GDPR</div>
+        <div class="law">欧盟 / 罚 4% 营收</div>
+      </div>
+      <div class="cf-card">
+        <span class="flag">🇺🇸</span>
+        <div class="nm">CCPA</div>
+        <div class="law">加州个人隐私</div>
+      </div>
+      <div class="cf-card">
+        <span class="flag">🇧🇷</span>
+        <div class="nm">LGPD</div>
+        <div class="law">巴西</div>
+      </div>
+      <div class="cf-card">
+        <span class="flag">🇸🇬</span>
+        <div class="nm">PDPA</div>
+        <div class="law">东南亚（新加坡/印尼）</div>
+      </div>
+      <div class="cf-card">
+        <span class="flag">🇨🇳</span>
+        <div class="nm">数据出境</div>
+        <div class="law">国内 → 海外 安全评估</div>
+      </div>
+    </div>`,
+    voice: '出海三大模式产品出海 App SaaS、品牌出海消费品、服务出海咨询外包架构需求差异大。架构原则业务就近部署加数据合规驻留加多 region 高可用加全球加速中心加边缘混合。<b>4 大合规要求</b>。欧盟 GDPR 最高罚款全球营收 4%。美国加州 CCPA 个人隐私。巴西 LGPD。东南亚 PDPA 新加坡印尼等。中国数据出境关键数据出境需安全评估金融医疗政务尤为严格。<b>出海产品组合</b>海外 region ECS+TOS+CDN 加 Anycast EIP 加多语种内容豆包翻译加当地支付。<b>工具栈协同</b> TikTok 广告加巨量引擎加火山引擎云从内容到流量到服务一体。',
+    fallbackDuration: 36000 },
+
+  { chapter: '第 5 章 · 出海典型场景', title: '电商 / 游戏 / SaaS / 内容',
+    visual: `<div class="three-col" style="grid-template-columns:1fr 1fr;">
+      <div class="col-card"><div class="num">🛍️</div><h5>跨境电商</h5><p>Shopify/独立站<br>多支付 + 海外 CDN<br>AIGC 商品图<br>东南亚增长最快</p></div>
+      <div class="col-card"><div class="num">🎮</div><h5>游戏出海</h5><p>全球低延迟 Anycast<br>DDoS 防护<br>中东东南亚热门</p></div>
+      <div class="col-card"><div class="num">💼</div><h5>SaaS 出海</h5><p>多租户隔离<br>多语言<br>GDPR/SOC2</p></div>
+      <div class="col-card"><div class="num">🎬</div><h5>内容/视频</h5><p>CDN+VOD+智能字幕<br>本地化运营<br>TikTok 副本</p></div>
+    </div>`,
+    voice: '出海 4 大典型场景。跨境电商 Shopify 独立站加多支付加海外 CDN 加 AIGC 商品图文案东南亚增长最快。游戏出海全球低延迟 Anycast 加 DDoS 防护加数据中心多 region 中东东南亚是热门。SaaS 出海多租户隔离加多语言加 GDPR SOC2 合规典型服务于本地中小企业。内容视频出海 CDN+VOD+智能字幕加本地化运营 TikTok 模式的副本。售前推出海客户必带"Anycast EIP + 海外 80+ POP + 豆包翻译 30+ 语种 + TikTok 联动"4 件套——这是字节系出海产品同款基础设施。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🎯 互动测验 #2', title: '茶饮东南亚扩张 · 怎么搭？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某连锁茶饮 600 店扩张东南亚 + 国内 1 个 IDC + POS 卡顿 + App 留存差。怎么救？</div>
+      <div class="quiz-opt wrong" data-k="A">把所有业务迁到新加坡（国内门店卡顿）</div>
+      <div class="quiz-opt correct" data-k="B">国内主架构 + 新加坡副站 + 边缘 POS + Anycast + 抖音 TikTok 联动</div>
+      <div class="quiz-opt wrong" data-k="C">提速国内 CDN（解决不了东南亚问题）</div>
+      <div class="quiz-opt wrong" data-k="D">在每个东南亚国家建机房（成本爆炸）</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：典型"出海混合架构"。① <b>国内主架构保留</b>不打破现有；② <b>新加坡 region 副站</b> ECS+CDN+TOS 海外服务；③ <b>门店 POS 边缘缓存</b>断网可用；④ <b>东南亚用户走 Anycast EIP</b>全球同 IP 加速；⑤ <b>抖音/TikTok 营销联动</b>本地化获客；⑥ <b>豆包多语种生成本地文案</b>。<b>实测 POS 800ms→80ms / App 留存 +14% / 本地化内容效率 +5x</b>。这是 Day 19 标杆案例的标准打法。</div>
+    </div>`,
+    voice: '思考一下。茶饮东南亚扩张怎么搭？给你 5 秒......正确答案 B 国内主架构加新加坡副站加边缘 POS 加 Anycast 加抖音 TikTok 联动。典型"出海混合架构"：国内主架构保留不打破现有；新加坡 region 副站 ECS+CDN+TOS 海外服务；门店 POS 边缘缓存断网可用；东南亚用户走 Anycast EIP 全球同 IP；抖音 TikTok 营销联动本地化获客；豆包多语种生成本地文案。实测 POS 800ms 到 80ms App 留存 +14% 本地化内容效率 +5x。',
+    fallbackDuration: 28000 },
+
+  { chapter: '🌟 客户对话 #1', title: '"我们做政企新厂商怎么进？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>政府客户要求 3 年同类业绩，我们火山是新厂商怎么进？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>3 阶段路径</b>。<b>① 短期</b>联合本地有资质集成商分包做 ISV 软件供应商；<b>② 中期</b>1-2 年内积累 3-5 个小项目（区县级 / 部委内部系统）；<b>③ 长期</b>3 年后独立投标大项目。同时<b>主推 AI 应用层</b>豆包政务 + Coze 一网通办——这层友商弱我们强。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>怎么找合适集成商？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>火山引擎已有<b>政企渠道生态</b>：地方电信运营商、华为系老 SI（已转向多云）、本地软件公司。我们提供<b>"ISV 培训 + 联合方案 + 渠道返点"</b>三件套，集成商有动力推。<b>3 个月内</b>我们帮您对接 2-3 家本地集成商完成首单。</div>
+      </div>
+    </div>`,
+    voice: '一段政企新厂商对话。客户问 3 年业绩硬条款怎么破。售前给 3 阶段路径：短期联合本地有资质集成商分包做 ISV；中期 1-2 年积累 3-5 个小项目区县级或部委内部；长期 3 年后独立投标。主推 AI 应用层豆包政务加 Coze 一网通办这层友商弱我们强。客户问怎么找集成商，售前甩"政企渠道生态"：地方电信运营商、华为系老 SI 已转向多云、本地软件公司。提供 ISV 培训加联合方案加渠道返点三件套 3 月内对接 2-3 家完成首单。',
+    fallbackDuration: 32000 },
+
+  { chapter: '🌟 客户对话 #2', title: '"教育公司 6 周上线互动课堂"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>K12 在线教育要互动课堂 + 录课 + 防作弊 + 智能字幕，6 周上线行吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span><b>6 周完全够</b>。火山<b>互动课堂套件开箱即用</b>：① <b>RTC 1 师 N 生</b>延迟 &lt;400ms；② <b>录课 VOD + 智能字幕</b>课后复习；③ <b>录屏防作弊</b>检测画面切换 + 多设备；④ <b>豆包 AI 答疑</b>课中 + 课后。<b>开发量减 80% / 1 周 PoC + 4 周上线 + 1 周稳定</b>。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>未成年人数据合规怎么办？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>三件套合规：<b>① 数据本地化</b>所有学生数据存中国境内；<b>② 内容审核 + 监课 AI</b>不当言论实时识别；<b>③ 父母授权流程</b>14 岁以下监护人授权才能注册。我们做过 <b>5 家在线教育合规备案</b>有参考案例。<b>合规架构图 + 监管对接经验</b>是教育行业售前的隐形竞争力。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话教育客户 6 周上线。售前推火山互动课堂套件开箱即用 RTC 1 师 N 生延迟 400ms 录课 VOD 加智能字幕录屏防作弊豆包 AI 答疑。开发量减 80% 1 周 PoC 加 4 周上线加 1 周稳定。客户问未成年人合规，售前甩三件套：数据本地化所有学生数据存中国境内；内容审核加监课 AI 不当言论实时识别；父母授权流程 14 岁以下监护人授权才能注册。做过 5 家在线教育合规备案有参考案例。合规架构图加监管对接经验是教育行业售前的隐形竞争力。',
+    fallbackDuration: 32000 },
+
+  { chapter: '案例', title: '🌟 连锁茶饮 · 600 店东南亚扩张',
+    body: '<b>痛点</b>：600+ 国内门店扩张东南亚 / IDC 集中国内 / POS 卡顿 / App 留存差<br><b>方案</b>：国内主架构 + 新加坡副站 + 边缘 POS + Anycast + 抖音 TikTok 联动<br><br>🏪 东南亚 POS 延迟 <b>800ms → 80ms</b><br>📱 当地 App 留存 <b>+14%</b><br>📈 本地化营销内容效率 <b>+5x</b>',
+    visual: '<div style="font-size:64px;">🧋</div>',
+    voice: '一个真实案例。某连锁茶饮 600+ 门店扩张到东南亚现有架构集中在国内一台 IDC东南亚门店 POS 卡顿营销活动时延高 App 留存差。方案主架构保留国内加在新加坡 region 部署副站点 ECS+CDN+TOS；门店 POS 边缘缓存断网可用；东南亚用户走 Anycast EIP；抖音 TikTok 营销联动；豆包多语种生成本地文案。结果东南亚门店 POS 操作延迟从 800ms 到 80ms 当地 App 留存提升 14% 本地化营销内容生产效率提升 5x。',
+    fallbackDuration: 28000 },
+
+  { chapter: '⚠️ 售前坑', title: '行业方案下 3 大坑',
+    visual: `<div class="danger-zone">
+      <h4>🚫 行业方案下半场 3 大坑</h4>
+      <div class="x-row"><b>出海不做合规</b>：GDPR 罚款全球营收 4% → 可能上千万欧</div>
+      <div class="x-row"><b>政企标书没盖电子签</b>：直接废标</div>
+      <div class="x-row"><b>教育做未成年没数据本地化</b>：被网信办约谈整改</div>
+      <div class="ok-row">售前正确做法：<b>① 出海合规先行</b>GDPR/CCPA/LGPD/PDPA 必查；<b>② 政企标书 3 人交叉审</b>电子签 / 盖章 / 资质有效期；<b>③ 教育合规架构</b>本地化 + 内容审核 + 父母授权三件套。</div>
+    </div>`,
+    voice: '行业方案下半场 3 大坑。一出海不做合规 GDPR 罚款全球营收 4% 可能上千万欧。二政企标书没盖电子签直接废标。三教育做未成年用户没数据本地化被网信办约谈整改。正确做法：出海合规先行 GDPR CCPA LGPD PDPA 必查；政企标书 3 人交叉审电子签盖章资质有效期；教育合规架构本地化加内容审核加父母授权三件套。',
+    fallbackDuration: 24000 },
+
+  { chapter: '🌟 销售心法', title: '"3 个数字" · 客户行业语言',
+    visual: `<div class="scenario-card">
+      <h4>🎯 行业打法精髓 · 熟悉每个行业 BD 心里的 3 个数字</h4>
+      <div class="row"><b>零售</b>库销比 / 复购率 / 获客成本</div>
+      <div class="row"><b>政企</b>审批流程节点数 / 国产化替代率 / 信创进度</div>
+      <div class="row"><b>教育</b>续课率 / 师生比 / 做题人均时长</div>
+      <div class="row"><b>出海</b>多 region SLA / 合规通过率 / 本地支付集成数</div>
+      <div class="row" style="margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.15);"><b>💎 心法</b>能用客户行业的语言聊三句话，转化率立刻翻倍</div>
+    </div>`,
+    voice: '行业打法精髓不是熟悉每个行业的产品是熟悉每个行业 BD 心里的"3 个数字"。零售库销比、复购率、获客成本。政企审批流程节点数、国产化替代率、信创进度。教育续课率、师生比、做题人均时长。出海多 region SLA、合规通过率、本地支付集成数。<b>售前能用客户行业的语言聊三句话转化率立刻翻倍</b>。这是 Day 18 和 Day 19 共同的心法。',
+    fallbackDuration: 26000 },
+
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 零售 4 大特征？<span style="color:#a5b4fc"> → O2O 融合 + 千店千面 + 季节性 + 低毛利</span><br>
+      <b>Q2</b> 零售抖音生态协同？<span style="color:#a5b4fc"> → 抖音小店 + 巨量引擎 + 抖音直播</span><br>
+      <b>Q3</b> 政企 4 强？<span style="color:#a5b4fc"> → 合规 / 流程长 / 保守 / 项目制</span><br>
+      <b>Q4</b> 新厂商进政企？<span style="color:#a5b4fc"> → 联合集成商 + AI 应用层 + 3 阶段路径</span><br>
+      <b>Q5</b> 教育 4 类细分？<span style="color:#a5b4fc"> → K12 大学 / 职业 / 企业培训 / 留学</span><br>
+      <b>Q6</b> 教育合规三件套？<span style="color:#a5b4fc"> → 本地化 + 内容审核 + 父母授权</span><br>
+      <b>Q7</b> 出海 4 大合规？<span style="color:#a5b4fc"> → GDPR / CCPA / LGPD / PDPA</span><br>
+      <b>Q8</b> 行业 3 个数字心法？<span style="color:#a5b4fc"> → 用客户行业语言聊 3 句话转化翻倍</span>
+    </div>`,
+    voice: '8 题速查。一零售 4 大特征 O2O 融合千店千面季节性低毛利。二零售抖音生态协同抖音小店巨量引擎抖音直播。三政企 4 强合规流程长保守项目制。四新厂商进政企联合集成商加 AI 应用层加 3 阶段路径。五教育 4 类细分 K12 大学职业企业培训留学。六教育合规三件套本地化内容审核父母授权。七出海 4 大合规 GDPR CCPA LGPD PDPA。八行业 3 个数字心法用客户行业语言聊 3 句话转化翻倍。这 8 道刷熟行业方案下面试稳过。',
+    fallbackDuration: 28000 },
+
+  { chapter: '完成', title: '🎉 Day 19 学完！',
+    eyebrow: '关键心法',
+    body: '"<b>用客户行业的语言聊三句话，转化率立刻翻倍</b>"<br>每个行业心里要装<b>3 个数字</b>。<br><span class="hl">这是售前从"产品手册人形版"进阶为"行业顾问"的标志</span>',
+    visual: '<div style="font-size:80px;">🌏</div>',
+    voice: '恭喜 Day 19 学完。用客户行业的语言聊三句话转化率立刻翻倍。每个行业心里要装 3 个数字。这是售前从"产品手册人形版"进阶为"行业顾问"的标志。下一站 Day 20 综合实战与终面。',
+    fallbackDuration: 21000 },
+];
+</script>
+<script src="_player.js?v=26"></script>
+</body>
+</html>
