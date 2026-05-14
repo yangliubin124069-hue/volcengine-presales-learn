@@ -325,6 +325,110 @@ body{display:flex;flex-direction:column;}
 .tts-ok{color:#22c55e;}
 .tts-fail{color:#ef4444;}
 
+/* ============================================================
+   增强视频共用组件（v19+）
+   客户对话 / 互动测验 / 厂商对比 / 故障案例 / 命令终端
+   ============================================================ */
+
+/* —— 客户对话 —— */
+.dlg-scene{width:780px;max-width:94vw;}
+.dlg-row{display:flex;align-items:flex-start;gap:10px;margin:10px 0;}
+.dlg-row.client{animation:dlgInL .55s both;}
+.dlg-row.sales{flex-direction:row-reverse;animation:dlgInR .55s both;}
+.dlg-row.client:nth-of-type(1){animation-delay:.2s;}
+.dlg-row.sales:nth-of-type(2){animation-delay:.8s;}
+.dlg-row.client:nth-of-type(3){animation-delay:1.5s;}
+.dlg-row.sales:nth-of-type(4){animation-delay:2.1s;}
+.dlg-row.client:nth-of-type(5){animation-delay:2.8s;}
+.dlg-row.sales:nth-of-type(6){animation-delay:3.4s;}
+.dlg-avatar{font-size:24px;flex-shrink:0;width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;}
+.dlg-row.client .dlg-avatar{background:rgba(43,92,255,.2);border:1px solid #2b5cff;}
+.dlg-row.sales .dlg-avatar{background:rgba(34,197,94,.2);border:1px solid #22c55e;}
+.dlg-bubble{padding:10px 16px;border-radius:12px;font-size:14.5px;line-height:1.65;
+  max-width:580px;text-align:left;}
+.dlg-row.client .dlg-bubble{background:rgba(43,92,255,.1);border:1px solid rgba(43,92,255,.4);
+  border-top-left-radius:4px;}
+.dlg-row.sales .dlg-bubble{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.4);
+  border-top-right-radius:4px;}
+.dlg-tag{display:inline-block;padding:1px 7px;margin-right:4px;border-radius:4px;
+  font-size:11px;font-weight:700;letter-spacing:1px;}
+.dlg-row.client .dlg-tag{background:#2b5cff;color:#fff;}
+.dlg-row.sales .dlg-tag{background:#22c55e;color:#0b1020;}
+@keyframes dlgInL{from{opacity:0;transform:translateX(-30px);}to{opacity:1;transform:translateX(0);}}
+@keyframes dlgInR{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
+
+/* —— 互动测验 —— */
+.quiz-card{width:680px;max-width:92vw;padding:22px 26px;
+  background:rgba(245,158,11,.06);border:2px solid #f59e0b;border-radius:14px;
+  text-align:left;box-shadow:0 0 24px rgba(245,158,11,.2);}
+.quiz-q{font-size:17px;font-weight:700;color:#fde68a;margin-bottom:16px;line-height:1.55;}
+.quiz-q::before{content:'🤔 思考一下：';color:#f59e0b;}
+.quiz-opt{padding:11px 16px;margin:8px 0;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.15);border-radius:8px;
+  font-size:14.5px;color:#cbd5e1;transition:all .6s;position:relative;}
+.quiz-opt::before{content:attr(data-k) '. ';color:#7a8db5;font-weight:700;margin-right:4px;}
+.quiz-opt.correct{animation:revealOk 1s ease 5s forwards;}
+.quiz-opt.wrong{animation:revealNo 1s ease 5s forwards;}
+@keyframes revealOk{to{background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;
+  box-shadow:0 0 14px rgba(34,197,94,.4);}}
+@keyframes revealNo{to{background:rgba(239,68,68,.05);border-color:rgba(239,68,68,.3);color:#6b7280;}}
+.quiz-hint{margin-top:14px;padding:12px;background:rgba(34,197,94,.08);
+  border-left:3px solid #22c55e;border-radius:4px;font-size:13px;color:#cbd5e1;
+  opacity:0;animation:hintIn 1s ease 5.5s forwards;}
+.quiz-hint b{color:#86efac;}
+@keyframes hintIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* —— 厂商对比表 —— */
+.cloud-table{width:760px;max-width:94vw;border-collapse:collapse;
+  background:rgba(255,255,255,.03);border-radius:10px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.1);}
+.cloud-table th,.cloud-table td{padding:10px 14px;font-size:13px;text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.08);}
+.cloud-table th{background:rgba(43,92,255,.18);color:#a5b4fc;font-weight:700;
+  font-size:12px;letter-spacing:1px;}
+.cloud-table td:first-child{color:#cbd5e1;font-weight:600;}
+.cloud-table .ve{color:#fde68a;font-weight:700;}
+.cloud-table .hw{color:#fca5a5;}
+.cloud-table .al{color:#a5b4fc;}
+.cloud-table .tc{color:#7dd3fc;}
+.cloud-table .bd{color:#c4b5fd;}
+.cloud-table .aws{color:#fed7aa;}
+.cloud-table tr:hover td{background:rgba(255,255,255,.03);}
+
+/* —— 故障案例卡片 —— */
+.incident-card{width:740px;max-width:94vw;padding:22px 26px;
+  background:rgba(239,68,68,.06);border:2px solid rgba(239,68,68,.5);border-radius:14px;
+  text-align:left;box-shadow:0 0 28px rgba(239,68,68,.15);}
+.incident-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;
+  padding-bottom:12px;border-bottom:1px dashed rgba(239,68,68,.4);}
+.incident-header .badge-time{background:rgba(239,68,68,.25);color:#fca5a5;
+  padding:4px 10px;border-radius:6px;font-size:11.5px;font-weight:700;letter-spacing:1px;}
+.incident-header h4{font-size:16px;color:#fca5a5;font-weight:700;}
+.incident-row{padding:6px 0;font-size:14px;color:#cbd5e1;line-height:1.7;}
+.incident-row b{color:#fca5a5;}
+.incident-row.ok b{color:#86efac;}
+
+/* —— 终端命令块 —— */
+.term{width:720px;max-width:94vw;padding:18px 22px;background:#000814;
+  border:1px solid #1e2746;border-radius:10px;font-family:'Courier New',monospace;
+  font-size:13.5px;line-height:1.7;color:#cbd5e1;text-align:left;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);}
+.term .prompt{color:#22c55e;}
+.term .cmd{color:#fde68a;}
+.term .out{color:#94a3b8;display:block;padding-left:14px;}
+.term .err{color:#fca5a5;display:block;padding-left:14px;}
+.term .hl{color:#a5b4fc;font-weight:700;}
+.term .comment{color:#64748b;}
+
+/* —— 通用情景卡 —— */
+.scenario-card{width:740px;max-width:94vw;padding:20px 24px;
+  background:rgba(43,92,255,.05);border:2px solid rgba(43,92,255,.4);border-radius:14px;
+  text-align:left;}
+.scenario-card h4{color:#a5b4fc;font-size:16px;margin-bottom:10px;}
+.scenario-card .row{display:flex;gap:12px;padding:8px 0;font-size:14px;color:#cbd5e1;}
+.scenario-card .row b{color:#fde68a;min-width:80px;}
+
 /* 响应式 */
 @media (max-width:768px){
   .slide{padding:4vh 5vw;}
@@ -345,4 +449,15 @@ body{display:flex;flex-direction:column;}
   .ctrl-toggle{padding:5px 8px;font-size:10.5px;}
   .toc-item{min-width:160px;}
   .cdn-flow{font-size:32px;gap:8px;}
+  /* 增强组件移动适配 */
+  .dlg-bubble{font-size:13px;padding:8px 12px;}
+  .dlg-avatar{width:34px;height:34px;font-size:18px;}
+  .quiz-card{padding:14px;}
+  .quiz-q{font-size:14.5px;}
+  .quiz-opt{font-size:13px;padding:9px 12px;}
+  .quiz-hint{font-size:12px;}
+  .cloud-table th,.cloud-table td{padding:7px 8px;font-size:11.5px;}
+  .incident-card{padding:14px;}
+  .incident-row{font-size:12.5px;}
+  .term{padding:12px;font-size:11.5px;}
 }

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Day 12 · AI / ML / DL 基础 · 互动教学视频</title>
-<link rel="stylesheet" href="_player.css?v=18">
+<link rel="stylesheet" href="_player.css?v=19">
 <style>
   /* Day 12 专用动画样式 */
 
@@ -99,23 +99,73 @@
     0%, 60%, 100% { background: rgba(236,72,153,.3); box-shadow: none; }
     75% { background: #ec4899; box-shadow: 0 0 10px #ec4899, 0 0 20px rgba(236,72,153,.6); }
   }
+
+  /* Prompt 演化卡片 */
+  .prompt-evo { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .prompt-box { width: 240px; padding: 14px; border-radius: 10px;
+    background: rgba(255,255,255,.04); border: 1.5px solid;
+    text-align: left; font-size: 12.5px; }
+  .prompt-box.bad { border-color: #ef4444; }
+  .prompt-box.ok { border-color: #f59e0b; }
+  .prompt-box.good { border-color: #22c55e; }
+  .prompt-box h5 { font-size: 13px; margin-bottom: 6px; }
+  .prompt-box.bad h5 { color: #fca5a5; }
+  .prompt-box.ok h5 { color: #fde68a; }
+  .prompt-box.good h5 { color: #86efac; }
+  .prompt-box code { display: block; padding: 6px 8px; margin: 4px 0;
+    background: rgba(0,0,0,.4); border-radius: 4px; font-family: monospace;
+    font-size: 11px; color: #cbd5e1; line-height: 1.5; }
+  .prompt-box .ret { font-size: 11px; color: #94a3b8; margin-top: 6px; padding-top: 6px;
+    border-top: 1px dashed rgba(255,255,255,.1); }
+
+  /* RAG 流程 */
+  .rag-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    justify-content: center; max-width: 92vw; }
+  .rag-node { padding: 12px 16px; border-radius: 10px; min-width: 120px;
+    background: rgba(255,255,255,.04); border: 1.5px solid; text-align: center;
+    font-size: 12px; animation: cardIn .5s both; }
+  .rag-node.q { border-color: #2b5cff; background: rgba(43,92,255,.1); }
+  .rag-node.emb { border-color: #6e3aff; background: rgba(110,58,255,.1); animation-delay: .15s; }
+  .rag-node.db { border-color: #f59e0b; background: rgba(245,158,11,.12); animation-delay: .3s; }
+  .rag-node.llm { border-color: #ec4899; background: rgba(236,72,153,.12); animation-delay: .45s;
+    box-shadow: 0 0 16px rgba(236,72,153,.3); }
+  .rag-node.ans { border-color: #22c55e; background: rgba(34,197,94,.12); animation-delay: .6s; }
+  .rag-node .ic { font-size: 24px; display: block; margin-bottom: 4px; }
+
+  /* LLM 厂商雷达对比简化 */
+  .llm-vs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    max-width: 800px; width: 100%; }
+  .llm-card { padding: 14px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; font-size: 12.5px; text-align: left; animation: cardIn .5s both; }
+  .llm-card.db { border-color: #fde68a; animation-delay: .1s; }
+  .llm-card.qw { border-color: #a5b4fc; animation-delay: .25s; }
+  .llm-card.ds { border-color: #86efac; animation-delay: .4s; }
+  .llm-card.km { border-color: #f9a8d4; animation-delay: .55s; }
+  .llm-card.gm { border-color: #c4b5fd; animation-delay: .7s; }
+  .llm-card.gpt { border-color: #fed7aa; animation-delay: .85s; }
+  .llm-card h5 { font-size: 14px; margin-bottom: 6px; color: #fff; }
+  .llm-card .feat { padding: 3px 0; color: #cbd5e1; font-size: 11.5px; }
+  .llm-card .price { padding-top: 6px; margin-top: 6px;
+    border-top: 1px dashed rgba(255,255,255,.1);
+    font-size: 11px; color: #94a3b8; }
 </style>
 </head>
 <body>
 <script>
 window.META = {
   day: 12,
-  title: 'Day 12 · AI / ML / DL 基础',
-  intro: '12 分钟讲透 AI/ML/DL/Transformer/MLOps · 售前必懂'
+  title: 'Day 12 · AI / ML / DL 基础（增强版）',
+  intro: '16 分钟讲透 AI/ML/DL/Transformer/Prompt/RAG/MLOps + 3 客户对话 + 国产大模型对比'
 };
 window.SLIDES = [
+
   // ===== 开场 =====
   { chapter: '开场', title: 'Day 12 · AI / ML / DL 基础',
-    eyebrow: '火山引擎售前 · 互动视频课',
-    body: '<b>AI / ML / DL / Transformer / MLOps</b><br>从基础概念到 GPT 工作原理，让你能跟客户聊清楚 AI',
+    eyebrow: '火山引擎售前 · 互动视频课（增强版）',
+    body: '<b>AI / ML / DL / Transformer / Prompt / RAG / MLOps</b><br>16 分钟 + 2 道互动测验 + 3 个真实客户对话 + 国产大模型对比',
     visual: '<div class="cover-icon">🧠</div>',
-    voice: '欢迎来到 Day 12 AI 与机器学习基础课。客户问"我们能不能做 AI"，售前必须先讲清楚 AI、ML、DL 都是什么。今天 12 分钟，从基础概念到 Transformer，让你跟客户聊 AI 不卡壳。',
-    fallbackDuration: 11000 },
+    voice: '欢迎来到 Day 12 AI 与机器学习基础课的增强版。客户问"我们能不能做 AI"，售前必须先讲清楚 AI、ML、DL 都是什么。今天 16 分钟覆盖基础概念、Transformer、Prompt 工程、RAG 检索增强、MLOps，再加 3 个客户对话和国产大模型对比表。',
+    fallbackDuration: 19000 },
 
   // ===== 第 1 章 AI 边界 =====
   { chapter: '第 1 章 · AI 的边界', title: 'AI ⊃ ML ⊃ DL ⊃ GenAI',
@@ -130,7 +180,7 @@ window.SLIDES = [
       <div class="lbl l3">DL · 深度学习</div>
       <div class="lbl l4">GenAI</div>
     </div>`,
-    voice: 'AI、ML、DL、GenAI 是层层包含关系。最外圈是 AI 人工智能，最大概念。里面一圈是机器学习 ML，让机器从数据中学规律。再里面是深度学习 DL，用多层神经网络。最里面那一圈是生成式 AI GenAI，比如 ChatGPT 和文生图。讲方案要从外到内一层层精确，不要把 AI 和 ChatGPT 混着用。',
+    voice: 'AI、ML、DL、GenAI 是层层包含关系。最外圈是 AI 人工智能最大概念。里面一圈是机器学习 ML 让机器从数据中学规律。再里面是深度学习 DL 用多层神经网络。最里面那一圈是生成式 AI GenAI，比如 ChatGPT 和文生图。讲方案要从外到内一层层精确，不要把 AI 和 ChatGPT 混着用。',
     fallbackDuration: 17000 },
 
   { chapter: '第 1 章 · AI 的边界', title: '判别式 vs 生成式',
@@ -151,8 +201,8 @@ window.SLIDES = [
         <p><span class="tag">技术</span>Transformer / Diffusion</p>
       </div>
     </div>`,
-    voice: '判别式和生成式是 AI 两条主线。判别式做的是"分类和识别"，输入一张图判断是不是猫。生成式做的是"从无到有造内容"，输入一句话画出一只猫。判别 AI 在企业里用了十几年，生成式 AI 是 2022 年 ChatGPT 之后才爆发。售前要能分清，客户说"做 AI"时先问清楚是哪一类。',
-    fallbackDuration: 17000 },
+    voice: '判别式和生成式是 AI 两条主线。判别式做的是分类和识别，输入一张图判断是不是猫。生成式做的是从无到有造内容，输入一句话画出一只猫。判别 AI 在企业里用了十几年，生成式 AI 是 2022 年 ChatGPT 之后才爆发。售前要能分清，客户说"做 AI"时先问清楚是哪一类。',
+    fallbackDuration: 18000 },
 
   // ===== 第 2 章 三大范式 =====
   { chapter: '第 2 章 · 机器学习三大范式', title: '监督 / 无监督 / 强化',
@@ -167,8 +217,21 @@ window.SLIDES = [
   { chapter: '第 2 章 · 机器学习三大范式', title: '自监督 · 大模型时代的主角',
     body: '<b>自监督学习</b>：从无标注海量数据自动构造监督信号。<br>"看着上文猜下一个词"——<span class="hl">这就是 GPT 的训练方法</span><br>BERT 是"挖空填词"，GPT 是"接龙"。',
     visual: '<div class="code-block" style="text-align:center;font-size:16px;">输入：<span class="str">"今天天气真"</span><br><br>模型预测：<span class="kw">"好"</span> / 不错 / 糟糕 ...<br><br><span class="cmt"># 用互联网海量文本无标注训练</span></div>',
-    voice: '现代大模型用的是自监督学习。不需要人标注，直接让模型"看上文猜下一个词"。整个互联网的文本都能拿来训练。GPT 这样训练后，居然学会了语法、知识、推理。这就是为什么 ChatGPT 看起来什么都懂——它读了几乎整个人类公开知识。',
-    fallbackDuration: 15000 },
+    voice: '现代大模型用的是自监督学习。不需要人标注，直接让模型"看上文猜下一个词"。整个互联网的文本都能拿来训练。GPT 这样训练后居然学会了语法、知识、推理。这就是为什么 ChatGPT 看起来什么都懂——它读了几乎整个人类公开知识。',
+    fallbackDuration: 16000 },
+
+  // ===== 互动测验 #1 =====
+  { chapter: '🎯 互动测验 #1', title: '客户场景：要做什么类型的 AI？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户："我有 5 万张已审核完的发票图片，想自动识别新发票上的金额和发票号"——这是什么类型 AI？</div>
+      <div class="quiz-opt wrong" data-k="A">强化学习（让 AI 试错识别）</div>
+      <div class="quiz-opt correct" data-k="B">监督学习的判别式 + CV（OCR + 字段抽取）</div>
+      <div class="quiz-opt wrong" data-k="C">生成式 AI（LLM 大模型直接看图回答）</div>
+      <div class="quiz-opt wrong" data-k="D">自监督学习（让模型自己学发票）</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：有 5 万标注数据 + 识别+抽取任务 = 经典监督学习+判别式 CV。技术栈：<b>OCR（PaddleOCR/PP-Structure）+ NER 抽取 + 规则校验</b>。也可叠 LLM 做"要素一致性"二次校验，但主流程还是判别式 CV。新人最容易选 C 把所有 AI 都丢给 LLM，<b>成本高 100 倍且不准</b>。</div>
+    </div>`,
+    voice: '思考一下。客户有 5 万张已审核完的发票图片想自动识别金额和发票号，这是什么类型 AI？给你 5 秒......正确答案 B，监督学习的判别式 CV，OCR 加字段抽取。新人最容易选 C 把所有 AI 都丢给 LLM 大模型——成本高 100 倍而且不准。判别 AI 在企业里被验证十年，比 LLM 稳定便宜。售前要能看场景选范式而不是只会推大模型。',
+    fallbackDuration: 24000 },
 
   // ===== 第 3 章 训练流程 =====
   { chapter: '第 3 章 · 模型训练流程', title: '完整 ML 流水线',
@@ -188,8 +251,8 @@ window.SLIDES = [
       <span class="pipe-arrow">→</span>
       <div class="pipe-step s5"><span class="ic">🚀</span>上线</div>
     </div>`,
-    voice: '一个完整的 AI 项目流水线长这样。从采集、清洗、标注开始，然后按 7 比 1 比 2 切训练集、验证集、测试集，再训练、评估、上线。注意：80% 的工作量在数据准备，不在模型本身。新手以为算法是主菜，实际上数据才是。',
-    fallbackDuration: 16000 },
+    voice: '一个完整的 AI 项目流水线长这样。从采集、清洗、标注开始，然后按 7 比 1 比 2 切训练集、验证集、测试集，再训练、评估、上线。注意：80% 的工作量在数据准备不在模型本身。新手以为算法是主菜实际上数据才是。',
+    fallbackDuration: 17000 },
 
   { chapter: '第 3 章 · 模型训练流程', title: '过拟合 vs 欠拟合 · 一图秒懂',
     body: '<b>过拟合</b>：训练集好测试集差 → 模型死记硬背<br><b>欠拟合</b>：训练集都差 → 模型太傻',
@@ -200,24 +263,20 @@ window.SLIDES = [
           <stop offset="1" stop-color="#22c55e" stop-opacity="0"/>
         </linearGradient>
       </defs>
-      <!-- 坐标轴 -->
       <line x1="40" y1="240" x2="520" y2="240" stroke="#7a8db5" stroke-width="1"/>
       <line x1="40" y1="20" x2="40" y2="240" stroke="#7a8db5" stroke-width="1"/>
       <text x="270" y="270" text-anchor="middle" fill="#7a8db5" font-size="11">训练轮数 →</text>
       <text x="20" y="130" text-anchor="middle" fill="#7a8db5" font-size="11" transform="rotate(-90 20 130)">损失 Loss</text>
-      <!-- 训练集 loss（持续下降）-->
       <path d="M 60 200 Q 200 80 380 50 T 500 40" stroke="#22c55e" stroke-width="2.5" fill="none"
         stroke-dasharray="1000" stroke-dashoffset="1000">
         <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2s" fill="freeze"/>
       </path>
       <text x="430" y="40" fill="#22c55e" font-size="12" font-weight="700">训练集 Loss ↓</text>
-      <!-- 验证集 loss（先降后升）-->
       <path d="M 60 210 Q 200 90 320 120 T 500 220" stroke="#ec4899" stroke-width="2.5" fill="none"
         stroke-dasharray="1000" stroke-dashoffset="1000">
         <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2.5s" begin=".3s" fill="freeze"/>
       </path>
       <text x="430" y="225" fill="#ec4899" font-size="12" font-weight="700">验证集 Loss ↗</text>
-      <!-- 过拟合区 -->
       <line x1="320" y1="20" x2="320" y2="240" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4 4">
         <animate attributeName="opacity" from="0" to="1" dur=".5s" begin="2s" fill="freeze"/>
       </line>
@@ -226,8 +285,8 @@ window.SLIDES = [
         <animate attributeName="opacity" from="0" to="1" dur=".5s" begin="2s" fill="freeze"/>
       </text>
     </svg>`,
-    voice: '看这张曲线图。绿色是训练集 Loss 一直往下降，模型在数据上越来越拟合。粉色是验证集 Loss，先降后升——升上去那一段就是过拟合：模型把训练数据死记硬背了，遇到新数据反而效果差。黄色虚线那个拐点叫"过拟合点"，应该在这里提前停止训练。如果两条线都很高就是欠拟合，模型太傻，得加层数或加数据。',
-    fallbackDuration: 21000 },
+    voice: '看这张曲线图。绿色是训练集 Loss 一直往下降模型在数据上越来越拟合。粉色是验证集 Loss 先降后升——升上去那一段就是过拟合：模型把训练数据死记硬背了遇到新数据反而效果差。黄色虚线那个拐点叫"过拟合点"应该在这里提前停止训练。如果两条线都很高就是欠拟合，模型太傻得加层数或加数据。',
+    fallbackDuration: 22000 },
 
   { chapter: '第 3 章 · 模型训练流程', title: '评估指标 · 不平衡数据看 F1',
     body: '准确率（Accuracy）是新手坑：<br><span class="hl">100 张图 95 张猫 5 张狗，全猜猫准确率 95%</span>',
@@ -236,8 +295,8 @@ window.SLIDES = [
       <div class="col-card"><div class="num">⚖️</div><h5>精确率 / 召回率</h5><p>抓得准 vs 抓得全<br>风控场景必关注</p></div>
       <div class="col-card"><div class="num">⭐</div><h5>F1 / AUC</h5><p>综合指标<br>不平衡数据首选</p></div>
     </div>`,
-    voice: '评估指标里有个新手坑。准确率会骗你——100 张图 95 张猫 5 张狗，模型全猜"猫"准确率就 95%，看起来很高但抓狗一只都不对。所以风控、医疗这种不平衡数据场景，要看精确率、召回率、F1 和 AUC，不能只看准确率。客户问效果时，你得问清楚是什么场景，再给评估方案。',
-    fallbackDuration: 17000 },
+    voice: '评估指标里有个新手坑。准确率会骗你——100 张图 95 张猫 5 张狗，模型全猜"猫"准确率就 95% 看起来很高但抓狗一只都不对。所以风控、医疗这种不平衡数据场景要看精确率、召回率、F1 和 AUC不能只看准确率。客户问效果时你得问清楚是什么场景再给评估方案。',
+    fallbackDuration: 18000 },
 
   // ===== 第 4 章 CNN =====
   { chapter: '第 4 章 · CNN 卷积神经网络', title: 'CNN：CV 的革命',
@@ -276,8 +335,8 @@ window.SLIDES = [
         <div style="font-size:13px;color:#a5b4fc;font-weight:700;text-align:center;padding:6px;">🐈 猫<br>92%</div>
       </div>
     </div>`,
-    voice: 'CNN 是图像识别的基石。看这张图，输入一张图片，先经过卷积层提取局部特征（比如边缘、纹理），再经过池化层做下采样减少计算量，反复几次后接全连接层分类输出。2012 年 AlexNet 用 CNN 在 ImageNet 比赛上一举碾压传统方法，深度学习时代正式开启。',
-    fallbackDuration: 17000 },
+    voice: 'CNN 是图像识别的基石。看这张图输入一张图片先经过卷积层提取局部特征（比如边缘、纹理）再经过池化层做下采样减少计算量反复几次后接全连接层分类输出。2012 年 AlexNet 用 CNN 在 ImageNet 比赛上一举碾压传统方法深度学习时代正式开启。',
+    fallbackDuration: 18000 },
 
   { chapter: '第 4 章 · CNN 卷积神经网络', title: 'CV 经典模型族谱',
     body: 'LeNet → AlexNet → VGG → ResNet → EfficientNet<br>每代都解决前一代的"层越深越难训练"问题',
@@ -288,11 +347,11 @@ window.SLIDES = [
       <div class="col-card"><div class="num">2015</div><h5>ResNet</h5><p>152 层<br>残差连接</p></div>
       <div class="col-card"><div class="num">2019</div><h5>EfficientNet</h5><p>更高效<br>移动端友好</p></div>
     </div>`,
-    voice: 'CV 经典模型族谱快速过。1998 年 LeNet 是 CNN 鼻祖，识别手写数字。2012 年 AlexNet 把 ImageNet 错误率从 26% 拉到 16%。2014 年 VGG 结构简洁深 19 层。2015 年 ResNet 用残差连接，深度直接到 152 层。2019 年 EfficientNet 用神经架构搜索，效率最优。这条线就是 CV 的 20 年史。',
+    voice: 'CV 经典模型族谱快速过。1998 年 LeNet 是 CNN 鼻祖识别手写数字。2012 年 AlexNet 把 ImageNet 错误率从 26% 拉到 16%。2014 年 VGG 结构简洁深 19 层。2015 年 ResNet 用残差连接深度直接到 152 层。2019 年 EfficientNet 用神经架构搜索效率最优。这条线就是 CV 的 20 年史。',
     fallbackDuration: 16000 },
 
   // ===== 第 5 章 RNN / Transformer =====
-  { chapter: '第 5 章 · RNN / LSTM', title: 'RNN：处理序列数据',
+  { chapter: '第 5 章 · RNN / Transformer', title: 'RNN：处理序列数据',
     body: '<b>RNN 的核心</b>：上一时刻输出作为下一时刻输入<br>处理文本、语音、时间序列。<br><span class="hl">但有"梯度消失"问题，长句子记不住开头</span>',
     visual: `<div class="cdn-flow" style="font-size:30px;">
       <span class="node">📝 我</span><span class="arrow">→</span>
@@ -300,10 +359,9 @@ window.SLIDES = [
       <span class="node">📝 北</span><span class="arrow">→</span>
       <span class="node">📝 京</span>
     </div><div style="font-size:13px;color:#7a8db5;margin-top:10px;">每个词都"看见"前面的词 · 但句子一长就忘前面</div>`,
-    voice: 'RNN 是处理序列数据的传统神器。核心想法：上一时刻的输出作为下一时刻的输入，让模型有"记忆"。它能处理文本、语音、时间序列。但是 RNN 有个致命问题：梯度消失，长句子记不住前面。后来 LSTM 和 GRU 用门控机制部分解决，但本质问题没根除。',
-    fallbackDuration: 15000 },
+    voice: 'RNN 是处理序列数据的传统神器。核心想法：上一时刻的输出作为下一时刻的输入让模型有"记忆"。它能处理文本、语音、时间序列。但是 RNN 有个致命问题：梯度消失长句子记不住前面。后来 LSTM 和 GRU 用门控机制部分解决但本质问题没根除。',
+    fallbackDuration: 16000 },
 
-  // ===== 第 6 章 Transformer =====
   { chapter: '第 6 章 · Transformer', title: '2017 年的革命：Attention Is All You Need',
     body: '<b>核心：Self-Attention</b><br>让序列中<span class="hl">每个位置看到所有其他位置</span>，复杂度 O(n²)<br>但并行性远超 RNN → 训练快百倍',
     visual: `<div class="attn-grid">
@@ -316,8 +374,8 @@ window.SLIDES = [
         return `<div class="attn-cell${h}">${w}</div>`;
       }).join('')}
     </div><div style="font-size:13px;color:#7a8db5;margin-top:12px;text-align:center;">每个高亮词都直接 attend 到所有其他词，无需"传话"</div>`,
-    voice: '2017 年 Google 一篇论文 "Attention Is All You Need" 改变了一切。它提出 Transformer，核心是自注意力机制。RNN 是逐个词传话，Transformer 让每个词直接看到所有其他词，复杂度 O n 平方，但并行性远超 RNN，训练速度快 100 倍。现在 ChatGPT、豆包、Claude 全部基于 Transformer。',
-    fallbackDuration: 18000 },
+    voice: '2017 年 Google 一篇论文 Attention Is All You Need 改变了一切。它提出 Transformer 核心是自注意力机制。RNN 是逐个词传话 Transformer 让每个词直接看到所有其他词复杂度 O n 平方但并行性远超 RNN 训练速度快 100 倍。现在 ChatGPT、豆包、Claude 全部基于 Transformer。',
+    fallbackDuration: 19000 },
 
   { chapter: '第 6 章 · Transformer', title: 'Encoder vs Decoder · 三种用法',
     visual: `<div class="three-col">
@@ -325,7 +383,7 @@ window.SLIDES = [
       <div class="col-card"><div class="num">✏️</div><h5>Decoder-Only</h5><p><b>GPT / 豆包</b><br>从左到右生成<br>适合生成类<br>对话 / 写作 / 代码</p></div>
       <div class="col-card"><div class="num">🔄</div><h5>Encoder-Decoder</h5><p><b>T5 / BART</b><br>读+写<br>适合翻译 / 摘要</p></div>
     </div>`,
-    voice: 'Transformer 三种用法。Encoder-only 代表是 BERT，双向看上下文，适合理解类任务，比如分类、信息抽取、检索。Decoder-only 代表是 GPT 和豆包，从左到右生成，适合对话、写作、代码生成。Encoder-Decoder 代表是 T5，读完输入再写输出，适合翻译和摘要。这三类决定了 2017 年后 NLP 的全部方向。',
+    voice: 'Transformer 三种用法。Encoder-only 代表是 BERT 双向看上下文适合理解类任务比如分类、信息抽取、检索。Decoder-only 代表是 GPT 和豆包从左到右生成适合对话、写作、代码生成。Encoder-Decoder 代表是 T5 读完输入再写输出适合翻译和摘要。这三类决定了 2017 年后 NLP 的全部方向。',
     fallbackDuration: 19000 },
 
   { chapter: '第 6 章 · Transformer', title: 'Multi-Head Attention · 多视角看世界',
@@ -336,30 +394,97 @@ window.SLIDES = [
         return `<div class="attn-cell ${cls}" style="aspect-ratio:auto;padding:14px 6px;font-size:12px;text-align:center;">${n}</div>`;
       }).join('')}
     </div>`,
-    voice: 'Multi-Head Attention 是 Transformer 的另一个杀手锏。一个注意力机制只能看一种关系，那就并行用 8 到 32 个"头"，每个头学不同的东西：语法、语义、位置、引用、情感、实体......就像派 32 个专家从不同角度同时分析同一句话，然后把结果合在一起。这就是为什么 Transformer 这么强。',
-    fallbackDuration: 17000 },
+    voice: 'Multi-Head Attention 是 Transformer 的另一个杀手锏。一个注意力机制只能看一种关系，那就并行用 8 到 32 个"头"，每个头学不同的东西：语法、语义、位置、引用、情感、实体......就像派 32 个专家从不同角度同时分析同一句话然后把结果合在一起。这就是为什么 Transformer 这么强。',
+    fallbackDuration: 18000 },
 
-  // ===== 第 7 章 训练推理 =====
-  { chapter: '第 7 章 · 训练推理基础设施', title: '训练 GPT-4 需要几张卡？',
+  // ===== Prompt Engineering =====
+  { chapter: '第 7 章 · Prompt 工程', title: 'Prompt 三层进阶 · 同样模型差 5 倍效果',
+    visual: `<div class="prompt-evo">
+      <div class="prompt-box bad">
+        <h5>❌ 新手 Prompt</h5>
+        <code>"帮我写销售总结"</code>
+        <div class="ret">输出：泛泛 200 字，没有数据没有结论，根本不能给老板看</div>
+      </div>
+      <div class="prompt-box ok">
+        <h5>🟡 中等 Prompt</h5>
+        <code>"你是销售经理。基于以下季度数据，写一份 500 字总结。数据：……"</code>
+        <div class="ret">输出：结构齐全但仍偏模板化</div>
+      </div>
+      <div class="prompt-box good">
+        <h5>✅ 高手 Prompt</h5>
+        <code>"角色：金融行业 SE。任务：根据 Q3 数据写总结。<br>结构：① 关键数字 ② 同环比 ③ 3 条洞察 ④ Q4 行动项。<br>风格：数据驱动。引用：所有结论标[数据]。"</code>
+        <div class="ret">输出：直接可交付，含数据引用和行动项</div>
+      </div>
+    </div>`,
+    voice: 'Prompt 工程不是玄学是工程。看这三层。新手写帮我写销售总结，模型给你泛泛 200 字没法给老板看。中等加角色加数据但仍模板化。高手会按角色加任务加结构加风格加引用要求五要素写。同一个模型，新手 prompt 和高手 prompt 输出质量差 5 倍。售前讲 AI 方案时要把 Prompt 工程作为咨询服务卖，让客户认知到模型只是基础，工程能力才是落地的关键。',
+    fallbackDuration: 30000 },
+
+  // ===== RAG =====
+  { chapter: '第 7 章 · RAG 检索增强', title: 'RAG · 让大模型"懂你的私有知识"',
+    body: '<b>问题</b>：大模型不知道你公司内部文档<br><b>方案</b>：先把问题向量检索匹配私有文档片段，再喂给 LLM 生成答案',
+    visual: `<div class="rag-flow">
+      <div class="rag-node q"><span class="ic">❓</span>用户提问</div>
+      <span class="cnn-arrow">→</span>
+      <div class="rag-node emb"><span class="ic">🧮</span>向量化<br>Embedding</div>
+      <span class="cnn-arrow">→</span>
+      <div class="rag-node db"><span class="ic">📚</span>向量库<br>检索 Top-K</div>
+      <span class="cnn-arrow">→</span>
+      <div class="rag-node llm"><span class="ic">🤖</span>LLM<br>生成答案</div>
+      <span class="cnn-arrow">→</span>
+      <div class="rag-node ans"><span class="ic">✅</span>带出处<br>的回答</div>
+    </div>`,
+    voice: 'RAG 检索增强生成是企业落地 LLM 最常用的姿势。问题是大模型不知道你公司内部文档。方案：把所有内部文档切片向量化存到向量库，用户提问时先把问题向量化在库里检索 Top 5 相似片段，把这些片段加问题一起喂给 LLM，让它基于这些上下文生成答案。优点：① 不用 fine-tune 节省成本 99% ② 答案可追溯到原文档 ③ 知识更新只更新向量库不动模型。火山的 viking DB 就是企业级向量库代表。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 7 章 · RAG vs Fine-tune', title: '何时选谁？三句话讲清',
+    visual: `<table class="cloud-table" style="width:760px;">
+      <thead><tr><th>维度</th><th>RAG 检索增强</th><th>Fine-tune 微调</th></tr></thead>
+      <tbody>
+        <tr><td>适用场景</td><td class="ve">企业知识问答 / 客服 / 文档检索</td><td class="hw">特定风格 / 特定行业术语 / 任务型</td></tr>
+        <tr><td>数据要求</td><td class="ve">文档即可，无需标注</td><td class="hw">需要 1-10 万条高质量样本</td></tr>
+        <tr><td>初次成本</td><td class="ve">$ 500-5000（向量化+存储）</td><td class="hw">$ 5-30 万（GPU 训练 + 工程）</td></tr>
+        <tr><td>更新成本</td><td class="ve">秒级（新文档入库即可）</td><td class="hw">高（需重新训练）</td></tr>
+        <tr><td>可追溯</td><td class="ve"><b>答案可标来源文档</b></td><td class="hw">不可追溯</td></tr>
+        <tr><td>推荐</td><td class="ve"><b>90% 企业落地首选</b></td><td class="hw">特定场景+预算高</td></tr>
+      </tbody>
+    </table>`,
+    voice: '客户最常问"我们要不要做 fine-tune"，售前要能秒答。看这张对比表。RAG 适合企业知识问答客服文档检索，数据只需要文档不用标注，初次成本 5 千到 5 万，新文档入库即可秒级更新，答案能标来源。Fine-tune 适合特定风格特定行业术语，需要 1 到 10 万条高质量样本，初次成本 5 到 30 万，更新得重新训练。结论：90% 企业落地首选 RAG，少数特定风格需求再叠 Fine-tune。这一段是售前能不能 close 单的关键。',
+    fallbackDuration: 33000 },
+
+  // ===== 互动测验 #2 =====
+  { chapter: '🎯 互动测验 #2', title: '客户场景：智能客服选哪种 AI？',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户："我们想做智能客服，能基于公司 10 万份产品文档回答用户问题，最好能标出处。"——怎么落地最快？</div>
+      <div class="quiz-opt wrong" data-k="A">用开源 LLaMA 自己做 Fine-tune（成本最低）</div>
+      <div class="quiz-opt correct" data-k="B">RAG：viking DB 向量库 + 豆包 LLM + 引用追溯</div>
+      <div class="quiz-opt wrong" data-k="C">把 10 万份文档喂 GPT-4 一次性提问</div>
+      <div class="quiz-opt wrong" data-k="D">用判别式 CV 把文档变图片做 OCR</div>
+      <div class="quiz-hint">💡 <b>答案 B</b>：典型 RAG 场景。Fine-tune 成本高 + 不能追溯 + 文档更新要重训，劝退。GPT-4 单次上下文最多 200K token 装不下 10 万文档。<b>RAG 是企业级智能客服的事实标准</b>：火山 viking DB 做向量库，豆包做 LLM，30 天即可上线。</div>
+    </div>`,
+    voice: '第二道。客户想做智能客服基于 10 万份产品文档回答还要标出处，怎么落地最快？给你 5 秒......正确答案 B，RAG 加 viking DB 向量库加豆包 LLM 加引用追溯。Fine-tune 成本高且不能追溯文档更新要重训直接劝退。GPT-4 单次上下文只能放 200K token 装不下 10 万文档。RAG 是企业智能客服的事实标准 30 天可上线。售前讲方案如果还在劝客户 fine-tune就过时了。',
+    fallbackDuration: 26000 },
+
+  // ===== 训练推理 =====
+  { chapter: '第 8 章 · 训练推理基础设施', title: '训练 GPT-4 需要几张卡？',
     body: '<b>大模型训练 = 数万张 GPU 跑数月</b><br>用 InfiniBand 高速互联 200-400 Gbps<br>训练一次 GPT-4 估算成本 ¥4 亿+',
     visual: `<div class="gpu-grid">
       ${Array(64).fill().map(()=>'<div class="gpu-cell"></div>').join('')}
     </div><div style="font-size:13px;color:#7a8db5;margin-top:14px;text-align:center;">每个粉色方块 = 1 张 NVIDIA H100 GPU（¥30万一张）</div>`,
-    voice: '看这张图，每个粉色方块是一张 NVIDIA H100 显卡，单价 30 万人民币。这里画了 64 张做示意，但训练 GPT-4 用了 2.5 万张 H100，连续跑 3 个月。粗算一次训练成本 4 亿人民币。所以大模型不是个个公司都能玩，普通企业用 API 就行。',
-    fallbackDuration: 16000 },
+    voice: '看这张图每个粉色方块是一张 NVIDIA H100 显卡单价 30 万人民币。这里画了 64 张做示意但训练 GPT-4 用了 2.5 万张 H100 连续跑 3 个月。粗算一次训练成本 4 亿人民币。所以大模型不是个个公司都能玩普通企业用 API 就行。',
+    fallbackDuration: 17000 },
 
-  { chapter: '第 7 章 · 训练推理基础设施', title: '推理优化 · 让大模型跑得起',
+  { chapter: '第 8 章 · 训练推理基础设施', title: '推理优化 · 让大模型跑得起',
     body: '<b>量化</b>：FP16 → INT8/INT4，模型小 4-8x，速度 2-4x<br><b>vLLM / TensorRT</b>：连续批处理，吞吐提升 10x<br><b>KV Cache</b>：多轮对话不重算',
     visual: `<div class="three-col">
       <div class="col-card"><div class="num">📦→📦</div><h5>量化</h5><p>FP32 → INT8<br>体积 ¼<br>速度 2-4×</p></div>
       <div class="col-card"><div class="num">🚀</div><h5>vLLM</h5><p>连续批处理<br>显存碎片 0<br>吞吐 ↑10×</p></div>
       <div class="col-card"><div class="num">💾</div><h5>KV Cache</h5><p>缓存历史 token<br>多轮对话 ↑5-10×</p></div>
     </div>`,
-    voice: '训练贵，推理也得优化。三个核心技术。量化是把模型权重从 32 位精度压到 8 位甚至 4 位，体积缩小 4 到 8 倍，速度提升 2 到 4 倍，精度只损失 1-3%。vLLM 是开源推理引擎，用连续批处理消除显存碎片，吞吐量比传统方案高 10 倍。KV Cache 是多轮对话缓存历史 token 的注意力中间结果，避免重复计算，节省一半算力。',
-    fallbackDuration: 20000 },
+    voice: '训练贵推理也得优化。三个核心技术。量化是把模型权重从 32 位精度压到 8 位甚至 4 位体积缩小 4 到 8 倍速度提升 2 到 4 倍精度只损失 1-3%。vLLM 是开源推理引擎用连续批处理消除显存碎片吞吐量比传统方案高 10 倍。KV Cache 是多轮对话缓存历史 token 的注意力中间结果避免重复计算节省一半算力。',
+    fallbackDuration: 21000 },
 
-  // ===== 第 8 章 MLOps =====
-  { chapter: '第 8 章 · MLOps', title: 'MLOps · AI 工程化',
+  // ===== MLOps =====
+  { chapter: '第 9 章 · MLOps', title: 'MLOps · AI 工程化',
     body: '不做 MLOps = 手工小作坊<br>模型上线 ≠ 项目结束 → <span class="hl">真正的工作才开始</span>',
     visual: `<div class="cdn-flow" style="font-size:30px;">
       <span class="node">📊 数据</span><span class="arrow">→</span>
@@ -368,35 +493,158 @@ window.SLIDES = [
       <span class="node">🚀 部署</span><span class="arrow">→</span>
       <span class="node">📈 监控</span>
     </div><div style="font-size:13px;color:#7a8db5;margin-top:14px;text-align:center;">数据版本 + 模型版本 + CI/CD + 监控 + 自动重训</div>`,
-    voice: 'MLOps 是机器学习的 DevOps。不做 MLOps 你就是手工小作坊，每次重训都要找当年的数据脚本和服务器。MLOps 把数据版本、模型版本、CI/CD、监控、自动重训全部流水线化。模型上线不是项目结束，而是真正工作的开始——线上数据会漂移，每 3 到 6 个月得重训。',
-    fallbackDuration: 16000 },
+    voice: 'MLOps 是机器学习的 DevOps。不做 MLOps 你就是手工小作坊每次重训都要找当年的数据脚本和服务器。MLOps 把数据版本、模型版本、CI/CD、监控、自动重训全部流水线化。模型上线不是项目结束而是真正工作的开始——线上数据会漂移每 3 到 6 个月得重训。',
+    fallbackDuration: 17000 },
 
-  { chapter: '第 8 章 · MLOps', title: '⚠️ AB 漂移 · 离线 ≠ 线上',
-    body: '离线测试 95% 准确率，<span style="color:#ef4444;font-weight:700;">上线后掉到 70%</span>？<br>原因：训练数据和线上真实流量分布不同。<br><span class="hl">所有 AI 项目都要做 A/B 灰度上线</span>',
-    visual: `<div class="danger-box">
-      离线 Accuracy: 95% ✅<br>
-      ↓ 上线<br>
-      线上效果: <span style="color:#ef4444;font-weight:700;">70%</span> ☠️
+  // ===== 真实故障 =====
+  { chapter: '⚠️ 真实故障', title: '某创业公司接 GPT-4，一周烧 30 万 token 费',
+    visual: `<div class="incident-card">
+      <div class="incident-header">
+        <span class="badge-time">2025 · Q1</span>
+        <h4>某创业公司 · LLM 接入未做成本控制</h4>
+      </div>
+      <div class="incident-row">📅 <b>事故时间</b>：产品上线一周，账单 30 万</div>
+      <div class="incident-row">⚠️ <b>问题</b>：① 后端每次都把<b>全量历史 + 全量 RAG 上下文</b>发给 GPT-4，单次 30K token；② 没做 KV Cache 复用；③ 用户能在 prompt 里无限循环；④ 没限速没限额</div>
+      <div class="incident-row">💀 <b>损失</b>：第 5 天单日费用 8 万，第 7 天发现已烧 30 万，业务被迫下线</div>
+      <div class="incident-row ok">✅ <b>正确做法</b>：① 改 RAG 只送 Top-3 片段；② 启用 vLLM KV Cache 复用；③ 用户级限速 + 月度配额；④ 高频问题用 <b>语义缓存</b> 命中直接返回不走 LLM；⑤ <b>降级链</b>：豆包-mini → 豆包-pro → GPT-4，按问题难度选模型，成本降 80%</div>
     </div>`,
-    voice: '一个 AI 项目最坑的事——AB 漂移。离线测试模型 95% 准确率，售前讲方案讲得激情澎湃。结果一上线，效果掉到 70%。客户立刻怀疑你忽悠。原因是训练数据和线上真实流量分布不一致。所以所有 AI 项目必须先做 AB 灰度，1% 流量先试，确认效果再放量。',
-    fallbackDuration: 16000 },
+    voice: '一个真实案例。某创业公司接 GPT-4 做产品一周烧 30 万 token 费业务被迫下线。问题四条：每次把全量历史和全量 RAG 上下文都发过去单次 30K token；没做 KV Cache 复用；用户能在 prompt 里无限循环；没限速没限额。修复五条：RAG 只送 Top-3 片段；vLLM KV Cache 复用；用户级限速加月度配额；高频问题语义缓存命中直接返回不走 LLM；最关键的降级链：简单问题豆包 mini、中等豆包 pro、复杂才用 GPT-4，按难度路由模型成本降 80%。售前讲 LLM 方案必须把"成本控制"作为标配卖给客户。',
+    fallbackDuration: 36000 },
+
+  // ===== 国产大模型对比 =====
+  { chapter: '🆚 国产大模型对比', title: '6 个主流国产 LLM · 售前必背',
+    visual: `<div class="llm-vs">
+      <div class="llm-card db">
+        <h5>🌋 豆包（火山）</h5>
+        <div class="feat">· 抖音同款 RLHF</div>
+        <div class="feat">· 中文 SOTA</div>
+        <div class="feat">· Coze 智能体平台</div>
+        <div class="price">输入 ¥0.0008/千 token<br>输出 ¥0.002/千 token</div>
+      </div>
+      <div class="llm-card qw">
+        <h5>🟦 通义千问（阿里）</h5>
+        <div class="feat">· 开源 Qwen2.5</div>
+        <div class="feat">· 多模态强</div>
+        <div class="feat">· 百炼平台</div>
+        <div class="price">输入 ¥0.0005/千 token<br>开源版可私有部署</div>
+      </div>
+      <div class="llm-card ds">
+        <h5>💚 DeepSeek</h5>
+        <div class="feat">· R1 推理模型</div>
+        <div class="feat">· 极低价</div>
+        <div class="feat">· MIT 协议</div>
+        <div class="price">输入 ¥0.001/千 token<br>R1 同 o1 水平 1/10 价</div>
+      </div>
+      <div class="llm-card km">
+        <h5>🌙 Kimi（月之暗面）</h5>
+        <div class="feat">· 200 万长上下文</div>
+        <div class="feat">· 文档处理强</div>
+        <div class="feat">· 学术圈知名度</div>
+        <div class="price">长文档处理首选</div>
+      </div>
+      <div class="llm-card gm">
+        <h5>💎 GLM（智谱）</h5>
+        <div class="feat">· 国资背景</div>
+        <div class="feat">· 政务客户偏好</div>
+        <div class="feat">· GLM-4 Plus</div>
+        <div class="price">政府/央企首选</div>
+      </div>
+      <div class="llm-card gpt">
+        <h5>🌐 GPT-4o / Claude</h5>
+        <div class="feat">· 海外项目用</div>
+        <div class="feat">· 综合能力强</div>
+        <div class="feat">· 价格最贵</div>
+        <div class="price">输入 ~¥0.02/千 token<br>国内受限</div>
+      </div>
+    </div>`,
+    voice: '6 个主流 LLM 售前必背。豆包是火山自家抖音同款 RLHF 中文 SOTA加 Coze 智能体平台输入 8 厘输出 2 分。通义千问是阿里阿里百炼平台开源 Qwen2.5 可私有部署。DeepSeek 极低价 R1 推理模型同 o1 水平价格 1/10开源 MIT 协议。Kimi 是月之暗面 200 万长上下文文档处理无敌。GLM 智谱国资背景政务客户偏好。GPT-4o 和 Claude 海外项目用国内受限。售前要按客户场景推：互联网推豆包 + DeepSeek；政府央企推 GLM + 豆包；长文档场景推 Kimi。',
+    fallbackDuration: 36000 },
+
+  // ===== 客户对话 #1 =====
+  { chapter: '🌟 客户对话 #1', title: '客户问"用 GPT 还是豆包？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>都说 GPT 最强，为什么要用你们豆包？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>三个角度看。<b>① 合规</b>：你的数据进境外 LLM，等保和数据出境都过不了；<b>② 价格</b>：豆包同等中文任务 GPT 4o 的 1/15；<b>③ 中文场景</b>：豆包是抖音内部喂出来的中文 RLHF SOTA。<b>跨境/海外业务</b> 才用 GPT，国内业务豆包更稳。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>那我开源模型自部署是不是更便宜？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>看量。如果<b>日调用 &lt; 500 万 token</b>，API 直接调最划算，自部署 H100 一张就 30 万一月。日调用 5000 万 token + 强合规要求才考虑自部署 Qwen2.5-72B 或 DeepSeek-V2.5。我们火山方舟同时支持<b>公有 API + 私有部署</b> 两种姿势，按量随时切。</div>
+      </div>
+    </div>`,
+    voice: '第一个对话最常见。客户问 GPT 还是豆包，售前给三角度：合规、价格、中文场景。跨境用 GPT 国内用豆包。客户追问开源自部署是不是更便宜，售前给量化阈值：日 500 万 token 以下 API 划算，5000 万 token 加合规要求才自部署。最后给火山方舟"公有加私有"两种姿势的灵活路径。这是高级售前能让 CTO 信服的关键。',
+    fallbackDuration: 31000 },
+
+  // ===== 客户对话 #2 =====
+  { chapter: '🌟 客户对话 #2', title: '客户问"AI 项目怎么开始？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>老板说要做 AI 转型，但我也不知道从哪下手，给我个 100 万预算先试。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>三步走。<b>① 痛点诊断 1 周</b>：找 3 个可量化业务痛点（响应慢 / 审核贵 / 转化低）；<b>② 小步 PoC 6 周</b>：选 1 个最痛的做 RAG 智能问答或文档抽取，预算 30 万；<b>③ 规模化 3 个月</b>：PoC 见效后扩到 3-5 个场景，剩余 70 万。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>3 个痛点怎么找？我们也想做但找不准。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>我们送一份<b>免费 AI 诊断工作坊</b>：2 天驻场，访谈业务、销售、客服、运维四个团队，<b>每团队找出 3 个可量化痛点</b>，最后给优先级矩阵（ROI × 落地难度）。这是火山引擎大客户标配，我们做过 50 家。</div>
+      </div>
+    </div>`,
+    voice: '第二个对话是预算客户最常见。客户老板要做 AI 但不知从哪下手给 100 万试。售前给三步走：1 周痛点诊断、6 周小步 PoC、3 月规模化。客户追问 3 个痛点怎么找，售前甩出"免费 AI 诊断工作坊"——2 天驻场访谈四团队找痛点排优先级。这种"用工作坊换商机"的玩法是高级 SE 的标准动作，能让客户从"试试"变成"必须找你"。',
+    fallbackDuration: 30000 },
+
+  // ===== 客户对话 #3 =====
+  { chapter: '🌟 客户对话 #3', title: '客户问"幻觉怎么解决？"',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们试了 LLM 做客服，模型一本正经地胡说八道，客户投诉。怎么办？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>幻觉是 LLM 的天性，靠"工程"压制不靠模型。四件套：<b>① RAG</b> 答案必须基于检索到的文档片段；<b>② 引用追溯</b> 强制标 [文档 X 第 Y 段]；<b>③ 拒答阈值</b> 检索置信度 &lt;0.6 直接回"不确定，转人工"；<b>④ 反事实评估</b> 每周抽 100 条人工标注修正。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>能做到 0 幻觉吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>0 幻觉是反物理学的承诺。<b>正确目标是 ≤ 2% 严重错误率</b>，业内最佳实践是 1-3%。<b>关键是建立监控</b>：每条回答的检索分数、模型置信度都入数仓，每周 review 漂移。AI 项目不是上线就完事，是<b>持续治理</b>。这也是火山方舟平台的核心价值。</div>
+      </div>
+    </div>`,
+    voice: '第三个对话是 AI 落地最常见的痛点：幻觉。客户被一本正经胡说八道气坏了。售前给四件套：RAG 加引用追溯加拒答阈值加反事实评估。客户追问能做到 0 幻觉吗，售前不要逞强承诺。正确答：0 幻觉是反物理学的承诺，业内最佳 1 到 3% 严重错误率。关键是建立监控做持续治理。这种"实话实说+可量化目标+持续治理"的回答方式比"我们能解决所有问题"高级 10 倍，是赢得 CTO 信任的关键。',
+    fallbackDuration: 33000 },
 
   // ===== 案例 =====
   { chapter: '案例', title: '🌟 保险理赔单审核',
     body: '<b>痛点</b>：7 天人工审核 / 高人力成本<br><b>方案</b>：OCR + 异常分类 + 豆包要素校验<br><br>📈 80% 自动通过<br>⏱ 7 天 → 8 小时<br>😊 客户 NPS +22 点',
     visual: '<div style="font-size:64px;">📋</div>',
-    voice: '一个真实案例。某保险公司想用 AI 做理赔单审核，把 7 天人工审核压到 1 天。他们有 5 万条历史标注和 5 个 AI 工程师。我们的方案：先用 CV，也就是 OCR 加单据要素提取，再用传统 ML 做异常分类做基础版。再叠加豆包大模型做要素一致性校验和异常理由生成。3 个月上线，6 个月迭代。结果：80% 单据自动通过，平均响应从 7 天降到 8 小时，人工只看高风险的 20%，客户满意度提升 22 个 NPS 点。这就是 AI 在传统行业的真实样子。',
-    fallbackDuration: 24000 },
+    voice: '一个真实案例。某保险公司想用 AI 做理赔单审核把 7 天人工审核压到 1 天。他们有 5 万条历史标注和 5 个 AI 工程师。我们的方案：先用 CV 做 OCR 加单据要素提取再用传统 ML 做异常分类做基础版。再叠加豆包大模型做要素一致性校验和异常理由生成。3 个月上线 6 个月迭代。结果：80% 单据自动通过平均响应从 7 天降到 8 小时人工只看高风险的 20%客户满意度提升 22 个 NPS 点。',
+    fallbackDuration: 27000 },
 
   // ===== 心法 =====
   { chapter: '完成', title: '🎯 售前 AI 三步法',
     eyebrow: '关键心法',
     body: '客户说"我们要做 AI"时，问三个问题：<br><b>① 哪个可量化痛点？</b>（响应慢/审核贵/转化低）<br><b>② 用哪类 AI？</b>（识别 CV / 理解 NLP / 生成 LLM）<br><b>③ 数据准备度？</b>（有 1 万条标注吗？）<br><br><span class="hl">"小而美的 PoC" 比卖大模型平台容易落地 10 倍</span>',
     visual: '<div style="font-size:80px;">🧠</div>',
-    voice: '最后是售前讲 AI 的三步法。客户说"我们要做 AI"时，先问三个问题：一，你想解决哪个可量化的痛点？响应慢、审核贵、转化低？二，应该用哪类 AI？识别问题用 CV、理解用 NLP、生成用 LLM、决策用 ML。三，数据准备度怎么样？有没有 1 万条标注数据？没有从哪里来？想清楚这三步再讲方案。给客户做"小而美的 PoC"，比上来就卖大模型平台容易落地 10 倍。Day 12 完结，下一站 Day 13 豆包矩阵。',
-    fallbackDuration: 22000 },
+    voice: '最后是售前讲 AI 的三步法。客户说"我们要做 AI"时先问三个问题：一你想解决哪个可量化的痛点响应慢、审核贵、转化低？二应该用哪类 AI识别问题用 CV、理解用 NLP、生成用 LLM、决策用 ML。三数据准备度怎么样有没有 1 万条标注数据没有从哪里来？想清楚这三步再讲方案。给客户做小而美的 PoC比上来就卖大模型平台容易落地 10 倍。Day 12 增强版完结。',
+    fallbackDuration: 26000 },
 ];
 </script>
-<script src="_player.js?v=18"></script>
+<script src="_player.js?v=19"></script>
 </body>
 </html>
