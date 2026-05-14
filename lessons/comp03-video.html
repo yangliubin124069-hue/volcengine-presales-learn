@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>COMP-03 · 华为云对位详解 · 互动教学视频</title>
+<link rel="stylesheet" href="_player.css?v=20">
+<style>
+  /* COMP-03 专用样式 */
+
+  /* 火山 vs 华为双栏对比 */
+  .vs-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px;
+    width: 820px; max-width: 96vw; align-items: center; }
+  .vs-side { padding: 16px; border-radius: 10px; border: 1.5px solid;
+    background: rgba(255,255,255,.04); }
+  .vs-side.hw { border-color: #ec4899; background: rgba(236,72,153,.06); }
+  .vs-side.ve { border-color: #f59e0b; background: rgba(245,158,11,.08); }
+  .vs-side h4 { font-size: 14px; margin-bottom: 8px; font-weight: 700; }
+  .vs-side.hw h4 { color: #fca5a5; }
+  .vs-side.ve h4 { color: #fde68a; }
+  .vs-side p { font-size: 13px; color: #cbd5e1; line-height: 1.65; margin: 4px 0; }
+  .vs-side b { color: #fff; }
+  .vs-vs { font-size: 22px; color: #a5b4fc; font-weight: 800;
+    background: rgba(165,180,252,.1); border-radius: 50%;
+    width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; }
+
+  /* 产品对位矩阵 */
+  .product-map { display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    width: 880px; max-width: 96vw; }
+  .pm-cell { padding: 8px 10px; border-radius: 6px; font-size: 12px;
+    background: rgba(255,255,255,.04); border: 1px solid; }
+  .pm-cell.hw { border-color: rgba(236,72,153,.4); }
+  .pm-cell.ve { border-color: rgba(245,158,11,.4); }
+  .pm-row-label { grid-column: 1/3; font-size: 11px; color: #a5b4fc;
+    letter-spacing: 1px; margin-top: 8px; padding: 4px 0;
+    border-bottom: 1px dashed rgba(165,180,252,.3); }
+  .pm-cell b { color: #fff; font-size: 11.5px; }
+  .pm-cell.hw b { color: #fca5a5; }
+  .pm-cell.ve b { color: #fde68a; }
+
+  /* 优势/短板卡 */
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    width: 880px; max-width: 96vw; }
+  .pc-card { padding: 14px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid; text-align: left; animation: cardIn .5s both; }
+  .pc-card.strong { border-color: #22c55e; background: rgba(34,197,94,.06); }
+  .pc-card.weak { border-color: #f59e0b; background: rgba(245,158,11,.06); }
+  .pc-card h5 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .pc-card.strong h5 { color: #86efac; }
+  .pc-card.weak h5 { color: #fde68a; }
+  .pc-card p { font-size: 12.5px; color: #cbd5e1; line-height: 1.6; }
+  .pc-card:nth-child(2) { animation-delay: .1s; }
+  .pc-card:nth-child(3) { animation-delay: .2s; }
+  .pc-card:nth-child(4) { animation-delay: .3s; }
+  .pc-card:nth-child(5) { animation-delay: .4s; }
+  .pc-card:nth-child(6) { animation-delay: .5s; }
+  .pc-card:nth-child(7) { animation-delay: .6s; }
+
+  /* 政企打法卡 */
+  .gov-scenes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+    width: 920px; max-width: 96vw; }
+  .gov-card { padding: 12px 10px; border-radius: 10px; background: rgba(255,255,255,.04);
+    border: 1.5px solid #6e3aff; text-align: center; font-size: 11px;
+    animation: cardIn .5s both; }
+  .gov-card .ic { font-size: 28px; display: block; margin-bottom: 6px; }
+  .gov-card .name { font-size: 13px; color: #c4b5fd; font-weight: 700; margin-bottom: 6px; }
+  .gov-card .hw-line, .gov-card .ve-line { padding: 4px 0; font-size: 11px;
+    text-align: left; }
+  .gov-card .hw-line { color: #fca5a5; }
+  .gov-card .ve-line { color: #fde68a; }
+  .gov-card .hw-line b, .gov-card .ve-line b { font-size: 10px; }
+  .gov-card:nth-child(2) { animation-delay: .15s; }
+  .gov-card:nth-child(3) { animation-delay: .3s; }
+  .gov-card:nth-child(4) { animation-delay: .45s; }
+  .gov-card:nth-child(5) { animation-delay: .6s; }
+
+  /* 危险禁区 */
+  .danger-zone { padding: 22px 28px; background: rgba(239,68,68,.08);
+    border: 2px solid #ef4444; border-radius: 14px;
+    width: 740px; max-width: 94vw; text-align: left;
+    box-shadow: 0 0 32px rgba(239,68,68,.2); }
+  .danger-zone h4 { color: #fca5a5; font-size: 17px; margin-bottom: 10px; }
+  .danger-zone .x-row { padding: 6px 0; font-size: 14px; color: #cbd5e1; line-height: 1.7; }
+  .danger-zone .x-row::before { content: '❌ '; }
+  .danger-zone .ok-row { padding: 8px 12px; margin-top: 12px; background: rgba(34,197,94,.08);
+    border-left: 3px solid #22c55e; border-radius: 4px;
+    font-size: 13.5px; color: #cbd5e1; line-height: 1.7; }
+  .danger-zone .ok-row::before { content: '✅ 正确做法：'; color: #86efac; font-weight: 700; }
+</style>
+</head>
+<body>
+<script>
+window.META = {
+  day: 'COMP-03',
+  title: 'COMP-03 · 华为云对位详解',
+  intro: '20 分钟 · 19 项产品对位 + 6 优势 + 7 短板 + 5 场景话术 + 政企 5 打法（HCSP-Presales 必看）'
+};
+window.SLIDES = [
+
+  // ===== 开场 =====
+  { chapter: '开场', title: 'COMP-03 · 华为云对位详解',
+    eyebrow: '火山引擎售前 · 互动视频课 · 重点 ★★★★★',
+    body: '<b>整个竞品模块的核心</b><br>19 项产品对位 + 6 优势 + 7 短板 + 5 场景话术 + 政企 5 打法<br><span class="hl">HCSP-Presales 持证者最该看的一节</span>',
+    visual: '<div class="cover-icon">🆚</div>',
+    voice: '欢迎来到 COMP-03 华为云对位详解，整个竞品模块的核心。今天 20 分钟讲透 19 项产品级对位、华为 6 个真实优势和 7 个真实短板、5 个客户对话场景的逐字话术、政企 5 大场景的差异化打法。你拿过 HCSP-Presales 持证，这节课就是把华为视角下的护城河转换成火山引擎进攻路径。',
+    fallbackDuration: 23000 },
+
+  // ===== 第 1 章 中国云市场结构 =====
+  { chapter: '第 1 章 · 市场结构', title: '中国云市场 · 三股力量',
+    body: '<b>第一股</b>：互联网云（阿里 / 腾讯 / 火山 / 百度）<br><b>第二股</b>：政企云（华为 / 紫光 / 浪潮）<br><b>第三股</b>：国资云（天翼 / 移动 / 联通）<br><span class="hl">华为是政企云第一，火山在 AI 应用层挑战华为政企阵地</span>',
+    visual: `<div class="three-col">
+      <div class="col-card"><div class="num">🌐</div><h5>互联网云</h5><p>阿里/腾讯<br>火山/百度<br>价格灵活生态广</p></div>
+      <div class="col-card"><div class="num">🏛️</div><h5>政企云（华为为首）</h5><p>华为/紫光/浪潮<br>全栈自主可控<br>HCS 私有云第一</p></div>
+      <div class="col-card"><div class="num">📡</div><h5>国资云</h5><p>天翼/移动/联通<br>国资身份 + 网络资源<br>政企份额持续上升</p></div>
+    </div>`,
+    voice: '中国云市场 2026 年清晰分三股力量。第一股互联网云，阿里腾讯火山百度，价格灵活生态广。第二股政企云，华为是头部，紫光浪潮跟随，全栈自主可控加 HCS 私有云市占第一。第三股是 2023 起崛起的国资云，天翼移动联通，靠国资身份加运营商网络资源在政企单子里持续抢份额。火山的位置是在第一股里，但要进政企阵地必须懂华为视角。',
+    fallbackDuration: 25000 },
+
+  // ===== 19 项产品对位俯瞰 =====
+  { chapter: '第 2 章 · 产品对位', title: '19 项产品对位地图（俯瞰）',
+    visual: `<div class="product-map">
+      <div class="pm-row-label">🧠 大模型 & AI 平台</div>
+      <div class="pm-cell hw"><b>盘古大模型 5.0</b> NLP/CV/多模态/科学计算</div>
+      <div class="pm-cell ve"><b>豆包 1.6/2.0</b> Pro/Lite/Mini/Code 四档</div>
+      <div class="pm-cell hw"><b>ModelArts + Pangu Studio</b></div>
+      <div class="pm-cell ve"><b>火山方舟</b> 接入多家模型 RAG/Agent</div>
+      <div class="pm-cell hw"><b>GaussDB(向量) + CSS</b></div>
+      <div class="pm-cell ve"><b>VikingDB</b> 企业级向量库</div>
+
+      <div class="pm-row-label">📊 数据中台 & 数仓</div>
+      <div class="pm-cell hw"><b>DataArts + FusionInsight</b></div>
+      <div class="pm-cell ve"><b>DataLeap + EMR + LAS</b></div>
+      <div class="pm-cell hw"><b>GaussDB(DWS) / MRS Hive</b></div>
+      <div class="pm-cell ve"><b>ByteHouse</b> 云原生数仓</div>
+      <div class="pm-cell hw"><b>GaussDB(MySQL/PG/Oracle)</b></div>
+      <div class="pm-cell ve"><b>veDB / RDS</b></div>
+
+      <div class="pm-row-label">🐳 容器 & IaaS</div>
+      <div class="pm-cell hw"><b>CCE / CCI / UCS</b></div>
+      <div class="pm-cell ve"><b>VKE / VCI</b></div>
+      <div class="pm-cell hw"><b>ECS / BMS</b> 鲲鹏+x86</div>
+      <div class="pm-cell ve"><b>ECS</b> 主推 x86 + 部分昇腾</div>
+      <div class="pm-cell hw"><b>云 Stack（HCS）</b> 私有云第一</div>
+      <div class="pm-cell ve"><b>火山引擎私有云 / 专属版</b></div>
+
+      <div class="pm-row-label">📦 存储 / 网络 / 音视频</div>
+      <div class="pm-cell hw"><b>OBS / SFS / EVS</b></div>
+      <div class="pm-cell ve"><b>TOS / NAS / EBS</b></div>
+      <div class="pm-cell hw"><b>VPC/EIP/ELB + SDN</b></div>
+      <div class="pm-cell ve"><b>VPC/CLB/EIP</b></div>
+      <div class="pm-cell hw"><b>CDN + IdeaHub 会议</b></div>
+      <div class="pm-cell ve"><b>CDN + RTC + VOD</b> 抖音同款</div>
+    </div>`,
+    voice: '一张图把华为云和火山引擎 19 项产品对位看清楚。大模型层：盘古对豆包、ModelArts 对火山方舟、GaussDB 向量对 VikingDB。数据中台：DataArts 对 DataLeap、GaussDB DWS 对 ByteHouse、GaussDB 关系库对 veDB。容器 IaaS：CCE 对 VKE、ECS 鲲鹏+x86 对火山 ECS 主推 x86、HCS 对火山专有云。存储网络音视频：OBS 对 TOS、华为 SDN 对火山 VPC、IdeaHub 视频会议对抖音 RTC。这张图建议截图打印贴工位。',
+    fallbackDuration: 35000 },
+
+  // ===== 第 3 章 重点产品深度对位 =====
+  { chapter: '第 3 章 · 大模型', title: '盘古 vs 豆包 · 三个 R 对比',
+    visual: `<div class="vs-grid">
+      <div class="vs-side hw">
+        <h4>🔵 华为盘古 5.0</h4>
+        <p><b>定位</b>：行业大模型</p>
+        <p><b>强项</b>：行业知识深、科学计算、政企客户</p>
+        <p><b>迭代</b>：季度级</p>
+        <p><b>应用市场</b>：相对封闭</p>
+        <p><b>主推场景</b>：制造 / 矿山 / 气象 / 药物</p>
+      </div>
+      <div class="vs-vs">VS</div>
+      <div class="vs-side ve">
+        <h4>🌋 火山豆包 1.6/2.0</h4>
+        <p><b>定位</b>：通用 + 行业可定制</p>
+        <p><b>三个 R</b>：</p>
+        <p>· <b>Recent</b> 月级迭代</p>
+        <p>· <b>Real</b> 抖音电商真实流量打磨</p>
+        <p>· <b>Ready</b> Pro/Lite/Mini/Code 四档</p>
+        <p><b>主推场景</b>：客服 / 营销 / 内容 / 代码 / RAG</p>
+      </div>
+    </div>`,
+    voice: '盘古和豆包是中国大模型 ToB 两条路。盘古做行业大模型，行业知识深，科学计算强，主推制造、矿山、气象、药物等垂直场景。但迭代周期是季度级，应用市场相对封闭。豆包的差异点是三个 R：Recent 月级迭代、Real 抖音电商每天数十亿次调用真实打磨、Ready 分 Pro/Lite/Mini/Code 四档分级加火山方舟一站式工程化。售前对位时不要否定盘古的行业深度，要在"迭代速度和应用工程化"上立差异。',
+    fallbackDuration: 31000 },
+
+  { chapter: '第 3 章 · 大模型平台', title: 'ModelArts vs 火山方舟',
+    visual: `<div class="vs-grid">
+      <div class="vs-side hw">
+        <h4>🔵 ModelArts + Pangu Studio</h4>
+        <p><b>定位</b>：盘古训练 / 部署主战场</p>
+        <p><b>模型</b>：只盘古系列</p>
+        <p><b>客户</b>：行业大客户为主</p>
+        <p><b>工具链</b>：训练+微调强</p>
+        <p><b>开放度</b>：政企闭环优先</p>
+      </div>
+      <div class="vs-vs">VS</div>
+      <div class="vs-side ve">
+        <h4>🌋 火山方舟</h4>
+        <p><b>定位</b>：多模型推理 + 应用一站式</p>
+        <p><b>模型</b>：豆包 + DeepSeek + Kimi + 通义</p>
+        <p><b>客户</b>：从开发者到企业全覆盖</p>
+        <p><b>工具链</b>：Prompt+RAG+Agent 全栈</p>
+        <p><b>开放度</b>：开源生态友好</p>
+      </div>
+    </div>`,
+    voice: 'ModelArts 和火山方舟是大模型平台两种姿势。ModelArts 只跑盘古系列，训练微调能力强，主要做行业大客户的项目制交付。火山方舟是平台型产品，同时接入豆包、DeepSeek、Kimi、通义多家模型，让开发者一站式做 Prompt 工程加 RAG 加 Agent。售前讲方舟时要强调"不绑定单一模型"——客户在方舟上随时可切换底层模型，避免锁定。这是平台思维和项目思维的本质差异。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 3 章 · 大数据中台', title: 'DataArts vs DataLeap · 工具链对比',
+    visual: `<div class="vs-grid">
+      <div class="vs-side hw">
+        <h4>🔵 DataArts + FusionInsight</h4>
+        <p><b>底子</b>：传统 Hadoop 生态</p>
+        <p><b>强项</b>：数据治理、政企集成</p>
+        <p><b>分析</b>：MRS Hive + GaussDB DWS</p>
+        <p><b>湖仓一体</b>：能力相对老派</p>
+        <p><b>客户</b>：央企 / 政务深耕</p>
+      </div>
+      <div class="vs-vs">VS</div>
+      <div class="vs-side ve">
+        <h4>🌋 DataLeap + EMR + LAS + ByteHouse</h4>
+        <p><b>底子</b>：抖音内部数据栈</p>
+        <p><b>强项</b>：工具链更新快、湖仓一体强</p>
+        <p><b>分析</b>：ByteHouse 单点查询极速</p>
+        <p><b>湖仓一体</b>：LAS 业界领先</p>
+        <p><b>客户</b>：互联网+部分政企</p>
+      </div>
+    </div>`,
+    voice: '数据中台对位。DataArts 底子是传统 Hadoop FusionInsight 生态，数据治理和政企集成强，但分析时延和湖仓一体能力相对老派。DataLeap 加 EMR 加 LAS 加 ByteHouse 是抖音内部数据栈商业化，工具链更新快、湖仓一体能力强、ByteHouse 单点查询性能强。售前对位时拿一个客户高频查询场景做基准测试，让数据说话比讨论生态有效。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 3 章 · 私有云', title: 'HCS vs 火山专有云 · 不同维度的强',
+    visual: `<div class="vs-grid">
+      <div class="vs-side hw">
+        <h4>🔵 华为云 Stack（HCS）</h4>
+        <p><b>市占</b>：国内私有云第一</p>
+        <p><b>强项</b>：基础设施成熟、运维体系完整</p>
+        <p><b>客户</b>：金融、政府、央企</p>
+        <p><b>定位</b>：IaaS+PaaS 整体下沉</p>
+        <p><b>AI 集成</b>：偏项目制</p>
+      </div>
+      <div class="vs-vs">VS</div>
+      <div class="vs-side ve">
+        <h4>🌋 火山引擎专有云 / 专属版</h4>
+        <p><b>市占</b>：新入场</p>
+        <p><b>强项</b>：AI Cloud Stack 差异化</p>
+        <p><b>客户</b>：金融、能源、政府 AI 场景</p>
+        <p><b>定位</b>：豆包私有部署 + 火山方舟全套下沉</p>
+        <p><b>AI 集成</b>：产品化交付</p>
+      </div>
+    </div>`,
+    voice: 'HCS 和火山专有云是私有云对位。HCS 国内市占第一是事实，基础设施成熟运维体系完整，但 AI 集成偏项目制。火山专有云走"AI Cloud Stack"差异化路线——豆包可以私有化部署，火山方舟整套 RAG Agent 在专有环境下完整可用，DataLeap ByteHouse VikingDB 一并下沉。售前对位时不要在 IaaS 基础设施层硬刚，要在"AI 原生能力下沉"这一层立差异化。',
+    fallbackDuration: 32000 },
+
+  { chapter: '第 3 章 · AI 算力', title: '昇腾 vs NVIDIA + 多元算力',
+    visual: `<div class="vs-grid">
+      <div class="vs-side hw">
+        <h4>🔵 华为昇腾（Atlas 800/900）</h4>
+        <p><b>定位</b>：国产 AI 算力</p>
+        <p><b>合规</b>：信创最纯</p>
+        <p><b>性能</b>：单卡接近 NVIDIA A100</p>
+        <p><b>生态</b>：CANN 编程框架</p>
+        <p><b>应用</b>：政企 + 信创单子默选</p>
+      </div>
+      <div class="vs-vs">VS</div>
+      <div class="vs-side ve">
+        <h4>🌋 火山引擎 NVIDIA + 多元</h4>
+        <p><b>定位</b>：多元算力 + 字节大集群</p>
+        <p><b>主力</b>：NVIDIA H100/H800</p>
+        <p><b>国产备份</b>：昇腾 / 海光 / 天数</p>
+        <p><b>独家</b>：字节自有 GPU 集群可调度</p>
+        <p><b>应用</b>：性能优先 + 国产可切换</p>
+      </div>
+    </div>`,
+    voice: 'AI 算力对位最敏感。华为昇腾是国产 AI 算力代表，信创最纯，政企信创单子默选，CANN 编程框架封闭但生态在建。火山主力 NVIDIA H 系列性能优先，但国产备份接入了昇腾、海光、天数三家，字节内部 GPU 集群可调度是独家优势。售前对位时不要否定昇腾，要给客户"多元算力"路径：互联网客户主力 NVIDIA，信创需求时备份昇腾，避免单源锁定。',
+    fallbackDuration: 31000 },
+
+  // ===== 互动测验 #1 =====
+  { chapter: '🎯 互动测验 #1', title: '客户场景：金融客户做信创灾备',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">某城商行做信创灾备，底座必须国产，AI 风控模型要月级更新。火山怎么进？</div>
+      <div class="quiz-opt wrong" data-k="A">直接报火山 ECS + 豆包，劝客户放弃华为</div>
+      <div class="quiz-opt wrong" data-k="B">说火山昇腾性能更好，硬刚算力</div>
+      <div class="quiz-opt correct" data-k="C">承认信创底座选华为/天翼，火山打 AI 应用层（豆包私有 + 火山方舟）</div>
+      <div class="quiz-opt wrong" data-k="D">推 NVIDIA + 给客户做信创豁免</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：信创灾备底座是<b>政策硬性要求</b>，劝客户放弃华为/天翼是无效进攻。正确进入路径：<b>底座承让 + AI 应用层差异化</b>。说"鲲鹏+欧拉+高斯做底座是合理选择，咱们在底座上做火山的 AI 应用层——豆包私有化部署 + 火山方舟 RAG/Agent + DataLeap 信创版"。让客户多一个 AI 厂商选型，避免单源风险。这是 HCSP-Presales 视角的标准打法。</div>
+    </div>`,
+    voice: '思考一下。某城商行做信创灾备底座必须国产 AI 风控模型要月级更新，火山怎么进？给你 5 秒......正确答案 C。信创底座是政策硬性要求，劝客户放弃华为是无效进攻。正确路径是底座承让加 AI 应用层差异化。说鲲鹏加欧拉加高斯做底座合理，咱们在底座上做火山 AI 应用层——豆包私有化部署加火山方舟加 DataLeap 信创版。让客户多一个 AI 选型避免单源风险。这是 HCSP-Presales 视角的标准打法。',
+    fallbackDuration: 30000 },
+
+  // ===== 第 4 章 华为优势 =====
+  { chapter: '第 4 章 · 华为真实优势', title: '6 个绕不开的护城河（必须先承认）',
+    visual: `<div class="pros-cons">
+      <div class="pc-card strong">
+        <h5>① 政企渠道与关系</h5>
+        <p>华为系销售 + SA 在政企客户根基极深。硬实力，PPT 讲不倒。</p>
+      </div>
+      <div class="pc-card strong">
+        <h5>② 全栈自主可控</h5>
+        <p>鲲鹏+昇腾+欧拉+高斯+鸿蒙+HCS。信创单子几乎默选。</p>
+      </div>
+      <div class="pc-card strong">
+        <h5>③ 行业方案深度</h5>
+        <p>数字政府、公安、应急、烟草、电网、煤矿——产品化最深，现成模板多。</p>
+      </div>
+      <div class="pc-card strong">
+        <h5>④ HCS 私有云成熟</h5>
+        <p>国内私有云份额第一，运维体系最完整。绕不开。</p>
+      </div>
+      <div class="pc-card strong">
+        <h5>⑤ 运营商联合</h5>
+        <p>与天翼/移动/联通深度合作。央国企单子默认对手。</p>
+      </div>
+      <div class="pc-card strong">
+        <h5>⑥ 培训体系 + 认证</h5>
+        <p>HCIA/HCIP/HCIE/HCSP/HCSE 全栈认证 + 方法论沉淀。<b>你拿过 HCSP-Presales 就是受益者</b>。</p>
+      </div>
+    </div>`,
+    voice: '华为云有 6 个绕不开的护城河，售前必须先承认才能进攻。第一政企渠道根基极深这是硬实力。第二全栈自主可控鲲鹏+昇腾+欧拉+高斯+鸿蒙+HCS，信创单子默选。第三行业方案深度，数字政府公安应急烟草电网煤矿——产品化最深现成模板多。第四 HCS 私有云份额第一运维体系最完整。第五运营商联合，央国企单子默认对手。第六培训体系 HCIA 到 HCIE 加 HCSP HCSE 全栈认证，你拿过 HCSP-Presales 就是这套体系的受益者。承认这 6 个，客户才会愿意听你后面讲差异化。',
+    fallbackDuration: 32000 },
+
+  // ===== 第 5 章 华为短板 =====
+  { chapter: '第 5 章 · 华为真实短板', title: '7 个火山可以进攻的位置',
+    visual: `<div class="pros-cons" style="grid-template-columns:1fr 1fr;">
+      <div class="pc-card weak">
+        <h5>① 大模型迭代慢 / 应用市场闭</h5>
+        <p>盘古更新季度级，开发者生态弱。火山：豆包月级 + 方舟开放。</p>
+      </div>
+      <div class="pc-card weak">
+        <h5>② AI 应用层产品化弱</h5>
+        <p>RAG/Agent 偏 ToG 政企化，互联网客户慢。火山：方舟+VikingDB 一站式。</p>
+      </div>
+      <div class="pc-card weak">
+        <h5>③ 大数据栈相对老派</h5>
+        <p>FusionInsight 偏传统 Hadoop，湖仓一体差。火山：ByteHouse+LAS。</p>
+      </div>
+      <div class="pc-card weak">
+        <h5>④ 互联网/内容经验不足</h5>
+        <p>短视频/直播/增长不是强项。火山：字节原生场景。</p>
+      </div>
+      <div class="pc-card weak">
+        <h5>⑤ 价格刚性 / 折扣空间窄</h5>
+        <p>央国企商务谈判空间小。火山：互联网客户更灵活。</p>
+      </div>
+      <div class="pc-card weak">
+        <h5>⑥ 开发者社区弱</h5>
+        <p>活跃度对比有差距。火山：字节开放生态。</p>
+      </div>
+      <div class="pc-card weak" style="grid-column:1/3;">
+        <h5>⑦ 多租户 / SaaS 化能力</h5>
+        <p>部分场景 SaaS 化路径不如互联网厂商。火山：抖店/巨量 SaaS 积累深。</p>
+      </div>
+    </div>`,
+    voice: '承认了 6 个护城河之后，看 7 个可以进攻的位置。一大模型迭代慢应用市场闭，火山豆包月级加方舟开放。二 AI 应用层产品化弱，火山方舟加 VikingDB 一站式。三大数据栈老派，火山 ByteHouse 加 LAS 湖仓一体。四互联网内容经验不足，火山字节原生场景。五价格刚性，火山互联网客户更灵活。六开发者社区弱。七 SaaS 化能力。这 7 个就是火山的进攻坐标，但切记每次只攻一两个，配合客户痛点，不要全面铺开。',
+    fallbackDuration: 33000 },
+
+  // ===== 售前禁区 =====
+  { chapter: '⚠️ 售前禁区', title: '永远不要做这 5 件事',
+    visual: `<div class="danger-zone">
+      <h4>🚫 跟华为云对位时的禁区</h4>
+      <div class="x-row">在客户面前直接贬低华为产品（"华为不行"）— 立刻丢信任</div>
+      <div class="x-row">在 IaaS 基础设施层硬刚（"我们 ECS 比华为便宜"）— 政企客户不在意 IaaS 价格</div>
+      <div class="x-row">劝客户全部替换底座 — 客户已投入巨大，建议替换 = 否定客户决策</div>
+      <div class="x-row">在信创合规上找漏洞 — 政策硬性要求，没有讨论空间</div>
+      <div class="x-row">和华为系售前在客户面前正面冲突 — 客户反感、市场口碑差</div>
+      <div class="ok-row">承认华为基础设施优势 → 锁定到 <b>AI 应用价值</b> + <b>业务效果可量化</b>这两条战线打差异化。客户买 IaaS 是买"放心"，买 AI 是买"结果"。</div>
+    </div>`,
+    voice: '跟华为对位最忌 5 件事。一不要直接贬低华为产品立刻丢信任。二不要在 IaaS 基础设施层硬刚政企客户不在意 IaaS 价格。三不要劝客户全部替换底座等于否定客户决策。四不要在信创合规上找漏洞政策硬性没空间。五不要和华为系售前正面冲突客户反感市场口碑差。正确做法：承认华为基础设施优势锁定到 AI 应用价值加业务效果可量化两条战线打差异化。客户买 IaaS 是买放心买 AI 是买结果——这句话是这一章最重要的心法。',
+    fallbackDuration: 31000 },
+
+  // ===== 场景 1 话术 =====
+  { chapter: '🌟 场景话术 #1', title: '客户已用华为云，为什么还要试火山？',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们已经全栈华为云了，HCS 也跑得好好的。为什么还要试你们？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>华为云在政务底座和信创基础设施上确实扎实，咱们没必要换底座。建议<b>双云互补</b>——底座留华为，AI 应用层和数据应用层引入火山。三个理由：<b>① 模型选择更灵活</b>（方舟接入豆包+DeepSeek 等多家），<b>② AI 应用工程化更成熟</b>，<b>③ 场景已被抖音电商验证</b>。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>双云会不会增加运维复杂度？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>双云的复杂度集中在 IaaS 和网络层，AI 应用层是<b>松耦合接入</b>——通过 API 网关 + 数据交换，原有 HCS 业务系统零改动。我们先选 <b>1 个场景做 1 个月 POC</b>，KPI 定具体指标，验证完不行也不影响您的华为底座。</div>
+      </div>
+    </div>`,
+    voice: '场景一：客户已用华为还为什么试火山。这是政企最常见开场。售前话术核心：承认华为底座、推双云互补、给三理由（模型灵活、应用工程化、抖音电商验证）。客户追问双云复杂度，售前要消除顾虑——双云复杂度在 IaaS 网络层，AI 应用层是松耦合 API 接入，原有 HCS 业务零改动。最后甩出 1 月 POC 兜底，让客户觉得"试错成本低"，敢点头。',
+    fallbackDuration: 31000 },
+
+  // ===== 场景 2 话术 =====
+  { chapter: '🌟 场景话术 #2', title: '华为有盘古，豆包好在哪？',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们已经在用盘古行业大模型了，豆包的差异在哪？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>盘古在科学计算/制造垂直场景上有积累。豆包的差异是<b>三个 R</b>：<b>① Recent</b> — 月级迭代 vs 盘古季度级；<b>② Real</b> — 抖音电商每天数十亿次调用打磨；<b>③ Ready to ship</b> — Pro/Lite/Mini/Code 四档分级 + 火山方舟工程化，从模型到应用是一套产品。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>怎么验证差异？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>建议做 <b>[具体业务场景]</b> 的对比 POC，按四个指标：<b>① 准确率 ② 时延 ③ 单 token 成本 ④ 可解释性</b>。让数据说话。火山方舟支持您同时调豆包和接入盘古做对比，您看哪个跑得好用哪个。</div>
+      </div>
+    </div>`,
+    voice: '场景二：盘古 vs 豆包。售前话术核心是三个 R——Recent、Real、Ready to ship。客户追问怎么验证，售前给出四指标 POC：准确率、时延、单 token 成本、可解释性。最关键的一招：火山方舟支持客户同时调豆包和接入盘古做对比让客户在自己环境里赛马。这种"不强行替换让数据说话"的姿态，是高级 SE 拿下技术决策者的标志动作。',
+    fallbackDuration: 32000 },
+
+  // ===== 场景 3 话术 =====
+  { chapter: '🌟 场景话术 #3', title: '客户做信创，华为是默选，火山怎么进？',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们今年信创目标 100%，鲲鹏+欧拉+高斯是确定路径，你们怎么进？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>信创基础设施层华为是确定路径，咱们不强行替换。火山的进入点是 <b>AI 应用与数据智能层</b>——<b>① 豆包支持在国产算力（昇腾/海光）上推理</b>；<b>② DataLeap + ByteHouse 已通过信创认证</b>；<b>③ 火山方舟 RAG/Agent 提供 ARM 版本</b>。给客户多一个国产 AI 厂商选型，避免单源风险。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>豆包在昇腾上跑性能如何？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>豆包-Lite/Mini 在昇腾 910B 上经过适配，推理时延比 NVIDIA H100 慢 30-40%，但单 token 成本接近，<b>且完全国产化合规</b>。我们做了 [类似客户] 的标杆案例，可以给您参考备案号。先做 [具体应用场景] 的信创验证 POC。</div>
+      </div>
+    </div>`,
+    voice: '场景三：信创单子怎么进。这是政企客户最重要的对位场景。售前话术核心：底座承让 + AI 应用层 + 国产算力适配 + 单源风险话术。客户追问豆包在昇腾上性能如何，售前要诚实——比 NVIDIA 慢 30-40% 但完全国产化合规且单 token 成本接近。诚实数据加标杆案例备案号，是政企客户最吃的回答。新人售前最容易在这里夸大性能，反而失信。',
+    fallbackDuration: 33000 },
+
+  // ===== 场景 4 话术 =====
+  { chapter: '🌟 场景话术 #4', title: '华为方案是端到端打包的，火山呢？',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>华为给我的方案是端到端打包的，从底座到应用全包，省心。你们能做到吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>端到端打包确实省心，但代价是<b>绑定深、扩展慢、决策权在乙方</b>。火山走"<b>平台 + 开放生态</b>"路线：底座、模型、数据、应用四层都开放接口。意味着：<b>① 核心业务不用全推倒</b>；<b>② 后续切换成本低</b>；<b>③ 技术团队保留架构话语权</b>。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>开放生态会不会导致集成成本高？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>反过来更省。开放接口意味着：<b>① 用您现有的 CMDB / 监控 / IAM 不重复建</b>；<b>② ISV 工具可以直连不绑定</b>；<b>③ 我们提供 30 天驻场架构师陪跑做集成方案</b>。我们用<b>一份 7 天的 PoC 集成报告</b>给您看实际工作量，再决定。</div>
+      </div>
+    </div>`,
+    voice: '场景四：端到端打包 vs 开放生态。这是企业架构话语权的话题。售前话术核心：承认端到端省心但点出代价（绑定深扩展慢决策权丢）。火山平台加开放生态给三好处（不推倒、低切换成本、保留架构话语权）。客户追问集成成本，售前给三招（用现有 CMDB IAM 不重建、ISV 直连、30 天驻场陪跑）加 7 天 PoC 报告兜底。这种"把抽象的开放生态转化为具体好处"的能力是售前段位的体现。',
+    fallbackDuration: 34000 },
+
+  // ===== 场景 5 话术 =====
+  { chapter: '🌟 场景话术 #5', title: 'HCS 私有云成熟，火山专有云能比吗？',
+    visual: `<div class="dlg-scene">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>我们要建私有云，HCS 是行业标杆，你们专有云能比吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>HCS 在私有云市场份额第一是事实，咱们不去比纯基础设施。火山专有云的差异在 <b>AI 与数据原生能力</b>——<b>① 豆包私有化部署、模型权重不出域</b>；<b>② 火山方舟 RAG/Agent 在专有环境下完整可用</b>；<b>③ DataLeap/ByteHouse/VikingDB 一并下沉</b>。不只是 IaaS，是<b>"AI Cloud Stack"</b>。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">客户</span>如果我已经买了 HCS，能跑火山的 AI 模块吗？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>完全可以，<b>这是火山的开放策略</b>。豆包+方舟支持以 ISV 形态部署在 HCS 上，复用您的 IaaS 投资，只增加 AI 应用层订阅。<b>这种"AI 模块作为增值能力"的玩法</b>已经在多个金融客户落地。我可以给您看 2 个标杆案例。</div>
+      </div>
+    </div>`,
+    voice: '场景五：HCS vs 火山专有云。这是私有云阵地的话题。售前话术核心：不在 IaaS 层硬比，要在 AI Cloud Stack 立差异化——豆包私有化+方舟 RAG/Agent 完整+DataLeap ByteHouse VikingDB 下沉。客户追问已买 HCS 怎么办，售前用"开放策略"回答——豆包方舟以 ISV 形态部署在 HCS 上复用 IaaS 投资。这种"和华为底座兼容的合作姿态"是最大化签单概率的姿势——不抢底座只补 AI。',
+    fallbackDuration: 32000 },
+
+  // ===== 互动测验 #2 =====
+  { chapter: '🎯 互动测验 #2', title: '客户对你说"华为给我打八折，你怎么办？"',
+    visual: `<div class="quiz-card">
+      <div class="quiz-q">客户在采购末期说"华为已经报到刊例价 8 折，你能给到 7 折吗？"——最佳应对？</div>
+      <div class="quiz-opt wrong" data-k="A">立刻应承 7 折求成交（让总部审批）</div>
+      <div class="quiz-opt wrong" data-k="B">说"华为没这个价"质疑客户</div>
+      <div class="quiz-opt correct" data-k="C">"价格我们能争取，但建议先拉齐对比维度：SLA、模型迭代频率、应用层工程化、年度额外服务"</div>
+      <div class="quiz-opt wrong" data-k="D">直接转项目总监谈判，自己退场</div>
+      <div class="quiz-hint">💡 <b>答案 C</b>：A 是新人售前最容易犯的错——纯价格战 = <b>把华为留为对手</b>。B 质疑客户立刻丢信任。D 是甩锅。正确做法：<b>把价格战转为价值战</b>——拉齐 SLA、模型迭代、应用层工程化、年度额外服务（驻场陪跑/技术答疑/优先 feature 接入）等维度。同等条件下你的方案可能价值更高，客户愿意接受同价或溢价。这是销售里的"<b>定义比较坐标</b>"心法。</div>
+    </div>`,
+    voice: '思考一下。客户末期说华为八折你 7 折，怎么办？给你 5 秒......正确答案 C。立刻应承 7 折求成交是新人最大坑——纯价格战把华为留作对手永远赢不了底座。质疑客户立刻丢信任。甩锅给项目总监是不专业。正确做法：把价格战转为价值战，拉齐 SLA、模型迭代、应用层工程化、年度额外服务等维度做 TCO 对比。同等条件下你的方案可能价值更高客户愿意接受同价或溢价。这是销售里"定义比较坐标"的关键心法。',
+    fallbackDuration: 30000 },
+
+  // ===== 政企打法 =====
+  { chapter: '第 6 章 · 政企 5 打法', title: '5 个政务场景 · 一图速记',
+    visual: `<div class="gov-scenes">
+      <div class="gov-card">
+        <span class="ic">🏛️</span>
+        <div class="name">一网通办</div>
+        <div class="hw-line"><b>华为</b>：整体政务底座 + 统一身份</div>
+        <div class="ve-line"><b>火山</b>：政务智能客服 + 政民对话（豆包 C 端语料）</div>
+      </div>
+      <div class="gov-card">
+        <span class="ic">🧠</span>
+        <div class="name">政务大模型</div>
+        <div class="hw-line"><b>华为</b>：盘古政务版 + 行业知识</div>
+        <div class="ve-line"><b>火山</b>：豆包政务接地气 + 月级更新 + 多模型路由</div>
+      </div>
+      <div class="gov-card">
+        <span class="ic">🛡️</span>
+        <div class="name">公共安全</div>
+        <div class="hw-line"><b>华为</b>：视频图像分析 + 雪亮工程</div>
+        <div class="ve-line"><b>火山</b>：抖音多模态 + 视频检索/回放</div>
+      </div>
+      <div class="gov-card">
+        <span class="ic">📊</span>
+        <div class="name">政务数据中台</div>
+        <div class="hw-line"><b>华为</b>：DataArts + FusionInsight</div>
+        <div class="ve-line"><b>火山</b>：DataLeap 工具链更快 + AI 集成顺</div>
+      </div>
+      <div class="gov-card">
+        <span class="ic">🤖</span>
+        <div class="name">数字员工 / Agent</div>
+        <div class="hw-line"><b>华为</b>：RPA + 流程自动化</div>
+        <div class="ve-line"><b>火山</b>：方舟 Agent + 豆包 + RAG 一站式</div>
+      </div>
+    </div>`,
+    voice: '政企 5 打法一图速记。一网通办：华为做底座+统一身份，火山做政务智能客服+政民对话靠豆包 C 端语料更接地气。政务大模型：华为盘古政务版，火山豆包政务版加月级迭代加多模型路由让客户不绑定。公共安全：华为雪亮工程，火山靠抖音多模态视频检索做差异化。政务数据中台：华为 DataArts 老牌，火山 DataLeap 工具链更新更快与 AI 集成更顺。数字员工：华为偏 RPA 项目制，火山方舟 Agent 加豆包加 RAG 几周上线 Demo。',
+    fallbackDuration: 36000 },
+
+  // ===== 央企真实采购 =====
+  { chapter: '🎬 真实对话', title: '某央企采购 · 6 轮真实模拟',
+    visual: `<div class="dlg-scene" style="max-height:480px;overflow:hidden;">
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">CIO</span>我们今年定了"全面拥抱华为 + 信创"，你来还有什么意义？</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>张总，咱们不抢华为的位置。我来谈的是<b>"在华为底座之上"</b> 的 AI 应用层。您信创要满 100% 但 AI 创新指标是否也要达成？</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">CIO</span>AI 创新今年的 KPI 是 3 个落地场景。盘古我们已经在试。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>那建议<b>多模型路由</b>：盘古做行业知识场景，豆包做<b>员工服务</b>（语料接地气）和<b>客户服务</b>（多轮对话强）。这是市场上验证过的最优组合，避免单源 AI 风险。</div>
+      </div>
+      <div class="dlg-row client">
+        <div class="dlg-avatar">👤</div>
+        <div class="dlg-bubble"><span class="dlg-tag">CIO</span>采购怎么走？我们用华为合同框架。</div>
+      </div>
+      <div class="dlg-row sales">
+        <div class="dlg-avatar">💼</div>
+        <div class="dlg-bubble"><span class="dlg-tag">售前</span>火山可以以 <b>"AI 增值模块"</b> 进华为合同框架，作为<b>盘古的并行选项</b>采购。我们已经有 [2 家同类央企] 的合规备案号可参考。下周做 30 分钟方案对接？</div>
+      </div>
+    </div>`,
+    voice: '一段真实央企采购对话。CIO 直接说全面拥抱华为加信创你来什么意义。新手售前会慌掉。老售前回："不抢华为位置，谈在华为底座之上的 AI 应用层"。然后立刻探信息——AI 创新 KPI 是否要达成。CIO 给出 KPI 是 3 个场景盘古已经在试。售前顺势推多模型路由——盘古做行业知识豆包做员工和客户服务避免单源 AI 风险。CIO 关心采购路径，售前用"AI 增值模块进华为合同框架作为盘古并行选项"巧妙绕开排他条款。最后用 2 家央企备案号兜底加下周 30 分钟方案对接收单。整套对话节奏：探口风→定位差异→推组合→破合规→签框架。这就是高级 SE 的肌肉记忆。',
+    fallbackDuration: 45000 },
+
+  // ===== 心法 =====
+  { chapter: '💎 心法', title: '不要在底座层硬刚，要在 AI 应用价值层超越',
+    body: '<b>客户买 IaaS 是买"放心"</b><br><b>客户买 AI 是买"结果"</b><br><br>华为云在底座给了客户放心 → 不要否定<br>火山引擎要给客户结果 → 用业务效果说话<br><br><span class="hl">这一句话是这一章最贵的心法</span>',
+    visual: '<div style="font-size:80px;">💎</div>',
+    voice: '整个 COMP-03 最贵的一句话：客户买 IaaS 是买放心，客户买 AI 是买结果。华为云在底座给了客户放心咱们不要否定，火山引擎要给客户结果用业务效果说话。所有的对位话术、所有的产品差异、所有的政企打法，最终都收敛到这一句。读到这里你就懂为什么我前面让你"承认华为优势"——不是认怂，而是把战场移到火山的强场。这是高级 SE 和初级 SE 的本质差异。',
+    fallbackDuration: 28000 },
+
+  // ===== 面试速查 =====
+  { chapter: '速查表', title: '面试 · 8 题速查',
+    body: `<div style="font-size:13.5px;line-height:1.85;text-align:left;max-width:840px;">
+      <b>Q1</b> 盘古 vs 豆包核心差异？<span style="color:#a5b4fc"> → 三个 R：Recent 月级、Real 抖音电商打磨、Ready 四档分级</span><br>
+      <b>Q2</b> HCS 和火山专有云怎么选？<span style="color:#a5b4fc"> → 纯 IaaS HCS；AI 原生场景选火山 AI Cloud Stack</span><br>
+      <b>Q3</b> 客户全栈华为怎么进？<span style="color:#a5b4fc"> → 双云互补，底座留华为，AI 应用层试火山，1 月 POC</span><br>
+      <b>Q4</b> 信创单子怎么打？<span style="color:#a5b4fc"> → 底座承让 + 豆包昇腾适配 + DataLeap 信创认证</span><br>
+      <b>Q5</b> 华为 6 大优势？<span style="color:#a5b4fc"> → 政企渠道/全栈自主/行业方案/HCS/运营商/HCSP认证体系</span><br>
+      <b>Q6</b> 华为 7 大短板？<span style="color:#a5b4fc"> → 大模型迭代慢/AI 应用弱/大数据老/互联网经验/价格刚性/社区/SaaS</span><br>
+      <b>Q7</b> 央企排他怎么破？<span style="color:#a5b4fc"> → 以 AI 增值模块进华为合同框架，作为盘古的并行选项</span><br>
+      <b>Q8</b> 一句话心法？<span style="color:#a5b4fc"> → 客户买 IaaS 是买放心，买 AI 是买结果</span>
+    </div>`,
+    voice: '8 题面试速查。一盘古 vs 豆包三个 R：Recent、Real、Ready。二 HCS 选纯 IaaS 火山专有云选 AI 原生。三客户全栈华为打双云互补加 1 月 POC。四信创单子底座承让加豆包昇腾适配。五华为 6 大优势：政企渠道全栈自主行业方案 HCS 运营商认证体系。六华为 7 大短板：大模型慢 AI 应用弱大数据老互联网经验价格刚性社区 SaaS。七央企排他用 AI 增值模块进华为合同。八一句话心法：客户买 IaaS 是买放心买 AI 是买结果。这 8 题刷熟，HCSP-Presales 持证 + 火山引擎政企面试稳过。',
+    fallbackDuration: 36000 },
+
+  // ===== 完成 =====
+  { chapter: '完成', title: '🎉 COMP-03 学完！',
+    eyebrow: 'HCSP-Presales × 火山引擎',
+    body: '这是整个竞品模块的核心。<br>建议把<b>"5 个场景话术"</b>打印贴工位，每天早上读一遍。<br>直到能不看稿讲出来。<br><br>下一站：<b>COMP-04 阿里 / 腾讯对位</b>',
+    visual: '<div style="font-size:80px;">🏆</div>',
+    voice: '恭喜，COMP-03 华为对位详解学完。这是整个竞品模块的核心，建议把 5 个场景话术打印贴工位，每天早上读一遍直到能不看稿讲出来。你拿过 HCSP-Presales 持证，今天这节把华为视角下的护城河转换成了火山引擎的进攻路径。下一站 COMP-04 阿里腾讯对位，那是互联网厂商对位，逻辑完全不同。学习愉快。',
+    fallbackDuration: 26000 },
+];
+</script>
+<script src="_player.js?v=20"></script>
+</body>
+</html>

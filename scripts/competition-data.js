@@ -170,6 +170,7 @@ const COMPETITION = [
         ]
       }
     ],
+    internalVideo: 'lessons/comp03-video.html?v=20',
     tips: '本章是整个模块的核心。如果你只看一章，看这章。建议把"五个典型对位场景的逐字话术"打印出来贴在工位旁，每天早上读一遍——直到能不看稿讲出来。'
   },
 
