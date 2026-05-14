@@ -1196,6 +1196,7 @@ const COURSE = [
   {
     day: 12,
     videoQueries: ['大语言模型 LLM 入门', 'Transformer 原理 通俗讲解', 'RLHF 训练 教程'],
+    internalVideo: 'lessons/day12-video.html?v=17',
     stage: 's3',
     title: 'AI / ML / DL 基础',
     summary: '机器学习/深度学习核心概念、模型训练流程、CNN/RNN/Transformer',

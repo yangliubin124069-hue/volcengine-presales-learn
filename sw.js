@@ -1,7 +1,7 @@
 // Service Worker · 火山引擎售前学习 PWA
 // 策略：静态资源 cache-first；HTML 走 network-first（保证更新可见），离线回退 cache。
 // 升级方式：改下面的 CACHE_VERSION，SW 自动清旧 cache。
-const CACHE_VERSION = 'volcengine-presales-v16';
+const CACHE_VERSION = 'volcengine-presales-v17';
 const RUNTIME_CACHE = 'volcengine-presales-runtime';
 
 // 预缓存清单：首次安装即下载，离线立刻可用
@@ -9,17 +9,18 @@ const PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './styles/main.css?v=16',
-  './scripts/data.js?v=16',
-  './scripts/quiz-data.js?v=16',
-  './scripts/competition-data.js?v=16',
-  './scripts/glossary.js?v=16',
-  './scripts/app.js?v=16',
-  './scripts/ai-chat.js?v=16',
-  './lessons/_player.css?v=16',
-  './lessons/_player.js?v=16',
-  './lessons/day2-video.html?v=16',
-  './lessons/day5-video.html?v=16',
+  './styles/main.css?v=17',
+  './scripts/data.js?v=17',
+  './scripts/quiz-data.js?v=17',
+  './scripts/competition-data.js?v=17',
+  './scripts/glossary.js?v=17',
+  './scripts/app.js?v=17',
+  './scripts/ai-chat.js?v=17',
+  './lessons/_player.css?v=17',
+  './lessons/_player.js?v=17',
+  './lessons/day2-video.html?v=17',
+  './lessons/day5-video.html?v=17',
+  './lessons/day12-video.html?v=17',
   './icons/icon-96.png',
   './icons/icon-144.png',
   './icons/icon-180.png',
