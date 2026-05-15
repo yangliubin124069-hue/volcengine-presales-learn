@@ -1,0 +1,84 @@
+{
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "rate": "+0%",
+  "videos": {
+    "day13": {
+      "count": 21
+    },
+    "comp01": {
+      "count": 11
+    },
+    "comp02": {
+      "count": 9
+    },
+    "comp03": {
+      "count": 23
+    },
+    "comp04": {
+      "count": 13
+    },
+    "comp05": {
+      "count": 14
+    },
+    "comp06": {
+      "count": 18
+    },
+    "day1": {
+      "count": 18
+    },
+    "day10": {
+      "count": 17
+    },
+    "day11": {
+      "count": 18
+    },
+    "day12": {
+      "count": 29
+    },
+    "day14": {
+      "count": 22
+    },
+    "day15": {
+      "count": 19
+    },
+    "day16": {
+      "count": 19
+    },
+    "day17": {
+      "count": 19
+    },
+    "day18": {
+      "count": 16
+    },
+    "day19": {
+      "count": 16
+    },
+    "day2": {
+      "count": 29
+    },
+    "day20": {
+      "count": 16
+    },
+    "day3": {
+      "count": 18
+    },
+    "day4": {
+      "count": 22
+    },
+    "day5": {
+      "count": 30
+    },
+    "day6": {
+      "count": 19
+    },
+    "day7": {
+      "count": 23
+    },
+    "day8": {
+      "count": 21
+    },
+    "day9": {
+      "count": 19
+    }
+  }
+}
