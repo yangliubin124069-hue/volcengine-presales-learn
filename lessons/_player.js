@@ -129,6 +129,30 @@
   let advanceTimer = null;
   let preferredVoiceName = null;
 
+  // 预生成 MP3（最高优先级，跨平台稳定）
+  let pregenAvailable = false;
+  let pregenVideoId = null;
+  function initPregenAudio() {
+    const filename = (location.pathname.split('/').pop() || '').toLowerCase();
+    const m = filename.match(/^(.+?)-video\.html$/);
+    if (!m) return;
+    pregenVideoId = m[1];
+    // 加载 audio manifest（cache-bust 用版本号）
+    const ver = (document.querySelector('link[href*="_player.css"]')?.href.match(/v=(\d+)/) || ['', '0'])[1];
+    fetch(`./audio/manifest.json?v=${ver}`, { cache: 'no-cache' })
+      .then(r => r.ok ? r.json() : null)
+      .then(manifest => {
+        if (manifest && manifest.videos && manifest.videos[pregenVideoId]) {
+          pregenAvailable = true;
+          console.log(`[Audio] 检测到预生成 MP3: ${pregenVideoId}（${manifest.videos[pregenVideoId].count} 段）`);
+          // 刷新 voice 选择器提示文案
+          if (typeof fillVoiceSelector === 'function') fillVoiceSelector();
+        }
+      })
+      .catch(() => {});
+  }
+  initPregenAudio();
+
   // 火山 TTS 配置
   const ARK_KEY = 've-ark-tts';
   function loadArkConfig() {
@@ -235,7 +259,14 @@
   function fillVoiceSelector() {
     if (!window.speechSynthesis) return;
     const voices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('zh'));
-    if (!voices.length) { voiceSel.innerHTML = '<option>无中文语音</option>'; return; }
+    if (!voices.length) {
+      // 没系统中文 voice：提示用户预生成 MP3 或火山 TTS
+      const hint = pregenAvailable
+        ? '✅ 已用预生成 MP3'
+        : '⚠️ 系统无中文语音 · 点 ⚙ 配置火山 TTS 或加载 MP3 包';
+      voiceSel.innerHTML = `<option>${hint}</option>`;
+      return;
+    }
     const best = pickBestVoice();
     voiceSel.innerHTML = '';
     voices.forEach(v => {
@@ -254,6 +285,24 @@
     preferredVoiceName = voiceSel.value;
     if (playing && currentUtter) showSlide(idx);
   });
+
+  // ===================== 预生成 MP3 播放（最高优先级）=====================
+  function speakWithPregen(slideIdx, onEnd, onError) {
+    if (!pregenAvailable || !pregenVideoId) return null;
+    const url = `./audio/${pregenVideoId}/${slideIdx}.mp3`;
+    try {
+      const audio = new Audio(url);
+      audio.playbackRate = Math.max(0.5, Math.min(speed, 4));
+      audio.onended = () => { if (onEnd) onEnd(); };
+      audio.onerror = () => { if (onError) onError(new Error('预生成 MP3 加载失败：' + url)); };
+      currentAudio = audio;
+      audio.play().catch(e => { if (onError) onError(e); });
+      return audio;
+    } catch (e) {
+      if (onError) onError(e);
+      return null;
+    }
+  }
 
   // ===================== 火山 TTS 调用 =====================
   async function speakWithArk(text, onEnd, onError) {
@@ -338,7 +387,29 @@
       return;
     }
 
-    // 优先火山 TTS
+    // 优先级 1：预生成 MP3（最稳，跨平台一致）
+    const onPregenEnd = () => {
+      if (!playing) return;
+      advanceTimer = setTimeout(() => {
+        if (playing && idx < SLIDES.length - 1) { idx++; showSlide(idx); }
+        else pause();
+      }, 600);
+    };
+    const onPregenErr = (err) => {
+      console.warn('[Audio] 预生成 MP3 不可用，降级:', err && err.message);
+      // 降到优先级 2：火山 TTS
+      if (isArkReady()) {
+        speakWithArk(s.voice, onPregenEnd, () => fallbackToWebSpeech(s));
+      } else {
+        fallbackToWebSpeech(s);
+      }
+    };
+    if (pregenAvailable) {
+      const ok = speakWithPregen(i, onPregenEnd, onPregenErr);
+      if (ok) return;
+    }
+
+    // 优先级 2：火山 TTS
     if (isArkReady()) {
       speakWithArk(s.voice,
         () => {
@@ -354,6 +425,7 @@
         }
       );
     } else {
+      // 优先级 3：浏览器 Web Speech
       fallbackToWebSpeech(s);
     }
   }

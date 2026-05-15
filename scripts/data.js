@@ -11,7 +11,7 @@ const COURSE = [
   // ============ 阶段一：云计算基础（深度版，Day 1-7） ============
   {
     day: 1,
-    internalVideo: 'lessons/day1-video.html?v=27',
+    internalVideo: 'lessons/day1-video.html?v=28',
     videoQueries: ['云计算入门教程', 'IaaS PaaS SaaS 区别', '公有云 私有云 混合云'],
     stage: 's1',
     title: '云计算基础与全景架构',
@@ -131,7 +131,7 @@ const COURSE = [
   {
     day: 2,
     videoQueries: ['VPC 入门 阿里云', 'VLAN 子网划分 教程', 'CIDR 子网计算'],
-    internalVideo: 'lessons/day2-video.html?v=27',
+    internalVideo: 'lessons/day2-video.html?v=28',
     stage: 's1',
     title: '云网络深度（VPC / 负载均衡 / 混合组网 / CDN）',
     summary: '从 OSI 模型到 VPC、SLB、专线、SD-WAN、CDN 的全栈云网络',
@@ -241,7 +241,7 @@ const COURSE = [
 
   {
     day: 3,
-    internalVideo: 'lessons/day3-video.html?v=27',
+    internalVideo: 'lessons/day3-video.html?v=28',
     videoQueries: ['对象存储 S3 入门', '块存储 文件存储 对象存储 区别', '云存储 IOPS 教程'],
     stage: 's1',
     title: '云存储深度（对象 / 块 / 文件 / 归档 / KMS）',
@@ -350,7 +350,7 @@ const COURSE = [
 
   {
     day: 4,
-    internalVideo: 'lessons/day4-video.html?v=27',
+    internalVideo: 'lessons/day4-video.html?v=28',
     videoQueries: ['MySQL Redis 区别', 'NoSQL 数据库对比', 'Kafka 入门教程'],
     stage: 's1',
     title: '云数据库与中间件（NewSQL / Redis / Kafka / 数据湖）',
@@ -462,7 +462,7 @@ const COURSE = [
   {
     day: 5,
     videoQueries: ['Docker 入门', 'Kubernetes K8s 入门教程', 'Service Mesh Istio'],
-    internalVideo: 'lessons/day5-video.html?v=27',
+    internalVideo: 'lessons/day5-video.html?v=28',
     stage: 's1',
     title: '容器与云原生（Docker / K8s / Service Mesh / GitOps）',
     summary: 'Docker、Kubernetes 全要素、Service Mesh、CI/CD 与 GitOps 完整链路',
@@ -570,7 +570,7 @@ const COURSE = [
 
   {
     day: 6,
-    internalVideo: 'lessons/day6-video.html?v=27',
+    internalVideo: 'lessons/day6-video.html?v=28',
     videoQueries: ['云安全 等保 2.0', '零信任 SASE 架构', 'WAF 防御 教程'],
     stage: 's1',
     title: '云安全与合规（IAM / 零信任 / WAF / 等保 / 信创）',
@@ -676,7 +676,7 @@ const COURSE = [
 
   {
     day: 7,
-    internalVideo: 'lessons/day7-video.html?v=27',
+    internalVideo: 'lessons/day7-video.html?v=28',
     videoQueries: ['上云迁移 6R 策略', 'TCO 计算 教程', 'SRE 站点可靠性 入门'],
     stage: 's1',
     title: '上云迁移与可观测性（6R / TCO / SLI/SLO / OTel）',
@@ -783,7 +783,7 @@ const COURSE = [
   // ============ 阶段二：火山引擎产品矩阵（Day 8-11） ============
   {
     day: 8,
-    internalVideo: 'lessons/day8-video.html?v=27',
+    internalVideo: 'lessons/day8-video.html?v=28',
     videoQueries: ['火山引擎 入门', 'ECS 弹性云服务器 教程', 'VKE Kubernetes 火山'],
     stage: 's2',
     title: '火山引擎概览与计算（ECS / VKE / veFaaS / 异构）',
@@ -890,7 +890,7 @@ const COURSE = [
 
   {
     day: 9,
-    internalVideo: 'lessons/day9-video.html?v=27',
+    internalVideo: 'lessons/day9-video.html?v=28',
     videoQueries: ['对象存储 TOS 教程', 'ByteHouse OLAP 教程', 'veDB MySQL'],
     stage: 's2',
     title: '火山引擎存储与网络（TOS / EBS / CDN / DCDN / VPC）',
@@ -995,7 +995,7 @@ const COURSE = [
 
   {
     day: 10,
-    internalVideo: 'lessons/day10-video.html?v=27',
+    internalVideo: 'lessons/day10-video.html?v=28',
     videoQueries: ['DataLeap 数据中台', 'ByteHouse 数仓 教程', '湖仓一体 Iceberg'],
     stage: 's2',
     title: '火山引擎数据库与大数据（veDB / ByteHouse / LAS / Kafka）',
@@ -1097,7 +1097,7 @@ const COURSE = [
 
   {
     day: 11,
-    internalVideo: 'lessons/day11-video.html?v=27',
+    internalVideo: 'lessons/day11-video.html?v=28',
     videoQueries: ['RTC 直播 推流', 'CDN 直播 教程', '短视频 推荐系统'],
     stage: 's2',
     title: '火山引擎视频云与音视频（VOD / LSS / RTC / 多媒体处理）',
@@ -1205,7 +1205,7 @@ const COURSE = [
   {
     day: 12,
     videoQueries: ['大语言模型 LLM 入门', 'Transformer 原理 通俗讲解', 'RLHF 训练 教程'],
-    internalVideo: 'lessons/day12-video.html?v=27',
+    internalVideo: 'lessons/day12-video.html?v=28',
     stage: 's3',
     title: 'AI / ML / DL 基础',
     summary: '机器学习/深度学习核心概念、模型训练流程、CNN/RNN/Transformer',
@@ -1308,7 +1308,7 @@ const COURSE = [
 
   {
     day: 13,
-    internalVideo: 'lessons/day13-video.html?v=27',
+    internalVideo: 'lessons/day13-video.html?v=28',
     videoQueries: ['豆包大模型 入门', 'RAG 检索增强生成 教程', 'Coze 智能体 搭建'],
     stage: 's3',
     title: '大模型与豆包（Tokenizer / Scaling Law / RLHF / 豆包矩阵）',
@@ -1415,7 +1415,7 @@ const COURSE = [
 
   {
     day: 14,
-    internalVideo: 'lessons/day14-video.html?v=27',
+    internalVideo: 'lessons/day14-video.html?v=28',
     videoQueries: ['Function Calling Agent 入门', 'Prompt Engineering 教程', '向量数据库 VikingDB'],
     stage: 's3',
     title: '火山方舟 / Coze / veMLP（一站式 AI 平台）',
@@ -1522,7 +1522,7 @@ const COURSE = [
   // ============ 阶段四：售前专业技能（Day 15-17） ============
   {
     day: 15,
-    internalVideo: 'lessons/day15-video.html?v=27',
+    internalVideo: 'lessons/day15-video.html?v=28',
     videoQueries: ['SPIN 销售方法 教程', 'MEDDIC 销售框架', '客户需求挖掘 售前'],
     stage: 's4',
     title: '售前角色与方法论（SPIN / MEDDIC / BANT / 价值主张）',
@@ -1629,7 +1629,7 @@ const COURSE = [
 
   {
     day: 16,
-    internalVideo: 'lessons/day16-video.html?v=27',
+    internalVideo: 'lessons/day16-video.html?v=28',
     videoQueries: ['FFAB 售前话术', '方案架构图 怎么画', '4+1 视图 架构'],
     stage: 's4',
     title: '解决方案设计与 TCO/ROI（架构图 / 4+1 视图 / 灾备 / 成本）',
@@ -1736,7 +1736,7 @@ const COURSE = [
 
   {
     day: 17,
-    internalVideo: 'lessons/day17-video.html?v=27',
+    internalVideo: 'lessons/day17-video.html?v=28',
     videoQueries: ['POC 设计 怎么做', '招投标 售前讲标', '售前异议处理'],
     stage: 's4',
     title: '演讲、招投标与竞争分析',
@@ -1851,7 +1851,7 @@ const COURSE = [
   // ============ 阶段五：行业方案与综合实战（Day 18-20） ============
   {
     day: 18,
-    internalVideo: 'lessons/day18-video.html?v=27',
+    internalVideo: 'lessons/day18-video.html?v=28',
     videoQueries: ['金融 大数据 风控 案例', '互联网 RAG 智能客服', '汽车云 智能座舱'],
     stage: 's5',
     title: '行业方案 (上)：互联网 / 泛娱乐 / 金融 / 汽车',
@@ -1959,7 +1959,7 @@ const COURSE = [
 
   {
     day: 19,
-    internalVideo: 'lessons/day19-video.html?v=27',
+    internalVideo: 'lessons/day19-video.html?v=28',
     videoQueries: ['零售云 会员营销', '政企云 一网通办', '教育 在线学习方案'],
     stage: 's5',
     title: '行业方案 (下)：零售 / 政企 / 教育 / 出海',
@@ -2068,7 +2068,7 @@ const COURSE = [
 
   {
     day: 20,
-    internalVideo: 'lessons/day20-video.html?v=27',
+    internalVideo: 'lessons/day20-video.html?v=28',
     videoQueries: ['售前面试 经验分享', '解决方案架构师 SA 面试题', '火山引擎 面试'],
     stage: 's5',
     title: '综合实战：客户 Q&A、红线、速记卡与考试冲刺',
