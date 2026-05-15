@@ -86,7 +86,7 @@ window.SLIDES = [
       <div class="st-card obj">
         <span class="ic">📦</span>
         <h5>对象存储</h5>
-        <p>S3/TOS HTTP<br>扁平 K-V 数 PB<br>图片视频备份</p>
+        <p>S3/TOS HTTP<br>扁平 K-V 数 PB<br>图片 / 视频 / 备份</p>
         <span class="perf">10ms-100ms</span>
       </div>
       <div class="st-card arch">
@@ -102,7 +102,7 @@ window.SLIDES = [
         <span class="perf">ms 级查询</span>
       </div>
     </div>`,
-    voice: '6 类存储形态一图速记。第一类本地盘，是 NVMe 或 SSD 直接插在 ECS 物理机上，机器一旦宕机数据就丢失，所以只适合做缓存层。第二类块存储 EBS 云盘，支持 POSIX 读写，亚毫秒延迟，VM 系统盘和数据库用。第三类文件存储 NAS，走 NFS 或 SMB 协议，多机挂载共享，OA、ML 训练数据集用。第四类对象存储 S3 或 TOS，走 HTTP RESTful 扁平 K-V 结构，单桶数 PB，图片视频备份数据湖用。第五类归档存储，成本是对象的 1/4 到 1/10，但取回需要 1 分钟到 12 小时，适合 7 到 30 年合规留档。第六类数据库，是结构化加查询引擎，Day 4 详讲。',
+    voice: '6 类存储形态一图速记。第一类本地盘，是 NVMe 或 SSD 直接插在 ECS 物理机上，机器一旦宕机数据就丢失，所以只适合做缓存层。第二类块存储 EBS 云盘，支持 POSIX 读写，亚毫秒延迟，VM 系统盘和数据库用。第三类文件存储 NAS，走 NFS 或 SMB 协议，多机挂载共享，OA、ML 训练数据集用。第四类对象存储 S3 或 TOS，走 HTTP RESTful 扁平 K-V 结构，单桶数 PB，适合存图片、视频、备份、数据湖等场景。第五类归档存储，成本是对象的 1/4 到 1/10，但取回需要 1 分钟到 12 小时，适合 7 到 30 年合规留档。第六类数据库，是结构化加查询引擎，Day 4 详讲。',
     fallbackDuration: 33000 },
 
   { chapter: '第 2 章 · 对象存储', title: 'Bucket / Object / S3 协议',
