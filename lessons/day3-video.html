@@ -68,7 +68,7 @@ window.SLIDES = [
       <div class="st-card local">
         <span class="ic">⚡</span>
         <h5>本地盘</h5>
-        <p>NVMe / SSD<br>机器死数据死<br>缓存层用</p>
+        <p>NVMe / SSD<br>机器宕机 → 数据丢失<br>仅缓存层使用</p>
         <span class="perf">μs 级延迟</span>
       </div>
       <div class="st-card block">
@@ -102,7 +102,7 @@ window.SLIDES = [
         <span class="perf">ms 级查询</span>
       </div>
     </div>`,
-    voice: '6 类存储形态一图速记。本地盘 NVMe SSD 机器死数据死缓存层用。块存储 EBS 云盘支持 POSIX 读写 VM 系统盘和数据库用亚毫秒延迟。文件存储 NAS NFS SMB 多机挂载共享，OA、ML 训练数据集用。对象存储 S3 TOS HTTP RESTful 扁平 K-V 单桶数 PB 图片视频备份数据湖用。归档存储成本是对象的 1/4 到 1/10 但取回需 1 分钟到 12 小时适合 7-30 年合规留档。数据库是结构化加查询引擎 Day 4 讲。',
+    voice: '6 类存储形态一图速记。第一类本地盘，是 NVMe 或 SSD 直接插在 ECS 物理机上，机器一旦宕机数据就丢失，所以只适合做缓存层。第二类块存储 EBS 云盘，支持 POSIX 读写，亚毫秒延迟，VM 系统盘和数据库用。第三类文件存储 NAS，走 NFS 或 SMB 协议，多机挂载共享，OA、ML 训练数据集用。第四类对象存储 S3 或 TOS，走 HTTP RESTful 扁平 K-V 结构，单桶数 PB，图片视频备份数据湖用。第五类归档存储，成本是对象的 1/4 到 1/10，但取回需要 1 分钟到 12 小时，适合 7 到 30 年合规留档。第六类数据库，是结构化加查询引擎，Day 4 详讲。',
     fallbackDuration: 33000 },
 
   { chapter: '第 2 章 · 对象存储', title: 'Bucket / Object / S3 协议',
